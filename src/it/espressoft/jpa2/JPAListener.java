@@ -15,7 +15,7 @@ public class JPAListener implements ServletContextListener {
 
 	protected static final Logger logger = Logger.getLogger(JPAListener.class.getName());
 
-//	private Controller chachedController;
+	private JpaController chachedController;
 
 	/**
 	 * Default constructor.
@@ -38,7 +38,8 @@ public class JPAListener implements ServletContextListener {
 		e.getServletContext().setAttribute(IJpaListernes.SESSION_EMF, emf);
 		logger.info(IJpaListernes.SESSION_EMF + " start");
 
-//		chachedController = new Controller(emf);
+		chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
+		chachedController.test();
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class JPAListener implements ServletContextListener {
 		emf.close();
 		logger.info(IJpaListernes.SESSION_EMF + " close");
 
-//		chachedController.close();
+		chachedController.close();
 	}
 
 }

@@ -4,7 +4,7 @@ import it.espressoft.jpa2.IJpaListernes;
 
 import javax.persistence.EntityManagerFactory;
 
-public class PageBaseJpa2Data extends PageBase {
+public class PageBaseJpa2Data extends PageBaseInitialiseSession {
 	/**
 	 * Use With @JPASessionListener
 	 * 

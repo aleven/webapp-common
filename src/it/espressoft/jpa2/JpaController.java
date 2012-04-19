@@ -468,4 +468,12 @@ public class JpaController implements Serializable {
 
 		// System.gc();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public EntityManagerFactory test() {
+		return getEmf();
+	}
 }
