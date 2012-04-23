@@ -193,6 +193,7 @@ public class DbUtilsConnector extends JdbcConnector {
 			 * Sembra che il like con i parametri ufficiali non funzioni, forse
 			 * dovuto al fatto che son tutti object
 			 */
+			logger.debug(aQuery);
 			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz), params);
 
 		} finally {
@@ -212,6 +213,8 @@ public class DbUtilsConnector extends JdbcConnector {
 
 		try {
 
+			// String query = FormatUtils.formatLikeCSharp(true, aQuery, params);
+			logger.debug(aQuery);
 			result = run.query(getConnection(), aQuery, getResultSetHandlerSingle(clazz), params);
 		} catch (Exception ex) {
 			logger.error("Error executeSingle", ex);
@@ -235,6 +238,7 @@ public class DbUtilsConnector extends JdbcConnector {
 			 * Sembra che il like con i parametri ufficiali non funzioni, forse
 			 * dovuto al fatto che son tutti object
 			 */
+			logger.debug(aQuery);
 			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz));
 
 		} finally {
@@ -252,7 +256,7 @@ public class DbUtilsConnector extends JdbcConnector {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int executeUpdate(boolean keepConnOpen, String aQuery, String... params) throws Exception {
+	public int executeUpdate(boolean keepConnOpen, String aQuery) throws Exception {
 		int res = 0;
 
 		// QueryRunner run = new QueryRunner();
@@ -268,9 +272,9 @@ public class DbUtilsConnector extends JdbcConnector {
 			// res = run.update(getConnection(), formatLikeCSharp(aQuery,
 			// params));
 
-			logger.info(FormatUtils.formatLikeCSharp(true, aQuery, params));
-
-			res = getConnection().prepareStatement(FormatUtils.formatLikeCSharp(true, aQuery, params)).executeUpdate();
+			// String query = FormatUtils.formatLikeCSharp(true, aQuery, params);
+			logger.debug(aQuery);
+			res = getConnection().prepareStatement(aQuery).executeUpdate();
 
 			// The line before uses varargs and autoboxing to simplify the code
 
