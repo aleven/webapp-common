@@ -8,7 +8,7 @@ package it.espressoft.utils;
 public class FormatUtils {
 
 	/**
-	 * Format Strings like a C# Formatter in style with {0}
+	 * Format a Strings like a C# Formatter with placeholder like {0}
 	 * @param aString
 	 * @param param
 	 * @return
