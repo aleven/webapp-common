@@ -19,7 +19,7 @@ import org.hibernate.criterion.Example;
 
 /**
  * 
- * @author Mirco
+ * @author Mirco Attocchi
  */
 public class JpaController implements Serializable {
 

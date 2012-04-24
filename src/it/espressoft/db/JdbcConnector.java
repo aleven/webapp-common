@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author Mirco Attocchi
+ *
+ */
 public class JdbcConnector {
 
 	protected static final Logger logger = Logger.getLogger(JdbcConnector.class.getName());

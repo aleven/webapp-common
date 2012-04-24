@@ -2,7 +2,7 @@ package it.espressoft.utils;
 
 /**
  * 
- * @author Mirco
+ * @author Mirco Attocchi
  * 
  */
 public class FormatUtils {

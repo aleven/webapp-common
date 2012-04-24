@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 /**
  * Application Lifecycle Listener implementation class JPAListener
  * 
+ * @author Mirco Attocchi
  */
 public class JPAListener implements ServletContextListener {
 

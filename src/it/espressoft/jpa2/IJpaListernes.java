@@ -9,7 +9,7 @@ package it.espressoft.jpa2;
  * 
  * 
  * 
- * @author Mirco
+ * @author Mirco Attocchi
  *
  */
 public interface IJpaListernes {

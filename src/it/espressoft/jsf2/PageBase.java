@@ -23,6 +23,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author Mirco Attocchi
+ *
+ */
 public class PageBase implements Serializable {
 
 	protected static final Logger logger = Logger.getLogger(PageBase.class.getName());

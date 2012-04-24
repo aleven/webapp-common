@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 /**
  * Session Lifecycle Listener implementation class JPASessionListener
  * 
+ * @author Mirco Attocchi
  */
 public class JPASessionListener implements HttpSessionListener {
 
