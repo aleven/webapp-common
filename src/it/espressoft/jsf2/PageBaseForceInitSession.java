@@ -14,7 +14,7 @@ public class PageBaseForceInitSession extends PageBase {
 	 * the-response-has-been-committed
 	 */
 	@PostConstruct
-	void initialiseSession() {
+	public void initialiseSession() {
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	}
 }
