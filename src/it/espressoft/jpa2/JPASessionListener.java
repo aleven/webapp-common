@@ -1,5 +1,7 @@
 package it.espressoft.jpa2;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -27,11 +29,10 @@ public class JPASessionListener implements HttpSessionListener {
 	 * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
 	 */
 	public void sessionCreated(HttpSessionEvent e) {
-		// // com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-		// EntityManagerFactory emf =
-		// Persistence.createEntityManagerFactory(Controller.DEFAULT_PU);
-		// e.getSession().setAttribute(SESSION_EMF, emf);
-		// logger.debug(SESSION_EMF + " start");
+		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
+		logger.debug(IJpaListernes.SESSION_EMF + " start");
 		//
 		// chachedController = new Controller(Controller.DEFAULT_PU);
 	}
@@ -40,10 +41,9 @@ public class JPASessionListener implements HttpSessionListener {
 	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
 	 */
 	public void sessionDestroyed(HttpSessionEvent e) {
-		// EntityManagerFactory emf = (EntityManagerFactory)
-		// e.getSession().getAttribute(SESSION_EMF);
-		// emf.close();
-		// logger.debug(SESSION_EMF + " close");
+		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);
+		emf.close();
+		logger.debug(IJpaListernes.SESSION_EMF + " close");
 		//
 		// chachedController.close();
 	}
