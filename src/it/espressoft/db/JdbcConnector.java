@@ -1,5 +1,7 @@
 package it.espressoft.db;
 
+import it.espressoft.utils.JdbcUtils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -55,19 +57,21 @@ public class JdbcConnector {
 
 		if (conn == null) {
 
-			try {
-				Class.forName(driverClass).newInstance();
-			} catch (Exception ex) {
-				logger.error("Check classpath. Cannot load db driver: " + driverClass, ex);
-				throw ex;
-			}
-
-			try {
-				conn = DriverManager.getConnection(connString, userName, password);
-			} catch (SQLException ex) {
-				logger.error("Driver loaded, but cannot connect to db: " + connString, ex);
-				throw ex;
-			}
+//			try {
+//				Class.forName(driverClass).newInstance();
+//			} catch (Exception ex) {
+//				logger.error("Check classpath. Cannot load db driver: " + driverClass, ex);
+//				throw ex;
+//			}
+//
+//			try {
+//				conn = DriverManager.getConnection(connString, userName, password);
+//			} catch (SQLException ex) {
+//				logger.error("Driver loaded, but cannot connect to db: " + connString, ex);
+//				throw ex;
+//			}
+			
+			conn = JdbcUtils.getConnection(driverClass, connString, userName, password);
 
 		}
 		return conn;

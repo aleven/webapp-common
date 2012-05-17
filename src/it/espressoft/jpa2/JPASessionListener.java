@@ -29,6 +29,7 @@ public class JPASessionListener implements HttpSessionListener {
 	 * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
 	 */
 	public void sessionCreated(HttpSessionEvent e) {
+		
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
 		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
@@ -41,6 +42,7 @@ public class JPASessionListener implements HttpSessionListener {
 	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
 	 */
 	public void sessionDestroyed(HttpSessionEvent e) {
+		
 		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);
 		emf.close();
 		logger.debug(IJpaListernes.SESSION_EMF + " close");

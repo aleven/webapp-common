@@ -12,16 +12,16 @@ import org.apache.log4j.Logger;
  * 
  * @author Mirco Attocchi
  */
-public class JPAListener implements ServletContextListener {
+public class JPAContextListener implements ServletContextListener {
 
-	protected static final Logger logger = Logger.getLogger(JPAListener.class.getName());
+	protected static final Logger logger = Logger.getLogger(JPAContextListener.class.getName());
 
 	private JpaController chachedController;
 
 	/**
 	 * Default constructor.
 	 */
-	public JPAListener() {
+	public JPAContextListener() {
 		// TODO Auto-generated constructor stub
 	}
 
