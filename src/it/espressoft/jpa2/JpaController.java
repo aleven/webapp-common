@@ -459,11 +459,14 @@ public class JpaController implements Serializable {
 		/*
 		 * Non facciamo piu la chiusura qui perche' messa in jpasessionlister
 		 * apertura chiusura
+		 * 
+		 * 25/05 la imposto nuovamente per qui progetti che non usano i listener ed aprono
+		 * e chiudono quando serve (in caso di errore o non chiusura almeno così si chiude)
 		 */
 
-		// logger.debug(String.format("Finalize Controller %s", numero));
-		// close();
-		//
+		logger.debug(String.format("Finalize Controller %s", numero));
+		close();
+
 		super.finalize();
 
 		// System.gc();
