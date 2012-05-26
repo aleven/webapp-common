@@ -148,6 +148,16 @@ public class PageBase implements Serializable {
 		}
 		return res;
 	}
+	
+	protected Long getParamObjectAsLong(String paramName) {
+		Long res = 0l;
+		try {
+			res = Long.parseLong(getParamObject(paramName));
+		} catch (Exception ex) {
+			// logger.error("getParamObjectAsInt", ex);
+		}
+		return res;
+	}	
 
 	protected String getResourceBundle(String resourceName, String key) {
 		ResourceBundle bundle = getFacesContext().getApplication().getResourceBundle(getFacesContext(), resourceName);
