@@ -126,6 +126,15 @@ public class PageBase implements Serializable {
 	 * END SCREEN SIZE
 	 */
 
+	/**
+	 * Verify if current page has certain name passed parameter
+	 * @param paramName
+	 * @return
+	 */
+	protected boolean hasParam(String paramName) {
+		return getParamObject(paramName) != null;
+	}
+	
 	protected String getParamObject(String paramName) {
 		String res = null;
 
@@ -221,6 +230,8 @@ public class PageBase implements Serializable {
 
 	/*
 	 * DOWNLOAD
+	 * 
+	 * thanks to: http://balusc.blogspot.it/
 	 */
 
 	// Constants

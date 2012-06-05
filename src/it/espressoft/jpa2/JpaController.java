@@ -7,10 +7,12 @@ package it.espressoft.jpa2;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -28,30 +30,37 @@ public class JpaController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// public static final String DEFAULT_PU = "Cad2Erp";
+	public static final String DEFAULT_PU = "DEFAULT_PU";
 
 	protected static final Logger logger = Logger.getLogger(JpaController.class.getName());
 
 	private EntityManagerFactory emf;
 	private boolean passedEmf;
 
-	private static EntityManagerFactory sharedEmf;
+	private Map<String, String> dbConf;
+
+	// private static EntityManagerFactory sharedEmf;
 
 	private String persistenceUnit;
 
 	public static int Numero = 0;
 	private int numero = 0;
 
-	private JpaController() {
+	/**
+	 * use DEFAULT_PU
+	 */
+	public JpaController() {
 		super();
 		assegnaNumero();
 
+		this.persistenceUnit = DEFAULT_PU;
+		passedEmf = false;
 		// System.gc();
 	}
 
 	public JpaController(EntityManagerFactory emf) {
 		this();
-		
+
 		if (emf != null) {
 			this.emf = emf;
 			passedEmf = true;
@@ -61,7 +70,12 @@ public class JpaController implements Serializable {
 	public JpaController(String persistenceUnit) {
 		this();
 		this.persistenceUnit = persistenceUnit;
-		passedEmf = false;
+		// passedEmf = false;
+	}
+
+	public JpaController(String persistenceUnit, Map<String, String> dbConf) {
+		this(persistenceUnit);
+		this.dbConf = dbConf;
 	}
 
 	private void assegnaNumero() {
@@ -305,13 +319,21 @@ public class JpaController implements Serializable {
 
 	}
 
-	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws Exception {
-		List<T> res = new ArrayList<T>();
+	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
+
 		EntityManager em = getEmf().createEntityManager();
 
 		try {
 
-			res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() + " e", clazz).getResultList();
+			em.getTransaction().begin();
+
+			T attached = em.find(clazz, id);
+			if (attached != null) {
+				em.remove(attached);
+				// em.remove(o);
+			}
+
+			em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
@@ -321,6 +343,29 @@ public class JpaController implements Serializable {
 				em.getTransaction().rollback();
 			em.close();
 		}
+
+	}
+
+	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws Exception {
+		List<T> res = new ArrayList<T>();
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// try {
+		//
+		// res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
+		// " e", clazz).getResultList();
+		//
+		// } catch (Exception e) {
+		// throw e;
+		// } finally {
+		// // Close the database connection:
+		// if (em.getTransaction().isActive())
+		// em.getTransaction().rollback();
+		// em.close();
+		// }
+
+		String query = "SELECT e FROM " + clazz.getCanonicalName() + " e";
+		res = findBy(clazz, query);
 
 		return res;
 	}
@@ -345,7 +390,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public <T extends Serializable> T findFirst(Class<T> clazz) throws Exception {
+	public <T extends Serializable> T findFirst(Class<T> clazz, String query, Object... params) throws Exception {
 		T res = null;
 		List<T> list = null;
 		// EntityManagerFactory emf = (EntityManagerFactory)
@@ -355,7 +400,19 @@ public class JpaController implements Serializable {
 
 		try {
 
-			list = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() + " e", clazz).getResultList();
+			// list = em.createQuery(query, clazz).getResultList();
+
+			TypedQuery<T> q = em.createQuery(query, clazz);
+
+			if (params != null) {
+				int i = 1;
+				for (Object o : params) {
+					q.setParameter(i, o);
+					i++;
+				}
+			}
+
+			list = q.getResultList();
 
 			if (list != null && list.size() > 0) {
 				res = list.get(0);
@@ -374,24 +431,67 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	private EntityManagerFactory getEmf() {
-		EntityManagerFactory res = null;
+	public <T extends Serializable> T findFirst(Class<T> clazz) throws Exception {
+		T res = null;
+		List<T> list = null;
+		// EntityManagerFactory emf = (EntityManagerFactory)
+		// getSession().getAttribute("emf");
 
-		if (!passedEmf) {
-			// emf = Persistence.createEntityManagerFactory(persistenceUnit);
-			if (sharedEmf == null || !sharedEmf.isOpen()) {
-				sharedEmf = Persistence.createEntityManagerFactory(persistenceUnit);
-			}
-			emf = sharedEmf;
-		}
-		res = emf;
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// try {
+		//
+		// list = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
+		// " e", clazz).getResultList();
+		//
+		// if (list != null && list.size() > 0) {
+		// res = list.get(0);
+		// }
+		//
+		// } catch (Exception e) {
+		// // setErrorMessage(e.getMessage(), "");
+		// throw e;
+		// } finally {
+		// // Close the database connection:
+		// if (em.getTransaction().isActive())
+		// em.getTransaction().rollback();
+		// em.close();
+		// }
+
+		String query = "SELECT e FROM " + clazz.getCanonicalName() + " e";
+		res = findFirst(clazz, query);
 
 		return res;
+	}
+
+	private EntityManagerFactory getEmf() {
+		// EntityManagerFactory res = null;
+
+		if (!passedEmf) {
+
+			// Memorizzo sullo Statico, ma ora usiamo i Listener
+			// if (sharedEmf == null || !sharedEmf.isOpen()) {
+			// sharedEmf =
+			// Persistence.createEntityManagerFactory(persistenceUnit);
+			// }
+			// emf = sharedEmf;
+			if (emf == null || !emf.isOpen()) {
+				if (dbConf == null) {
+					emf = Persistence.createEntityManagerFactory(persistenceUnit);
+				} else {
+					emf = Persistence.createEntityManagerFactory(persistenceUnit, dbConf);
+				}
+			}
+		}
+		// res = emf;
+
+		return emf;
 	}
 
 	public void close() {
 		if (!passedEmf) {
 			if (getEmf() != null) {
+				logger.debug(String.format("Close Controller %s", numero));
 				getEmf().close();
 			}
 		}
@@ -453,6 +553,53 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * 
+	 * @param clazz
+	 * @param query
+	 *            a query with Ordinal Parameters (?index)
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query, Object... params) throws Exception {
+		List<T> res = new ArrayList<T>();
+
+		EntityManager em = getEmf().createEntityManager();
+		Session session = null;
+		Criteria cri = null;
+
+		try {
+
+			session = (Session) em.getDelegate();
+
+			// res =
+			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
+
+			TypedQuery<T> q = em.createQuery(query, clazz);
+
+			if (params != null) {
+				int i = 1;
+				for (Object o : params) {
+					q.setParameter(i, o);
+					i++;
+				}
+			}
+
+			res = q.getResultList();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+		return res;
+	}
+
 	@Override
 	protected void finalize() throws Throwable {
 
@@ -460,8 +607,9 @@ public class JpaController implements Serializable {
 		 * Non facciamo piu la chiusura qui perche' messa in jpasessionlister
 		 * apertura chiusura
 		 * 
-		 * 25/05 la imposto nuovamente per qui progetti che non usano i listener ed aprono
-		 * e chiudono quando serve (in caso di errore o non chiusura almeno così si chiude)
+		 * 25/05 la imposto nuovamente per qui progetti che non usano i listener
+		 * ed aprono e chiudono quando serve (in caso di errore o non chiusura
+		 * almeno così si chiude)
 		 */
 
 		logger.debug(String.format("Finalize Controller %s", numero));
@@ -471,12 +619,18 @@ public class JpaController implements Serializable {
 
 		// System.gc();
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
 	public EntityManagerFactory test() {
 		return getEmf();
+	}
+
+	public static void close(JpaController istance) {
+		if (istance != null) {
+			istance.close();
+		}
 	}
 }

@@ -1,0 +1,17 @@
+A set o class usefull to build a new WebApp with JSF2 and JPA2.
+
+it.espressoft.jpa2 
+
+you can find Session or Context Listener to use for lazy close of JPA Controller.
+
+it.espressoft.jsf2
+
+you can find base class for your BackBean 
+
+it.espressoft.utils
+
+a set of utils
+
+it.espressoft.db
+
+something to work easy with org.apache.commons.dbutils.DbUtils or JDBC
