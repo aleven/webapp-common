@@ -41,6 +41,10 @@ public class PageBase implements Serializable {
 		return (HttpSession) facesContext.getExternalContext().getSession(false);
 	}
 
+	protected void setInfoMessage(String summary) {
+		setInfoMessage(summary, "");
+	}
+	
 	protected void setInfoMessage(String summary, String detail) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
