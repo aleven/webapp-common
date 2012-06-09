@@ -12,7 +12,9 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transaction;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -600,6 +602,42 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public int executeUpdate(String query, Object... params) throws Exception {
+		int res = 0;
+
+		EntityManager em = getEmf().createEntityManager();
+		Criteria cri = null;
+
+		try {
+
+			em.getTransaction().begin();
+			
+			Query q = em.createQuery(query);
+
+			if (params != null) {
+				int i = 1;
+				for (Object o : params) {
+					q.setParameter(i, o);
+					i++;
+				}
+			}
+
+			res = q.executeUpdate();
+
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+		return res;
+	}
+	
 	@Override
 	protected void finalize() throws Throwable {
 
