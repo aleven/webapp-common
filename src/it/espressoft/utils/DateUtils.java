@@ -914,4 +914,23 @@ public class DateUtils {
 		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM).parse(aIsoString + " 12:00");
 	}
 
+	/**
+	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
+	 * minutes)
+	 * 
+	 * @param HHmm
+	 * @return value of duration as numeric value
+	 */
+	public static float calculateDuration(String HHmm) {
+
+		String[] data = HHmm.split(":");
+		int hours = Integer.parseInt(data[0]);
+		int minutes = Integer.parseInt(data[1]);
+
+		float res = hours * 60 * 60 * 1000 + minutes * 60 * 1000;
+
+		res = res / (1000 * 60 * 60);
+
+		return res;
+	}
 }

@@ -14,7 +14,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transaction;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -366,7 +367,7 @@ public class JpaController implements Serializable {
 		// em.close();
 		// }
 
-		String query = "SELECT e FROM " + clazz.getCanonicalName() + " e";
+		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		res = findBy(clazz, query);
 
 		return res;
@@ -460,7 +461,7 @@ public class JpaController implements Serializable {
 		// em.close();
 		// }
 
-		String query = "SELECT e FROM " + clazz.getCanonicalName() + " e";
+		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		res = findFirst(clazz, query);
 
 		return res;
@@ -536,7 +537,7 @@ public class JpaController implements Serializable {
 
 		try {
 
-			session = (Session) em.getDelegate();
+			// session = (Session) em.getDelegate();
 
 			// res =
 			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
@@ -554,6 +555,37 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
+	
+	@Deprecated
+	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter filter) throws Exception {
+		List<T> res = new ArrayList<T>();
+
+		EntityManager em = getEmf().createEntityManager();
+		Session session = null;
+		Criteria cri = null;
+
+		try {
+
+			// session = (Session) em.getDelegate();
+
+			// res =
+			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
+
+			String query = "SELECT o FROM " + clazz.getCanonicalName() + " o " + filter.getHQLQueryString(em) ;
+			
+			res = em.createQuery(query, clazz).getResultList();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+		return res;
+	}	
 
 	/**
 	 * 
@@ -611,7 +643,7 @@ public class JpaController implements Serializable {
 		try {
 
 			em.getTransaction().begin();
-			
+
 			Query q = em.createQuery(query);
 
 			if (params != null) {
@@ -625,7 +657,7 @@ public class JpaController implements Serializable {
 			res = q.executeUpdate();
 
 			em.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -637,7 +669,7 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 
@@ -671,4 +703,67 @@ public class JpaController implements Serializable {
 			istance.close();
 		}
 	}
+
+	public int getItemCount(Class classObj) throws Exception {
+		int returnValue = 0;
+
+		EntityManager em = getEmf().createEntityManager();
+
+		try {
+
+			// StringBuffer hsqlQuery = new StringBuffer();
+			// hsqlQuery.append("select count(*) from ");
+			// hsqlQuery.append(classObj.getCanonicalName());
+			// hsqlQuery.append(" as o");
+			// Query q = em.createQuery(hsqlQuery.toString());
+			//
+			// returnValue = ((Long) q.getSingleResult()).intValue();
+
+			CriteriaBuilder qb = em.getCriteriaBuilder();
+			CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+			cq.select(qb.count(cq.from(classObj)));
+
+			Long res = em.createQuery(cq).getSingleResult();
+
+			return res.intValue();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+	}
+
+	@Deprecated
+	public void beginTransaction() throws Exception {
+
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// em.getTransaction().begin();
+
+	}
+
+	@Deprecated
+	public void commitTransaction() throws Exception {
+
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// em.getTransaction().commit();
+
+	}
+
+	@Deprecated
+	public void rollbackTransaction() throws Exception {
+
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// if (em.getTransaction().isActive())
+		// em.getTransaction().rollback();
+
+	}
+
 }

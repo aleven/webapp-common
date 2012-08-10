@@ -1,25 +1,22 @@
 package it.espressoft.db;
 
-import it.espressoft.utils.FormatUtils;
+import it.espressoft.utils.ListUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.log4j.Logger;
 
 /**
  * 
  * @author Mirco Attocchi
- *
+ * 
  */
 public class DbUtilsConnector extends JdbcConnector {
 
@@ -140,6 +137,44 @@ public class DbUtilsConnector extends JdbcConnector {
 
 			logger.debug(aQuery);
 			res = getConnection().prepareStatement(aQuery).executeUpdate();
+
+		} finally {
+			if (!keepConnOpen)
+				close();
+		}
+
+		return res;
+	}
+
+	/**
+	 * 
+	 * @param aQuery
+	 * @param params
+	 * @return
+	 * @throws SQLException
+	 */
+	public int executeBatchUpdate(boolean keepConnOpen, List<String> batchQuery) throws Exception {
+		int res = 0;
+
+		try {
+
+			if (ListUtils.isNotEmpty(batchQuery)) {
+
+				logger.debug(batchQuery.size());
+
+				Connection connection = getConnection();
+				
+				// connection.setAutoCommit(false);
+				
+				Statement statement = connection.createStatement();
+				for (String aQuery : batchQuery) {
+					statement.addBatch(aQuery);
+				}
+
+				int[] counts = statement.executeBatch();
+				
+				// connection.commit();
+			}
 
 		} finally {
 			if (!keepConnOpen)
