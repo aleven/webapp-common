@@ -67,4 +67,16 @@ public class ListUtils {
 		}
 		return res;
 	}
+
+	/**
+	 * If @List is Empty inizialize it to a new @ArrayList
+	 * @param aList a List where add the object (can be empty)
+	 * @param anObject an object to add to to the list
+	 */
+	public static <T> void add(List<T> aList, T anObject) {
+		if (aList == null) {
+			aList = new ArrayList<T>();
+		}
+		aList.add(anObject);
+	}
 }
