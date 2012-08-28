@@ -2,20 +2,38 @@ package it.espressoft.jpa2;
 
 import java.io.Serializable;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-public class JPAEntityFilter implements Serializable {
+public abstract class JPAEntityFilter<T extends Serializable> {
 
-	public String getHQLQueryString(EntityManager em) {
+	EntityManagerFactory em;
+	CriteriaBuilder criteriaBuilder;
+	CriteriaQuery<T> criteriaQuery;
+	Root<T> root;
 
-		// QueryBuilder qb = em.getQueryBuilder();
-		// CriteriaQuery<Person> c = qb.createQuery(Person.class);
-		// Root<Person> p = c.from(Person.class);
-		// Predicate condition = qb.gt(p.get(Person_.age), 20);
-		// c.where(condition);
-		// TypedQuery<Person> q = em.createQuery(c);
-		// List<Person> result = q.getResultList();
+	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory em) {
 
-		return "";
+		// CriteriaBuilder 
+		criteriaBuilder = em.getCriteriaBuilder();
+
+		criteriaQuery = criteriaBuilder.createQuery(clazz);
+		root = criteriaQuery.from(clazz);
+
+		criteriaQuery.select(root);
+
+		// criteria.where( builder.equal( personRoot.get( Utente_.eyeColor ),
+		// "brown" ) );
+
+		buildWhere(criteriaQuery, criteriaBuilder, root);
+		buildSort(criteriaQuery, criteriaBuilder, root);
+
+		return criteriaQuery;
 	}
+
+	public abstract void buildWhere(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root);
+	
+	public abstract void buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root);
 }
