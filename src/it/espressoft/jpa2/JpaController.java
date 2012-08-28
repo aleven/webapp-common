@@ -17,6 +17,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -367,7 +368,36 @@ public class JpaController implements Serializable {
 		// em.close();
 		// }
 
+		// String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
+		// res = findBy(clazz, query);
+
+		res = findAll(clazz, null);
+
+		return res;
+	}
+
+	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws Exception {
+		List<T> res = new ArrayList<T>();
+		// EntityManager em = getEmf().createEntityManager();
+		//
+		// try {
+		//
+		// res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
+		// " e", clazz).getResultList();
+		//
+		// } catch (Exception e) {
+		// throw e;
+		// } finally {
+		// // Close the database connection:
+		// if (em.getTransaction().isActive())
+		// em.getTransaction().rollback();
+		// em.close();
+		// }
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
+		if (StringUtils.isNotEmpty(orderBy)) {
+			query = query + " ORDER BY " + orderBy;
+		}
+
 		res = findBy(clazz, query);
 
 		return res;
@@ -555,37 +585,6 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
-	@Deprecated
-	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter filter) throws Exception {
-		List<T> res = new ArrayList<T>();
-
-		EntityManager em = getEmf().createEntityManager();
-		Session session = null;
-		Criteria cri = null;
-
-		try {
-
-			// session = (Session) em.getDelegate();
-
-			// res =
-			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
-
-			String query = "SELECT o FROM " + clazz.getCanonicalName() + " o " + filter.getHQLQueryString(em) ;
-			
-			res = em.createQuery(query, clazz).getResultList();
-
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
-		}
-
-		return res;
-	}	
 
 	/**
 	 * 
@@ -621,6 +620,64 @@ public class JpaController implements Serializable {
 			}
 
 			res = q.getResultList();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+		return res;
+	}
+
+	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		List<T> res = new ArrayList<T>();
+
+		EntityManager em = getEmf().createEntityManager();
+		// Session session = null;
+		Criteria cri = null;
+
+		try {
+
+			// session = (Session) em.getDelegate();
+
+			// res =
+			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
+
+			CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
+			TypedQuery<T> q = em.createQuery(cq);
+			res = q.getResultList();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			em.close();
+		}
+
+		return res;
+	}
+
+	public <T extends Serializable> List<T> findBy(CriteriaQuery<T> criteria) throws Exception {
+		List<T> res = new ArrayList<T>();
+
+		EntityManager em = getEmf().createEntityManager();
+		Session session = null;
+		Criteria cri = null;
+
+		try {
+
+			session = (Session) em.getDelegate();
+
+			// res =
+			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
+
+			res = em.createQuery(criteria).getResultList();
 
 		} catch (Exception e) {
 			throw e;
@@ -704,7 +761,7 @@ public class JpaController implements Serializable {
 		}
 	}
 
-	public int getItemCount(Class classObj) throws Exception {
+	public <T extends Serializable> int getItemCount(Class<T> classObj) throws Exception {
 		int returnValue = 0;
 
 		EntityManager em = getEmf().createEntityManager();
@@ -764,6 +821,42 @@ public class JpaController implements Serializable {
 		// if (em.getTransaction().isActive())
 		// em.getTransaction().rollback();
 
+	}
+
+	/**
+	 * Use for close the Controller in a try-catch-finally block.
+	 * 
+	 * @param aController
+	 */
+	public static void callClose(JpaController aController) {
+		if (aController != null) {
+			aController.close();
+		}
+	}
+
+	/**
+	 * Ready to use method to search entities using JPAEntityFilter
+	 * 
+	 * @param clazz
+	 * @param filter
+	 * @return
+	 * @throws Exception
+	 */
+	public static <T extends Serializable> List<T> search(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		List<T> res = new ArrayList<T>();
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController();
+			res = controller.findBy(clazz, filter);
+		} catch (Exception ex) {
+			logger.error("search", ex);
+		} finally {
+			JpaController.callClose(controller);
+		}
+
+		return res;
 	}
 
 }
