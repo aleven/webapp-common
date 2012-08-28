@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 /**
  * 
  * @author Mirco Attocchi
- *
+ * 
  */
 public class PageBase implements Serializable {
 
@@ -44,7 +44,7 @@ public class PageBase implements Serializable {
 	protected void setInfoMessage(String summary) {
 		setInfoMessage(summary, "");
 	}
-	
+
 	protected void setInfoMessage(String summary, String detail) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
@@ -132,21 +132,24 @@ public class PageBase implements Serializable {
 
 	/**
 	 * Verify if current page has certain name passed parameter
+	 * 
 	 * @param paramName
 	 * @return
 	 */
 	protected boolean hasParam(String paramName) {
 		return getParamObject(paramName) != null;
 	}
-	
+
 	protected String getParamObject(String paramName) {
 		String res = null;
 
 		try {
-			Object p = getExternalContext().getRequestParameterMap().get(paramName);
-			res = p.toString();
+			Object o = getExternalContext().getRequestParameterMap().get(paramName);
+			if (o != null) {
+				res = o.toString();
+			}
 		} catch (Exception ex) {
-			// logger.error("getParamObject", ex);
+			logger.error("getParamObject", ex);
 		}
 
 		return res;
@@ -155,22 +158,28 @@ public class PageBase implements Serializable {
 	protected int getParamObjectAsInt(String paramName) {
 		int res = 0;
 		try {
-			res = Integer.parseInt(getParamObject(paramName));
+			Object o = getParamObject(paramName);
+			if (o != null) {
+				res = Integer.parseInt(o.toString());
+			}
 		} catch (Exception ex) {
-			// logger.error("getParamObjectAsInt", ex);
+			logger.error("getParamObjectAsInt", ex);
 		}
 		return res;
 	}
-	
+
 	protected Long getParamObjectAsLong(String paramName) {
 		Long res = 0l;
 		try {
-			res = Long.parseLong(getParamObject(paramName));
+			Object o = getParamObject(paramName);
+			if (o != null) {
+				res = Long.parseLong(o.toString());
+			}
 		} catch (Exception ex) {
-			// logger.error("getParamObjectAsInt", ex);
+			logger.error("getParamObjectAsLong", ex);
 		}
 		return res;
-	}	
+	}
 
 	protected String getResourceBundle(String resourceName, String key) {
 		ResourceBundle bundle = getFacesContext().getApplication().getResourceBundle(getFacesContext(), resourceName);
@@ -198,6 +207,20 @@ public class PageBase implements Serializable {
 		}
 
 		return returnValue;
+	}
+
+	protected int getSessionObjectAsInt(String paramName) {
+		int res = 0;
+
+		try {
+			Object o = getSessionObject(paramName);
+			if (o != null) {
+				res = Integer.parseInt(o.toString());
+			}
+		} catch (Exception ex) {
+			logger.error("getSessionObjectAsInt", ex);
+		}
+		return res;
 	}
 
 	public Object setSessionObject(String object_name, Object object) {
