@@ -4,7 +4,7 @@ package it.espressoft.jpa2;
  * Usage in web.xml:
  * 
  *   <listener>
- *   	<listener-class>it.atreeblu.lib.jpa2.listeners.JPASessionListener</listener-class>
+ *   	<listener-class>it.espressoft.jpa2.JPASessionListener</listener-class>
  *   </listener>
  * 
  * 

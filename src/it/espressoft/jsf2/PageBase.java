@@ -33,11 +33,11 @@ public class PageBase implements Serializable {
 	protected static final Logger logger = Logger.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
-		return (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		return (ServletContext) getFacesContext().getExternalContext().getContext();
 	}
 
 	protected HttpSession getSession() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
+		FacesContext facesContext = getFacesContext();
 		return (HttpSession) facesContext.getExternalContext().getSession(false);
 	}
 
@@ -46,20 +46,20 @@ public class PageBase implements Serializable {
 	}
 
 	protected void setInfoMessage(String summary, String detail) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
+		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
 
 	protected void setWarnMessage(String summary, String detail) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
+		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
 	}
 
 	protected void setErrorMessage(Throwable ex) {
 
 		// if (ex != null && ex.getMessage() != null) {
-		// FacesContext.getCurrentInstance().addMessage(null, new
+		// getFacesContext().addMessage(null, new
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
 		// } else {
-		// FacesContext.getCurrentInstance().addMessage(null, new
+		// getFacesContext().addMessage(null, new
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore Generico", null));
 		// }
 
@@ -76,21 +76,21 @@ public class PageBase implements Serializable {
 
 			if (ex.getCause() == null) {
 				logger.error(summary, ex);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
+				getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
 			} else {
 				logger.error(summary, ex.getCause());
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
+				getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
 			}
 
 		} else {
 			logger.error(summary, ex);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, "Errore Generico"));
+			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, "Errore Generico"));
 		}
 
 	}
 
 	protected void setErrorMessage(String summary, String detail) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
+		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 	}
 
 	protected String getInitParam(String name) {
@@ -193,17 +193,23 @@ public class PageBase implements Serializable {
 	public Object getSessionObject(String object_name) {
 		Object returnValue = null;
 
-		FacesContext facesContext = null;
-		Map sessionObjects = null;
+//		FacesContext facesContext = null;
+//		Map sessionObjects = null;
 		try {
-			facesContext = FacesContext.getCurrentInstance();
-			sessionObjects = facesContext.getExternalContext().getSessionMap();
-			returnValue = sessionObjects.get(object_name);
+//			facesContext = getFacesContext();
+//			sessionObjects = facesContext.getExternalContext().getSessionMap();
+//			returnValue = sessionObjects.get(object_name);
+			
+			HttpSession session = getSession();
+			if (session != null) {
+				returnValue = session.getAttribute(object_name);
+			}
+			
 		} catch (Exception e) {
-			returnValue = null;
+			
 		} finally {
-			facesContext = null;
-			sessionObjects = null;
+//			facesContext = null;
+//			sessionObjects = null;
 		}
 
 		return returnValue;
@@ -229,7 +235,7 @@ public class PageBase implements Serializable {
 		FacesContext facesContext = null;
 		Map sessionObjects = null;
 		try {
-			facesContext = FacesContext.getCurrentInstance();
+			facesContext = getFacesContext();
 			sessionObjects = facesContext.getExternalContext().getSessionMap();
 			sessionObjects.remove(object_name);
 			returnValue = sessionObjects.put(object_name, object);
@@ -272,7 +278,7 @@ public class PageBase implements Serializable {
 	protected void downloadPDF(String fileName, String rename) throws IOException {
 
 		// Prepare.
-		FacesContext facesContext = FacesContext.getCurrentInstance();
+		FacesContext facesContext = getFacesContext();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
 

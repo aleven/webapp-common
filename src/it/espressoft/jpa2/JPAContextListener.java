@@ -55,7 +55,7 @@ public class JPAContextListener implements ServletContextListener {
 		emf.close();
 		logger.info(IJpaListernes.SESSION_EMF + " close");
 
-		chachedController.close();
+		chachedController.closeEmf();
 	}
 
 }

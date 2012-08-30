@@ -521,7 +521,7 @@ public class JpaController implements Serializable {
 		return emf;
 	}
 
-	public void close() {
+	public void closeEmf() {
 		if (!passedEmf) {
 			if (getEmf() != null) {
 				logger.debug(String.format("Close Controller %s", numero));
@@ -740,7 +740,7 @@ public class JpaController implements Serializable {
 		 */
 
 		logger.debug(String.format("Finalize Controller %s", numero));
-		close();
+		closeEmf();
 
 		super.finalize();
 
@@ -757,7 +757,7 @@ public class JpaController implements Serializable {
 
 	public static void close(JpaController istance) {
 		if (istance != null) {
-			istance.close();
+			istance.closeEmf();
 		}
 	}
 
@@ -828,9 +828,9 @@ public class JpaController implements Serializable {
 	 * 
 	 * @param aController
 	 */
-	public static void callClose(JpaController aController) {
+	public static void callCloseEmf(JpaController aController) {
 		if (aController != null) {
-			aController.close();
+			aController.closeEmf();
 		}
 	}
 
@@ -842,18 +842,19 @@ public class JpaController implements Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T extends Serializable> List<T> search(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> List<T> search(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
 
 		JpaController controller = null;
 		try {
-			controller = new JpaController();
+			controller = new JpaController(emf);
 			res = controller.findBy(clazz, filter);
 		} catch (Exception ex) {
 			logger.error("search", ex);
+			throw ex;
 		} finally {
-			JpaController.callClose(controller);
+			JpaController.callCloseEmf(controller);
 		}
 
 		return res;
