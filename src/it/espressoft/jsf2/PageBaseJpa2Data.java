@@ -5,18 +5,24 @@ import it.espressoft.jpa2.IJpaListernes;
 import javax.persistence.EntityManagerFactory;
 
 /**
+ * Gestione EntityManagerFactory in Sessione o Context (richiede uno dei filtri
+ * @IJpaListernes)
  * 
- * @author Mirco Attocchi
- *
+ * @author Mirco
+ * 
  */
-public class PageBaseJpa2Data extends PageBaseForceInitSession {
+public abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
 	/**
 	 * Use With @JPASessionListener
 	 * 
 	 * @return
 	 */
 	protected EntityManagerFactory getEmfSession() {
-		return (EntityManagerFactory) getSession().getAttribute(IJpaListernes.SESSION_EMF);
+		EntityManagerFactory emf = (EntityManagerFactory) getSession().getAttribute(IJpaListernes.SESSION_EMF);
+		if (emf == null) {
+			logger.error("getEmfSession: EntityManagerFactory is not in Session");
+		}
+		return emf;
 	}
 
 	/**
@@ -25,7 +31,13 @@ public class PageBaseJpa2Data extends PageBaseForceInitSession {
 	 * @return
 	 */
 	protected EntityManagerFactory getEmfContext() {
-		return (EntityManagerFactory) getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
+		if (emf == null) {
+			logger.error("getEmfContext: EntityManagerFactory is not in Context");
+		}
+		return emf;
 	}
+
+	protected abstract void init() throws Exception;
 
 }

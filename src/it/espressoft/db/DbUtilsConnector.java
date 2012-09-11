@@ -173,6 +173,9 @@ public class DbUtilsConnector extends JdbcConnector {
 
 				int[] counts = statement.executeBatch();
 				
+				for (int count : counts) {
+					res = res + count;
+				}
 				// connection.commit();
 			}
 

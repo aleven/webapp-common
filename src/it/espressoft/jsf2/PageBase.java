@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,8 +23,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
+ * Pagina Base con Metodi di Gestione JSF
  * 
- * @author Mirco Attocchi
+ * @author Mirco
  * 
  */
 public class PageBase implements Serializable {
@@ -193,23 +193,24 @@ public class PageBase implements Serializable {
 	public Object getSessionObject(String object_name) {
 		Object returnValue = null;
 
-//		FacesContext facesContext = null;
-//		Map sessionObjects = null;
+		// FacesContext facesContext = null;
+		// Map sessionObjects = null;
 		try {
-//			facesContext = getFacesContext();
-//			sessionObjects = facesContext.getExternalContext().getSessionMap();
-//			returnValue = sessionObjects.get(object_name);
-			
+			// facesContext = getFacesContext();
+			// sessionObjects =
+			// facesContext.getExternalContext().getSessionMap();
+			// returnValue = sessionObjects.get(object_name);
+
 			HttpSession session = getSession();
 			if (session != null) {
 				returnValue = session.getAttribute(object_name);
 			}
-			
+
 		} catch (Exception e) {
-			
+
 		} finally {
-//			facesContext = null;
-//			sessionObjects = null;
+			// facesContext = null;
+			// sessionObjects = null;
 		}
 
 		return returnValue;

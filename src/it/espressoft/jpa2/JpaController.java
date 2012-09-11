@@ -646,10 +646,13 @@ public class JpaController implements Serializable {
 
 			// res =
 			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
-
-			CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
-			TypedQuery<T> q = em.createQuery(cq);
-			res = q.getResultList();
+			if (filter != null) {
+				CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
+				TypedQuery<T> q = em.createQuery(cq);
+				res = q.getResultList();
+			} else {
+				throw new NullPointerException("The specified JPAEntityFilter is null");
+			}
 
 		} catch (Exception e) {
 			throw e;
