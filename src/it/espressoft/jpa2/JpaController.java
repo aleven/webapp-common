@@ -651,7 +651,9 @@ public class JpaController implements Serializable {
 				TypedQuery<T> q = em.createQuery(cq);
 				res = q.getResultList();
 			} else {
-				throw new NullPointerException("The specified JPAEntityFilter is null");
+				
+				res = findAll(clazz);
+				// throw new NullPointerException("The specified JPAEntityFilter is null");
 			}
 
 		} catch (Exception e) {
@@ -845,7 +847,7 @@ public class JpaController implements Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T extends Serializable> List<T> search(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> List<T> find(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
 
@@ -854,12 +856,71 @@ public class JpaController implements Serializable {
 			controller = new JpaController(emf);
 			res = controller.findBy(clazz, filter);
 		} catch (Exception ex) {
-			logger.error("search", ex);
+			logger.error("find", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
 
+		return res;
+	}
+
+	public static <T extends Serializable> T findFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		List<T> list = new ArrayList<T>();
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+
+			list = controller.findBy(clazz, filter);
+
+			if (list != null && list.size() > 0) {
+				res = list.get(0);
+			}
+
+		} catch (Exception ex) {
+			logger.error("findFirst", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+
+	public static <T extends Serializable> boolean update(EntityManagerFactory emf, T object) throws Exception {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+
+			controller.update(object);
+			res = true;
+		} catch (Exception ex) {
+			logger.error("update", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}
+
+	public static <T extends Serializable> boolean insert(EntityManagerFactory emf, T object) throws Exception {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+
+			controller.insert(object);
+			res = true;
+		} catch (Exception ex) {
+			logger.error("insert", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
 		return res;
 	}
 

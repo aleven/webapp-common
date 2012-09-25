@@ -1,6 +1,5 @@
 package it.espressoft.web.config;
 
-import it.espressoft.jsf2.PageBase;
 import it.espressoft.utils.PropertiesUtils;
 
 import java.util.HashMap;
@@ -18,6 +17,11 @@ public class SoftwareConfig {
 	public static final String WEB_INF_CONFIG_PROPERTIES = "/WEB-INF/software.properties";
 	// public static final String PU_NAME = "AtreeFLOW-WS";
 	public static final String PU_NAME = "DEFAULT_PU";
+
+	public static final String PROPERTY_connString = "connString";
+	public static final String PROPERTY_driverClass = "driverClass";
+	public static final String PROPERTY_userName = "userName";
+	public static final String PROPERTY_password = "password";
 
 	private static Properties properties;
 
@@ -60,10 +64,10 @@ public class SoftwareConfig {
 				// RapportoServerBL.password =
 				// properties.getProperty("password");
 
-				String connString = properties.getProperty("connString");
-				String driverClass = properties.getProperty("driverClass");
-				String userName = properties.getProperty("userName");
-				String password = properties.getProperty("password");
+				connString = properties.getProperty(PROPERTY_connString);
+				driverClass = properties.getProperty(PROPERTY_driverClass);
+				userName = properties.getProperty(PROPERTY_userName);
+				password = properties.getProperty(PROPERTY_password);
 
 				jpaDbProps = new HashMap<String, String>();
 
@@ -77,4 +81,9 @@ public class SoftwareConfig {
 		}
 	}
 
+	
+	public static String connString ;
+	public static String driverClass ;
+	public static String userName ;
+	public static String password ;
 }

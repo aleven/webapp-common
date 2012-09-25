@@ -6,21 +6,22 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  * Gestione EntityManagerFactory in Sessione o Context (richiede uno dei filtri
+ * 
  * @IJpaListernes)
  * 
  * @author Mirco
  * 
  */
-public abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
+abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
 	/**
 	 * Use With @JPASessionListener
 	 * 
 	 * @return
 	 */
-	protected EntityManagerFactory getEmfSession() {
+	private EntityManagerFactory getEmfSession() {
 		EntityManagerFactory emf = (EntityManagerFactory) getSession().getAttribute(IJpaListernes.SESSION_EMF);
 		if (emf == null) {
-			logger.error("getEmfSession: EntityManagerFactory is not in Session");
+			// logger.error("getEmfSession: EntityManagerFactory is not in Session");
 		}
 		return emf;
 	}
@@ -30,14 +31,30 @@ public abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
 	 * 
 	 * @return
 	 */
-	protected EntityManagerFactory getEmfContext() {
+	private EntityManagerFactory getEmfContext() {
 		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
 		if (emf == null) {
-			logger.error("getEmfContext: EntityManagerFactory is not in Context");
+			// logger.error("getEmfContext: EntityManagerFactory is not in Context");
 		}
 		return emf;
 	}
 
 	protected abstract void init() throws Exception;
 
+	protected EntityManagerFactory getEmfShared() {
+		EntityManagerFactory emf = null;
+
+		EntityManagerFactory emfSession = getEmfSession();
+		EntityManagerFactory emfContext = getEmfContext();
+
+		if (emfSession != null) {
+			emf = emfSession;
+		} else if (emfContext != null) {
+			emf = emfContext;
+		} else {
+			logger.error("getEmfShared: EntityManagerFactory is not in Session or in Context ");
+		}
+
+		return emf;
+	}
 }

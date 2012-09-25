@@ -50,7 +50,7 @@ public class JPASessionListener implements HttpSessionListener {
 		}
 
 		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
-		logger.debug(IJpaListernes.SESSION_EMF + " start");
+		logger.info(IJpaListernes.SESSION_EMF + " start");
 		//
 		// chachedController = new Controller(Controller.DEFAULT_PU);
 	}
@@ -62,7 +62,7 @@ public class JPASessionListener implements HttpSessionListener {
 
 		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);
 		emf.close();
-		logger.debug(IJpaListernes.SESSION_EMF + " close");
+		logger.info(IJpaListernes.SESSION_EMF + " close");
 		//
 		// chachedController.close();
 	}

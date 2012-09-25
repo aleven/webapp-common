@@ -2,8 +2,6 @@ package it.espressoft.jsf2;
 
 import it.espressoft.web.filters.AuthFilter;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Pagina Gestione Utenti Autenticati (Richiede filtro @AuthFilter)
  * 
@@ -12,20 +10,33 @@ import javax.annotation.PostConstruct;
  */
 public abstract class PageBaseAuth extends PageBaseNoAuth {
 
-	@PostConstruct
-	private void postConstruct() {
-		try {
+	// @PostConstruct
+	// private void postConstruct() {
+	// try {
+	//
+	// if (getIdUtenteLoggato() > 0) {
+	// init();
+	// } else {
+	//
+	// setErrorMessage("Necessaria Autenticazione");
+	// }
+	//
+	// } catch (Exception ex) {
+	// // logger.error("postConstruct", ex);
+	// setErrorMessage("postConstruct", ex);
+	// }
+	// }
 
-			if (getIdUtenteLoggato() > 0) {
-				init();
-			} else {
+	@Override
+	protected void preInit() throws Exception {
+		if (getIdUtenteLoggato() > 0) {
 
-				setErrorMessage("Necessaria Autenticazione");
-			}
+			// Login e' stato fatto
 
-		} catch (Exception ex) {
-			// logger.error("postConstruct", ex);
-			setErrorMessage("postConstruct", ex);
+		} else {
+			logger.error("Necessaria Autenticazione");
+			// setErrorMessage("Necessaria Autenticazione");
+			throw new Exception("Necessaria Autenticazione");
 		}
 	}
 

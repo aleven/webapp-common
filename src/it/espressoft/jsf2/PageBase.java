@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
  * @author Mirco
  * 
  */
-public class PageBase implements Serializable {
+abstract class PageBase implements Serializable {
 
 	protected static final Logger logger = Logger.getLogger(PageBase.class.getName());
 
@@ -356,4 +356,12 @@ public class PageBase implements Serializable {
 		SimpleDateFormat format = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, getCurrentLocale());
 		return format.toLocalizedPattern();
 	}
+
+	public String getRealPath() {
+		return getServletContext().getRealPath("/");
+	}
+
+	public String getRealPath(String relativePath) {
+		return getServletContext().getRealPath(relativePath);
+	}	
 }

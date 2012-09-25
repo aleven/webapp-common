@@ -1,7 +1,5 @@
 package it.espressoft.jsf2;
 
-import it.espressoft.web.filters.AuthFilter;
-
 import javax.annotation.PostConstruct;
 
 /**
@@ -15,6 +13,8 @@ public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
 	@PostConstruct
 	private void postConstruct() {
 		try {
+
+			initialiseSession();
 
 			init();
 

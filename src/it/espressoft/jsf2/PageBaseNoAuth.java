@@ -14,13 +14,19 @@ public abstract class PageBaseNoAuth extends PageBaseJpa2Data {
 	private void postConstruct() {
 		try {
 
+			initialiseSession();
+
+			preInit();
+
 			init();
 
 		} catch (Exception ex) {
 			// logger.error("postConstruct", ex);
-			setErrorMessage("postConstruct", ex);
+			setErrorMessage("Si e' verificato un errore.", ex);
 		}
 	}
+
+	protected abstract void preInit() throws Exception;
 
 	protected abstract void init() throws Exception;
 
