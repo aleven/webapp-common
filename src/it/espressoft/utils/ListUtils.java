@@ -33,13 +33,28 @@ public class ListUtils {
 	}
 
 	public static List<String> toList(String[] anArray) {
-		List res = null;
+		List<String> res = null;
 
-		if (anArray != null && anArray.length > 0) {
-			res = new ArrayList<String>(anArray.length);
-			for (String s : anArray) {
-				res.add(s);
-			}
+		// if (anArray != null && anArray.length > 0) {
+		// res = new ArrayList<String>(anArray.length);
+		// for (String s : anArray) {
+		// res.add(s);
+		// }
+		// }
+
+		res = Arrays.asList(anArray);
+
+		return res;
+	}
+
+	public static String[] toArray(List<String> aList) {
+		String[] res = null;
+
+		if (aList != null) {
+			res = aList.toArray(new String[aList.size()]);
+			// for (String s : anArray) {
+			// res.add(s);
+			// }
 		}
 
 		return res;
@@ -68,10 +83,25 @@ public class ListUtils {
 		return res;
 	}
 
+	public static String toCommaSeparedNoBracket(List<String> aListOfString) {
+		String res = "";
+		if (!ListUtils.isEmpty(aListOfString)) {
+			res = aListOfString.toString();
+
+			res = res.substring(1);
+			res = res.substring(0, res.length() - 1);
+		}
+
+		return res;
+	}
+
 	/**
 	 * If @List is Empty inizialize it to a new @ArrayList
-	 * @param aList a List where add the object (can be empty)
-	 * @param anObject an object to add to to the list
+	 * 
+	 * @param aList
+	 *            a List where add the object (can be empty)
+	 * @param anObject
+	 *            an object to add to to the list
 	 */
 	public static <T> void add(List<T> aList, T anObject) {
 		if (aList == null) {

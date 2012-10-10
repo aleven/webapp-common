@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class SoftwareConfig {
@@ -64,10 +65,10 @@ public class SoftwareConfig {
 				// RapportoServerBL.password =
 				// properties.getProperty("password");
 
-				connString = properties.getProperty(PROPERTY_connString);
-				driverClass = properties.getProperty(PROPERTY_driverClass);
-				userName = properties.getProperty(PROPERTY_userName);
-				password = properties.getProperty(PROPERTY_password);
+				connString = properties.getProperty(PROPERTY_connString).trim();
+				driverClass = properties.getProperty(PROPERTY_driverClass).trim();
+				userName = properties.getProperty(PROPERTY_userName).trim();
+				password = properties.getProperty(PROPERTY_password).trim();
 
 				jpaDbProps = new HashMap<String, String>();
 
@@ -75,15 +76,25 @@ public class SoftwareConfig {
 				jpaDbProps.put("javax.persistence.jdbc.driver", driverClass);
 				jpaDbProps.put("javax.persistence.jdbc.user", userName);
 				jpaDbProps.put("javax.persistence.jdbc.password", password);
+
+				/*
+				 * Se uno dei Parametri da File e' nullo annullo tutti gli
+				 * oggetti
+				 */
+				if (StringUtils.isEmpty(connString) || StringUtils.isEmpty(driverClass)) {
+					properties = null;
+					jpaDbProps = null;
+					
+					logger.warn("SoftwareConfig loaded but Empty");
+				}
 			}
 		} else {
 			logger.warn("SoftwareConfig already inizialized");
 		}
 	}
 
-	
-	public static String connString ;
-	public static String driverClass ;
-	public static String userName ;
-	public static String password ;
+	public static String connString;
+	public static String driverClass;
+	public static String userName;
+	public static String password;
 }

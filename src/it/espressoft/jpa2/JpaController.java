@@ -497,6 +497,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * User for speed test 
+	 * @return
+	 */
+	@Deprecated
+	public EntityManagerFactory getEntityManagetFactory() {
+		return getEmf();
+	}
+	
 	private EntityManagerFactory getEmf() {
 		// EntityManagerFactory res = null;
 

@@ -33,27 +33,30 @@ abstract class PageBase implements Serializable {
 	protected static final Logger logger = Logger.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
-		return (ServletContext) getFacesContext().getExternalContext().getContext();
+		return (ServletContext) getExternalContext().getContext();
 	}
 
 	protected HttpSession getSession() {
-		FacesContext facesContext = getFacesContext();
-		return (HttpSession) facesContext.getExternalContext().getSession(false);
+		HttpSession res = (HttpSession) getExternalContext().getSession(false);
+		if (res == null) {
+			logger.warn("HttpSession is null");
+		}
+		return res;
 	}
 
-	protected void setInfoMessage(String summary) {
-		setInfoMessage(summary, "");
+	protected void addInfoMessage(String summary) {
+		addInfoMessage(summary, "");
 	}
 
-	protected void setInfoMessage(String summary, String detail) {
+	protected void addInfoMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
 
-	protected void setWarnMessage(String summary, String detail) {
+	protected void addWarnMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
 	}
 
-	protected void setErrorMessage(Throwable ex) {
+	protected void addErrorMessage(Throwable ex) {
 
 		// if (ex != null && ex.getMessage() != null) {
 		// getFacesContext().addMessage(null, new
@@ -63,14 +66,14 @@ abstract class PageBase implements Serializable {
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore Generico", null));
 		// }
 
-		setErrorMessage("An error ocurred.", ex);
+		addErrorMessage("An error ocurred.", ex);
 	}
 
-	protected void setErrorMessage(String summary) {
-		setErrorMessage(summary, "");
+	protected void addErrorMessage(String summary) {
+		addErrorMessage(summary, "");
 	}
 
-	protected void setErrorMessage(String summary, Throwable ex) {
+	protected void addErrorMessage(String summary, Throwable ex) {
 
 		if (ex != null && ex.getMessage() != null) {
 
@@ -89,7 +92,7 @@ abstract class PageBase implements Serializable {
 
 	}
 
-	protected void setErrorMessage(String summary, String detail) {
+	protected void addErrorMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 	}
 
@@ -98,11 +101,19 @@ abstract class PageBase implements Serializable {
 	}
 
 	protected FacesContext getFacesContext() {
-		return FacesContext.getCurrentInstance();
+		FacesContext res = FacesContext.getCurrentInstance();
+		if (res == null) {
+			logger.warn("FacesContext is null");
+		}
+		return res;
 	}
 
 	protected ExternalContext getExternalContext() {
-		return getFacesContext().getExternalContext();
+		ExternalContext res = getFacesContext().getExternalContext();
+		if (res == null) {
+			logger.warn("ExternalContext is null");
+		}
+		return res;
 	}
 
 	/*
@@ -229,6 +240,20 @@ abstract class PageBase implements Serializable {
 		}
 		return res;
 	}
+	
+	protected String getSessionObjectAsString(String paramName) {
+		String res = "";
+
+		try {
+			Object o = getSessionObject(paramName);
+			if (o != null) {
+				res = String.valueOf(o.toString());
+			}
+		} catch (Exception ex) {
+			logger.error("getSessionObjectAsString", ex);
+		}
+		return res;
+	}	
 
 	public Object setSessionObject(String object_name, Object object) {
 		Object returnValue = null;
@@ -363,5 +388,10 @@ abstract class PageBase implements Serializable {
 
 	public String getRealPath(String relativePath) {
 		return getServletContext().getRealPath(relativePath);
-	}	
+	}
+
+	public String getJsfRedirect(String outcome) {
+		return outcome + "?faces-redirect=true";
+	}
+
 }

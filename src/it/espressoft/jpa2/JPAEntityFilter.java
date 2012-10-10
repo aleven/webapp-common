@@ -11,22 +11,36 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
+
+	protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
 
 	private static final long serialVersionUID = 1L;
 
 	private static final String JOLLY_CHAR = "%";
 	EntityManagerFactory em;
-	
-	/*
-	 * Not here because some problem in JSF "registry does not contain entity manager factory"
-	 */
-//	CriteriaBuilder criteriaBuilder;
-//	CriteriaQuery<T> criteriaQuery;
-//	Root<T> root;
 
-	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) {
+	protected boolean emptyFilterEmptyData;
+
+	/*
+	 * Not here because some problem in JSF
+	 * "registry does not contain entity manager factory"
+	 */
+	// CriteriaBuilder criteriaBuilder;
+	// CriteriaQuery<T> criteriaQuery;
+	// Root<T> root;
+
+	public boolean isEmptyFilterEmptyData() {
+		return emptyFilterEmptyData;
+	}
+
+	public void setEmptyFilterEmptyData(boolean emptyFilterEmptyData) {
+		this.emptyFilterEmptyData = emptyFilterEmptyData;
+	}
+
+	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) throws Exception {
 
 		// CriteriaBuilder
 		CriteriaBuilder criteriaBuilder = emf.getCriteriaBuilder();
@@ -41,7 +55,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 
-		buildWhere(predicateList, criteriaQuery, criteriaBuilder, root);
+		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
 
 		Predicate[] predicates = new Predicate[predicateList.size()];
 		predicateList.toArray(predicates);
@@ -52,9 +66,9 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return criteriaQuery;
 	}
 
-	public abstract void buildWhere(List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root);
+	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
-	public abstract void buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root);
+	public abstract void buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
 	protected String semeRicerca;
 
@@ -102,5 +116,51 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	public JPAEntityFilter<T> setIncludiEliminatiL(boolean includiEliminati) {
 		setIncludiEliminati(includiEliminati);
 		return this;
+	}
+
+	protected String buildMultiIds(List<Long> longs) {
+		StringBuilder res = new StringBuilder();
+
+		for (Long l : longs) {
+			if (res.length() > 0) {
+				res.append(",#" + l + "#");
+			} else {
+				res.append("#" + l + "#");
+			}
+		}
+
+		return res.toString();
+	}
+
+	protected List<Long> splitMultiIds(String stringIds) {
+		List<Long> res = new ArrayList<Long>();
+
+		if (stringIds.startsWith("[")) {
+			stringIds = stringIds.substring(1);
+		}
+		if (stringIds.endsWith("]")) {
+			stringIds = stringIds.substring(0, stringIds.length() - 1);
+		}
+
+		String[] ids = stringIds.split(",");
+		if (ids != null && ids.length > 0) {
+			for (String stringId : ids) {
+				stringId = stringId.trim();
+				if (stringId.startsWith("#") && stringId.endsWith("#")) {
+					String idToParse = stringId.substring(1, stringId.length() - 1);
+					Long id = 0l;
+
+					id = Long.parseLong(idToParse);
+
+					if (id != null && id > 0) {
+						res.add(id);
+					} else {
+						logger.warn("Perhaps Unparsable " + stringIds);
+					}
+				}
+			}
+		}
+
+		return res;
 	}
 }

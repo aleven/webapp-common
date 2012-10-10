@@ -1,5 +1,7 @@
 package it.espressoft.jsf2;
 
+import org.apache.commons.lang3.StringUtils;
+
 import it.espressoft.web.filters.AuthFilter;
 
 /**
@@ -60,5 +62,9 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		}
 
 		return idUtenteLoggato;
+	}
+
+	public boolean isUtenteLoggato() {
+		return getIdUtenteLoggato() > 0;
 	}
 }

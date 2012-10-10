@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class AuthFilter implements Filter {
@@ -36,18 +37,22 @@ public class AuthFilter implements Filter {
 		// Get the value of a request parameter; the name is case-sensitive
 		String name = PARAM_AUTH;
 		String value = request.getParameter(name);
-		if (value != null && !"".equals(value)) {
+		// if (value != null && !"".equals(value)) {
+		if (StringUtils.isNotEmpty(value)) {
 			// The request parameter 'param' was not present in the query string
 			// e.g. http://hostname.com?a=b
 
 			// The request parameter 'param' was present in the query string but
 			// has no value
 			// e.g. http://hostname.com?param=&a=b
-			int idUtente = Integer.parseInt(value);
+			
+			// int idUtente = Integer.parseInt(value);
 
 			HttpSession session = req.getSession();
-			if (session != null)
-				session.setAttribute(PARAM_AUTH, idUtente);
+			if (session != null) {
+				// session.setAttribute(PARAM_AUTH, idUtente);
+				session.setAttribute(PARAM_AUTH, value);
+			}
 		}
 
 		chain.doFilter(request, response);
