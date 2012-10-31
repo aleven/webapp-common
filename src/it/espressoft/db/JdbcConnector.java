@@ -126,6 +126,9 @@ public class JdbcConnector {
 			logger.debug(sqlCommand);
 			res = getConnection().prepareStatement(sqlCommand).execute();
 
+			// Non Ritorna True in caso di Esecuzione di Stored
+			res = true;
+			
 		} finally {
 			if (!keepConnOpen)
 				close();

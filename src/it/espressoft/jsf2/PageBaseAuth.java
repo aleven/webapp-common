@@ -12,6 +12,8 @@ import it.espressoft.web.filters.AuthFilter;
  */
 public abstract class PageBaseAuth extends PageBaseNoAuth {
 
+	private boolean debug = false;
+	
 	// @PostConstruct
 	// private void postConstruct() {
 	// try {
@@ -55,6 +57,13 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 		if (idUtenteLoggato <= 0) {
 			int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
+			
+			if (param == 0 && debug) {
+				logger.warn("auth debug mode");
+				param = 1;
+				addWarnMessage("auth debug mode", "");
+			}
+			
 			if (param > 0) {
 				idUtenteLoggato = param;
 				setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);

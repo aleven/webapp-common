@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
@@ -18,16 +17,7 @@ import org.joda.time.Duration;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-public class DateUtils {
-
-	protected static final Logger logger = Logger.getLogger(DateUtils.class.getName());
-
-	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-	public final static String FORMAT_ISO = "yyyyMMdd";
-
-	public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
-
-	public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
+public class DateUtils extends DateUtilsLT {
 
 	/**
 	 * 
@@ -84,14 +74,6 @@ public class DateUtils {
 		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
 
 		return dateFormatGmt.format(aDate);
-	}
-
-	public static String getNowFormatISO() {
-		return new SimpleDateFormat(FORMAT_ISO).format(new Date());
-	}
-
-	public static Date Now() {
-		return new Date();
 	}
 
 	/**

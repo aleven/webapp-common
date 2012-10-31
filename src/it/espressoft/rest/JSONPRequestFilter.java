@@ -1,5 +1,7 @@
 package it.espressoft.rest;
 
+import it.espressoft.utils.Crono;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -11,6 +13,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 /*
  * USE ON WEB.XML
  * 
@@ -18,23 +22,25 @@ import javax.servlet.http.HttpServletRequest;
  * 	
  * 
  * 	<!-- JSONP FILTER -->
-	<filter>
-		<display-name>JSONPRequestFilter</display-name>
-		<filter-name>JSONPRequestFilter</filter-name>
-		<filter-class>it.atreeblu.atreeflow.rapportoserver.filter.JSONPRequestFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>JSONPRequestFilter</filter-name>
-		<!-- <url-pattern>/JSONPFilter</url-pattern> -->
-		<servlet-name>JAX-RS Servlet</servlet-name>
-	</filter-mapping>
-	
+ <filter>
+ <display-name>JSONPRequestFilter</display-name>
+ <filter-name>JSONPRequestFilter</filter-name>
+ <filter-class>it.atreeblu.atreeflow.rapportoserver.filter.JSONPRequestFilter</filter-class>
+ </filter>
+ <filter-mapping>
+ <filter-name>JSONPRequestFilter</filter-name>
+ <!-- <url-pattern>/JSONPFilter</url-pattern> -->
+ <servlet-name>JAX-RS Servlet</servlet-name>
+ </filter-mapping>
+
  */
 
 /**
  * Servlet Filter implementation class JSONPFilter
  */
 public class JSONPRequestFilter implements Filter {
+
+	protected static final Logger logger = Logger.getLogger(JSONPRequestFilter.class.getName());
 
 	/**
 	 * Default constructor.
@@ -64,11 +70,16 @@ public class JSONPRequestFilter implements Filter {
 		if (isJSONPRequest(httpRequest)) {
 			ServletOutputStream out = response.getOutputStream();
 
+			Crono.start("JSONPRequestFilter");
+
 			out.println(getCallbackMethod(httpRequest) + "(");
 			chain.doFilter(request, response);
 			out.println(");");
 
 			response.setContentType("text/javascript");
+
+			Crono.stopAndLogDebug("JSONPRequestFilter", logger);
+
 		} else {
 			chain.doFilter(request, response);
 		}

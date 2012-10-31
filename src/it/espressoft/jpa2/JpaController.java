@@ -873,6 +873,24 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
+	
+	public static <T extends Serializable> List<T> find(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		List<T> res = new ArrayList<T>();
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+			res = controller.findBy(clazz, filter);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}	
 
 	public static <T extends Serializable> T findFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
