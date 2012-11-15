@@ -19,6 +19,10 @@ public class DateUtilsLT {
 	public static Date Now() {
 		return new Date();
 	}
+	
+	public static String Now(String pattern) {
+		return new SimpleDateFormat(pattern).format(Now());
+	}
 
 	public static String getNowFormatISO() {
 		return new SimpleDateFormat(FORMAT_ISO).format(Now());

@@ -22,7 +22,7 @@ public abstract class PageBaseNoAuth extends PageBaseJpa2Data {
 
 		} catch (Exception ex) {
 			// logger.error("postConstruct", ex);
-			addErrorMessage("Si e' verificato un errore.", ex);
+			addErrorMessage(ex.getMessage(), ex);
 		}
 	}
 

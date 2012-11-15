@@ -874,7 +874,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 	
-	public static <T extends Serializable> List<T> find(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> List<T> findPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
 

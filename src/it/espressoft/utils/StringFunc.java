@@ -22,4 +22,7 @@ public class StringFunc {
 		return (string1 != null && string2 != null && string1.equalsIgnoreCase(string2));
 	}
 
+	public static boolean contains(String string, String subString) {
+		return string != null && !string.isEmpty() && string.indexOf(subString) >= 0;
+	}
 }

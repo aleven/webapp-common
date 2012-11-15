@@ -42,8 +42,7 @@ public class IEVersionFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		/*
-		 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.
-		 * html
+		 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.html
 		 */
 		res.setHeader("X-UA-Compatible", "IE=EDGE");
 
