@@ -47,15 +47,15 @@ public class JpaController implements Serializable {
 
 	private String persistenceUnit;
 
-	public static int Numero = 0;
-	private int numero = 0;
+	// public static int Numero = 0;
+	// private int numero = 0;
 
 	/**
 	 * use DEFAULT_PU
 	 */
 	public JpaController() {
 		super();
-		assegnaNumero();
+		// assegnaNumero();
 
 		this.persistenceUnit = DEFAULT_PU;
 		passedEmf = false;
@@ -82,294 +82,93 @@ public class JpaController implements Serializable {
 		this.dbConf = dbConf;
 	}
 
-	private void assegnaNumero() {
-
-		JpaController.Numero++;
-
-		this.numero = JpaController.Numero;
-
-		logger.debug(String.format("Creazione Controller %s", numero));
-	}
-
-	// // // private Class<T> aClass;
-	// // // private T type;
-	// final private Class<T> returnedClass;
-	//
-	// //
-	// // public Class getGenericType() {
-	// //
-	// // return returnedClass;
-	// //
-	// // // return type.getClass();
-	// // // return ((ParameterizedType)
-	// // //
-	// //
-	// getClass().getGenericSuperclass()).getActualTypeArguments()[0].getClass();
-	// // // return getClass().get
-	// // }
-	// //
-	// // /**
-	// // * Questo tipo di costruttore e' necessario perche' al momento e'
-	// // * impossibile risalire al tipo dal parametro Generics
-	// // *
-	// // * @param clazz
-	// // */
-	// // public GenericJpaController(Class<T> clazz) {
-	// // returnedClass = clazz;
-	// // }
-	//
-	// // private Type type;
-	// //
-	// // private void TypeRef() {
-	// // ParameterizedType superclass = (ParameterizedType)
-	// // getClass().getGenericSuperclass();
-	// // type = superclass.getActualTypeArguments()[0];
-	// // }
-	//
-	// public GenericJpaController(Class<T> clazz, EntityManagerFactory emf) {
-	// this.emf = emf;
-	// this.returnedClass = clazz;
-	// }
-	//
-	// private EntityManagerFactory emf = null;
-	//
-	// public EntityManager getEntityManager() {
-	// return emf.createEntityManager();
-	// }
-	//
-	// public void create(T o) {
-	// EntityManager em = null;
-	// try {
-	// em = getEntityManager();
-	// em.getTransaction().begin();
-	// em.persist(o);
-	// em.getTransaction().commit();
-	// } finally {
-	// if (em != null) {
-	// em.close();
-	// }
-	// }
-	// }
-	//
-	// public void edit(T o) throws NonexistentEntityException, Exception {
-	// EntityManager em = null;
-	// try {
-	// em = getEntityManager();
-	// em.getTransaction().begin();
-	// o = em.merge(o);
-	// em.getTransaction().commit();
-	// } catch (Exception ex) {
-	// String msg = ex.getLocalizedMessage();
-	// if (msg == null || msg.length() == 0) {
-	// Integer id = o.getId();
-	// if (findEntity(id) == null) {
-	// throw new NonexistentEntityException("The Entity with id " + id +
-	// " no longer exists.");
-	// }
-	// }
-	// throw ex;
-	// } finally {
-	// if (em != null) {
-	// em.close();
-	// }
-	// }
-	// }
-	//
-	// public void destroy(Integer id) throws NonexistentEntityException {
-	// EntityManager em = null;
-	// try {
-	// em = getEntityManager();
-	// em.getTransaction().begin();
-	// T o;
-	// try {
-	// o = (T) em.getReference(getGenericType(), id);
-	// o.getId();
-	// } catch (EntityNotFoundException enfe) {
-	// throw new NonexistentEntityException("The Entity with id " + id +
-	// " no longer exists.", enfe);
-	// }
-	// em.remove(o);
-	// em.getTransaction().commit();
-	// } finally {
-	// if (em != null) {
-	// em.close();
-	// }
-	// }
-	// }
-	//
-	// public List<T> findEntityEntities() {
-	// return findEntityEntities(true, -1, -1);
-	// }
-	//
-	// public List<T> findEntityEntities(int maxResults, int firstResult) {
-	// return findEntityEntities(false, maxResults, firstResult);
-	// }
-	//
-	// private List<T> findEntityEntities(boolean all, int maxResults, int
-	// firstResult) {
-	// EntityManager em = getEntityManager();
-	// try {
-	// CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-	// cq.select(cq.from(getGenericType()));
-	// Query q = em.createQuery(cq);
-	// if (!all) {
-	// q.setMaxResults(maxResults);
-	// q.setFirstResult(firstResult);
-	// }
-	// return q.getResultList();
-	// } finally {
-	// em.close();
-	// }
-	// }
-	//
-	// public List<T> findEntityEntities(String semeRicerca, boolean all, int
-	// maxResults, int firstResult) {
-	// EntityManager em = getEntityManager();
-	// try {
-	// CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-	//
-	// javax.persistence.criteria.CriteriaBuilder cb =
-	// getEntityManager().getCriteriaBuilder();
-	//
-	// Root<T> rt = cq.from(getGenericType());
-	//
-	// cq.select(rt);
-	// // cq.where(Restrictions.like("ragioneSociale1", "%" + semeRicerca +
-	// // "%"))
-	// if (semeRicerca != null && !semeRicerca.isEmpty()) {
-	// // cq.where(cb.like(rt.get(Entity_.ragioneSociale1), "%"
-	// // + semeRicerca + "%"));
-	// }
-	//
-	// Query q = em.createQuery(cq);
-	// if (!all) {
-	// q.setMaxResults(maxResults);
-	// q.setFirstResult(firstResult);
-	// }
-	// return q.getResultList();
-	// } finally {
-	// em.close();
-	// }
-	// }
-	//
-	// public T findEntity(Integer id) {
-	// EntityManager em = getEntityManager();
-	// try {
-	// return (T) em.find(getGenericType(), id);
-	// } finally {
-	// em.close();
-	// }
-	// }
-	//
-	// public int getEntityCount(String search) {
-	// EntityManager em = getEntityManager();
-	// try {
-	// CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-	// Root<T> rt = cq.from(getGenericType());
-	// cq.select(em.getCriteriaBuilder().count(rt));
-	//
-	// if (search != null && !search.isEmpty()) {
-	// //
-	// cq.where(getEntityManager().getCriteriaBuilder().like(rt.get(Entity_.),
-	// // "%" + search + "%"));
-	// }
-	//
-	// Query q = em.createQuery(cq);
-	// return ((Long) q.getSingleResult()).intValue();
-	// } finally {
-	// em.close();
-	// }
+	// private void assegnaNumero() {
+	// JpaController.Numero++;
+	// this.numero = JpaController.Numero;
+	// logger.debug(String.format("Creazione Controller %s", numero));
 	// }
 
 	public <T extends Serializable> void insert(T o) throws Exception {
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
 
-			em.getTransaction().begin();
+			if (!globalTransactionOpen)
+				em.getTransaction().begin();
 			em.persist(o);
-			em.getTransaction().commit();
+			if (!globalTransactionOpen)
+				em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 	}
 
 	public <T extends Serializable> void update(T o) throws Exception {
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
-
-			em.getTransaction().begin();
+			if (!globalTransactionOpen)
+				em.getTransaction().begin();
 			em.merge(o);
-			em.getTransaction().commit();
+			if (!globalTransactionOpen)
+				em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 	}
 
 	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
-
-			em.getTransaction().begin();
+			if (!globalTransactionOpen)
+				em.getTransaction().begin();
 
 			T attached = em.find(clazz, id);
 			if (attached != null) {
 				em.remove(attached);
 				// em.remove(o);
 			}
-
-			em.getTransaction().commit();
+			if (!globalTransactionOpen)
+				em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
+
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 	}
 
 	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws Exception {
 		List<T> res = new ArrayList<T>();
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// try {
-		//
-		// res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
-		// " e", clazz).getResultList();
-		//
-		// } catch (Exception e) {
-		// throw e;
-		// } finally {
-		// // Close the database connection:
-		// if (em.getTransaction().isActive())
-		// em.getTransaction().rollback();
-		// em.close();
-		// }
-
-		// String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
-		// res = findBy(clazz, query);
 
 		res = findAll(clazz, null);
 
@@ -378,21 +177,7 @@ public class JpaController implements Serializable {
 
 	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws Exception {
 		List<T> res = new ArrayList<T>();
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// try {
-		//
-		// res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
-		// " e", clazz).getResultList();
-		//
-		// } catch (Exception e) {
-		// throw e;
-		// } finally {
-		// // Close the database connection:
-		// if (em.getTransaction().isActive())
-		// em.getTransaction().rollback();
-		// em.close();
-		// }
+
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		if (StringUtils.isNotEmpty(orderBy)) {
 			query = query + " ORDER BY " + orderBy;
@@ -405,7 +190,7 @@ public class JpaController implements Serializable {
 
 	public <T extends Serializable> T find(Class<T> clazz, Long id) throws Exception {
 		T res = null;
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
 
@@ -415,9 +200,11 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -426,14 +213,10 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> T findFirst(Class<T> clazz, String query, Object... params) throws Exception {
 		T res = null;
 		List<T> list = null;
-		// EntityManagerFactory emf = (EntityManagerFactory)
-		// getSession().getAttribute("emf");
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
-
-			// list = em.createQuery(query, clazz).getResultList();
 
 			TypedQuery<T> q = em.createQuery(query, clazz);
 
@@ -452,13 +235,15 @@ public class JpaController implements Serializable {
 			}
 
 		} catch (Exception e) {
-			// setErrorMessage(e.getMessage(), "");
+
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -467,29 +252,6 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> T findFirst(Class<T> clazz) throws Exception {
 		T res = null;
 		List<T> list = null;
-		// EntityManagerFactory emf = (EntityManagerFactory)
-		// getSession().getAttribute("emf");
-
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// try {
-		//
-		// list = em.createQuery("SELECT e FROM " + clazz.getCanonicalName() +
-		// " e", clazz).getResultList();
-		//
-		// if (list != null && list.size() > 0) {
-		// res = list.get(0);
-		// }
-		//
-		// } catch (Exception e) {
-		// // setErrorMessage(e.getMessage(), "");
-		// throw e;
-		// } finally {
-		// // Close the database connection:
-		// if (em.getTransaction().isActive())
-		// em.getTransaction().rollback();
-		// em.close();
-		// }
 
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		res = findFirst(clazz, query);
@@ -498,25 +260,19 @@ public class JpaController implements Serializable {
 	}
 
 	/**
-	 * User for speed test 
+	 * User for speed test
+	 * 
 	 * @return
 	 */
 	@Deprecated
 	public EntityManagerFactory getEntityManagetFactory() {
 		return getEmf();
 	}
-	
+
 	private EntityManagerFactory getEmf() {
-		// EntityManagerFactory res = null;
 
 		if (!passedEmf) {
 
-			// Memorizzo sullo Statico, ma ora usiamo i Listener
-			// if (sharedEmf == null || !sharedEmf.isOpen()) {
-			// sharedEmf =
-			// Persistence.createEntityManagerFactory(persistenceUnit);
-			// }
-			// emf = sharedEmf;
 			if (emf == null || !emf.isOpen()) {
 				if (dbConf == null) {
 					emf = Persistence.createEntityManagerFactory(persistenceUnit);
@@ -525,16 +281,36 @@ public class JpaController implements Serializable {
 				}
 			}
 		}
-		// res = emf;
 
 		return emf;
 	}
 
-	public void closeEmf() {
+	private void closeEm() {
+
+		/* Gestione delle Transazioni */
+		if (!globalTransactionOpen) {
+			if (getEntityManager() != null) {
+				// logger.debug(String.format("Close EM %s", numero));
+				getEntityManager().close();
+				em = null;
+			}
+		}
+
+	}
+
+	/**
+	 * Close EM if is in use for a global transaction, and close EMF if is not
+	 * passed from outside
+	 */
+	public void closeEmfAndEm() {
+
+		closeEm();
+
 		if (!passedEmf) {
 			if (getEmf() != null) {
-				logger.debug(String.format("Close Controller %s", numero));
+				// logger.debug(String.format("Close EMF %s", numero));
 				getEmf().close();
+				emf = null;
 			}
 		}
 	}
@@ -542,7 +318,7 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findByExample(Class<T> clazz, T anExample) throws Exception {
 		List<T> res = new ArrayList<T>();
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
 
@@ -552,16 +328,15 @@ public class JpaController implements Serializable {
 
 			res = session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
 
-			// res = em.createQuery("SELECT e FROM " + clazz.getCanonicalName()
-			// + " e", clazz).getResultList();
-
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -570,16 +345,11 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws Exception {
 		List<T> res = new ArrayList<T>();
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
 
 		try {
-
-			// session = (Session) em.getDelegate();
-
-			// res =
-			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
 
 			res = em.createQuery(query, clazz).getResultList();
 
@@ -587,9 +357,11 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -607,16 +379,13 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query, Object... params) throws Exception {
 		List<T> res = new ArrayList<T>();
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
 
 		try {
 
 			session = (Session) em.getDelegate();
-
-			// res =
-			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
 
 			TypedQuery<T> q = em.createQuery(query, clazz);
 
@@ -634,9 +403,11 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -645,33 +416,28 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		List<T> res = new ArrayList<T>();
 
-		EntityManager em = getEmf().createEntityManager();
-		// Session session = null;
+		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
 		try {
 
-			// session = (Session) em.getDelegate();
-
-			// res =
-			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
 			if (filter != null) {
 				CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
 				TypedQuery<T> q = em.createQuery(cq);
 				res = q.getResultList();
 			} else {
-				
 				res = findAll(clazz);
-				// throw new NullPointerException("The specified JPAEntityFilter is null");
 			}
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -680,7 +446,7 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(CriteriaQuery<T> criteria) throws Exception {
 		List<T> res = new ArrayList<T>();
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
 
@@ -688,18 +454,17 @@ public class JpaController implements Serializable {
 
 			session = (Session) em.getDelegate();
 
-			// res =
-			// session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
-
 			res = em.createQuery(criteria).getResultList();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -708,12 +473,12 @@ public class JpaController implements Serializable {
 	public int executeUpdate(String query, Object... params) throws Exception {
 		int res = 0;
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
 		try {
-
-			em.getTransaction().begin();
+			if (!globalTransactionOpen)
+				em.getTransaction().begin();
 
 			Query q = em.createQuery(query);
 
@@ -727,15 +492,18 @@ public class JpaController implements Serializable {
 
 			res = q.executeUpdate();
 
-			em.getTransaction().commit();
+			if (!globalTransactionOpen)
+				em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 		return res;
@@ -753,32 +521,27 @@ public class JpaController implements Serializable {
 		 * almeno così si chiude)
 		 */
 
-		logger.debug(String.format("Finalize Controller %s", numero));
-		closeEmf();
+		// logger.debug(String.format("Finalize Controller %s", numero));
+
+		closeEmfAndEm();
 
 		super.finalize();
 
 		// System.gc();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public EntityManagerFactory test() {
-		return getEmf();
-	}
-
-	public static void close(JpaController istance) {
-		if (istance != null) {
-			istance.closeEmf();
-		}
-	}
+	// /**
+	// *
+	// * @return
+	// */
+	// public EntityManagerFactory test() {
+	// return getEmf();
+	// }
 
 	public <T extends Serializable> int getItemCount(Class<T> classObj) throws Exception {
 		int returnValue = 0;
 
-		EntityManager em = getEmf().createEntityManager();
+		EntityManager em = getEntityManager();
 
 		try {
 
@@ -802,38 +565,55 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-			em.close();
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
 		}
 
 	}
 
-	@Deprecated
-	public void beginTransaction() throws Exception {
+	private EntityManager em = null;
+	private boolean globalTransactionOpen = false;
 
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// em.getTransaction().begin();
+	private EntityManager getEntityManager() {
+		if (em == null) {
+			em = getEmf().createEntityManager();
+		}
+		return em;
 
+		// return getEmf().createEntityManager();
 	}
 
-	@Deprecated
-	public void commitTransaction() throws Exception {
+	public void beginTransaction() {
+		if (!globalTransactionOpen) {
+			EntityManager em = getEntityManager();
 
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// em.getTransaction().commit();
+			em.getTransaction().begin();
 
+			globalTransactionOpen = true;
+		}
 	}
 
-	@Deprecated
-	public void rollbackTransaction() throws Exception {
+	public void commitTransaction() {
+		if (globalTransactionOpen) {
+			EntityManager em = getEntityManager();
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().commit();
+			}
+			globalTransactionOpen = false;
+		}
+	}
 
-		// EntityManager em = getEmf().createEntityManager();
-		//
-		// if (em.getTransaction().isActive())
-		// em.getTransaction().rollback();
+	public void rollbackTransaction() {
+		if (globalTransactionOpen) {
+			EntityManager em = getEntityManager();
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			globalTransactionOpen = false;
+		}
 
 	}
 
@@ -844,7 +624,13 @@ public class JpaController implements Serializable {
 	 */
 	public static void callCloseEmf(JpaController aController) {
 		if (aController != null) {
-			aController.closeEmf();
+			aController.closeEmfAndEm();
+		}
+	}
+
+	public static void callRollback(JpaController aController) {
+		if (aController != null) {
+			aController.rollbackTransaction();
 		}
 	}
 
@@ -873,7 +659,7 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
+
 	public static <T extends Serializable> List<T> findPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
@@ -890,7 +676,7 @@ public class JpaController implements Serializable {
 		}
 
 		return res;
-	}	
+	}
 
 	public static <T extends Serializable> T findFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
@@ -951,4 +737,20 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public static <T extends Serializable> boolean insertPU(String persistenceUnit, T object) throws Exception {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+
+			controller.insert(object);
+			res = true;
+		} catch (Exception ex) {
+			logger.error("insert", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}
 }
