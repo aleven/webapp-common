@@ -139,6 +139,8 @@ public class JpaController implements Serializable {
 
 	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 
 		try {
@@ -178,6 +180,8 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws Exception {
 		List<T> res = new ArrayList<T>();
 
+		testClazz(clazz);
+		
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		if (StringUtils.isNotEmpty(orderBy)) {
 			query = query + " ORDER BY " + orderBy;
@@ -190,6 +194,9 @@ public class JpaController implements Serializable {
 
 	public <T extends Serializable> T find(Class<T> clazz, Long id) throws Exception {
 		T res = null;
+		
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 
 		try {
@@ -214,6 +221,8 @@ public class JpaController implements Serializable {
 		T res = null;
 		List<T> list = null;
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 
 		try {
@@ -253,6 +262,8 @@ public class JpaController implements Serializable {
 		T res = null;
 		List<T> list = null;
 
+		testClazz(clazz);
+		
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		res = findFirst(clazz, query);
 
@@ -289,9 +300,9 @@ public class JpaController implements Serializable {
 
 		/* Gestione delle Transazioni */
 		if (!globalTransactionOpen) {
-			if (getEntityManager() != null) {
+			if (em != null) {
 				// logger.debug(String.format("Close EM %s", numero));
-				getEntityManager().close();
+				em.close();
 				em = null;
 			}
 		}
@@ -307,9 +318,9 @@ public class JpaController implements Serializable {
 		closeEm();
 
 		if (!passedEmf) {
-			if (getEmf() != null) {
+			if (emf != null) {
 				// logger.debug(String.format("Close EMF %s", numero));
-				getEmf().close();
+				emf.close();
 				emf = null;
 			}
 		}
@@ -318,6 +329,8 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findByExample(Class<T> clazz, T anExample) throws Exception {
 		List<T> res = new ArrayList<T>();
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -345,6 +358,8 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws Exception {
 		List<T> res = new ArrayList<T>();
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -379,6 +394,8 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query, Object... params) throws Exception {
 		List<T> res = new ArrayList<T>();
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -416,6 +433,8 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		List<T> res = new ArrayList<T>();
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
@@ -454,42 +473,50 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> Long countBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Long res = 0L;
 
+		testClazz(clazz);
+		
 		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
 		try {
 
 			if (filter != null) {
-				
-				// Source: http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
-				
+
+				// Source:
+				// http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
+
 				CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
-				
-//				TypedQuery<T> q = em.createQuery(cq);
-//
-//				q.setFirstResult(filter.getLimit() * filter.getPageNumber());
-//				q.setMaxResults(filter.getLimit());
-//
-//				res = Long.valueOf(q.getResultList().size());
-				
-//				CriteriaBuilder qb = em.getCriteriaBuilder();
-//				CriteriaQuery<Long> countQuery = qb.createQuery(Long.class);
-//				countQuery.select(qb.count(cq.from(clazz)));
-//				// cq.where(/*your stuff*/);
-//				return em.createQuery(cq).getSingleResult();		
-				
+
+				// TypedQuery<T> q = em.createQuery(cq);
+				//
+				// q.setFirstResult(filter.getLimit() * filter.getPageNumber());
+				// q.setMaxResults(filter.getLimit());
+				//
+				// res = Long.valueOf(q.getResultList().size());
+
+				// CriteriaBuilder qb = em.getCriteriaBuilder();
+				// CriteriaQuery<Long> countQuery = qb.createQuery(Long.class);
+				// countQuery.select(qb.count(cq.from(clazz)));
+				// // cq.where(/*your stuff*/);
+				// return em.createQuery(cq).getSingleResult();
+
 				CriteriaBuilder builder = em.getCriteriaBuilder();
 				CriteriaQuery<Long> cqCount = builder.createQuery(Long.class);
 				cqCount.select(builder.count(cqCount.from(clazz)));
-				
-				// Following line if commented causes [org.hibernate.hql.ast.QuerySyntaxException: Invalid path: 'generatedAlias1.enabled' [select count(generatedAlias0) from xxx.yyy.zzz.Brand as generatedAlias0 where ( generatedAlias1.enabled=:param0 ) and ( lower(generatedAlias1.description) like :param1 )]]
+
+				// Following line if commented causes
+				// [org.hibernate.hql.ast.QuerySyntaxException: Invalid path:
+				// 'generatedAlias1.enabled' [select count(generatedAlias0) from
+				// xxx.yyy.zzz.Brand as generatedAlias0 where (
+				// generatedAlias1.enabled=:param0 ) and (
+				// lower(generatedAlias1.description) like :param1 )]]
 				em.createQuery(cqCount);
-				
+
 				cqCount.where(filter.getWherePredicate());
 				filter.getCriteria(clazz, getEmf());
-				
-				res = em.createQuery(cqCount).getSingleResult();				
-				
+
+				res = em.createQuery(cqCount).getSingleResult();
+
 			} else {
 				// res = findAll(clazz);
 
@@ -650,7 +677,7 @@ public class JpaController implements Serializable {
 	private boolean globalTransactionOpen = false;
 
 	private EntityManager getEntityManager() {
-		if (em == null) {
+		if (em == null || !em.isOpen()) {
 			em = getEmf().createEntityManager();
 		}
 		return em;
@@ -767,7 +794,7 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
+
 	public static <T extends Serializable> Long callCountPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		Long res = 0L;
@@ -784,9 +811,9 @@ public class JpaController implements Serializable {
 		}
 
 		return res;
-	}	
-	
-	public static <T extends Serializable> T findFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	}
+
+	public static <T extends Serializable> T callFindFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> list = new ArrayList<T>();
 		T res = null;
@@ -877,5 +904,10 @@ public class JpaController implements Serializable {
 			JpaController.callCloseEmf(controller);
 		}
 		return res;
+	}
+
+	private void testClazz(Class clazz) throws Exception {
+		if (clazz == null)
+			throw new Exception("JPAController Entity Class not specified.");
 	}
 }
