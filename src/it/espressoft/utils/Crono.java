@@ -19,7 +19,7 @@ public class Crono {
 		starts.put(name, new Date());
 	}
 
-	public static void stop(String name) {
+	private static void stop(String name) {
 		// if (stops == null)
 		// stops = new HashMap<String, Date>();
 

@@ -67,6 +67,16 @@ public class ListUtils {
 	 * @return
 	 */
 	public static List<String> fromCommaSepared(String aStringWithValues) {
+		
+		if (aStringWithValues.startsWith("[")) {
+			aStringWithValues = aStringWithValues.substring(1);
+		}
+		
+		if (aStringWithValues.endsWith("]")) {
+			aStringWithValues = aStringWithValues.substring(0, aStringWithValues.length() - 1);
+		}
+		
+		
 		return Arrays.asList(aStringWithValues.split("\\s*,\\s*"));
 	}
 

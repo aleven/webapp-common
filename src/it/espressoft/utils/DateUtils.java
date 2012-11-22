@@ -863,16 +863,6 @@ public class DateUtils extends DateUtilsLT {
 		return a1.toDateTime(DateTimeZone.UTC);
 	}
 
-	public static Date addDays(Date aDate, int days) {
-
-		Calendar cal = new GregorianCalendar();
-		cal.setTime(aDate);
-
-		cal.add(Calendar.DATE, days);
-
-		return cal.getTime();
-	}
-
 	public static Date minDate() {
 		// Calendar calendar = Calendar.getInstance();
 		// calendar.setTime(new Date(0l));
@@ -882,37 +872,4 @@ public class DateUtils extends DateUtilsLT {
 		return new Date(0l);
 	}
 
-	/**
-	 * Aggiunge 12:00 per evitare problemi con CET CEST. Una data 20120309
-	 * potrebbe diventare 2012 03 08 perche viene valorizzata con ora 00:00 e
-	 * quando la si formatta nel locale Italiano Java la fa diventare il giorno
-	 * precedente passando da CET a CEST
-	 * 
-	 * @param aIsoString
-	 * @return
-	 * @throws ParseException
-	 */
-	public static Date parseISO(String aIsoString) throws ParseException {
-		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM).parse(aIsoString + " 12:00");
-	}
-
-	/**
-	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
-	 * minutes)
-	 * 
-	 * @param HHmm
-	 * @return value of duration as numeric value
-	 */
-	public static float calculateDuration(String HHmm) {
-
-		String[] data = HHmm.split(":");
-		int hours = Integer.parseInt(data[0]);
-		int minutes = Integer.parseInt(data[1]);
-
-		float res = hours * 60 * 60 * 1000 + minutes * 60 * 1000;
-
-		res = res / (1000 * 60 * 60);
-
-		return res;
-	}
 }

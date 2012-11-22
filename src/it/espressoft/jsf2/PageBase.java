@@ -75,7 +75,7 @@ abstract class PageBase implements Serializable {
 
 	protected void addErrorMessage(String summary, Throwable ex) {
 
-		if (ex != null && ex.getMessage() != null) {
+		if (ex != null && ex.getMessage() != null && summary != null) {
 
 			if (ex.getCause() == null) {
 				logger.error(summary, ex);
@@ -86,8 +86,9 @@ abstract class PageBase implements Serializable {
 			}
 
 		} else {
-			logger.error(summary, ex);
-			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, "Errore Generico"));
+			
+			logger.error("NullPointerException", ex);
+			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "NullPointerException", "java.lang.NullPointerException"));
 		}
 
 	}

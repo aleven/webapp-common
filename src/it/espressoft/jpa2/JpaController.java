@@ -302,7 +302,7 @@ public class JpaController implements Serializable {
 	 * Close EM if is in use for a global transaction, and close EMF if is not
 	 * passed from outside
 	 */
-	public void closeEmfAndEm() {
+	public void closeEmAndEmf() {
 
 		closeEm();
 
@@ -523,7 +523,7 @@ public class JpaController implements Serializable {
 
 		// logger.debug(String.format("Finalize Controller %s", numero));
 
-		closeEmfAndEm();
+		closeEmAndEmf();
 
 		super.finalize();
 
@@ -624,7 +624,7 @@ public class JpaController implements Serializable {
 	 */
 	public static void callCloseEmf(JpaController aController) {
 		if (aController != null) {
-			aController.closeEmfAndEm();
+			aController.closeEmAndEmf();
 		}
 	}
 
@@ -753,4 +753,21 @@ public class JpaController implements Serializable {
 		}
 		return res;
 	}
+	
+	public static <T extends Serializable> boolean updatePU(String persistenceUnit, T object) throws Exception {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+
+			controller.update(object);
+			res = true;
+		} catch (Exception ex) {
+			logger.error("update", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}	
 }
