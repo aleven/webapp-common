@@ -424,9 +424,81 @@ public class JpaController implements Serializable {
 			if (filter != null) {
 				CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
 				TypedQuery<T> q = em.createQuery(cq);
+
+				q.setFirstResult(filter.getLimit() * filter.getPageNumber());
+				q.setMaxResults(filter.getLimit());
+
 				res = q.getResultList();
 			} else {
 				res = findAll(clazz);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
+		}
+
+		return res;
+	}
+
+	public <T extends Serializable> Long count(Class<T> clazz) throws Exception {
+		return countBy(clazz, null);
+	}
+
+	public <T extends Serializable> Long countBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		Long res = 0L;
+
+		EntityManager em = getEntityManager();
+		Criteria cri = null;
+
+		try {
+
+			if (filter != null) {
+				
+				// Source: http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
+				
+				CriteriaQuery<T> cq = filter.getCriteria(clazz, getEmf());
+				
+//				TypedQuery<T> q = em.createQuery(cq);
+//
+//				q.setFirstResult(filter.getLimit() * filter.getPageNumber());
+//				q.setMaxResults(filter.getLimit());
+//
+//				res = Long.valueOf(q.getResultList().size());
+				
+//				CriteriaBuilder qb = em.getCriteriaBuilder();
+//				CriteriaQuery<Long> countQuery = qb.createQuery(Long.class);
+//				countQuery.select(qb.count(cq.from(clazz)));
+//				// cq.where(/*your stuff*/);
+//				return em.createQuery(cq).getSingleResult();		
+				
+				CriteriaBuilder builder = em.getCriteriaBuilder();
+				CriteriaQuery<Long> cqCount = builder.createQuery(Long.class);
+				cqCount.select(builder.count(cqCount.from(clazz)));
+				
+				// Following line if commented causes [org.hibernate.hql.ast.QuerySyntaxException: Invalid path: 'generatedAlias1.enabled' [select count(generatedAlias0) from xxx.yyy.zzz.Brand as generatedAlias0 where ( generatedAlias1.enabled=:param0 ) and ( lower(generatedAlias1.description) like :param1 )]]
+				em.createQuery(cqCount);
+				
+				cqCount.where(filter.getWherePredicate());
+				filter.getCriteria(clazz, getEmf());
+				
+				res = em.createQuery(cqCount).getSingleResult();				
+				
+			} else {
+				// res = findAll(clazz);
+
+				CriteriaBuilder qb = em.getCriteriaBuilder();
+				CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+				cq.select(qb.count(cq.from(clazz)));
+				// cq.where(/*your stuff*/);
+				res = em.createQuery(cq).getSingleResult();
+
 			}
 
 		} catch (Exception e) {
@@ -642,7 +714,7 @@ public class JpaController implements Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T extends Serializable> List<T> find(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> List<T> callFind(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
 
@@ -660,7 +732,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> List<T> findPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> List<T> callFindPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
 
@@ -678,6 +750,42 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public static <T extends Serializable> Long callCount(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		Long res = 0L;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			res = controller.countBy(clazz, filter);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+	
+	public static <T extends Serializable> Long callCountPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		Long res = 0L;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+			res = controller.countBy(clazz, filter);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}	
+	
 	public static <T extends Serializable> T findFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> list = new ArrayList<T>();
@@ -703,7 +811,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> boolean update(EntityManagerFactory emf, T object) throws Exception {
+	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -720,7 +828,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> boolean insert(EntityManagerFactory emf, T object) throws Exception {
+	public static <T extends Serializable> boolean callInsert(EntityManagerFactory emf, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -737,7 +845,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> boolean insertPU(String persistenceUnit, T object) throws Exception {
+	public static <T extends Serializable> boolean callInsertPU(String persistenceUnit, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -753,8 +861,8 @@ public class JpaController implements Serializable {
 		}
 		return res;
 	}
-	
-	public static <T extends Serializable> boolean updatePU(String persistenceUnit, T object) throws Exception {
+
+	public static <T extends Serializable> boolean callUpdatePU(String persistenceUnit, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -769,5 +877,5 @@ public class JpaController implements Serializable {
 			JpaController.callCloseEmf(controller);
 		}
 		return res;
-	}	
+	}
 }

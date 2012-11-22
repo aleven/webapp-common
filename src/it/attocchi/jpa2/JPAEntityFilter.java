@@ -40,6 +40,8 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.emptyFilterEmptyData = emptyFilterEmptyData;
 	}
 
+	Predicate wherePredicate;
+
 	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) throws Exception {
 
 		// CriteriaBuilder
@@ -59,11 +61,18 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 		Predicate[] predicates = new Predicate[predicateList.size()];
 		predicateList.toArray(predicates);
-		criteriaQuery.where(criteriaBuilder.and(predicates));
+
+		wherePredicate = criteriaBuilder.and(predicates);
+
+		criteriaQuery.where(wherePredicate);
 
 		buildSort(criteriaQuery, criteriaBuilder, root);
 
 		return criteriaQuery;
+	}
+
+	public Predicate getWherePredicate() {
+		return wherePredicate;
 	}
 
 	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
@@ -163,4 +172,24 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 		return res;
 	}
+
+	private int pageNumber;
+	private int limit;
+
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
 }
