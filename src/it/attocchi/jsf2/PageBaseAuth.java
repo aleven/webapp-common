@@ -13,7 +13,7 @@ import it.attocchi.web.filters.AuthFilter;
 public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 	private boolean debug = false;
-	
+
 	// @PostConstruct
 	// private void postConstruct() {
 	// try {
@@ -22,12 +22,12 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	// init();
 	// } else {
 	//
-	// setErrorMessage("Necessaria Autenticazione");
+	// addErrorMessage("Necessaria Autenticazione");
 	// }
 	//
 	// } catch (Exception ex) {
 	// // logger.error("postConstruct", ex);
-	// setErrorMessage("postConstruct", ex);
+	// addErrorMessage("postConstruct", ex);
 	// }
 	// }
 
@@ -39,7 +39,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 		} else {
 			logger.error("Necessaria Autenticazione");
-			// setErrorMessage("Necessaria Autenticazione");
+			// addErrorMessage("Necessaria Autenticazione");
 			throw new Exception("Necessaria Autenticazione");
 		}
 	}
@@ -55,15 +55,16 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 		idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
 
-		if (idUtenteLoggato <= 0) {
-			int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
-			
+		int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
+		
+		if (idUtenteLoggato <= 0 || param != idUtenteLoggato) {
+
 			if (param == 0 && debug) {
 				logger.warn("auth debug mode");
 				param = 1;
 				addWarnMessage("auth debug mode", "");
 			}
-			
+
 			if (param > 0) {
 				idUtenteLoggato = param;
 				setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);

@@ -21,7 +21,7 @@ public abstract class PageBaseNoAuth extends PageBaseJpa2Data {
 			init();
 
 		} catch (Exception ex) {
-			// logger.error("postConstruct", ex);
+			logger.error("postConstruct", ex);
 			addErrorMessage(ex.getMessage(), ex);
 		}
 	}

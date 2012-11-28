@@ -4,7 +4,7 @@ package it.attocchi.jpa2;
  * Usage in web.xml:
  * 
  *   <listener>
- *   	<listener-class>it.espressoft.jpa2.JPASessionListener</listener-class>
+ *   	<listener-class>it.attocchi.jpa2.JPASessionListener</listener-class>
  *   </listener>
  * 
  * 

@@ -13,7 +13,8 @@ public class PropertiesUtils {
 
 	/**
 	 * 
-	 * @param in InputStrem like a getResourceAsStrem from ServletContext
+	 * @param in
+	 *            InputStrem like a getResourceAsStrem from ServletContext
 	 * @return "new Properties();" also in case of error
 	 */
 	public static Properties getProperties(InputStream in) {
@@ -29,6 +30,7 @@ public class PropertiesUtils {
 
 		} catch (Exception ex) {
 			logger.error("Error loading properties", ex);
+			properties = null;
 		} finally {
 			if (in != null) {
 				try {

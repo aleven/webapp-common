@@ -52,6 +52,10 @@ abstract class PageBase implements Serializable {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
 
+	protected void addWarnMessage(String summary) {
+		addInfoMessage(summary, "");
+	}
+
 	protected void addWarnMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
 	}
@@ -86,7 +90,7 @@ abstract class PageBase implements Serializable {
 			}
 
 		} else {
-			
+
 			logger.error("NullPointerException", ex);
 			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "NullPointerException", "java.lang.NullPointerException"));
 		}
@@ -241,7 +245,7 @@ abstract class PageBase implements Serializable {
 		}
 		return res;
 	}
-	
+
 	protected String getSessionObjectAsString(String paramName) {
 		String res = "";
 
@@ -254,7 +258,7 @@ abstract class PageBase implements Serializable {
 			logger.error("getSessionObjectAsString", ex);
 		}
 		return res;
-	}	
+	}
 
 	public Object setSessionObject(String object_name, Object object) {
 		Object returnValue = null;

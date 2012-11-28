@@ -1,6 +1,6 @@
 package it.attocchi.jpa2;
 
-import it.attocchi.web.config.SoftwareConfig;
+import it.attocchi.web.config.SoftwareProperties;
 
 import java.util.Map;
 
@@ -37,8 +37,8 @@ public class JPASessionListener implements HttpSessionListener {
 		/*
 		 * Aggiunta del Supporto alla Configurazione
 		 */
-		SoftwareConfig.init(e.getSession().getServletContext());
-		Map<String, String> dbProps = SoftwareConfig.getJpaDbProps();
+		SoftwareProperties.init(e.getSession().getServletContext());
+		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
@@ -61,7 +61,8 @@ public class JPASessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent e) {
 
 		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);
-		emf.close();
+		if (emf != null)
+			emf.close();
 		logger.info(IJpaListernes.SESSION_EMF + " close");
 		//
 		// chachedController.close();

@@ -11,9 +11,9 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class SoftwareConfig {
+public class SoftwareProperties {
 
-	protected static final Logger logger = Logger.getLogger(SoftwareConfig.class.getName());
+	protected static final Logger logger = Logger.getLogger(SoftwareProperties.class.getName());
 
 	public static final String WEB_INF_CONFIG_PROPERTIES = "/WEB-INF/software.properties";
 	// public static final String PU_NAME = "AtreeFLOW-WS";
@@ -31,7 +31,7 @@ public class SoftwareConfig {
 	}
 
 	public static void setProperties(Properties properties) {
-		SoftwareConfig.properties = properties;
+		SoftwareProperties.properties = properties;
 	}
 
 	private static Map<String, String> jpaDbProps;
@@ -41,7 +41,7 @@ public class SoftwareConfig {
 	}
 
 	public static void setJpaDbProps(Map<String, String> dbProps) {
-		SoftwareConfig.jpaDbProps = dbProps;
+		SoftwareProperties.jpaDbProps = dbProps;
 	}
 
 	/**

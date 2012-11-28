@@ -192,4 +192,19 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.limit = limit;
 	}
 
+
+//	private Predicate buildLikePredicateForFields(CriteriaBuilder criteriaBuilder, String semeRicercaForLike, Path<String>... fields) {
+//
+//		List<Predicate> ors = new ArrayList<Predicate>();
+//		for (Path<String> field : fields) {
+//			// Predicate p1 = (criteriaBuilder.like(root.get(Attivita_.oggetto),
+//			// getSemeRicercaForLike()));
+//			// Predicate p2 = (criteriaBuilder.like(root.get(Attivita_.notes),
+//			// getSemeRicercaForLike()));
+//			ors.add(criteriaBuilder.like(field, semeRicercaForLike));
+//		}
+//
+//		return criteriaBuilder.or(ListUtils.toArray(aList));
+//
+//	}
 }

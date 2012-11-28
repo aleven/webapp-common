@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  <filter>
  <display-name>IEVersionFilter</display-name>
  <filter-name>IEVersionFilter</filter-name>
- <filter-class>it.espressoft.web.filters.IEVersionFilter</filter-class>
+ <filter-class>it.attocchi.web.filters.IEVersionFilter</filter-class>
  </filter>
  <filter-mapping>
  <filter-name>IEVersionFilter</filter-name>

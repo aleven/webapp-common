@@ -20,7 +20,7 @@ public abstract class PageBaseAuthString extends PageBaseNoAuth {
 
 		} else {
 			logger.error("Necessaria Autenticazione");
-			// setErrorMessage("Necessaria Autenticazione");
+			// addErrorMessage("Necessaria Autenticazione");
 			// throw new Exception("Necessaria Autenticazione");
 		}
 	}

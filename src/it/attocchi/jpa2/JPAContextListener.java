@@ -1,6 +1,6 @@
 package it.attocchi.jpa2;
 
-import it.attocchi.web.config.SoftwareConfig;
+import it.attocchi.web.config.SoftwareProperties;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class JPAContextListener implements ServletContextListener {
 
 	protected static final Logger logger = Logger.getLogger(JPAContextListener.class.getName());
 
-//	private JpaController chachedController;
+	// private JpaController chachedController;
 
 	/**
 	 * Default constructor.
@@ -33,13 +33,13 @@ public class JPAContextListener implements ServletContextListener {
 	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
 	 */
 	public void contextInitialized(ServletContextEvent e) {
-		
+
 		/*
 		 * Aggiunta del Supporto alla Configurazione
 		 */
 		// SoftwareConfig.init(e.getSession().getServletContext());
-		SoftwareConfig.init(e.getServletContext());
-		Map<String, String> dbProps = SoftwareConfig.getJpaDbProps();
+		SoftwareProperties.init(e.getServletContext());
+		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
@@ -49,22 +49,21 @@ public class JPAContextListener implements ServletContextListener {
 		} else {
 			emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
 		}
-		
-		
+
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 		// EntityManagerFactory emf =
 		// Persistence.createEntityManagerFactory("$objectdb/db/caderplink.odb");
 		// e.getServletContext().setAttribute("emf", emf);
 
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-		
-		
-		// EntityManagerFactory emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);		
+
+		// EntityManagerFactory emf =
+		// Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
 		e.getServletContext().setAttribute(IJpaListernes.SESSION_EMF, emf);
 		logger.info(IJpaListernes.SESSION_EMF + " start");
 
-//		chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
-//		chachedController.test();
+		// chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
+		// chachedController.test();
 	}
 
 	/**
@@ -76,10 +75,11 @@ public class JPAContextListener implements ServletContextListener {
 		// emf.close();
 
 		EntityManagerFactory emf = (EntityManagerFactory) e.getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
-		emf.close();
+		if (emf != null)
+			emf.close();
 		logger.info(IJpaListernes.SESSION_EMF + " close");
 
-//		chachedController.closeEmf();
+		// chachedController.closeEmf();
 	}
 
 }
