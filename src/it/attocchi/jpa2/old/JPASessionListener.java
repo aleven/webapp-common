@@ -1,5 +1,6 @@
-package it.attocchi.jpa2;
+package it.attocchi.jpa2.old;
 
+import it.attocchi.jpa2.IJpaListernes;
 import it.attocchi.web.config.SoftwareProperties;
 
 import java.util.Map;
