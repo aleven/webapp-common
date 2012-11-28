@@ -56,7 +56,7 @@ public class JpaController implements Serializable {
 	public JpaController() {
 		super();
 		// assegnaNumero();
-
+		
 		this.persistenceUnit = DEFAULT_PU;
 		passedEmf = false;
 		// System.gc();
@@ -68,6 +68,8 @@ public class JpaController implements Serializable {
 		if (emf != null) {
 			this.emf = emf;
 			passedEmf = true;
+		} else {
+			
 		}
 	}
 
@@ -75,11 +77,15 @@ public class JpaController implements Serializable {
 		this();
 		this.persistenceUnit = persistenceUnit;
 		// passedEmf = false;
+
+		
 	}
 
 	public JpaController(String persistenceUnit, Map<String, String> dbConf) {
 		this(persistenceUnit);
 		this.dbConf = dbConf;
+
+		
 	}
 
 	// private void assegnaNumero() {
@@ -140,7 +146,7 @@ public class JpaController implements Serializable {
 	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 
 		try {
@@ -181,7 +187,7 @@ public class JpaController implements Serializable {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
-		
+
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		if (StringUtils.isNotEmpty(orderBy)) {
 			query = query + " ORDER BY " + orderBy;
@@ -194,9 +200,9 @@ public class JpaController implements Serializable {
 
 	public <T extends Serializable> T find(Class<T> clazz, Long id) throws Exception {
 		T res = null;
-		
+
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 
 		try {
@@ -222,7 +228,7 @@ public class JpaController implements Serializable {
 		List<T> list = null;
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 
 		try {
@@ -258,12 +264,35 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public <T extends Serializable> T findFirst(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		List<T> list = new ArrayList<T>();
+		T res = null;
+
+		// try {
+
+		list = findBy(clazz, filter);
+
+		if (list != null && list.size() > 0) {
+			res = list.get(0);
+		}
+
+		// } catch (Exception ex) {
+		// logger.error("findFirst", ex);
+		// throw ex;
+		// } finally {
+		//
+		// }
+
+		return res;
+	}
+
 	public <T extends Serializable> T findFirst(Class<T> clazz) throws Exception {
 		T res = null;
 		List<T> list = null;
 
 		testClazz(clazz);
-		
+
 		String query = "SELECT o FROM " + clazz.getCanonicalName() + " o";
 		res = findFirst(clazz, query);
 
@@ -284,12 +313,17 @@ public class JpaController implements Serializable {
 
 		if (!passedEmf) {
 
-			if (emf == null || !emf.isOpen()) {
+			/* Questo controllo sembra causare il problema con AJAX che "EMF e' già registrato" */
+			// if (emf == null || !emf.isOpen()) {
+			
+			if (emf == null) {
 				if (dbConf == null) {
 					emf = Persistence.createEntityManagerFactory(persistenceUnit);
 				} else {
 					emf = Persistence.createEntityManagerFactory(persistenceUnit, dbConf);
 				}
+			} else  if (!emf.isOpen()) {
+				logger.warn("exist emf istance but is close");
 			}
 		}
 
@@ -330,7 +364,7 @@ public class JpaController implements Serializable {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -359,7 +393,7 @@ public class JpaController implements Serializable {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -395,7 +429,7 @@ public class JpaController implements Serializable {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 		Session session = null;
 		Criteria cri = null;
@@ -434,7 +468,7 @@ public class JpaController implements Serializable {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
@@ -474,7 +508,7 @@ public class JpaController implements Serializable {
 		Long res = 0L;
 
 		testClazz(clazz);
-		
+
 		EntityManager em = getEntityManager();
 		Criteria cri = null;
 
