@@ -2,13 +2,16 @@
 
 ##_it.attocchi.jpa2_
 
+A set of class for work with JPA Entitites. You can find Session or Context Listener to use for lazy close of JPA Controller (EntityManagerFactory lifecicle)
+
 ###Example for JPAController usage:
 
+    /* you can use this code on standalone java program, for JSF web-app is better to work with a shared emf */
     List<MyEntity> list = JPAController.callFindPU("PU_NAME", MyEntity.class, myEntityFilter);
 
 ###Example for JPAEntityFilter
 
-public class MyEntityFilter extends JPAEntityFilter<MyEntity> {
+    public class MyEntityFilter extends JPAEntityFilter<MyEntity> {
 
 	private String fieldValue;
 
@@ -22,7 +25,8 @@ public class MyEntityFilter extends JPAEntityFilter<MyEntity> {
 
 	@Override
 	public void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<Attivita> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<Attivita> root) {
-
+	
+		/* build here you filter logic */
 		if (StringUtils.isNotBlank(fieldValue)) {
 			predicateList.add(criteriaBuilder.equal(root.get(Attivita_.sample), fieldValue));
 		}
@@ -36,16 +40,16 @@ public class MyEntityFilter extends JPAEntityFilter<MyEntity> {
 
 	}
 
-#you can find Session or Context Listener to use for lazy close of JPA Controller.
+
 
 ##_it.attocchi.jsf2_
 
-#you can find base class for your BackBean 
+you can find base class for your BackBean 
 
 ##_it.attocchi.utils_
 
-#a set of utils
+a set of utils
 
 ##_it.attocchi.db_
 
-#something to work easy with org.apache.commons.dbutils.DbUtils or JDBC
+something to work easy with org.apache.commons.dbutils.DbUtils or JDBC
