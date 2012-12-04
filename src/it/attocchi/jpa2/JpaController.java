@@ -547,9 +547,9 @@ public class JpaController implements Serializable {
 				// lower(generatedAlias1.description) like :param1 )]]
 				em.createQuery(cqCount);
 
-				cqCount.where(filter.getWherePredicate());
 				filter.getCriteria(clazz, getEmf());
-
+				cqCount.where(filter.getWherePredicate());
+				
 				res = em.createQuery(cqCount).getSingleResult();
 
 			} else {
@@ -875,6 +875,31 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public static <T extends Serializable> T callFindFirstPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+
+		List<T> list = new ArrayList<T>();
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+
+			list = controller.findBy(clazz, filter);
+
+			if (list != null && list.size() > 0) {
+				res = list.get(0);
+			}
+
+		} catch (Exception ex) {
+			logger.error("findFirst", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+	
 	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
