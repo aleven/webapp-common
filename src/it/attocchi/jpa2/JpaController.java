@@ -549,7 +549,7 @@ public class JpaController implements Serializable {
 
 				filter.getCriteria(clazz, getEmf());
 				cqCount.where(filter.getWherePredicate());
-				
+
 				res = em.createQuery(cqCount).getSingleResult();
 
 			} else {
@@ -814,6 +814,42 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, Long id) throws Exception {
+
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			res = controller.find(clazz, id);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+
+	public static <T extends Serializable> T callFindByIdPU(String persistenceUnit, Class<T> clazz, Long id) throws Exception {
+
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+			res = controller.find(clazz, id);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+
 	public static <T extends Serializable> Long callCount(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		Long res = 0L;
@@ -899,7 +935,7 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
+
 	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
