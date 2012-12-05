@@ -547,8 +547,8 @@ public class JpaController implements Serializable {
 				// lower(generatedAlias1.description) like :param1 )]]
 				em.createQuery(cqCount);
 
-				filter.getCriteria(clazz, getEmf());
-				cqCount.where(filter.getWherePredicate());
+				// filter.getCriteria(clazz, getEmf());
+				cqCount.where(filter.getWherePredicate(clazz, getEmf()));
 
 				res = em.createQuery(cqCount).getSingleResult();
 

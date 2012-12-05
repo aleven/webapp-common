@@ -20,7 +20,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	private static final long serialVersionUID = 1L;
 
 	private static final String JOLLY_CHAR = "%";
-	EntityManagerFactory em;
+	// EntityManagerFactory em;
 
 	protected boolean emptyFilterEmptyData;
 
@@ -40,8 +40,6 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.emptyFilterEmptyData = emptyFilterEmptyData;
 	}
 
-	Predicate wherePredicate;
-
 	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) throws Exception {
 
 		// CriteriaBuilder
@@ -57,13 +55,13 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 
-		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+//		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+//
+//		Predicate[] predicates = new Predicate[predicateList.size()];
+//		predicateList.toArray(predicates);
 
-		Predicate[] predicates = new Predicate[predicateList.size()];
-		predicateList.toArray(predicates);
-
-		wherePredicate = criteriaBuilder.and(predicates);
-
+		Predicate[] predicates = getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+		Predicate wherePredicate = criteriaBuilder.and(predicates);
 		criteriaQuery.where(wherePredicate);
 
 		buildSort(criteriaQuery, criteriaBuilder, root);
@@ -71,9 +69,41 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return criteriaQuery;
 	}
 
-	public Predicate getWherePredicate() {
+	// Predicate wherePredicate;
+	public Predicate getWherePredicate(Class<T> clazz, EntityManagerFactory emf) throws Exception {
+		
+		// CriteriaBuilder
+		CriteriaBuilder criteriaBuilder = emf.getCriteriaBuilder();
+
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
+		Root<T> root = criteriaQuery.from(clazz);
+
+		criteriaQuery.select(root);
+		
+		List<Predicate> predicateList = new ArrayList<Predicate>();
+		
+		// return getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+		
+		Predicate[] predicates = getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+		Predicate wherePredicate = criteriaBuilder.and(predicates);
+		
 		return wherePredicate;
 	}
+	
+	public Predicate[] getWherePredicates(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception {
+		
+		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+
+		Predicate[] predicates = new Predicate[predicateList.size()];
+		predicateList.toArray(predicates);
+		
+		return predicates;
+	}
+
+	// public Predicate getBuilderWherePredicate(Class<T> clazz,
+	// EntityManagerFactory emf) throws Exception {
+	// return wherePredicate;
+	// }
 
 	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
@@ -192,19 +222,19 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.limit = limit;
 	}
 
-
-//	private Predicate buildLikePredicateForFields(CriteriaBuilder criteriaBuilder, String semeRicercaForLike, Path<String>... fields) {
-//
-//		List<Predicate> ors = new ArrayList<Predicate>();
-//		for (Path<String> field : fields) {
-//			// Predicate p1 = (criteriaBuilder.like(root.get(Attivita_.oggetto),
-//			// getSemeRicercaForLike()));
-//			// Predicate p2 = (criteriaBuilder.like(root.get(Attivita_.notes),
-//			// getSemeRicercaForLike()));
-//			ors.add(criteriaBuilder.like(field, semeRicercaForLike));
-//		}
-//
-//		return criteriaBuilder.or(ListUtils.toArray(aList));
-//
-//	}
+	// private Predicate buildLikePredicateForFields(CriteriaBuilder
+	// criteriaBuilder, String semeRicercaForLike, Path<String>... fields) {
+	//
+	// List<Predicate> ors = new ArrayList<Predicate>();
+	// for (Path<String> field : fields) {
+	// // Predicate p1 = (criteriaBuilder.like(root.get(Attivita_.oggetto),
+	// // getSemeRicercaForLike()));
+	// // Predicate p2 = (criteriaBuilder.like(root.get(Attivita_.notes),
+	// // getSemeRicercaForLike()));
+	// ors.add(criteriaBuilder.like(field, semeRicercaForLike));
+	// }
+	//
+	// return criteriaBuilder.or(ListUtils.toArray(aList));
+	//
+	// }
 }
