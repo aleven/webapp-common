@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -55,23 +56,26 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 
-//		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
-//
-//		Predicate[] predicates = new Predicate[predicateList.size()];
-//		predicateList.toArray(predicates);
+		// buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
+		//
+		// Predicate[] predicates = new Predicate[predicateList.size()];
+		// predicateList.toArray(predicates);
 
 		Predicate[] predicates = getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
 		Predicate wherePredicate = criteriaBuilder.and(predicates);
 		criteriaQuery.where(wherePredicate);
 
-		buildSort(criteriaQuery, criteriaBuilder, root);
+		// buildSort(criteriaQuery, criteriaBuilder, root);
+		Order order = buildSort(criteriaQuery, criteriaBuilder, root);
+		if (order != null)
+			criteriaQuery.orderBy(order);
 
 		return criteriaQuery;
 	}
 
 	// Predicate wherePredicate;
 	public Predicate getWherePredicate(Class<T> clazz, EntityManagerFactory emf) throws Exception {
-		
+
 		// CriteriaBuilder
 		CriteriaBuilder criteriaBuilder = emf.getCriteriaBuilder();
 
@@ -79,24 +83,25 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		Root<T> root = criteriaQuery.from(clazz);
 
 		criteriaQuery.select(root);
-		
+
 		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
-		// return getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
-		
+
+		// return getWherePredicates(emf, predicateList, criteriaQuery,
+		// criteriaBuilder, root);
+
 		Predicate[] predicates = getWherePredicates(emf, predicateList, criteriaQuery, criteriaBuilder, root);
 		Predicate wherePredicate = criteriaBuilder.and(predicates);
-		
+
 		return wherePredicate;
 	}
-	
+
 	public Predicate[] getWherePredicates(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception {
-		
+
 		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
 
 		Predicate[] predicates = new Predicate[predicateList.size()];
 		predicateList.toArray(predicates);
-		
+
 		return predicates;
 	}
 
@@ -107,7 +112,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
-	public abstract void buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
+	public abstract Order buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
 	protected String semeRicerca;
 
