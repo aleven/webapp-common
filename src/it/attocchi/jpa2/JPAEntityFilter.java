@@ -1,5 +1,7 @@
 package it.attocchi.jpa2;
 
+import it.attocchi.utils.ListUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +68,10 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		criteriaQuery.where(wherePredicate);
 
 		// buildSort(criteriaQuery, criteriaBuilder, root);
-		Order order = buildSort(criteriaQuery, criteriaBuilder, root);
-		if (order != null)
-			criteriaQuery.orderBy(order);
+		List<Order> orders = new ArrayList<Order>();
+		buildSort(orders, criteriaQuery, criteriaBuilder, root);
+		if (ListUtils.isNotEmpty(orders))
+			criteriaQuery.orderBy(orders);
 
 		return criteriaQuery;
 	}
@@ -112,7 +115,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
-	public abstract Order buildSort(CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
+	public abstract void buildSort(List<Order> orderList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
 	protected String semeRicerca;
 
