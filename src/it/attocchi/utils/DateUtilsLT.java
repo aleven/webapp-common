@@ -33,6 +33,10 @@ public class DateUtilsLT {
 		return new SimpleDateFormat(FORMAT_ISO).format(Now());
 	}
 
+	public static String getYear(Date aDate) {
+		return new SimpleDateFormat("yyyy").format(aDate);
+	}
+
 	public static Date addDays(Date aDate, int days) {
 
 		Calendar cal = new GregorianCalendar();
@@ -45,16 +49,15 @@ public class DateUtilsLT {
 
 	public static List<Date> dateBetweens(Date start, Date end) {
 		List<Date> res = new ArrayList<Date>();
-	
-	    Calendar startCal = getCalendar(start);	
-	    while (startCal.getTime().before(end))
-	    {
-	        Date resultado = startCal.getTime();
-	        res.add(resultado);
-	        
-	        startCal.add(Calendar.DATE, 1);
-	    }
-	    
+
+		Calendar startCal = getCalendar(start);
+		while (startCal.getTime().before(end)) {
+			Date resultado = startCal.getTime();
+			res.add(resultado);
+
+			startCal.add(Calendar.DATE, 1);
+		}
+
 		return res;
 	}
 
@@ -101,9 +104,22 @@ public class DateUtilsLT {
 	public static boolean isWorkDay(Date data) {
 
 		int theDay = getCalendar(data).get(Calendar.DAY_OF_WEEK);
-		
+
 		return theDay != Calendar.SUNDAY && theDay != Calendar.SATURDAY;
-		
+
+	}
+
+	/**
+	 * Week number of the date. From the help this may be different by Calendar
+	 * Locale
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static int getWeekOfTheYear(Date aDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aDate);
+		return cal.get(Calendar.WEEK_OF_YEAR);
 	}
 
 }

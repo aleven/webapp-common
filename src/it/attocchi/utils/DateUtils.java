@@ -1,7 +1,6 @@
 package it.attocchi.utils;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,6 +15,8 @@ import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class DateUtils extends DateUtilsLT {
 
@@ -870,6 +871,18 @@ public class DateUtils extends DateUtilsLT {
 		// return calendar.getTime();
 
 		return new Date(0l);
+	}
+
+	/**
+	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html
+	 * @param aDate
+	 * @return
+	 */
+	public static String getWeekOfTheYearKey(Date aDate) {
+		DateTime dateTime = new DateTime(aDate);
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("x-'W'w");
+		return fmt.print(dateTime);
+
 	}
 
 }
