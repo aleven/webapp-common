@@ -3,6 +3,8 @@ package it.attocchi.jsf2;
 import it.attocchi.jpa2.IJpaListernes;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 /**
  * Gestione EntityManagerFactory in Sessione o Context (richiede uno dei filtri
@@ -19,10 +21,15 @@ abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
 	 * @return
 	 */
 	private EntityManagerFactory getEmfSession() {
-		EntityManagerFactory emf = (EntityManagerFactory) getSession().getAttribute(IJpaListernes.SESSION_EMF);
-		if (emf == null) {
-			// logger.error("getEmfSession: EntityManagerFactory is not in Session");
+		EntityManagerFactory emf = null;
+
+		HttpSession session = getSession();
+		if (session != null) {
+			emf = (EntityManagerFactory) session.getAttribute(IJpaListernes.SESSION_EMF);
+		} else {
+			logger.error("Session is null ");
 		}
+
 		return emf;
 	}
 
@@ -32,9 +39,13 @@ abstract class PageBaseJpa2Data extends PageBaseForceInitSession {
 	 * @return
 	 */
 	private EntityManagerFactory getEmfContext() {
-		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
-		if (emf == null) {
-			// logger.error("getEmfContext: EntityManagerFactory is not in Context");
+		EntityManagerFactory emf = null;
+
+		ServletContext context = getServletContext();
+		if (context != null) {
+			emf = (EntityManagerFactory) context.getAttribute(IJpaListernes.SESSION_EMF);
+		} else {
+			logger.error("Context is null ");
 		}
 		return emf;
 	}
