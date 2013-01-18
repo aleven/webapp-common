@@ -18,6 +18,11 @@ import org.apache.log4j.Logger;
 
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
 
+	public enum SortOrder {
+		ASC,
+		DESC
+	}
+
 	protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
 
 	private static final long serialVersionUID = 1L;
@@ -41,6 +46,16 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	public void setEmptyFilterEmptyData(boolean emptyFilterEmptyData) {
 		this.emptyFilterEmptyData = emptyFilterEmptyData;
+	}
+
+	protected SortOrder sortOrder = SortOrder.ASC;
+
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) throws Exception {
