@@ -28,7 +28,7 @@ public class Crono {
 	}
 
 	public static String stopAndLog(String name) {
-		String res = "Crono " + name + " not available.";
+		String res = "Crono \"" + name + "\" not available.";
 
 		stop(name);
 
