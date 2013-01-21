@@ -2,6 +2,8 @@ package it.attocchi.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ListUtils {
@@ -123,4 +125,31 @@ public class ListUtils {
 		}
 		aList.add(anObject);
 	}
+
+	public static <T> T find(List<T> aList, T key, Comparator<T> c) {
+		T res = null;
+
+		Collections.sort(aList, c);
+		int index = Collections.binarySearch(aList, key, c);
+
+		if (index >= 0) {
+			res = aList.get(index);
+		}
+
+		return res;
+	}
+
+	public static <T extends Comparable<T>> T find(List<T> aList, T key) {
+		T res = null;
+
+		Collections.sort(aList);
+		int index = Collections.binarySearch(aList, key);
+
+		if (index >= 0) {
+			res = aList.get(index);
+		}
+
+		return res;
+	}
+
 }
