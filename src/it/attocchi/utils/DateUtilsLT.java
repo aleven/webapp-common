@@ -21,6 +21,8 @@ public class DateUtilsLT {
 
 	public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
 
+	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
+	
 	public static Date Now() {
 		return new Date();
 	}
