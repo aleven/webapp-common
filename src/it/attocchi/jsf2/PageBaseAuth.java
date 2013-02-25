@@ -31,8 +31,13 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	// }
 	// }
 
+	// protected abstract void inizializeMembers() throws Exception;
+	
 	@Override
 	protected void preInit() throws Exception {
+		
+		// inizializeMembers();
+		
 		if (getIdUtenteLoggato() > 0) {
 
 			// Login e' stato fatto
