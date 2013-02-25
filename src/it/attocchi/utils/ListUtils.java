@@ -152,4 +152,14 @@ public class ListUtils {
 		return res;
 	}
 
+	public static List<String> fromValues(String... values) {
+		List<String> res = new ArrayList<String>();
+
+		for (int i = 0; i < values.length; i++) {
+			res.add(values[i]);
+		}
+
+		return res;
+	}
+
 }
