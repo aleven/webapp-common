@@ -395,6 +395,9 @@ abstract class PageBase implements Serializable {
 		return getServletContext().getRealPath(relativePath);
 	}
 
+	/*
+	 * 
+	 */
 	public String getJsfRedirect(String outcome) {
 		return outcome + "?faces-redirect=true";
 	}
