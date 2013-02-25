@@ -149,16 +149,36 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	/**
 	 * 
-	 * @param semeRicerca
+	 * @return
 	 */
 	public String getSemeRicercaForLike() {
-		String res = semeRicerca;
+		// String res = semeRicerca;
+		//
+		// if (StringUtils.isNotEmpty(res)) {
+		// if (res.startsWith(JOLLY_CHAR) || res.endsWith(JOLLY_CHAR)) {
+		// // OK
+		// } else {
+		// res = JOLLY_CHAR + semeRicerca + JOLLY_CHAR;
+		// }
+		// }
+		//
+		// return res;
+		return getForLike(semeRicerca);
+	}
+
+	/**
+	 * 
+	 * @param aString
+	 * @return
+	 */
+	public String getForLike(String aString) {
+		String res = aString;
 
 		if (StringUtils.isNotEmpty(res)) {
 			if (res.startsWith(JOLLY_CHAR) || res.endsWith(JOLLY_CHAR)) {
 				// OK
 			} else {
-				res = JOLLY_CHAR + semeRicerca + JOLLY_CHAR;
+				res = JOLLY_CHAR + res + JOLLY_CHAR;
 			}
 		}
 
