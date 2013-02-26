@@ -1008,4 +1008,21 @@ public class JpaController implements Serializable {
 		if (clazz == null)
 			throw new Exception("JPAController Entity Class not specified.");
 	}
+
+	public static <T extends Serializable> boolean callDelete(EntityManagerFactory emf, Class<T> clazz, T o, Object id) throws Exception {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+
+			controller.delete(clazz, o, id);
+			res = true;
+		} catch (Exception ex) {
+			logger.error("delete", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}
 }
