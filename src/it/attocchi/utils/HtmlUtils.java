@@ -121,4 +121,49 @@ public class HtmlUtils {
 	// Document doc = Jsoup.connect(uri).get();
 	// doc.get
 	// }
+	
+	/**
+	 * Funzione che converte
+	 * 
+	 * @param aString
+	 * @return
+	 */
+	public static String encodeForEscape(String aString) {
+		String res = null;
+
+		// if (aString != null) {
+		if (StringUtils.isNotEmpty(aString)) {
+			/*
+			 * Succede che poi in HTML ho tutte le entita HTML se uso escapeHtml
+			 */
+			res = aString;
+			// res = StringEscapeUtils.escapeHtml(aString);
+
+			/*
+			 * Per Ultimo questo altrimenti converte <BR> nelle entita' quello
+			 * fatto prima
+			 */
+			res = res.replaceAll("\n", "<BR/>").replaceAll("\r", "");
+		}
+
+		return res;
+	}
+
+	public static String encodeWebUrl(String aString) {
+		String res = null;
+
+		// res = aString.replaceAll("(?:https?|ftps?)://[\\w/%.-]+",
+		// "<a href='$0'>$0</a>");
+
+		String regexp = "(?:https?|ftps?)://[\\w/%.-]+";
+
+		// if (aString != null) {
+		if (StringUtils.isNotEmpty(aString)) {
+			res = aString.replaceAll(regexp, "<a href='$0' class='LinkChiaveEsterna' target='_blank'>$0</a>");
+		}
+		// res = aString.replaceAll("(?:wwws?)://[\\w/%.-]+",
+		// "<a href='http://$0'>$0</a>");
+
+		return res;
+	}	
 }

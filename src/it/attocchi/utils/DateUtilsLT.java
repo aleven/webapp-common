@@ -18,6 +18,7 @@ public class DateUtilsLT {
 	public final static String FORMAT_ISO = "yyyyMMdd";
 
 	public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
+	public final static String FORMAT_ISO_HHMM_SEPARATOR = "yyyy-MM-dd HH:mm";
 
 	public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
 
@@ -76,6 +77,16 @@ public class DateUtilsLT {
 	public static Date parseISO(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM).parse(aIsoString + " 12:00");
 	}
+	
+	/**
+	 * 2013-12-13
+	 * @param aIsoString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseISOSeparator(String aIsoString) throws ParseException {
+		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM_SEPARATOR).parse(aIsoString + " 12:00");
+	}	
 
 	/**
 	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
