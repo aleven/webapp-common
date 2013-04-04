@@ -1,5 +1,6 @@
 package it.attocchi.jsf2;
 
+import it.attocchi.jsf2.exceptions.PageAuthException;
 import it.attocchi.web.filters.AuthFilter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class PageBaseAuthString extends PageBaseNoAuth {
 
 	@Override
-	protected void preInit() throws Exception {
+	protected void preInit() throws PageAuthException {
 		if (StringUtils.isNotEmpty(getIdUtenteLoggato())) {
 
 			// Login e' stato fatto

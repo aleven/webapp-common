@@ -1,5 +1,7 @@
 package it.attocchi.jsf2;
 
+import it.attocchi.jsf2.exceptions.PageAuthException;
+
 import javax.annotation.PostConstruct;
 
 /**
@@ -26,7 +28,7 @@ public abstract class PageBaseNoAuth extends PageBaseJpa2Data {
 		}
 	}
 
-	protected abstract void preInit() throws Exception;
+	protected abstract void preInit() throws PageAuthException;
 
 	protected abstract void init() throws Exception;
 

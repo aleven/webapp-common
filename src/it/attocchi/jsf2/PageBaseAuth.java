@@ -1,7 +1,6 @@
 package it.attocchi.jsf2;
 
-import org.apache.commons.lang3.StringUtils;
-
+import it.attocchi.jsf2.exceptions.PageAuthException;
 import it.attocchi.web.filters.AuthFilter;
 
 /**
@@ -32,12 +31,12 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	// }
 
 	// protected abstract void inizializeMembers() throws Exception;
-	
+
 	@Override
-	protected void preInit() throws Exception {
-		
+	protected void preInit() throws PageAuthException {
+
 		// inizializeMembers();
-		
+
 		if (getIdUtenteLoggato() > 0) {
 
 			// Login e' stato fatto
@@ -45,7 +44,8 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		} else {
 			logger.error("Necessaria Autenticazione");
 			// addErrorMessage("Necessaria Autenticazione");
-			throw new Exception("Necessaria Autenticazione");
+			// throw new Exception("Necessaria Autenticazione");
+			throw new PageAuthException();
 		}
 	}
 
@@ -61,7 +61,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
 
 		int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
-		
+
 		if (idUtenteLoggato <= 0 || param != idUtenteLoggato) {
 
 			if (param == 0 && debug) {
