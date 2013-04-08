@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
  <filter>
  <display-name>JSONPRequestFilter</display-name>
  <filter-name>JSONPRequestFilter</filter-name>
- <filter-class>it.atreeblu.atreeflow.rapportoserver.filter.JSONPRequestFilter</filter-class>
+ <filter-class>it.attocchi.rest.JSONPRequestFilter</filter-class>
  </filter>
  <filter-mapping>
  <filter-name>JSONPRequestFilter</filter-name>
