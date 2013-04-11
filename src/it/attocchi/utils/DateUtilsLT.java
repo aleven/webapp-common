@@ -24,6 +24,10 @@ public class DateUtilsLT {
 
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
 	
+	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
+	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
+	public static final String FORMAT_TIME_IT = "HH:mm";
+	
 	public static Date Now() {
 		return new Date();
 	}
