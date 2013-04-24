@@ -101,6 +101,19 @@ abstract class PageBase implements Serializable {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 	}
 
+	protected void addValidationMessage(String componentId, String summary) {
+
+		getFacesContext().addMessage(componentId, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null));
+
+		/*
+		 * UIComponent comp =
+		 * FacesContext.getCurrentInstance().getViewRoot().findComponent
+		 * (componentId); if ((comp != null) && (comp instanceof UIInput)) {
+		 * ((UIInput) comp).setValid(false); }
+		 */
+
+	}
+
 	protected String getInitParam(String name) {
 		return getExternalContext().getInitParameter(name);
 	}
@@ -331,6 +344,8 @@ abstract class PageBase implements Serializable {
 			response.setHeader("Content-Type", "application/octet-stream");
 			response.setHeader("Content-Length", String.valueOf(file.length()));
 			response.setHeader("Content-Disposition", "inline; filename=\"" + downloadFileName + "\"");
+			// response.setHeader("Content-Disposition",
+			// "attachment; filename=\"" + downloadFileName + "\"");
 			output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 
 			// Write file contents to response.
