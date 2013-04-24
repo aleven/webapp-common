@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ListUtils {
 
 	/**
@@ -93,7 +95,7 @@ public class ListUtils {
 	 */
 	public static String toCommaSepared(List<String> aListOfString) {
 		String res = "";
-		if (!ListUtils.isEmpty(aListOfString)) {
+		if (isNotEmpty(aListOfString)) {
 			res = aListOfString.toString();
 		}
 		return res;
@@ -101,9 +103,10 @@ public class ListUtils {
 
 	public static String toCommaSeparedNoBracket(List<String> aListOfString) {
 		String res = "";
-		if (!ListUtils.isEmpty(aListOfString)) {
-			res = aListOfString.toString();
 
+		res = toCommaSepared(aListOfString);
+
+		if (StringUtils.isNotBlank(res)) {
 			res = res.substring(1);
 			res = res.substring(0, res.length() - 1);
 		}
