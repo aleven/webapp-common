@@ -53,7 +53,7 @@ abstract class PageBase implements Serializable {
 	}
 
 	protected void addWarnMessage(String summary) {
-		addInfoMessage(summary, "");
+		addWarnMessage(summary, "");
 	}
 
 	protected void addWarnMessage(String summary, String detail) {
