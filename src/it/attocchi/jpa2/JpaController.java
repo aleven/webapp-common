@@ -196,7 +196,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public <T extends Serializable> T find(Class<T> clazz, Long id) throws Exception {
+	public <T extends Serializable> T find(Class<T> clazz, long id) throws Exception {
 		T res = null;
 
 		testClazz(clazz);
@@ -220,6 +220,56 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
+	
+	public <T extends Serializable> T find(Class<T> clazz, int id) throws Exception {
+		T res = null;
+
+		testClazz(clazz);
+
+		EntityManager em = getEntityManager();
+
+		try {
+
+			res = em.find(clazz, id);
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
+		}
+
+		return res;
+	}
+	
+	public <T extends Serializable> T find(Class<T> clazz, String id) throws Exception {
+		T res = null;
+
+		testClazz(clazz);
+
+		EntityManager em = getEntityManager();
+
+		try {
+
+			res = em.find(clazz, id);
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
+		}
+
+		return res;
+	}	
 
 	public <T extends Serializable> T findFirst(Class<T> clazz, String query, Object... params) throws Exception {
 		T res = null;
@@ -814,7 +864,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, Long id) throws Exception {
+	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, long id) throws Exception {
 
 		T res = null;
 
@@ -831,8 +881,44 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
+	
+	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, int id) throws Exception {
 
-	public static <T extends Serializable> T callFindByIdPU(String persistenceUnit, Class<T> clazz, Long id) throws Exception {
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			res = controller.find(clazz, id);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}
+	
+	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, String id) throws Exception {
+
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			res = controller.find(clazz, id);
+		} catch (Exception ex) {
+			logger.error("find", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}	
+
+	public static <T extends Serializable> T callFindByIdPU(String persistenceUnit, Class<T> clazz, long id) throws Exception {
 
 		T res = null;
 
@@ -1006,7 +1092,7 @@ public class JpaController implements Serializable {
 
 	private void testClazz(Class clazz) throws Exception {
 		if (clazz == null)
-			throw new Exception("JPAController Entity Class not specified.");
+			throw new Exception("JPAController Entity Class (clazz) not specified.");
 	}
 
 	public static <T extends Serializable> boolean callDelete(EntityManagerFactory emf, Class<T> clazz, T o, Object id) throws Exception {
