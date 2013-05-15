@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 
 public class BookmarkParser {
 
-	private static Logger log = Logger.getLogger(BookmarkParser.class.getName());
+	protected static final Logger logger = Logger.getLogger(BookmarkParser.class.getName());
 
-	public static String parserBookmark(String testo, Map<String, Object> parameters) throws Exception {
+	public static String parse(String testo, Map<String, Object> parameters) throws Exception {
 		String returnValue = null;
 		String strOggetto = null;
 		String strProperty = null;
@@ -32,7 +32,7 @@ public class BookmarkParser {
 		try {
 			testoInput = testo;
 			returnValue = "";
-			if (!testoInput.equals("")) {
+			if (testoInput != null && !testoInput.equals("")) {
 				while (testoInput != null && !testoInput.equals("")) {
 					int indexLow = testoInput.indexOf("${");
 					if (indexLow == -1) {
@@ -73,8 +73,10 @@ public class BookmarkParser {
 										 * stampare
 										 */
 										if (arrayProperty.length == i + 1) {
-											if (getMethod.getReturnType() != Date.class && getMethod.getReturnType() != Integer.class && getMethod.getReturnType() != int.class) {
-												strValore = (String) getMethod.invoke(oggetto);
+											// if (getMethod.getReturnType() != Date.class && getMethod.getReturnType() != Integer.class && getMethod.getReturnType() != int.class) {
+											if (getMethod.getReturnType() != Date.class) {
+												// strValore = (String) getMethod.invoke(oggetto);
+												strValore = String.valueOf(getMethod.invoke(oggetto));
 												if (strValore == null) {
 													strValore = "";
 												}
@@ -86,12 +88,12 @@ public class BookmarkParser {
 													strCalValue = formatter.format(dateValue);
 												}
 												returnValue = returnValue + strCalValue;
-											} else if (getMethod.getReturnType() == Integer.class || getMethod.getReturnType() == int.class) {
-												integerValue = (Integer) getMethod.invoke(oggetto);
-												if (integerValue != null) {
-													strCalValue = String.valueOf(integerValue);
-												}
-												returnValue = returnValue + strCalValue;
+//											} else if (getMethod.getReturnType() == Integer.class || getMethod.getReturnType() == int.class) {
+//												integerValue = (Integer) getMethod.invoke(oggetto);
+//												if (integerValue != null) {
+//													strCalValue = String.valueOf(integerValue);
+//												}
+//												returnValue = returnValue + strCalValue;
 											}
 											retobj = null;
 										} else {
@@ -107,15 +109,15 @@ public class BookmarkParser {
 											retobj = getMethod.invoke(oggetto);
 										}
 									} catch (IntrospectionException e) {
-										returnValue = returnValue + "########";
+										returnValue = returnValue + "#no_property#";
 									}
 								} else {
 									/*
 									 * Se l'oggetto e' nullo allora imposto il
 									 * segnaposto a ""
 									 */
-									// returnValue = returnValue + "########";
-									returnValue = "";
+									returnValue = returnValue + "#null#";
+									// returnValue = "";
 								}
 							}
 						} else {
@@ -131,7 +133,8 @@ public class BookmarkParser {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			logger.error("parse", ex);
 			returnValue = testoInput;
 		} finally {
 			strOggetto = null;
