@@ -45,7 +45,7 @@ public class JpaController implements Serializable {
 
 	// private static EntityManagerFactory sharedEmf;
 
-	private String persistenceUnit;
+	protected String persistenceUnit;
 
 	// public static int Numero = 0;
 	// private int numero = 0;
