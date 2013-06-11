@@ -54,6 +54,10 @@ public class Crono {
 	public static void stopAndLogDebug(String name, Logger logger) {
 		logger.debug(stopAndLog(name));
 	}
+	
+	public static void stopAndLogInfo(String name, Logger logger) {
+		logger.info(stopAndLog(name));
+	}	
 
 	public static void stopAndSysOut(String name) {
 		System.out.println(stopAndLog(name));
