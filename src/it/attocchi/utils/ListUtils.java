@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class ListUtils {
@@ -163,6 +165,20 @@ public class ListUtils {
 		}
 
 		return res;
+	}
+
+	public static <T> List<T> newIfNull(List<T> listaTags) {
+		List<T> res = listaTags;
+		if (res == null)
+			res = new ArrayList<T>();
+		
+		return res;
+	}
+	
+	public static void clear(List aList) {
+		if (aList != null) {
+			aList.clear();
+		}
 	}
 
 }
