@@ -103,4 +103,14 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	protected abstract void onPreLoadData() throws Exception;
 
 	protected abstract void onPostLoadData() throws Exception;
+	
+	
+//	protected String actionSave() {
+//		try {
+//			JpaController.callUpdate(getEmfShared(), elemento);
+//		} catch (Exception ex) {
+//			addErrorMessage(ex);
+//		}
+//	}
+	
 }
