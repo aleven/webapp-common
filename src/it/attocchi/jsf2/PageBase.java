@@ -70,7 +70,12 @@ abstract class PageBase implements Serializable {
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore Generico", null));
 		// }
 
-		addErrorMessage("An error ocurred.", ex);
+		if (ex != null && ex.getMessage() != null) {
+			addErrorMessage(ex.getMessage());
+		} else {
+			addErrorMessage("An error ocurred.", ex);
+		}
+
 	}
 
 	protected void addErrorMessage(String summary) {
@@ -343,9 +348,9 @@ abstract class PageBase implements Serializable {
 			response.reset();
 			response.setHeader("Content-Type", "application/octet-stream");
 			response.setHeader("Content-Length", String.valueOf(file.length()));
-			response.setHeader("Content-Disposition", "inline; filename=\"" + downloadFileName + "\"");
-			// response.setHeader("Content-Disposition",
-			// "attachment; filename=\"" + downloadFileName + "\"");
+			// response.setHeader("Content-Disposition", "inline; filename=\"" +
+			// downloadFileName + "\"");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFileName + "\"");
 			output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 
 			// Write file contents to response.
