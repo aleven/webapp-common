@@ -19,13 +19,14 @@ public class ListUtils {
 	 * @return
 	 */
 	public static boolean isEmpty(List aList) {
-		boolean res = true;
-
-		if (aList != null && aList.size() > 0) {
-			res = false;
-		}
-
-		return res;
+//		boolean res = true;
+//
+//		if (aList != null && aList.size() > 0) {
+//			res = false;
+//		}
+//
+//		return res;
+		return !isNotEmpty(aList);
 	}
 
 	/**
@@ -35,7 +36,8 @@ public class ListUtils {
 	 * @return
 	 */
 	public static boolean isNotEmpty(List aList) {
-		return !isEmpty(aList);
+		return aList != null && aList.size() > 0;
+		// return !isEmpty(aList);
 	}
 
 	public static List<String> toList(String[] anArray) {
