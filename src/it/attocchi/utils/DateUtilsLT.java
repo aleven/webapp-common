@@ -16,11 +16,12 @@ public class DateUtilsLT {
 
 	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	public final static String FORMAT_ISO = "yyyyMMdd";
-
+	
 	public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
 	public final static String FORMAT_ISO_HHMM_SEPARATOR = "yyyy-MM-dd HH:mm";
 
-	public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
+	public static final String FORMAT_HHmmssSS = "HHmmssSS";
+	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
 
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
 	
