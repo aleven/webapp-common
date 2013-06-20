@@ -19,6 +19,8 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 
 /**
  * 
@@ -408,34 +410,30 @@ public class JpaController implements Serializable {
 		}
 	}
 
-//	public <T extends Serializable> List<T> findByExample(Class<T> clazz, T anExample) throws Exception {
-//		List<T> res = new ArrayList<T>();
-//
-//		testClazz(clazz);
-//
-//		EntityManager em = getEntityManager();
-//		// Session session = null;
-//
-//		try {
-//			// res = session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
-//
-//			CriteriaBuilder cb = em.getCriteriaBuilder();
-//			CriteriaQuery<T> q = cb.createQuery(clazz);
-//			q.where(cb.qbe(q.from(clazz), anExample);
-//			
-//		} catch (Exception e) {
-//			throw e;
-//		} finally {
-//			// Close the database connection:
-//			if (!globalTransactionOpen) {
-//				// if (em.getTransaction().isActive())
-//				// em.getTransaction().rollback();
-//				closeEm(); // em.close();
-//			}
-//		}
-//
-//		return res;
-//	}
+	public <T extends Serializable> List<T> findByExample(Class<T> clazz, T anExample) throws Exception {
+		List<T> res = new ArrayList<T>();
+
+		testClazz(clazz);
+
+		EntityManager em = getEntityManager();
+		Session session = null;
+
+		try {
+			res = session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
+		}
+
+		return res;
+	}
 
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws Exception {
 		List<T> res = new ArrayList<T>();
