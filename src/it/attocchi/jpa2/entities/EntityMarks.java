@@ -16,25 +16,25 @@ public class EntityMarks implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "dt_creazione")
+	@Column(name = "mark_dt_creazione")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataCreazione;
 
-	@Column(name = "ts_modifica")
+	@Column(name = "mark_ts_modifica")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataModifica;
 
-	@Column(name = "dt_cancellazione")
+	@Column(name = "mark_dt_cancellazione")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataCancellazione;
 	//
-	@Column(name = "id_utente_creazione")
+	@Column(name = "mark_id_utente_creazione")
 	protected int idUtenteCreazione;
 
-	@Column(name = "id_utente_modifica")
+	@Column(name = "mark_id_utente_modifica")
 	protected int idUtenteModifica;
 
-	@Column(name = "id_utente_cancellazione")
+	@Column(name = "mark_id_utente_cancellazione")
 	protected int idUtenteCancellazione;
 
 	public Date getDataCreazione() {
