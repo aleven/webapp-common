@@ -1,6 +1,7 @@
 package it.attocchi.jsf2.pages;
 
 import it.attocchi.jpa2.JpaController;
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
 import it.attocchi.jsf2.PageBaseNoAuth;
 import it.attocchi.utils.Crono;
 
@@ -103,14 +104,13 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	protected abstract void onPreLoadData() throws Exception;
 
 	protected abstract void onPostLoadData() throws Exception;
-	
-	
-//	protected String actionSave() {
-//		try {
-//			JpaController.callUpdate(getEmfShared(), elemento);
-//		} catch (Exception ex) {
-//			addErrorMessage(ex);
-//		}
-//	}
-	
+
+	// protected String actionSave() {
+	// try {
+	// JpaController.callUpdate(getEmfShared(), elemento);
+	// } catch (Exception ex) {
+	// addErrorMessage(ex);
+	// }
+	// }
+
 }
