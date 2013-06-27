@@ -16,7 +16,7 @@ public class DateUtilsLT {
 
 	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	public final static String FORMAT_ISO = "yyyyMMdd";
-	
+
 	public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
 	public final static String FORMAT_ISO_HHMM_SEPARATOR = "yyyy-MM-dd HH:mm";
 
@@ -24,12 +24,12 @@ public class DateUtilsLT {
 	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
 
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
-	
+
 	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
 	public static final String FORMAT_DATE_TIME_IT = "dd/MM/yyyy HH:mm";
 	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
 	public static final String FORMAT_TIME_IT = "HH:mm";
-	
+
 	public static Date Now() {
 		return new Date();
 	}
@@ -83,16 +83,17 @@ public class DateUtilsLT {
 	public static Date parseISO(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM).parse(aIsoString + " 12:00");
 	}
-	
+
 	/**
 	 * 2013-12-13
+	 * 
 	 * @param aIsoString
 	 * @return
 	 * @throws ParseException
 	 */
 	public static Date parseISOSeparator(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM_SEPARATOR).parse(aIsoString + " 12:00");
-	}	
+	}
 
 	/**
 	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
@@ -139,6 +140,46 @@ public class DateUtilsLT {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(aDate);
 		return cal.get(Calendar.WEEK_OF_YEAR);
+	}
+
+	/**
+	 * Create a Date from specified data
+	 * @param year
+	 * @param month DAY_OF_MONTH
+	 * @param day
+	 * @param hours HOUR_OF_DAY
+	 * @param minutes
+	 * @return
+	 */
+	public static Date getDate(int year, int month, int day, int hours, int minutes) {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.YEAR, year);
+		c.set(Calendar.MONTH, month);
+		c.set(Calendar.DAY_OF_MONTH, day);
+		c.set(Calendar.HOUR_OF_DAY, hours);
+		c.set(Calendar.MINUTE, minutes);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+
+		return c.getTime();
+	}
+	
+	/**
+	 * Set time of a Date
+	 * @param aDate
+	 * @param hours
+	 * @param minutes
+	 * @return
+	 */
+	public static Date setTime(Date aDate, int hours, int minutes) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(aDate);
+		c.set(Calendar.HOUR_OF_DAY, hours);
+		c.set(Calendar.MINUTE, minutes);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+
+		return c.getTime();
 	}
 
 }
