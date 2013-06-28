@@ -29,13 +29,13 @@ public class EntityMarks implements Serializable {
 	protected Date dataCancellazione;
 	//
 	@Column(name = "mark_id_utente_creazione")
-	protected int idUtenteCreazione;
+	protected long idUtenteCreazione;
 
 	@Column(name = "mark_id_utente_modifica")
-	protected int idUtenteModifica;
+	protected long idUtenteModifica;
 
 	@Column(name = "mark_id_utente_cancellazione")
-	protected int idUtenteCancellazione;
+	protected long idUtenteCancellazione;
 
 	public Date getDataCreazione() {
 		return dataCreazione;
@@ -61,23 +61,23 @@ public class EntityMarks implements Serializable {
 		this.dataCancellazione = dataCancellazione;
 	}
 
-	public int getIdUtenteCreazione() {
+	public long getIdUtenteCreazione() {
 		return idUtenteCreazione;
 	}
 
-	public void setIdUtenteCreazione(int idUtenteCreazione) {
+	public void setIdUtenteCreazione(long idUtenteCreazione) {
 		this.idUtenteCreazione = idUtenteCreazione;
 	}
 
-	public int getIdUtenteModifica() {
+	public long getIdUtenteModifica() {
 		return idUtenteModifica;
 	}
 
-	public void setIdUtenteModifica(int idUtenteModifica) {
+	public void setIdUtenteModifica(long idUtenteModifica) {
 		this.idUtenteModifica = idUtenteModifica;
 	}
 
-	public int getIdUtenteCancellazione() {
+	public long getIdUtenteCancellazione() {
 		return idUtenteCancellazione;
 	}
 
