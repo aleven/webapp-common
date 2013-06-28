@@ -818,7 +818,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(emf);
 			res = controller.findBy(clazz, filter);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callFind", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -836,7 +836,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(persistenceUnit);
 			res = controller.findBy(clazz, filter);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callFindPU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -872,7 +872,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(emf);
 			res = controller.find(clazz, id);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callFindById", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -890,7 +890,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(emf);
 			res = controller.find(clazz, id);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callFindById", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -908,7 +908,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(persistenceUnit);
 			res = controller.find(clazz, id);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callFindByIdPU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -916,6 +916,24 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
+	
+	public static <T extends Serializable> T callFindByUUIDPU(String persistenceUnit, Class<T> clazz, String uuid) throws Exception {
+
+		T res = null;
+
+		JpaController controller = null;
+		try {
+			controller = new JpaController(persistenceUnit);
+			res = controller.find(clazz, uuid);
+		} catch (Exception ex) {
+			logger.error("callFindByUUIDPU", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+
+		return res;
+	}	
 
 	public static <T extends Serializable> Long callCount(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
@@ -926,7 +944,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(emf);
 			res = controller.countBy(clazz, filter);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callCount", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -944,7 +962,7 @@ public class JpaController implements Serializable {
 			controller = new JpaController(persistenceUnit);
 			res = controller.countBy(clazz, filter);
 		} catch (Exception ex) {
-			logger.error("find", ex);
+			logger.error("callCountPU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -969,7 +987,7 @@ public class JpaController implements Serializable {
 			}
 
 		} catch (Exception ex) {
-			logger.error("findFirst", ex);
+			logger.error("callFindFirst", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -994,7 +1012,7 @@ public class JpaController implements Serializable {
 			}
 
 		} catch (Exception ex) {
-			logger.error("findFirst", ex);
+			logger.error("callFindFirstPU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -1012,7 +1030,7 @@ public class JpaController implements Serializable {
 			controller.update(object);
 			res = true;
 		} catch (Exception ex) {
-			logger.error("update", ex);
+			logger.error("callUpdate", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -1029,7 +1047,7 @@ public class JpaController implements Serializable {
 			controller.insert(object);
 			res = true;
 		} catch (Exception ex) {
-			logger.error("insert", ex);
+			logger.error("callInsert", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -1046,7 +1064,7 @@ public class JpaController implements Serializable {
 			controller.insert(object);
 			res = true;
 		} catch (Exception ex) {
-			logger.error("insert", ex);
+			logger.error("callInsertPU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
@@ -1063,7 +1081,7 @@ public class JpaController implements Serializable {
 			controller.update(object);
 			res = true;
 		} catch (Exception ex) {
-			logger.error("update", ex);
+			logger.error("callUpdatePU", ex);
 			throw ex;
 		} finally {
 			JpaController.callCloseEmf(controller);
