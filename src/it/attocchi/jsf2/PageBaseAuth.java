@@ -54,9 +54,9 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	/*
 	 * Gestione Autorizzazione Utente in Sessione
 	 */
-	private int idUtenteLoggato;
+	private long idUtenteLoggato;
 
-	public int getIdUtenteLoggato() {
+	public long getIdUtenteLoggato() {
 
 		idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
 
