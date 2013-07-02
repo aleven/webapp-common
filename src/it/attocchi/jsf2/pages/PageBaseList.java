@@ -2,7 +2,7 @@ package it.attocchi.jsf2.pages;
 
 import it.attocchi.jpa2.JPAEntityFilter;
 import it.attocchi.jpa2.JpaController;
-import it.attocchi.jsf2.PageBaseNoAuth;
+import it.attocchi.jsf2.PageBaseAuth;
 import it.attocchi.utils.Crono;
 
 import java.io.Serializable;
@@ -19,12 +19,12 @@ import org.apache.commons.lang3.StringUtils;
  * @param <T>
  * @param <F>
  */
-public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFilter<T>> extends PageBaseNoAuth {
+public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFilter<T>> extends PageBaseAuth {
 
 	protected List<T> elenco;
 	protected F filtro;
 	protected Class<T> clazz;
-	protected int count;
+	protected long count;
 	protected String persistentUnit;
 
 	public List<T> getElenco() {
@@ -51,11 +51,11 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		this.clazz = clazz;
 	}
 
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 
@@ -68,15 +68,15 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 
 		Crono.start("onPreLoadData");
 		onPreLoadData();
-		logger.debug(Crono.stopAndLog("onPreLoadData"));
+		Crono.stopAndLogDebug("onPreLoadData", logger);
 
 		Crono.start("loadData");
 		loadData();
-		logger.debug(Crono.stopAndLog("loadData"));
+		Crono.stopAndLogDebug("loadData", logger);
 
 		Crono.start("onPostLoadData");
 		onPostLoadData();
-		logger.debug(Crono.stopAndLog("onPostLoadData"));
+		Crono.stopAndLogDebug("onPostLoadData", logger);
 
 		// postInit();
 	}
@@ -91,7 +91,12 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		if (elenco == null || elenco.size() == 0) {
 			addErrorMessage("Nessun Dato");
 		} else {
-			count = elenco.size();
+			// count = elenco.size();
+			if (StringUtils.isNotBlank(persistentUnit))
+				count = JpaController.callCountPU(persistentUnit, clazz, filtro);
+			else
+				count = JpaController.callCount(getEmfShared(), clazz, filtro);
+
 		}
 	}
 
@@ -121,7 +126,7 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		loadDataException();
 		return "";
 	}
-	
+
 	public void actionListenerReload(ActionEvent event) {
 		loadDataException();
 	}

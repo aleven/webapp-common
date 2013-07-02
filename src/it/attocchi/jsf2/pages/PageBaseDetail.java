@@ -2,7 +2,7 @@ package it.attocchi.jsf2.pages;
 
 import it.attocchi.jpa2.JpaController;
 import it.attocchi.jpa2.entities.IEntityWithIdLong;
-import it.attocchi.jsf2.PageBaseNoAuth;
+import it.attocchi.jsf2.PageBaseAuth;
 import it.attocchi.utils.Crono;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
  * @param <T>
  * @param <F>
  */
-public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBaseNoAuth {
+public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBaseAuth {
 
 	protected T elemento;
 	protected long id;
