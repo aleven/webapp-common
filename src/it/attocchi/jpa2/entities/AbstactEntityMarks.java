@@ -14,7 +14,7 @@ public abstract class AbstactEntityMarks extends EntityBase {
 
 	public abstract void setEntityMarks(EntityMarks entityMarks);
 
-	public void markAsCreated(int idUtente) {
+	public void markAsCreated(long idUtente) {
 		init();
 		getEntityMarks().idUtenteCreazione = idUtente;
 		getEntityMarks().dataCreazione = new Date();
@@ -22,13 +22,13 @@ public abstract class AbstactEntityMarks extends EntityBase {
 		markAsUpdated(idUtente);
 	}
 
-	public void markAsUpdated(int idUtente) {
+	public void markAsUpdated(long idUtente) {
 		init();
 		getEntityMarks().idUtenteModifica = idUtente;
 		getEntityMarks().dataModifica = new Date();
 	}
 
-	public void markAsDeleted(int idUtente) {
+	public void markAsDeleted(long idUtente) {
 		init();
 		getEntityMarks().idUtenteCancellazione = idUtente;
 		getEntityMarks().dataCancellazione = new Date();
