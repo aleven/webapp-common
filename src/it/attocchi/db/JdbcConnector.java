@@ -84,6 +84,10 @@ public class JdbcConnector {
 		return conn;
 	}
 
+	public void reopenConnection() {
+		conn = null;
+	}
+
 	/**
 	 * Close a Connection if not is passed in constructor. If you pass in
 	 * constructor you close manually, not with this method
@@ -128,7 +132,7 @@ public class JdbcConnector {
 
 			// Non Ritorna True in caso di Esecuzione di Stored
 			res = true;
-			
+
 		} finally {
 			if (!keepConnOpen)
 				close();
