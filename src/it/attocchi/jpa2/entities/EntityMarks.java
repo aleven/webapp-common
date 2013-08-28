@@ -16,26 +16,26 @@ public class EntityMarks implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "mark_dt_creazione")
+	@Column(name = "data_creazione")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataCreazione;
 
-	@Column(name = "mark_ts_modifica")
+	@Column(name = "data_modifica")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataModifica;
 
-	@Column(name = "mark_dt_cancellazione")
+	@Column(name = "data_cancellazione")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date dataCancellazione;
-	//
-	@Column(name = "mark_id_utente_creazione")
-	protected long idUtenteCreazione;
 
-	@Column(name = "mark_id_utente_modifica")
-	protected long idUtenteModifica;
+	@Column(name = "utente_creazione_id")
+	protected long utenteCreazioneId;
 
-	@Column(name = "mark_id_utente_cancellazione")
-	protected long idUtenteCancellazione;
+	@Column(name = "utente_modifica_id")
+	protected long utenteModificaId;
+
+	@Column(name = "utente_cancellazione_id")
+	protected long utenteCancellazioneId;
 
 	public Date getDataCreazione() {
 		return dataCreazione;
@@ -61,28 +61,28 @@ public class EntityMarks implements Serializable {
 		this.dataCancellazione = dataCancellazione;
 	}
 
-	public long getIdUtenteCreazione() {
-		return idUtenteCreazione;
+	public long getUtenteCreazioneId() {
+		return utenteCreazioneId;
 	}
 
-	public void setIdUtenteCreazione(long idUtenteCreazione) {
-		this.idUtenteCreazione = idUtenteCreazione;
+	public void setUtenteCreazioneId(long utenteCreazioneId) {
+		this.utenteCreazioneId = utenteCreazioneId;
 	}
 
-	public long getIdUtenteModifica() {
-		return idUtenteModifica;
+	public long getUtenteModificaId() {
+		return utenteModificaId;
 	}
 
-	public void setIdUtenteModifica(long idUtenteModifica) {
-		this.idUtenteModifica = idUtenteModifica;
+	public void setUtenteModificaId(long utenteModificaId) {
+		this.utenteModificaId = utenteModificaId;
 	}
 
-	public long getIdUtenteCancellazione() {
-		return idUtenteCancellazione;
+	public long getUtenteCancellazioneId() {
+		return utenteCancellazioneId;
 	}
 
-	public void setIdUtenteCancellazione(int idUtenteCancellazione) {
-		this.idUtenteCancellazione = idUtenteCancellazione;
+	public void setUtenteCancellazioneId(long utenteCancellazioneId) {
+		this.utenteCancellazioneId = utenteCancellazioneId;
 	}
 
 }
