@@ -46,6 +46,14 @@ public class DateUtilsLT {
 		return new SimpleDateFormat("yyyy").format(aDate);
 	}
 
+	public static String getMonth(Date aDate) {
+		return new SimpleDateFormat("MM").format(aDate);
+	}
+
+	public static String getDay(Date aDate) {
+		return new SimpleDateFormat("dd").format(aDate);
+	}
+
 	public static Date addDays(Date aDate, int days) {
 
 		Calendar cal = new GregorianCalendar();
@@ -144,10 +152,13 @@ public class DateUtilsLT {
 
 	/**
 	 * Create a Date from specified data
+	 * 
 	 * @param year
-	 * @param month DAY_OF_MONTH
+	 * @param month
+	 *            DAY_OF_MONTH
 	 * @param day
-	 * @param hours HOUR_OF_DAY
+	 * @param hours
+	 *            HOUR_OF_DAY
 	 * @param minutes
 	 * @return
 	 */
@@ -163,9 +174,10 @@ public class DateUtilsLT {
 
 		return c.getTime();
 	}
-	
+
 	/**
 	 * Set time of a Date
+	 * 
 	 * @param aDate
 	 * @param hours
 	 * @param minutes
@@ -180,6 +192,42 @@ public class DateUtilsLT {
 		c.set(Calendar.MILLISECOND, 0);
 
 		return c.getTime();
+	}
+
+	/**
+	 * Verify if a Date is Between other dates, looking only for the date, not
+	 * for the time
+	 * 
+	 * @param aMoment
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public static boolean isBetween(Date aMoment, Date from, Date to) {
+
+		if (aMoment == null)
+			return false;
+
+		if (from == null)
+			from = aMoment;
+
+		if (to == null)
+			to = aMoment;
+
+		Calendar a = Calendar.getInstance();
+		a.setTime(from);
+		Calendar b = Calendar.getInstance();
+		b.setTime(to);
+
+		a.set(Calendar.HOUR_OF_DAY, 0);
+		a.set(Calendar.MINUTE, 0);
+		a.set(Calendar.SECOND, 1);
+
+		b.set(Calendar.HOUR_OF_DAY, 23);
+		b.set(Calendar.MINUTE, 59);
+		b.set(Calendar.SECOND, 59);
+
+		return aMoment.getTime() >= a.getTime().getTime() && aMoment.getTime() <= b.getTime().getTime();
 	}
 
 }
