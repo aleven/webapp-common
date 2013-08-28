@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/apache-log4j-1.2.17"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-dbutils-1.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang3-3.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-release-4.2.1.Final"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mojarra-2.0.4-FCS"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/joda-time-2.1"/>
@@ -14,16 +13,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsoup-1.7.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-jpamodelgen-1.2.0.Final"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-release-4.2.1.Final"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
