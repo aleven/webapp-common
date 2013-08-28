@@ -1,12 +1,12 @@
 package it.attocchi.utils;
 
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.faces.model.SelectItem;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,14 +18,14 @@ public class ListUtils {
 	 * @param aList
 	 * @return
 	 */
-	public static boolean isEmpty(List aList) {
-//		boolean res = true;
-//
-//		if (aList != null && aList.size() > 0) {
-//			res = false;
-//		}
-//
-//		return res;
+	public static <T> boolean isEmpty(List<T> aList) {
+		// boolean res = true;
+		//
+		// if (aList != null && aList.size() > 0) {
+		// res = false;
+		// }
+		//
+		// return res;
 		return !isNotEmpty(aList);
 	}
 
@@ -35,7 +35,7 @@ public class ListUtils {
 	 * @param aList
 	 * @return
 	 */
-	public static boolean isNotEmpty(List aList) {
+	public static <T> boolean isNotEmpty(List<T> aList) {
 		return aList != null && aList.size() > 0;
 		// return !isEmpty(aList);
 	}
@@ -92,12 +92,26 @@ public class ListUtils {
 		return res;
 	}
 
+	public static List<Long> fromCommaSeparedLong(String aStringWithValues) {
+		List<Long> res = null;
+
+		List<String> valori = fromCommaSepared(aStringWithValues);
+		if (ListUtils.isNotEmpty(valori)) {
+			for (String valore : valori) {
+				res = newIfNull(res);
+				res.add(Long.valueOf(valore));
+			}
+		}
+
+		return res;
+	}
+
 	/**
 	 * 
 	 * @param aListOfString
 	 * @return [string, string, ... ]
 	 */
-	public static String toCommaSepared(List<String> aListOfString) {
+	public static <T> String toCommaSepared(List<T> aListOfString) {
 		String res = "";
 		if (isNotEmpty(aListOfString)) {
 			res = aListOfString.toString();
@@ -159,6 +173,57 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * Verificare che sia il modo migliore per cercare per id
+	 * 
+	 * @param aList
+	 * @param id
+	 * @return
+	 */
+	public static <T extends IEntityWithIdLong> T findByIdLong(List<T> aList, long id) {
+		T res = null;
+
+		for (T item : aList) {
+			if (item.getId() == id) {
+				res = item;
+				break;
+			}
+		}
+
+		// Comparator<ISearchableByIdLong> comparator = new
+		// Comparator<ISearchableByIdLong>() {
+		// public int compare(ISearchableByIdLong o1, ISearchableByIdLong o2) {
+		// // if (o1.getId().equals(o2.getId())) {
+		// // return o1.b.compareTo(o2.b);
+		// // }
+		// // return o1.a.compareTo(o2.a);
+		// return new Long(o1.getId()).compareTo(o2.getId());
+		// }
+		// };
+		// Collections.sort(aList, comparator);
+		// int i = Collections.binarySearch(aList, id, comparator);
+
+		return res;
+	}
+
+	public static <T extends IEntityWithIdLong> List<T> findByIdsLong(List<T> aList, String ids) {
+		List<T> res = new ArrayList<T>();
+
+		if (StringUtils.isNotBlank(ids)) {
+			for (T item : aList) {
+				List<Long> idsLong = fromCommaSeparedLong(ids);
+				for (Long id : idsLong) {
+					if (item.getId() == id) {
+						res.add(item);
+						// break;
+					}
+				}
+			}
+		}
+
+		return res;
+	}
+
 	public static List<String> fromValues(String... values) {
 		List<String> res = new ArrayList<String>();
 
@@ -173,14 +238,46 @@ public class ListUtils {
 		List<T> res = listaTags;
 		if (res == null)
 			res = new ArrayList<T>();
-		
+
 		return res;
 	}
-	
-	public static void clear(List aList) {
+
+	public static <T> void clear(List<T> aList) {
 		if (aList != null) {
 			aList.clear();
 		}
+	}
+
+	/**
+	 * 
+	 * @param aCommaSeparatedList
+	 * @param newValue
+	 * @return
+	 */
+	public static String addToListOfString(String aCommaSeparatedList, String newValue) {
+		List<String> list = null;
+		ListUtils.newIfNull(list);
+
+		if (StringUtils.isNotBlank(aCommaSeparatedList)) {
+			list = fromCommaSepared(aCommaSeparatedList);
+			ListUtils.newIfNull(list);
+			list.add(newValue);
+		}
+
+		return toCommaSepared(list);
+	}
+
+	public static String addToListOfLong(String aCommaSeparatedList, long newValue) {
+		List<Long> list = null;
+		ListUtils.newIfNull(list);
+
+		if (StringUtils.isNotBlank(aCommaSeparatedList)) {
+			list = fromCommaSeparedLong(aCommaSeparatedList);
+			ListUtils.newIfNull(list);
+			list.add(newValue);
+		}
+
+		return toCommaSepared(list);
 	}
 
 }
