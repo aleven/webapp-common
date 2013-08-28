@@ -6,20 +6,20 @@ package it.attocchi.jpa2.entities;
  * @author Mirco
  * 
  */
-public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks implements IEntityWithIdLong {
+public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks implements IEntityWithIdLong, Comparable<Long> {
 
 	public abstract long getId();
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
-	}
+	// @Override
+	// protected Object clone() throws CloneNotSupportedException {
+	// // TODO Auto-generated method stub
+	// return super.clone();
+	// }
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		// return super.hashCode();
+		return new Long(getId()).hashCode();
 	}
 
 	@Override
@@ -29,8 +29,29 @@ public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks i
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+
+		// return super.equals(obj);
+		// return new Long(this.getId()).equals(obj);
+		// return this.toString().equals(obj);
+
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+
+		if (obj instanceof AbstractEntityMarksWithIdLong) {
+			AbstractEntityMarksWithIdLong cast = (AbstractEntityMarksWithIdLong) obj;
+			return new Long(this.getId()).equals(cast.getId());
+		} else
+			return false;
+
+		// http://javarevisited.blogspot.com/2011/02/how-to-write-equals-method-in-java.html#ixzz2bI4axUuS
 	}
 
+	@Override
+	public int compareTo(Long o) {
+		return new Long(this.getId()).compareTo(o);
+	}
 }
