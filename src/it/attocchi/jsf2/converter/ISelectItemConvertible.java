@@ -2,8 +2,12 @@ package it.attocchi.jsf2.converter;
 
 public interface ISelectItemConvertible {
 
-	String getCode();
+//	@Deprecated
+//	String getCode();
+//
+//	@Deprecated
+//	String getDescrizione();
 
-	String getDescrizione();
-
+	String getItemValue();
+	String getItemLabel();
 }

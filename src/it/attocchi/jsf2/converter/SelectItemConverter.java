@@ -15,7 +15,8 @@ public class SelectItemConverter {
 		List<SelectItem> res = new ArrayList<SelectItem>();
 
 		for (ISelectItemConvertible item : aList) {
-			res.add(new SelectItem(item.getCode(), item.getDescrizione()));
+			// res.add(new SelectItem(item.getCode(), item.getDescrizione()));
+			res.add(new SelectItem(item.getItemValue(), item.getItemLabel()));
 		}
 		
 //		for (Object o : aList) {
