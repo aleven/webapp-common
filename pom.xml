@@ -75,5 +75,10 @@
   		<artifactId>servlet-api</artifactId>
   		<version>6.0.35</version>
   	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-jpamodelgen</artifactId>
+  		<version>1.2.0.Final</version>
+  	</dependency>
   </dependencies>
 </project>
