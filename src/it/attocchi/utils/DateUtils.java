@@ -367,6 +367,14 @@ public class DateUtils extends DateUtilsLT {
 		return (int) ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 	}
 
+	public static int getDaysBetween(Date d1, Date d2) {
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(d1);
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(d2);
+		return getDaysBetween(c1, c2);
+	}
+
 	/**
 	 * Calculates the number of days between two calendar days in a manner which
 	 * is independent of the Calendar type used.
@@ -874,7 +882,9 @@ public class DateUtils extends DateUtilsLT {
 	}
 
 	/**
-	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html
+	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/
+	 * DateTimeFormat.html
+	 * 
 	 * @param aDate
 	 * @return
 	 */
