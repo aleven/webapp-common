@@ -70,12 +70,16 @@ abstract class PageBase implements Serializable {
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore Generico", null));
 		// }
 
-		if (ex != null && ex.getMessage() != null) {
-			addErrorMessage(ex.getMessage());
-		} else {
-			addErrorMessage("An error ocurred.", ex);
-		}
+//		logger.error(ex);
+//		
+//		if (ex != null && ex.getMessage() != null) {
+//			addErrorMessage(ex.getMessage());
+//		} else {
+//			addErrorMessage("NullPointerException", ex);
+//		}
 
+		addErrorMessage("Error", ex);
+		
 	}
 
 	protected void addErrorMessage(String summary) {
@@ -84,20 +88,32 @@ abstract class PageBase implements Serializable {
 
 	protected void addErrorMessage(String summary, Throwable ex) {
 
-		if (ex != null && ex.getMessage() != null && summary != null) {
-
-			if (ex.getCause() == null) {
-				logger.error(summary, ex);
-				getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
+		if (ex != null && ex.getMessage() != null) {
+			
+			if (summary != null) {
+				if (ex.getCause() == null) {
+					logger.error(summary, ex);
+					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
+				} else {
+					logger.error(summary, ex.getCause());
+					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
+				}
 			} else {
-				logger.error(summary, ex.getCause());
-				getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
+				if (ex.getCause() == null) {
+					logger.error(ex);
+					summary = ex.getMessage();
+					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
+				} else {
+					logger.error(ex.getCause());
+					summary = ex.getCause().getMessage();
+					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
+				}				
 			}
 
 		} else {
 
-			logger.error("NullPointerException", ex);
-			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "NullPointerException", "java.lang.NullPointerException"));
+			logger.error("Error", ex);
+			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Null"));
 		}
 
 	}
