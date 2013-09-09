@@ -1,5 +1,4 @@
 <factorypath>
     <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="C:\Progetti\Java\hibernate\hibernate-jpamodelgen-1.2.0.Final\hibernate-jpamodelgen-1.2.0.Final.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="C:\Progetti\Java\eclipselink\eclipselink-2.4.2.v20130514-5956486\eclipselink\jlib\jpa\eclipselink-jpa-modelgen_2.4.2.v20130514-5956486.jar" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/hibernate/hibernate-jpamodelgen/1.2.0.Final/hibernate-jpamodelgen-1.2.0.Final.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
