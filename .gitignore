@@ -1,8 +1,8 @@
-/nbproject/private/
-/nbproject
-/build.xml
-/manifest.mf
-/bin
-/src.old
 /.apt_generated
+/.settings
+/bin
+/release
 /target
+/.classpath
+/.factorypath
+/.project
