@@ -70,16 +70,19 @@ abstract class PageBase implements Serializable {
 		// FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore Generico", null));
 		// }
 
-//		logger.error(ex);
-//		
-//		if (ex != null && ex.getMessage() != null) {
-//			addErrorMessage(ex.getMessage());
-//		} else {
-//			addErrorMessage("NullPointerException", ex);
-//		}
+		// logger.error(ex);
+		//
+		// if (ex != null && ex.getMessage() != null) {
+		// addErrorMessage(ex.getMessage());
+		// } else {
+		// addErrorMessage("NullPointerException", ex);
+		// }
 
-		addErrorMessage("Error", ex);
-		
+		if (ex != null)
+			addErrorMessage(ex.getMessage(), ex);
+		else
+			addErrorMessage("Error", ex);
+
 	}
 
 	protected void addErrorMessage(String summary) {
@@ -89,7 +92,7 @@ abstract class PageBase implements Serializable {
 	protected void addErrorMessage(String summary, Throwable ex) {
 
 		if (ex != null && ex.getMessage() != null) {
-			
+
 			if (summary != null) {
 				if (ex.getCause() == null) {
 					logger.error(summary, ex);
@@ -107,7 +110,7 @@ abstract class PageBase implements Serializable {
 					logger.error(ex.getCause());
 					summary = ex.getCause().getMessage();
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
-				}				
+				}
 			}
 
 		} else {
