@@ -29,7 +29,7 @@ public class DateUtilsLT {
 	public static final String FORMAT_DATE_TIME_IT = "dd/MM/yyyy HH:mm";
 	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
 	public static final String FORMAT_TIME_IT = "HH:mm";
-	
+
 	public static final String FORMAT_yyyyMMdd_dot_HHmmss = "yyyyMMdd.HHmmss";
 
 	public static Date Now() {
@@ -46,6 +46,12 @@ public class DateUtilsLT {
 
 	public static String getYear(Date aDate) {
 		return new SimpleDateFormat("yyyy").format(aDate);
+	}
+
+	public static int getYearAsInt(Date aDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(aDate);
+		return c.get(Calendar.YEAR);
 	}
 
 	public static String getMonth(Date aDate) {
