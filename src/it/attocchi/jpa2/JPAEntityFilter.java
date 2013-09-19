@@ -280,4 +280,15 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	// return criteriaBuilder.or(ListUtils.toArray(aList));
 	//
 	// }
+
+	/*
+	 * FUNZIONI UTILI PER PAGINATORI
+	 */
+	public int getCurrentPage() {
+		return (limit > 0) ? pageNumber + 1 : 0;
+	}
+
+	public int totalPages(int count) {
+		return (limit > 0) ? (int)((count / limit) + 1) : 0;
+	}
 }
