@@ -44,6 +44,14 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	protected void addFatalMessage(String summary) {
+		addInfoMessage(summary, "");
+	}
+	
+	protected void addFatalMessage(String summary, String detail) {
+		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, summary, detail));
+	}
+	
 	protected void addInfoMessage(String summary) {
 		addInfoMessage(summary, "");
 	}
