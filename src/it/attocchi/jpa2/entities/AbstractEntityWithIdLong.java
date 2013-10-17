@@ -36,8 +36,7 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	public int hashCode() {
-		
-		return super.hashCode();
+		return new Long(getId()).hashCode();
 	}
 
 	@Override
@@ -47,7 +46,6 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	public boolean equals(Object obj) {
-		
 		return super.equals(obj);
 	}
 
