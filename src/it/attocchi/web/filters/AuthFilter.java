@@ -73,7 +73,7 @@ public class AuthFilter implements Filter {
 			}
 
 			logger.info("AuthFilter: " + value);
-			chain.doFilter(request, response);
+			// chain.doFilter(request, response);
 		}
 		// } else {
 		// String page = "login.xhtml";
