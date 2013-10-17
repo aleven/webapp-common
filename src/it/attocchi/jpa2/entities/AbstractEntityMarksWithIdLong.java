@@ -12,7 +12,6 @@ public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks i
 
 	// @Override
 	// protected Object clone() throws CloneNotSupportedException {
-	// // TODO Auto-generated method stub
 	// return super.clone();
 	// }
 

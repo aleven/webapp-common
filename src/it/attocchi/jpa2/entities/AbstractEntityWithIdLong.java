@@ -11,13 +11,13 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
+		
 		return super.clone();
 	}
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
+		
 		return super.hashCode();
 	}
 
@@ -28,7 +28,7 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
+		
 		return super.equals(obj);
 	}
 

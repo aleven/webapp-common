@@ -26,7 +26,7 @@ public class JPASessionListener implements HttpSessionListener {
 	 * Default constructor.
 	 */
 	public JPASessionListener() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

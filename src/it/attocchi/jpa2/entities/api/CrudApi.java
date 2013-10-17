@@ -1,12 +1,13 @@
 package it.attocchi.jpa2.entities.api;
 
-import it.attocchi.jpa2.JpaController;
 import it.attocchi.jpa2.entities.IEntityWithIdLong;
 
-import javax.persistence.EntityManagerFactory;
+import org.apache.log4j.Logger;
 
 // public class CrudApi<T extends IEntityWithIdLong, C extends Class<T>> {
 public class CrudApi<T extends IEntityWithIdLong> {
+
+	protected static final Logger logger = Logger.getLogger(CrudApi.class.getName());
 
 	// <U extends AbstractEntityMarksWithIdLong> {
 
@@ -25,9 +26,10 @@ public class CrudApi<T extends IEntityWithIdLong> {
 	// contattoDaSalvare.getId());
 	// }
 
-//	public T cerca(EntityManagerFactory emf, long clienteId) throws Exception {
-//		C clazz;
-//		T res = JpaController.callFindById(emf, clazz.getClass(), clienteId);
-//		return res;
-//	}
+	// public T cerca(EntityManagerFactory emf, long clienteId) throws Exception
+	// {
+	// C clazz;
+	// T res = JpaController.callFindById(emf, clazz.getClass(), clienteId);
+	// return res;
+	// }
 }

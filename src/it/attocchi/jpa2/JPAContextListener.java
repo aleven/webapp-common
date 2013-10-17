@@ -26,7 +26,7 @@ public class JPAContextListener implements ServletContextListener {
 	 * Default constructor.
 	 */
 	public JPAContextListener() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

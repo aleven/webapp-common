@@ -1,10 +1,6 @@
 package it.attocchi.db;
 
-import it.attocchi.utils.ListUtils;
-
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

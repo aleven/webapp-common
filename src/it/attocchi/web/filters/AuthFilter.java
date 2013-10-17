@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -60,7 +60,7 @@ public class AuthFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+		
 
 	}
 

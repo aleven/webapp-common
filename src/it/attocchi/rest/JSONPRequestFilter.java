@@ -46,14 +46,14 @@ public class JSONPRequestFilter implements Filter {
 	 * Default constructor.
 	 */
 	public JSONPRequestFilter() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class JSONPRequestFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	private String getCallbackMethod(HttpServletRequest httpRequest) {
