@@ -17,8 +17,9 @@ public class DateUtilsLT {
 	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	public final static String FORMAT_ISO = "yyyyMMdd";
 
-	public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
-	public final static String FORMAT_ISO_HHMM_SEPARATOR = "yyyy-MM-dd HH:mm";
+	public final static String FORMAT_ISO_HHmm = "yyyyMMdd HH:mm";
+	public final static String FORMAT_ISO_HHmm_SEPARATOR = "yyyy-MM-dd HH:mm";
+	public final static String FORMAT_ISO_HHmmss_SEPARATOR = "yyyy-MM-dd HH:mm:ss";
 
 	public static final String FORMAT_HHmmssSS = "HHmmssSS";
 	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
@@ -97,7 +98,7 @@ public class DateUtilsLT {
 	 * @throws ParseException
 	 */
 	public static Date parseISO(String aIsoString) throws ParseException {
-		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM).parse(aIsoString + " 12:00");
+		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class DateUtilsLT {
 	 * @throws ParseException
 	 */
 	public static Date parseISOSeparator(String aIsoString) throws ParseException {
-		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHMM_SEPARATOR).parse(aIsoString + " 12:00");
+		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
 	}
 
 	/**

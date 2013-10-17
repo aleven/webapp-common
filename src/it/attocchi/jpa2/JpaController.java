@@ -419,8 +419,8 @@ public class JpaController implements Serializable {
 		Session session = null;
 
 		try {
+			session = (Session) em.getDelegate();
 			res = session.createCriteria(clazz).add(Example.create(anExample).excludeZeroes().enableLike()).list();
-
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -916,7 +916,7 @@ public class JpaController implements Serializable {
 
 		return res;
 	}
-	
+
 	public static <T extends Serializable> T callFindByUUIDPU(String persistenceUnit, Class<T> clazz, String uuid) throws Exception {
 
 		T res = null;
@@ -933,7 +933,7 @@ public class JpaController implements Serializable {
 		}
 
 		return res;
-	}	
+	}
 
 	public static <T extends Serializable> Long callCount(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
