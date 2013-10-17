@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
 
@@ -42,7 +42,6 @@ public class AuthFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		
 
 	}
 
@@ -57,14 +56,14 @@ public class AuthFilter implements Filter {
 		String name = PARAM_AUTH;
 		String value = request.getParameter(name);
 		// if (value != null && !"".equals(value)) {
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotBlank(value)) {
 			// The request parameter 'param' was not present in the query string
 			// e.g. http://hostname.com?a=b
 
 			// The request parameter 'param' was present in the query string but
 			// has no value
 			// e.g. http://hostname.com?param=&a=b
-			
+
 			// int idUtente = Integer.parseInt(value);
 
 			HttpSession session = req.getSession();
@@ -72,14 +71,26 @@ public class AuthFilter implements Filter {
 				// session.setAttribute(PARAM_AUTH, idUtente);
 				session.setAttribute(PARAM_AUTH, value);
 			}
+
+			logger.info("AuthFilter: " + value);
+			chain.doFilter(request, response);
 		}
+		// } else {
+		// String page = "login.xhtml";
+		// if (req.getRequestURI().endsWith(page)) {
+		// logger.info("AuthFilter: " + page);
+		// chain.doFilter(request, response);
+		// } else {
+		// logger.error("AuthFilter: No Login");
+		// res.sendRedirect(req.getContextPath() + "/" + page);
+		// }
+		// }
 
 		chain.doFilter(request, response);
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		
 
 	}
 
