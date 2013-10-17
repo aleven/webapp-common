@@ -1,7 +1,7 @@
-/*
-    Copyright (c) 2012 Mirco Attocchi
+/*  
+	Copyright (c) 2012 Mirco Attocchi
 	
-    This file is part of WebAppCommon.
+	This file is part of WebAppCommon.
 
     WebAppCommon is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
@@ -16,18 +16,3 @@
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-package it.attocchi.jpa2.entities.uuid;
-
-import java.io.Serializable;
-
-/**
- * 
- * @author Mirco
- * 
- */
-public interface IEntityUUID extends Serializable {
-	
-	String getUuid();
-	
-}

@@ -1,3 +1,22 @@
+/*
+    Copyright (c) 2012 Mirco Attocchi
+	
+    This file is part of WebAppCommon.
+
+    WebAppCommon is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    WebAppCommon is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package it.attocchi.web.filters;
 
 import java.io.IOException;
@@ -39,7 +58,7 @@ public class IE9TextFilter implements Filter {
 		// "ContentTypeList does not contain a supported content type: text/css"
 		// Um dies zu verhindern kann man entweder das Myfaces Patchen oder eben
 		// den Request korrigierren.
-		// Wir haben uns für die zweite Lösung enschieden und verändern den
+		// Wir haben uns fï¿½r die zweite Lï¿½sung enschieden und verï¿½ndern den
 		// Accept header. Neu wird es "text/css, */*" anstatt nur "text/css"
 
 		// String accept = ((HttpServletRequest) request).getHeader("Accept");

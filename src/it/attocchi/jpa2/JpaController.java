@@ -1,7 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+    Copyright (c) 2012 Mirco Attocchi
+	
+    This file is part of WebAppCommon.
+
+    WebAppCommon is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    WebAppCommon is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package it.attocchi.jpa2;
 
 import java.io.Serializable;
@@ -362,7 +377,7 @@ public class JpaController implements Serializable {
 
 			/*
 			 * Questo controllo sembra causare il problema con AJAX che
-			 * "EMF e' già registrato"
+			 * "EMF e' giï¿½ registrato"
 			 */
 			// if (emf == null || !emf.isOpen()) {
 
@@ -683,7 +698,7 @@ public class JpaController implements Serializable {
 		 * 
 		 * 25/05 la imposto nuovamente per qui progetti che non usano i listener
 		 * ed aprono e chiudono quando serve (in caso di errore o non chiusura
-		 * almeno così si chiude)
+		 * almeno cosï¿½ si chiude)
 		 */
 
 		// logger.debug(String.format("Finalize Controller %s", numero));
