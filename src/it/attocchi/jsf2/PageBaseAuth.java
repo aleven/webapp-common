@@ -15,12 +15,14 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2;
 
 import it.attocchi.jsf2.exceptions.PageAuthException;
 import it.attocchi.web.filters.AuthFilter;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Pagina Gestione Utenti Autenticati (Richiede filtro @AuthFilter)
@@ -56,9 +58,10 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 		// inizializeMembers();
 
-		if (getIdUtenteLoggato() > 0) {
+		// if (getIdUtenteLoggato() > 0) {
+		if (StringUtils.isNotBlank(getIdUtenteLoggato())) {
 
-			// Login e' stato fatto
+			// Login e' stato fatto\passato
 
 		} else {
 			logger.error("Necessaria Autenticazione");
@@ -73,23 +76,31 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	/*
 	 * Gestione Autorizzazione Utente in Sessione
 	 */
-	private long idUtenteLoggato;
+	private String idUtenteLoggato;
 
-	public long getIdUtenteLoggato() {
+	// private String authKey;
 
-		idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
+	// public long getIdUtenteLoggato() {
+	public String getIdUtenteLoggato() {
 
-		int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
+		// idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
+		idUtenteLoggato = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
 
-		if (idUtenteLoggato <= 0 || param != idUtenteLoggato) {
+		// int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
+		String param = getParamObject(AuthFilter.PARAM_AUTH);
 
-			if (param == 0 && debug) {
+		// if (idUtenteLoggato <= 0 || param != idUtenteLoggato) {
+		if (idUtenteLoggato == null || (param != null && !param.equals(idUtenteLoggato))) {
+
+			// if (param == 0 && debug) {
+			if (param == null && debug) {
 				logger.warn("auth debug mode");
-				param = 1;
+				param = "1";
 				addWarnMessage("auth debug mode", "");
 			}
 
-			if (param > 0) {
+			// if (param > 0) {
+			if (StringUtils.isNotBlank(param)) {
 				idUtenteLoggato = param;
 				setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);
 			}
@@ -98,7 +109,15 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		return idUtenteLoggato;
 	}
 
+	// public String getAuthKey() {
+	// authKey = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
+	// String param = getParamObjectAsString(AuthFilter.PARAM_AUTH);
+	// }
+
 	public boolean isUtenteLoggato() {
-		return getIdUtenteLoggato() > 0;
+		// return getIdUtenteLoggato() > 0 ||
+		// StringUtils.isNotBlank(getAuthKey());
+		// return getIdUtenteLoggato() > 0;
+		return StringUtils.isNotBlank(getIdUtenteLoggato());
 	}
 }

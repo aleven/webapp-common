@@ -311,7 +311,7 @@ abstract class PageBase implements Serializable {
 	}
 
 	protected String getSessionObjectAsString(String paramName) {
-		String res = "";
+		String res = null;
 
 		try {
 			Object o = getSessionObject(paramName);
