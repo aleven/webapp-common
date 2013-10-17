@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012 Mirco Attocchi
+    Copyright (c) 2012,2013 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -19,9 +19,7 @@
 
 package it.attocchi.utils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;

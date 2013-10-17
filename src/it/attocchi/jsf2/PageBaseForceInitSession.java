@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012 Mirco Attocchi
+    Copyright (c) 2012,2013 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -20,7 +20,6 @@
 package it.attocchi.jsf2;
 
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 
 /**
