@@ -15,13 +15,13 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2.pages.uuid;
 
 import it.attocchi.jpa2.JpaController;
 import it.attocchi.jpa2.entities.uuid.IEntityUUID;
-import it.attocchi.jsf2.PageBaseAuthString;
+import it.attocchi.jsf2.PageBaseAuth;
 import it.attocchi.utils.Crono;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ import org.apache.commons.lang3.StringUtils;
  * @param <T>
  * @param <F>
  */
-public abstract class PageBaseUUIDDetail<T extends IEntityUUID> extends PageBaseAuthString {
+public abstract class PageBaseUUIDDetail<T extends IEntityUUID> extends PageBaseAuth {
 
 	protected T elemento;
 	protected String uUID;
