@@ -59,7 +59,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		// inizializeMembers();
 
 		// if (getIdUtenteLoggato() > 0) {
-		if (StringUtils.isNotBlank(getIdUtenteLoggato())) {
+		if (StringUtils.isNotBlank(getAuthKey())) {
 
 			// Login e' stato fatto\passato
 
@@ -81,7 +81,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	// private String authKey;
 
 	// public long getIdUtenteLoggato() {
-	public String getIdUtenteLoggato() {
+	public String getAuthKey() {
 
 		// idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
 		idUtenteLoggato = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
@@ -118,6 +118,6 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		// return getIdUtenteLoggato() > 0 ||
 		// StringUtils.isNotBlank(getAuthKey());
 		// return getIdUtenteLoggato() > 0;
-		return StringUtils.isNotBlank(getIdUtenteLoggato());
+		return StringUtils.isNotBlank(getAuthKey());
 	}
 }
