@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2.entities.api;
 
@@ -26,7 +26,11 @@ import org.apache.log4j.Logger;
 // public class CrudApi<T extends IEntityWithIdLong, C extends Class<T>> {
 public class CrudApi<T extends IEntityWithIdLong> {
 
-	protected static final Logger logger = Logger.getLogger(CrudApi.class.getName());
+	// protected static final Logger logger =
+	// Logger.getLogger(CrudApi.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	// private final org.slf4j.Logger log =
+	// org.slf4j.LoggerFactory.getLogger(this.getClass());
 
 	// <U extends AbstractEntityMarksWithIdLong> {
 
