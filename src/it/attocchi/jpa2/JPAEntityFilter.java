@@ -37,12 +37,13 @@ import org.apache.log4j.Logger;
 
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
 
+	// protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	
 	public enum SortOrder {
 		ASC,
 		DESC
-	}
-
-	protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
+	}	
 
 	private static final long serialVersionUID = 1L;
 
