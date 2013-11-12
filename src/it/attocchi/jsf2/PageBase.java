@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2;
 
@@ -66,11 +66,11 @@ abstract class PageBase implements Serializable {
 	protected void addFatalMessage(String summary) {
 		addInfoMessage(summary, "");
 	}
-	
+
 	protected void addFatalMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, summary, detail));
 	}
-	
+
 	protected void addInfoMessage(String summary) {
 		addInfoMessage(summary, "");
 	}
