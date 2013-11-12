@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2;
 
@@ -37,7 +37,9 @@ import org.apache.log4j.Logger;
  */
 public class JPASessionListener implements HttpSessionListener {
 
-	protected static final Logger logger = Logger.getLogger(JPASessionListener.class.getName());
+	// protected static final Logger logger =
+	// Logger.getLogger(JPASessionListener.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	// private Controller chachedController;
 
@@ -45,7 +47,7 @@ public class JPASessionListener implements HttpSessionListener {
 	 * Default constructor.
 	 */
 	public JPASessionListener() {
-		
+
 	}
 
 	/**
@@ -67,7 +69,7 @@ public class JPASessionListener implements HttpSessionListener {
 		} else {
 			emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
 		}
-
+		// emfShared = emf;
 		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
 		logger.info(IJpaListernes.SESSION_EMF + " start");
 		//
@@ -86,5 +88,11 @@ public class JPASessionListener implements HttpSessionListener {
 		//
 		// chachedController.close();
 	}
+
+//	private static EntityManagerFactory emfShared;
+//
+//	public static EntityManagerFactory getEntityManagerFactory() {
+//		return emfShared;
+//	}
 
 }
