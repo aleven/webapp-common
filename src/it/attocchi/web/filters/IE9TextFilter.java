@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) 2012 http://de.softuses.com/269531
 	
     This file is part of WebAppCommon.
 
@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
 
@@ -36,6 +36,7 @@ import org.apache.log4j.Logger;
  * <!-- <filter-class>ch.bedag.gba.capweb.util.IE9Filter</filter-class> -->
  */
 public class IE9TextFilter implements Filter {
+
 	protected static final Logger logger = Logger.getLogger(IE9TextFilter.class.getName());
 
 	@Override
@@ -58,7 +59,8 @@ public class IE9TextFilter implements Filter {
 		// "ContentTypeList does not contain a supported content type: text/css"
 		// Um dies zu verhindern kann man entweder das Myfaces Patchen oder eben
 		// den Request korrigierren.
-		// Wir haben uns f�r die zweite L�sung enschieden und ver�ndern den
+		// Wir haben uns f�r die zweite L�sung enschieden und ver�ndern
+		// den
 		// Accept header. Neu wird es "text/css, */*" anstatt nur "text/css"
 
 		// String accept = ((HttpServletRequest) request).getHeader("Accept");
@@ -92,9 +94,9 @@ public class IE9TextFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		logger.debug(httpRequest.getRequestURI());
-		
+
 		if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-			
+
 			logger.debug(httpRequest.getContentType());
 		}
 

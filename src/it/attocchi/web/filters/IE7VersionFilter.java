@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) Twig (http://twigstechtips.blogspot.it/2010/03/css-ie8-meta-tag-to-disable.html)
 	
     This file is part of WebAppCommon.
 
@@ -70,8 +70,7 @@ public class IE7VersionFilter implements Filter {
 			// Do your business stuff here for all paths other than
 			// /specialpath.
 			/*
-			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable
-			 * .html
+			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.html
 			 */
 			httpResponse.setHeader("X-UA-Compatible", "IE=EmulateIE7");
 
