@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.test;
 
@@ -38,19 +38,24 @@ public class TestDateUtils {
 
 		cal1 = Calendar.getInstance();
 		cal2 = Calendar.getInstance();
-		inizio = cal1.getTime();
-		fine = cal2.getTime();
-		test();
 
-		cal1.add(Calendar.DATE, -1);
-		inizio = cal1.getTime();
-		fine = cal2.getTime();
-		test();
+//		test();
+//
+//		cal1.add(Calendar.DATE, -1);
+//		inizio = cal1.getTime();
+//		fine = cal2.getTime();
+//		test();
 
+		cal1.set(2013,11-1,11,16,00);
+		cal2.set(2013,11-1,11,16,00);
+		test();
 	}
 
 	private static void test() {
 
+		inizio = cal1.getTime();
+		fine = cal2.getTime();
+		
 		System.out.println(inizio);
 		System.out.println(fine);
 
@@ -60,5 +65,6 @@ public class TestDateUtils {
 		System.out.println(DateUtils.DiffDays(fine, inizio));
 		System.out.println(DateUtils.getDaysBetween(cal2, cal1));
 		System.out.println(DateUtils.getDaysBetween(cal1, cal2));
+
 	}
 }
