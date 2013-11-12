@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2.converter;
 
@@ -37,13 +37,13 @@ public class SelectItemConverter {
 			// res.add(new SelectItem(item.getCode(), item.getDescrizione()));
 			res.add(new SelectItem(item.getItemValue(), item.getItemLabel()));
 		}
-		
-//		for (Object o : aList) {
-//			if (o instanceof ISelectItemConvertible) {
-//				ISelectItemConvertible c = (ISelectItemConvertible) o;
-//				res.add(new SelectItem(c.getCode(), c.getDescrizione()));
-//			}
-//		}
+
+		// for (Object o : aList) {
+		// if (o instanceof ISelectItemConvertible) {
+		// ISelectItemConvertible c = (ISelectItemConvertible) o;
+		// res.add(new SelectItem(c.getCode(), c.getDescrizione()));
+		// }
+		// }
 
 		return res;
 	}
