@@ -55,4 +55,5 @@ public class CrudApi<T extends IEntityWithIdLong> {
 	// T res = JpaController.callFindById(emf, clazz.getClass(), clienteId);
 	// return res;
 	// }
+
 }
