@@ -28,10 +28,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class AuthFilter implements Filter {
@@ -48,43 +46,28 @@ public class AuthFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+		// HttpServletResponse res = (HttpServletResponse) response;
 
 		logger.debug(req.getRequestURI());
 
 		// Get the value of a request parameter; the name is case-sensitive
 		String name = PARAM_AUTH;
-		String value = request.getParameter(name);
-		// if (value != null && !"".equals(value)) {
-		if (StringUtils.isNotBlank(value)) {
-			// The request parameter 'param' was not present in the query string
-			// e.g. http://hostname.com?a=b
+		String value = null;
 
-			// The request parameter 'param' was present in the query string but
-			// has no value
-			// e.g. http://hostname.com?param=&a=b
+		/*
+		 * 
+		 */
+		req.setCharacterEncoding("UTF-8");
+		value = req.getParameter(name);
 
-			// int idUtente = Integer.parseInt(value);
-
+		if (value != null && !value.isEmpty()) {
 			HttpSession session = req.getSession();
 			if (session != null) {
-				// session.setAttribute(PARAM_AUTH, idUtente);
 				session.setAttribute(PARAM_AUTH, value);
 			}
 
 			logger.info("AuthFilter: " + value);
-			// chain.doFilter(request, response);
 		}
-		// } else {
-		// String page = "login.xhtml";
-		// if (req.getRequestURI().endsWith(page)) {
-		// logger.info("AuthFilter: " + page);
-		// chain.doFilter(request, response);
-		// } else {
-		// logger.error("AuthFilter: No Login");
-		// res.sendRedirect(req.getContextPath() + "/" + page);
-		// }
-		// }
 
 		chain.doFilter(request, response);
 	}
