@@ -159,6 +159,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	}
 
 	public void setSemeRicerca(String semeRicerca) {
+		logger.debug(String.format("setSemeRicerca(%s)", semeRicerca));
 		this.semeRicerca = semeRicerca;
 	}
 
