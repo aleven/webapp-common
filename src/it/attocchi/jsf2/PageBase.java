@@ -36,6 +36,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -49,7 +50,8 @@ import org.apache.log4j.Logger;
  */
 abstract class PageBase implements Serializable {
 
-	protected static final Logger logger = Logger.getLogger(PageBase.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
 		return (ServletContext) getExternalContext().getContext();
@@ -435,7 +437,7 @@ abstract class PageBase implements Serializable {
 				// know that this will generally only be thrown when the client
 				// aborted the download.
 				// e.printStackTrace();
-				logger.error("close", e);
+				loggerStatic.error("close", e);
 			}
 		}
 	}
@@ -466,6 +468,14 @@ abstract class PageBase implements Serializable {
 	 */
 	public String getJsfRedirect(String outcome) {
 		return outcome + "?faces-redirect=true";
+	}
+
+	protected HttpServletResponse getResponse() {
+		return (HttpServletResponse) getExternalContext().getResponse();
+	}
+
+	protected HttpServletRequest getRequest() {
+		return (HttpServletRequest) getExternalContext().getRequest();
 	}
 
 }
