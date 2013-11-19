@@ -15,11 +15,11 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2.exceptions;
 
-public class PageAuthException extends Exception {
+public class PageAuthException extends WebAppException {
 
 	public PageAuthException() {
 		super("Necessaria Autenticazione");
