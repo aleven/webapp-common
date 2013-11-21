@@ -19,7 +19,6 @@
 
 package it.attocchi.jsf2;
 
-import it.attocchi.jsf2.exceptions.PageAuthException;
 import it.attocchi.web.filters.AuthFilter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,75 +30,47 @@ import org.apache.commons.lang3.StringUtils;
  * 
  */
 public abstract class PageBaseAuth extends PageBaseNoAuth {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean debug = false;
 
-	// @PostConstruct
-	// private void postConstruct() {
-	// try {
-	//
-	// if (getIdUtenteLoggato() > 0) {
-	// init();
-	// } else {
-	//
-	// addErrorMessage("Necessaria Autenticazione");
-	// }
-	//
-	// } catch (Exception ex) {
-	// // logger.error("postConstruct", ex);
-	// addErrorMessage("postConstruct", ex);
-	// }
-	// }
-
-	// protected abstract void inizializeMembers() throws Exception;
-
 	@Override
-	protected void preInit() throws PageAuthException {
+	protected final void init() throws Exception {
 
-		// inizializeMembers();
-
-		// if (getIdUtenteLoggato() > 0) {
-		// if (StringUtils.isNotBlank(getAuthKey())) {
 		if (isUtenteLoggato()) {
-
-			// Login e' stato fatto\passato
-
+			initLogged();
 		} else {
-			logger.error("Necessaria Autenticazione");
-			/* POTREI AVER CHIAMATO LA LOGIN */
-			throw new PageAuthException();
+			logger.warn("Necessaria Autenticazione");
+			initNonLogged();
 		}
 	}
 
-	protected abstract void init() throws Exception;
+	protected abstract void initLogged() throws Exception;
+
+	protected abstract void initNonLogged() throws Exception;
 
 	/*
 	 * Gestione Autorizzazione Utente in Sessione
 	 */
 	private String idUtenteLoggato;
 
-	// private String authKey;
-
-	// public long getIdUtenteLoggato() {
 	public String getAuthKey() {
 
-		// idUtenteLoggato = getSessionObjectAsInt(AuthFilter.PARAM_AUTH);
 		idUtenteLoggato = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
 
-		// int param = getParamObjectAsInt(AuthFilter.PARAM_AUTH);
 		String param = getParamObject(AuthFilter.PARAM_AUTH);
 
-		// if (idUtenteLoggato <= 0 || param != idUtenteLoggato) {
 		if (idUtenteLoggato == null || (param != null && !param.equals(idUtenteLoggato))) {
 
-			// if (param == 0 && debug) {
 			if (param == null && debug) {
 				logger.warn("auth debug mode");
 				param = "1";
 				addWarnMessage("auth debug mode", "");
 			}
 
-			// if (param > 0) {
 			if (StringUtils.isNotBlank(param)) {
 				idUtenteLoggato = param;
 				setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);
@@ -109,15 +80,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		return idUtenteLoggato;
 	}
 
-	// public String getAuthKey() {
-	// authKey = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
-	// String param = getParamObjectAsString(AuthFilter.PARAM_AUTH);
-	// }
-
 	protected boolean isUtenteLoggato() {
-		// return getIdUtenteLoggato() > 0 ||
-		// StringUtils.isNotBlank(getAuthKey());
-		// return getIdUtenteLoggato() > 0;
 		return StringUtils.isNotBlank(getAuthKey());
 	}
 

@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2;
 
@@ -28,9 +28,13 @@ import javax.annotation.PostConstruct;
  * 
  */
 public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@PostConstruct
-	private void postConstruct() {
+	private final void postConstructBase() {
 		try {
 
 			initialiseSession();
@@ -38,7 +42,6 @@ public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
 			init();
 
 		} catch (Exception ex) {
-			// logger.error("postConstruct", ex);
 			addErrorMessage("postConstruct", ex);
 		}
 	}

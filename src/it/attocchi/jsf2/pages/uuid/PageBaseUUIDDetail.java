@@ -65,7 +65,7 @@ public abstract class PageBaseUUIDDetail<T extends IEntityUUID> extends PageBase
 	}
 
 	@Override
-	protected void init() throws Exception {
+	protected void initLogged() throws Exception {
 
 		uUID = getParamObject("uuid");
 

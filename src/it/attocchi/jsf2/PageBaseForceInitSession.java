@@ -29,12 +29,18 @@ import javax.faces.context.FacesContext;
  * 
  */
 abstract class PageBaseForceInitSession extends PageBase {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * http://stackoverflow.com/questions/7433575/cannot-create-a-session-after-
 	 * the-response-has-been-committed
 	 */
 	// @PostConstruct
-	public void initialiseSession() {
+	public final void initialiseSession() {
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	}
 

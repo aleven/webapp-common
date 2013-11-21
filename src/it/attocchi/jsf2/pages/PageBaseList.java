@@ -79,7 +79,7 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 	}
 
 	@Override
-	protected void init() throws Exception {
+	protected void initLogged() throws Exception {
 
 		// Lo Spostiamo prima di fare la verfica del login altrimenti abbiamo il
 		// filtro che e' a null

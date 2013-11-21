@@ -65,7 +65,7 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	}
 
 	@Override
-	protected void init() throws Exception {
+	protected void initLogged() throws Exception {
 
 		id = getParamObjectAsLong("id");
 

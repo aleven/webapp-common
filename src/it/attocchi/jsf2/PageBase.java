@@ -50,6 +50,11 @@ import org.apache.log4j.Logger;
  */
 abstract class PageBase implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
 
