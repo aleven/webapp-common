@@ -54,7 +54,7 @@ abstract class PageBase implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
 
@@ -355,12 +355,32 @@ abstract class PageBase implements Serializable {
 	 * END SESSION
 	 */
 
-	protected void redirect(String url) {
+	protected void redirect(String relativeUrl) {
 		try {
-			getFacesContext().getExternalContext().redirect(url);
+			getFacesContext().getExternalContext().redirect(relativeUrl);
 		} catch (IOException e) {
 			logger.error(e);
 		}
+	}
+
+	protected void redirectContext(String relativeUrl) {
+		if (!relativeUrl.startsWith("/"))
+			relativeUrl = "/" + relativeUrl;
+
+		redirect(getRequest().getContextPath() + relativeUrl);
+	}
+
+	protected void redirectContextCall(String relativeUrl) {
+
+		String uri = getRequest().getRequestURI();
+		/* rimuoviamo il context dal parametro che chiamiamo */
+		uri = uri.replace(getRequest().getContextPath(), "");
+		
+		String newUrl = String.format("%s?call=%s", relativeUrl, uri);
+		
+		logger.warn(newUrl);
+
+		redirectContext(newUrl);
 	}
 
 	/*
