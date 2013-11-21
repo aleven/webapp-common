@@ -59,14 +59,14 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		// inizializeMembers();
 
 		// if (getIdUtenteLoggato() > 0) {
-		if (StringUtils.isNotBlank(getAuthKey())) {
+		// if (StringUtils.isNotBlank(getAuthKey())) {
+		if (isUtenteLoggato()) {
 
 			// Login e' stato fatto\passato
 
 		} else {
 			logger.error("Necessaria Autenticazione");
-			// addErrorMessage("Necessaria Autenticazione");
-			// throw new Exception("Necessaria Autenticazione");
+			/* POTREI AVER CHIAMATO LA LOGIN */
 			throw new PageAuthException();
 		}
 	}
@@ -114,10 +114,14 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	// String param = getParamObjectAsString(AuthFilter.PARAM_AUTH);
 	// }
 
-	public boolean isUtenteLoggato() {
+	protected boolean isUtenteLoggato() {
 		// return getIdUtenteLoggato() > 0 ||
 		// StringUtils.isNotBlank(getAuthKey());
 		// return getIdUtenteLoggato() > 0;
 		return StringUtils.isNotBlank(getAuthKey());
+	}
+
+	protected void setLogin(String idUtenteLoggato) {
+		setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);
 	}
 }
