@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.utils;
 
@@ -32,6 +32,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -912,6 +913,34 @@ public class DateUtils extends DateUtilsLT {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("x-'W'w");
 		return fmt.print(dateTime);
 
+	}
+
+	/**
+	 * http://stackoverflow.com/questions/15358409/dividing-a-joda-time-period-
+	 * into-intervals-of-desired-size
+	 * 
+	 * @param start
+	 * @param end
+	 * @param chunkAmount
+	 * @param chunkSize
+	 * @return
+	 */
+	public static List<Interval> splitDuration(DateTime start, DateTime end, long chunkAmount, long chunkSize) {
+		long millis = start.getMillis();
+		List<Interval> list = new ArrayList<Interval>();
+
+		// for(int i = 0; i < chunkAmount; ++i) {
+		// list.add(new Interval(millis, millis += chunkSize));
+		// }
+
+		while (millis <= end.getMillis()) {
+			list.add(new Interval(millis, millis += chunkSize));
+		}
+
+		if (millis < end.getMillis())
+			list.add(new Interval(millis, end.getMillis()));
+		
+		return list;
 	}
 
 }

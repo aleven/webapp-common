@@ -23,6 +23,10 @@ import it.attocchi.utils.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 public class TestDateUtils {
 
@@ -36,26 +40,22 @@ public class TestDateUtils {
 	 */
 	public static void main(String[] args) {
 
+		 testDifferenza();
+
+//		testSuddivisione();
+	}
+
+	private static void testDifferenza() {
+
 		cal1 = Calendar.getInstance();
 		cal2 = Calendar.getInstance();
 
-//		test();
-//
-//		cal1.add(Calendar.DATE, -1);
-//		inizio = cal1.getTime();
-//		fine = cal2.getTime();
-//		test();
-
-		cal1.set(2013,11-1,11,16,00);
-		cal2.set(2013,11-1,11,16,00);
-		test();
-	}
-
-	private static void test() {
+		cal1.set(2013, 11 - 1, 11, 16, 00);
+		cal2.set(2013, 11 - 1, 19, 18, 00);
 
 		inizio = cal1.getTime();
 		fine = cal2.getTime();
-		
+
 		System.out.println(inizio);
 		System.out.println(fine);
 
@@ -65,6 +65,17 @@ public class TestDateUtils {
 		System.out.println(DateUtils.DiffDays(fine, inizio));
 		System.out.println(DateUtils.getDaysBetween(cal2, cal1));
 		System.out.println(DateUtils.getDaysBetween(cal1, cal2));
+
+	}
+
+	private static void testSuddivisione() {
+
+		DateTime now = new DateTime();
+		List<Interval> list = DateUtils.splitDuration(now, now.plusDays(10), 3, 60 * 60 * 24 * 7 * 1000);
+
+		for (Interval i : list) {
+			System.out.println(i.getStart() + " - " + i.getEnd() + " - " + i.toDurationMillis());
+		}
 
 	}
 }
