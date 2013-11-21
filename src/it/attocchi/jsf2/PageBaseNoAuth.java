@@ -40,21 +40,6 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	private final void postConstruct() {
-		try {
-
-			initialiseSession();
-
-			init();
-
-		} catch (Exception ex) {
-			addErrorMessage("postConstruct", ex);
-		}
-	}
-
-	protected abstract void init() throws Exception;
-
 	/* 
 	 * 
 	 * MERGE DA PageBaseJpa2Data 
