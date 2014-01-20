@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
 
 public class AuthFilter implements Filter {
 
-	protected static final Logger logger = Logger.getLogger(AuthFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(AuthFilter.class.getName());
 
 	public static final String PARAM_AUTH = "auth";
 
