@@ -15,18 +15,20 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.db;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 
 /**
  * 
@@ -129,6 +131,29 @@ public class DbUtilsConnector extends JdbcConnector {
 			 */
 			logger.debug(aQuery);
 			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz));
+
+		} finally {
+			if (!keepConnOpen)
+				close();
+		}
+
+		return result;
+	}
+
+	public List<Map<String, Object>> executeMap(boolean keepConnOpen, String aQuery) throws Exception {
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+		// No DataSource so we must handle Connections manually
+		QueryRunner run = new QueryRunner();
+
+		try {
+
+			/*
+			 * Sembra che il like con i parametri ufficiali non funzioni, forse
+			 * dovuto al fatto che son tutti object
+			 */
+			logger.debug(aQuery);
+			result = run.query(getConnection(), aQuery, new MapListHandler());
 
 		} finally {
 			if (!keepConnOpen)
