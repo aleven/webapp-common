@@ -15,10 +15,9 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
-
 
 import java.io.IOException;
 
@@ -43,21 +42,21 @@ public class LoginFilter implements Filter {
 	 * Default constructor.
 	 */
 	public LoginFilter() {
-		
+
 	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		
+
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
+
 		// place your code here
 
 		HttpServletRequest httprequest = (HttpServletRequest) request;
@@ -65,7 +64,10 @@ public class LoginFilter implements Filter {
 		String url = httprequest.getServletPath();
 		boolean allowedRequest = false;
 
-		if (url.endsWith("index.xhtml") || url.endsWith("login.xhtml")) {
+		/* AGGIUNTO PER DEBUG IN SVILUPPO */
+		allowedRequest = httprequest.getServerName().equals("localhost");
+
+		if (allowedRequest || url.endsWith("index.xhtml") || url.endsWith("login.xhtml")) {
 			allowedRequest = true;
 		}
 
