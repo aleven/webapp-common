@@ -21,9 +21,13 @@ package it.attocchi.jpa2.entities;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public abstract class AbstactEntityMarks extends EntityBase {
 
-	private static final long serialVersionUID = 1L;
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	// private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
