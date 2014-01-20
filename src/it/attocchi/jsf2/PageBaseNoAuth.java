@@ -20,9 +20,7 @@
 package it.attocchi.jsf2;
 
 import it.attocchi.jpa2.IJpaListernes;
-import it.attocchi.jsf2.exceptions.PageAuthException;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -40,10 +38,9 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/* 
+	/*
 	 * 
-	 * MERGE DA PageBaseJpa2Data 
-	 * 
+	 * MERGE DA PageBaseJpa2Data
 	 */
 
 	/**
