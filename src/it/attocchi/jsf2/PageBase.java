@@ -40,6 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -268,6 +271,21 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	protected <T> T getParamObject(String paramName, Class<T> clazz) {
+		T res = null;
+
+		try {
+			Object o = getExternalContext().getRequestParameterMap().get(paramName);
+			if (o != null) {
+				res = clazz.cast(o);
+			}
+		} catch (Exception ex) {
+			logger.error("getParamObject", ex);
+		}
+
+		return res;
+	}
+
 	protected String getResourceBundle(String resourceName, String key) {
 		ResourceBundle bundle = getFacesContext().getApplication().getResourceBundle(getFacesContext(), resourceName);
 		return bundle.getString(key);
@@ -375,9 +393,9 @@ abstract class PageBase implements Serializable {
 		String uri = getRequest().getRequestURI();
 		/* rimuoviamo il context dal parametro che chiamiamo */
 		uri = uri.replace(getRequest().getContextPath(), "");
-		
+
 		String newUrl = String.format("%s?call=%s", relativeUrl, uri);
-		
+
 		logger.warn(newUrl);
 
 		redirectContext(newUrl);
@@ -414,7 +432,17 @@ abstract class PageBase implements Serializable {
 
 			String downloadFileName = file.getName();
 			if (rename != null && !rename.equals("")) {
-				downloadFileName = rename + fileName.substring(fileName.lastIndexOf("."));
+				/*
+				 * controllo se rename specifica l'estensione, se non la
+				 * specifica la impostiamo dal nome originale
+				 */
+				String extNuova = FilenameUtils.getExtension(rename);
+				String extOrig = FilenameUtils.getExtension(fileName);
+				if (StringUtils.isBlank(extNuova))
+					if (StringUtils.isNotBlank(extNuova))
+						rename = rename + "." + extOrig;
+				downloadFileName = rename;
+				// fileName.substring(fileName.lastIndexOf("."));
 			}
 
 			// Init servlet response.
@@ -503,4 +531,21 @@ abstract class PageBase implements Serializable {
 		return (HttpServletRequest) getExternalContext().getRequest();
 	}
 
+	protected String encodeParam(String value) {
+		return Base64.encodeBase64URLSafeString(value.getBytes());
+	}
+
+	protected String decodeParam(String value) {
+		return new String(Base64.decodeBase64(value));
+	}
+
+	public String truncate50(String aString) {
+		String res = aString;
+		if (res != null && !res.isEmpty()) {
+			if (res.length() > 50) {
+				res = res.substring(0, 50) + "...";
+			}
+		}
+		return res;
+	}
 }
