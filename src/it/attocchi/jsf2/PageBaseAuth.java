@@ -84,7 +84,4 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		return StringUtils.isNotBlank(getAuthKey());
 	}
 
-	protected void setLogin(String idUtenteLoggato) {
-		setSessionObject(AuthFilter.PARAM_AUTH, idUtenteLoggato);
-	}
 }
