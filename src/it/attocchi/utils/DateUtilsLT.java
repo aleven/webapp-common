@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.utils;
 
@@ -88,6 +88,15 @@ public class DateUtilsLT {
 		cal.setTime(aDate);
 
 		cal.add(Calendar.DATE, days);
+
+		return cal.getTime();
+	}
+
+	public static Date addMonths(Date aDate, int months) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aDate);
+		cal.add(Calendar.MONTH, months);
 
 		return cal.getTime();
 	}
@@ -256,6 +265,80 @@ public class DateUtilsLT {
 		b.set(Calendar.SECOND, 59);
 
 		return aMoment.getTime() >= a.getTime().getTime() && aMoment.getTime() <= b.getTime().getTime();
+	}
+
+	/**
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static int getAnno(Date aDate) {
+
+		Calendar tempCal = new GregorianCalendar();
+		tempCal.setTime(aDate);
+
+		return tempCal.get(Calendar.YEAR);
+	}
+
+	public static int getMeseZeroBased(Date aDate) {
+
+		Calendar tempCal = new GregorianCalendar();
+		tempCal.setTime(aDate);
+
+		return tempCal.get(Calendar.MONTH);
+	}
+
+	/**
+	 * 
+	 * @param monthZeroBased
+	 *            numero del mese zero-based
+	 * @return
+	 */
+	public static int getLastDayOfMontZeroBased(int monthZeroBased, int year) throws Exception {
+		return getLastDayOfMont(monthZeroBased + 1, year);
+	}
+
+	/**
+	 * 
+	 * @param monthNonZeroBased
+	 *            Numero del mese non zero-based
+	 * @return
+	 */
+	public static int getLastDayOfMont(int monthNonZeroBased, int year) throws Exception {
+		int res = 0;
+
+		/*
+		 * monthNonZeroBased rappresenta nativamente il mese successivo
+		 */
+
+		if (monthNonZeroBased >= 1 && monthNonZeroBased < 12) {
+
+			Calendar cal = new GregorianCalendar();
+			cal.set(year, monthNonZeroBased, 1);
+
+			cal.add(Calendar.DATE, -1);
+
+			res = cal.get(Calendar.DATE);
+
+		} else if (monthNonZeroBased == 12) {
+
+			Calendar cal = new GregorianCalendar();
+			cal.set(getAnno(cal.getTime()) + 1, 1, 1);
+
+			cal.add(Calendar.DATE, -1);
+
+			res = cal.get(Calendar.DATE);
+		} else {
+			throw new Exception("Mese non valido");
+		}
+
+		return res;
+	}
+
+	public static Date getLastDateOfMonth(Date aDate) throws Exception {
+
+		Calendar cal = new GregorianCalendar(getAnno(aDate), getMeseZeroBased(aDate), getLastDayOfMontZeroBased(getMeseZeroBased(aDate), getAnno(aDate)));
+		return cal.getTime();
 	}
 
 }

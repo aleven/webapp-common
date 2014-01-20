@@ -41,19 +41,6 @@ import org.joda.time.format.DateTimeFormatter;
 public class DateUtils extends DateUtilsLT {
 
 	/**
-	 * 
-	 * @param aDate
-	 * @return
-	 */
-	public static int getAnno(Date aDate) {
-
-		Calendar tempCal = new GregorianCalendar();
-		tempCal.setTime(aDate);
-
-		return tempCal.get(Calendar.YEAR);
-	}
-
-	/**
 	 * Ritorna il mese della data specificata non 0 based
 	 * 
 	 * @param aDate
@@ -61,14 +48,6 @@ public class DateUtils extends DateUtilsLT {
 	 */
 	public static int getMese(Date aDate) {
 		return getMeseZeroBased(aDate) + 1;
-	}
-
-	public static int getMeseZeroBased(Date aDate) {
-
-		Calendar tempCal = new GregorianCalendar();
-		tempCal.setTime(aDate);
-
-		return tempCal.get(Calendar.MONTH);
 	}
 
 	/**
@@ -571,59 +550,6 @@ public class DateUtils extends DateUtilsLT {
 		return cal.getTime();
 	}
 
-	public static Date getLastDateOfMonth(Date aDate) throws Exception {
-
-		Calendar cal = new GregorianCalendar(getAnno(aDate), getMeseZeroBased(aDate), getLastDayOfMontZeroBased(getMeseZeroBased(aDate), getAnno(aDate)));
-		return cal.getTime();
-	}
-
-	/**
-	 * 
-	 * @param monthZeroBased
-	 *            numero del mese zero-based
-	 * @return
-	 */
-	public static int getLastDayOfMontZeroBased(int monthZeroBased, int year) throws Exception {
-		return getLastDayOfMont(monthZeroBased + 1, year);
-	}
-
-	/**
-	 * 
-	 * @param monthNonZeroBased
-	 *            Numero del mese non zero-based
-	 * @return
-	 */
-	public static int getLastDayOfMont(int monthNonZeroBased, int year) throws Exception {
-		int res = 0;
-
-		/*
-		 * monthNonZeroBased rappresenta nativamente il mese successivo
-		 */
-
-		if (monthNonZeroBased >= 1 && monthNonZeroBased < 12) {
-
-			Calendar cal = new GregorianCalendar();
-			cal.set(year, monthNonZeroBased, 1);
-
-			cal.add(Calendar.DATE, -1);
-
-			res = cal.get(Calendar.DATE);
-
-		} else if (monthNonZeroBased == 12) {
-
-			Calendar cal = new GregorianCalendar();
-			cal.set(getAnno(cal.getTime()) + 1, 1, 1);
-
-			cal.add(Calendar.DATE, -1);
-
-			res = cal.get(Calendar.DATE);
-		} else {
-			throw new Exception("Mese non valido");
-		}
-
-		return res;
-	}
-
 	public static Date getQuarterEndDate(Date aDate) throws Exception {
 		Date res = null;
 
@@ -939,7 +865,7 @@ public class DateUtils extends DateUtilsLT {
 
 		if (millis < end.getMillis())
 			list.add(new Interval(millis, end.getMillis()));
-		
+
 		return list;
 	}
 
