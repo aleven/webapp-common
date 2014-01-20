@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
 
@@ -29,6 +29,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 /*
  * Usage on web.xml:
@@ -49,11 +51,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class IE7VersionFilter implements Filter {
 
+	protected final Logger logger = Logger.getLogger(IE9TextFilter.class.getName());
+
 	String pathToBeIgnored;
 
 	@Override
 	public void destroy() {
-		
 
 	}
 
@@ -65,14 +68,16 @@ public class IE7VersionFilter implements Filter {
 		String path = httpRequest.getRequestURI();
 		// if (path.startsWith("/specialpath")) {
 		if (pathToBeIgnored != null && wildCardMatch(path, pathToBeIgnored)) {
+			logger.info("IE7VersionFilter not applied for " + path);
 			chain.doFilter(request, response); // Just continue chain.
 		} else {
 			// Do your business stuff here for all paths other than
 			// /specialpath.
 			/*
-			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.html
+			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable
+			 * .html
 			 */
-			httpResponse.setHeader("X-UA-Compatible", "IE=EmulateIE7");
+			httpResponse.setHeader("X-UA-Compatible", "IE=7");
 
 			chain.doFilter(request, response);
 		}
