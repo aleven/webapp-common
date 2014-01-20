@@ -162,7 +162,7 @@ public class HtmlUtils {
 			 * Per Ultimo questo altrimenti converte <BR> nelle entita' quello
 			 * fatto prima
 			 */
-			res = res.replaceAll("\n", "<BR/>").replaceAll("\r", "");
+			res = res.replaceAll("\n", "<br/>").replaceAll("\r", "");
 		}
 
 		return res;
