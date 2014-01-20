@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2;
 
@@ -37,13 +37,14 @@ import org.apache.log4j.Logger;
 
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
 
-	// protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
+	// protected static final Logger logger =
+	// Logger.getLogger(JPAEntityFilter.class.getName());
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-	
+
 	public enum SortOrder {
 		ASC,
 		DESC
-	}	
+	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -309,7 +310,7 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return (limit > 0) ? pageNumber + 1 : 0;
 	}
 
-	public int totalPages(int count) {
-		return (limit > 0) ? (int)((count / limit) + 1) : 0;
+	public int totalPages(long count) {
+		return (limit > 0 && count > limit) ? (int) ((count / limit) + 1) : 0;
 	}
 }
