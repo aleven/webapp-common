@@ -548,4 +548,10 @@ abstract class PageBase implements Serializable {
 		}
 		return res;
 	}
+
+	protected void sessionInvalidate() {
+		// HttpSession session = request.getSession(false);
+		if (getSession() != null)
+			getSession().invalidate();
+	}
 }
