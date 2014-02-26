@@ -34,18 +34,18 @@ import javax.servlet.http.HttpServletResponse;
 /*
  * Usage:
  * 
- * 	<!-- NoCacheFilter -->
+ * 	
+  	<!-- NoCacheFilter -->
 	<filter>
 		<display-name>NoCacheFilter</display-name>
 		<filter-name>NoCacheFilter</filter-name>
-		<filter-class>com.hydromec.performance.filters.NoCacheFilter</filter-class>
+		<filter-class>it.attocchi.web.filters.NoCacheFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>NoCacheFilter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>
 	</filter-mapping>
 	<!-- NoCacheFilter -->
-	
  */
 public class NoCacheFilter implements Filter {
 
