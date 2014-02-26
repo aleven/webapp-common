@@ -31,12 +31,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet Filter implementation class LoginFilter
+ * 
+ * <filter> <display-name>AuthFilter</display-name>
+ * <filter-name>AuthFilter</filter-name>
+ * <filter-class>it.attocchi.web.filters.LoginFilter</filter-class> <init-param>
+ * <param-name>enabled</param-name> <param-value>false</param-value>
+ * </init-param> <init-param> <param-name>allowedUrls</param-name>
+ * <param-value>index.html</param-value> </init-param> <init-param>
+ * <param-name>allowedServerName</param-name>
+ * <param-value>localhost</param-value> </init-param> <init-param>
+ * <param-name>loginPage</param-name> <param-value>login.html</param-value>
+ * </init-param> </filter> <filter-mapping>
+ * <filter-name>AuthFilter</filter-name> <url-pattern>/api/*</url-pattern>
+ * <url-pattern>*.html</url-pattern> </filter-mapping>
  */
 public class LoginFilter implements Filter {
 
+	protected final Logger logger = Logger.getLogger(LoginFilter.class.getName());
+
 	public static final String CURRENT_USER = "CURRENT_USER";
+
+	String enabled;
+	String allowedUrls;
+	String allowedServerName;
+	String loginPage;
 
 	/**
 	 * Default constructor.
@@ -57,29 +79,54 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		// place your code here
-
 		HttpServletRequest httprequest = (HttpServletRequest) request;
 		HttpServletResponse httpresponse = (HttpServletResponse) response;
-		String url = httprequest.getServletPath();
-		boolean allowedRequest = false;
 
-		/* AGGIUNTO PER DEBUG IN SVILUPPO */
-		allowedRequest = httprequest.getServerName().equals("localhost");
+		logger.debug(httprequest.getRequestURI());
 
-		if (allowedRequest || url.endsWith("index.xhtml") || url.endsWith("login.xhtml")) {
-			allowedRequest = true;
-		}
+		if (Boolean.parseBoolean(enabled)) {
 
-		if (!allowedRequest) {
-			HttpSession session = httprequest.getSession(false);
-			if (null == session) {
+			String url = httprequest.getServletPath();
+			boolean allowedRequest = false;
 
-				httpresponse.sendRedirect(httprequest.getContextPath() + "/login.xhtml");
-			} else {
-				Object currentUser = session.getAttribute(LoginFilter.CURRENT_USER);
-				if (null == currentUser) {
-					httpresponse.sendRedirect(httprequest.getContextPath() + "/login.xhtml");
+			/* AGGIUNTO PER DEBUG IN SVILUPPO */
+			if (allowedServerName != null && !allowedServerName.isEmpty()) {
+				logger.debug(String.format("allowedServerName=%s", allowedServerName));
+				allowedRequest = httprequest.getServerName().equals(allowedServerName);
+			}
+			if (!allowedRequest) {
+				if (loginPage != null && !loginPage.isEmpty()) {
+					if (allowedRequest || url.endsWith(loginPage) || url.indexOf(loginPage) >= 0) {
+						logger.debug(String.format("loginPage=%s", loginPage));
+						allowedRequest = true;
+					}
+				}
+			}
+			if (!allowedRequest) {
+				if (allowedUrls != null && !allowedUrls.isEmpty()) {
+					logger.debug("allowedUrls=" + allowedUrls);
+					for (String allowedUrl : allowedUrls.split(",")) {
+						logger.debug(String.format("allowedUrl=%s", allowedUrl));
+						if (allowedRequest || url.endsWith(allowedUrl) || url.indexOf(allowedUrl) >= 0) {
+							allowedRequest = true;
+						}
+					}
+				}
+			}
+			if (!allowedRequest) {
+				HttpSession session = httprequest.getSession(false);
+				if (null == session) {
+					String to = httprequest.getContextPath() + "/" + loginPage;
+					logger.debug("sendRedirect to " + to);
+					httpresponse.sendRedirect(to);
+				} else {
+					Object currentUser = session.getAttribute(LoginFilter.CURRENT_USER);
+					logger.debug(String.format("currentUser=%s", currentUser));
+					if (null == currentUser) {
+						String to = httprequest.getContextPath() + "/" + loginPage;
+						logger.debug("sendRedirect to " + to);
+						httpresponse.sendRedirect(to);
+					}
 				}
 			}
 		}
@@ -92,7 +139,9 @@ public class LoginFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// String filename = fConfig.getInitParameter("enabled");
+		enabled = fConfig.getInitParameter("enabled");
+		allowedUrls = fConfig.getInitParameter("allowedUrls");
+		allowedServerName = fConfig.getInitParameter("allowedServerName");
+		loginPage = fConfig.getInitParameter("loginPage");
 	}
-
 }
