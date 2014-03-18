@@ -95,8 +95,9 @@ public class BookmarkParser {
 											// if (getMethod.getReturnType() != Date.class && getMethod.getReturnType() != Integer.class && getMethod.getReturnType() != int.class) {
 											if (getMethod.getReturnType() != Date.class) {
 												// strValore = (String) getMethod.invoke(oggetto);
+												/*if the argument is null, then a string equal to "null"*/
 												strValore = String.valueOf(getMethod.invoke(oggetto));
-												if (strValore == null) {
+												if (strValore == null || strValore.equals("null")) {
 													strValore = "";
 												}
 												returnValue = returnValue + strValore;
