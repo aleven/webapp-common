@@ -351,6 +351,39 @@ public class QueryBuilderSqlServer {
 
 		return res.toString();
 	}
+	
+	/**
+	 * ciao esegue ricerca =
+	 * ciao* esegue ricerca ciao%
+	 * *ciao esegue ricerca %ciao
+	 * *ciao* esegue ricerca %ciao%
+	 * @param campo
+	 * @param semeRicerca
+	 * @return
+	 */
+	public static String likeOrEquaByUser(String campo, String semeRicerca) {
+		StringBuilder res = new StringBuilder();
+
+		if (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR) && semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CASO "ciao" */
+			semeRicerca = StringUtils.removeStart(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			semeRicerca = StringUtils.removeEnd(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			res.append(campo + " LIKE '%" + encodeStringSQL(semeRicerca) + "%'");
+		} else if (semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CASO ciao* */
+			semeRicerca = semeRicerca.replace(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR, "");
+			res.append(campo + " LIKE '" + encodeStringSQL(semeRicerca) + "%'");
+		} else if (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CASO *ciao */
+			semeRicerca = semeRicerca.replace(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR, "");
+			res.append(campo + " LIKE '%" + encodeStringSQL(semeRicerca) + "'");
+		} else {
+			/* CASO ciao */
+			res.append(campo + " = '" + encodeStringSQL(semeRicerca) + "'");
+		}
+
+		return res.toString();
+	}	
 
 	public static boolean isAdvancedSearchCommand(String semeRicerca) {
 		boolean res = false;
