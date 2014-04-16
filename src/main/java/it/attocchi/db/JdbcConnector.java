@@ -76,7 +76,7 @@ public class JdbcConnector {
 	 * 
 	 * @throws Exception
 	 */
-	protected Connection getConnection() throws Exception {
+	public Connection getConnection() throws Exception {
 
 		if (conn == null) {
 
