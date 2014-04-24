@@ -1,8 +1,23 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.attocchi.web.filters;
+    Copyright (c) 2012,2013 Mirco Attocchi
+	
+    This file is part of WebAppCommon.
+
+    WebAppCommon is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    WebAppCommon is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package it.attocchi.web.auth;
 
 import java.io.IOException;
 
@@ -17,22 +32,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
  * 
  * @author Mirco
  */
-public class NtmlFilter implements Filter {
+public class AuthenticationFilter implements Filter {
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
+	private static Logger logger = Logger.getLogger(AuthenticationFilter.class.getName());
 	//
 	FilterConfig config = null;
 	ServletContext servletContext = null;
 
-	public NtmlFilter() {
+	public AuthenticationFilter() {
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,9 +53,14 @@ public class NtmlFilter implements Filter {
 		servletContext = config.getServletContext();
 	}
 
+	// public void doFilter(ServletRequest request, ServletResponse response,
+	// FilterChain chain) throws IOException, ServletException {
+	// System.out.println("Inside the filter");
+	// chain.doFilter(request, response);
+	// }
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		logger.debug("Filtro Ntlm");
+		logger.debug("Filtro Autenticazione");
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -59,31 +77,15 @@ public class NtmlFilter implements Filter {
 		String username = null;
 
 		try {
-			/*
-			 * Operatore loggato? SI: prosegue con il flusso normalmente; NO:
-			 * tentativo di accesso con utente Windows e poi, se fallisce,
-			 * redirect alla pagina di autenticazione;
-			 */
-			if ((requestPath != null && requestPath.endsWith("index.jspx")) || (requestPath != null && requestPath.endsWith("status.jspx")) || requestPath != null && requestPath.endsWith("logout.jspx") || requestPath != null && requestPath.endsWith("authenticate.jspx")) {
+
+			if (requestPath != null && (requestPath.endsWith("index.xhtml") || requestPath.endsWith("login.xhtml"))) {
 				logger.debug("Richiesta una pagina fra quelle speciali, esco dal filtro");
-				// chain.doFilter(request, response);
-				// return;
+				chain.doFilter(request, response);
+				return;
 			} else {
 
-				/* COMMENTATO per problemi POST JSF */
-				// // <editor-fold defaultstate="collapsed"
-				// desc="DETERMINAZIONE UTENTE WINDOWS">
-
-				/*
-				 * La tecnica utilizzata (settaggio header) per la
-				 * determinazione dell'utente Windows � funzionante
-				 * esclusivamente con browser Microsoft Internet Explorer. Se
-				 * altro browser salta questo step
-				 */
 				user_agent = httpRequest.getHeader("user-agent");
-				// if ((user_agent != null) && (user_agent.indexOf("MSIE") >
-				// -1)) {
-				if ((user_agent != null)) {
+				if ((user_agent != null) && (user_agent.indexOf("MSIE") > -1)) {
 					logger.debug("USER-AGENT: " + user_agent);
 
 					auth = httpRequest.getHeader("Authorization");
@@ -111,10 +113,9 @@ public class NtmlFilter implements Filter {
 							// httpResponse.setHeader("WWW-Authenticate",
 							// "NTLM " + new
 							// sun.misc.BASE64Encoder().encodeBuffer(msg1));
-							httpResponse.setHeader("WWW-Authenticate", "NTLM " + Base64.encodeBase64String(msg1));
+							httpResponse.setHeader("WWW-Authenticate", "NTLM " + org.apache.commons.codec.binary.Base64.encodeBase64String(msg1));
 							httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 							return;
-
 						} else if (msg[8] == 3) {
 							logger.debug("STEP2b: read data");
 
@@ -144,40 +145,31 @@ public class NtmlFilter implements Filter {
 							logger.debug("RemoteHost: " + workstation);
 							logger.debug("Domain: " + domain);
 
-							chain.doFilter(request, response);
 						}
 					}
 				} // if IE
-					// </editor-fold>
-
-				/*
-				 * Mirco 30/09/10: Autentico solo con il nome utente senza il
-				 * prefisso DOMINIO Questo mi e' utile per i nomi importati da
-				 * LDAP che hanno specificato solo il nome dell'account
-				 */
-				String winUser = username; // domain + "\\" + username;
-				try {
-					if (winUser != null) {
-						// utenteDaLoggare =
-						// UtentiDAO.getUtenteByWindowsLogin(winUser);
-					}
-				} catch (Exception e) {
+				else {
+					chain.doFilter(request, response);
 				}
+
+				String winUser = username; // domain + "\\" + username;
 
 			}
 		} catch (RuntimeException e) {
 			logger.error("Errore nel Filtro Autenticazione");
 			logger.error(e);
-			chain.doFilter(request, response);
-		} finally {
 
+			chain.doFilter(request, response);
+			httpResponse.sendError(httpResponse.SC_UNAUTHORIZED);
+
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
 		}
 
-		logger.debug("Fine Filtro Ntlm");
+		logger.debug("Fine Filtro Autenticazione");
 	}
 
 	public void destroy() {
-
+		logger.debug("");
 	}
 
 }

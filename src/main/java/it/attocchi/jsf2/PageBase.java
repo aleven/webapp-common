@@ -45,6 +45,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+
 /**
  * Pagina Base con Metodi di Gestione JSF
  * 
@@ -59,7 +60,9 @@ abstract class PageBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	// protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
+	// protected static final Logger loggerStatic = LoggerFactory.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
 		return (ServletContext) getExternalContext().getContext();

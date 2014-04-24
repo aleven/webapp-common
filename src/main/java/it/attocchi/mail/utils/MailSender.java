@@ -50,6 +50,17 @@ public class MailSender {
 		return m;
 	}
 
+	public static MailSender createMailSenderAuth(String hostName, int port, String authUser, String authPassword) {
+		MailSender m = new MailSender();
+		m.setHostName(hostName);
+		m.setPort(port);
+
+		m.setAuthUser(authUser);
+		m.setAuthPassword(authPassword);
+		
+		return m;
+	}
+	
 	public static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName) {
 		MailSender m = createMailSender(hostName, port);
 

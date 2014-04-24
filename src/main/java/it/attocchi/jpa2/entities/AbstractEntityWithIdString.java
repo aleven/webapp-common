@@ -17,32 +17,37 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.attocchi.web.filters;
+package it.attocchi.jpa2.entities;
 
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
+/**
+ * An entity with id long
+ * 
+ * @author Mirco
+ * 
+ */
+public abstract class AbstractEntityWithIdString extends EntityBase implements IEntityWithIdString {
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+	public abstract String getId();
 
-import org.apache.log4j.Logger;
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
 
-public class CharResponseWrapper extends HttpServletResponseWrapper {
-
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	private CharArrayWriter output;
-
-	public CharResponseWrapper(HttpServletResponse response) {
-		super(response);
-		this.output = new CharArrayWriter();
+		return super.clone();
 	}
 
+	@Override
+	public int hashCode() {
+		return new Long(getId()).hashCode();
+	}
+
+	@Override
 	public String toString() {
-		return output.toString();
+		return String.format("%s[%s]", this.getClass().getName(), this.getId());
 	}
 
-	public PrintWriter getWriter() {
-		return new PrintWriter(output);
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 	}
+
 }

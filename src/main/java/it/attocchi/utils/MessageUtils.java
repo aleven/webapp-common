@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) 2012,2014 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -15,34 +15,23 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-package it.attocchi.web.filters;
+package it.attocchi.utils;
 
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
+import java.text.MessageFormat;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+public class MessageUtils {
 
-import org.apache.log4j.Logger;
+	public static String parse(String message, Object... params) {
+		String res = message;
 
-public class CharResponseWrapper extends HttpServletResponseWrapper {
+		if (message != null && !message.isEmpty()) {
+			// Object[] args = { username, password };
+			MessageFormat fmt = new MessageFormat(message);
+			res = fmt.format(params);
+		}
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	private CharArrayWriter output;
-
-	public CharResponseWrapper(HttpServletResponse response) {
-		super(response);
-		this.output = new CharArrayWriter();
-	}
-
-	public String toString() {
-		return output.toString();
-	}
-
-	public PrintWriter getWriter() {
-		return new PrintWriter(output);
+		return res;
 	}
 }

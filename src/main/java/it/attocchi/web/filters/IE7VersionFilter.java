@@ -30,6 +30,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /*
@@ -51,9 +52,11 @@ import org.apache.log4j.Logger;
  */
 public class IE7VersionFilter implements Filter {
 
-	protected final Logger logger = Logger.getLogger(IE9TextFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	String pathToBeIgnored;
+	String userAgentMatch;
+	String xuacompatible;
 
 	@Override
 	public void destroy() {
@@ -65,10 +68,12 @@ public class IE7VersionFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+		logger.debug("IE7VersionFilter");
+
 		String path = httpRequest.getRequestURI();
 		// if (path.startsWith("/specialpath")) {
 		if (pathToBeIgnored != null && wildCardMatch(path, pathToBeIgnored)) {
-			logger.info("IE7VersionFilter not applied for " + path);
+			logger.debug("IE7VersionFilter not applied for " + path);
 			chain.doFilter(request, response); // Just continue chain.
 		} else {
 			// Do your business stuff here for all paths other than
@@ -77,7 +82,15 @@ public class IE7VersionFilter implements Filter {
 			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable
 			 * .html
 			 */
-			httpResponse.setHeader("X-UA-Compatible", "IE=7");
+
+			String userAgent = httpRequest.getHeader("User-Agent");
+			if (StringUtils.isBlank(userAgentMatch) || userAgent.contains(userAgentMatch)) {
+				logger.debug("IE7VersionFilter applied agent " + userAgent);
+				// "IE=EmulateIE7"
+				httpResponse.setHeader("X-UA-Compatible", xuacompatible);
+			} else {
+				logger.debug("IE7VersionFilter not applied for agent " + userAgent);
+			}
 
 			chain.doFilter(request, response);
 		}
@@ -87,6 +100,8 @@ public class IE7VersionFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		pathToBeIgnored = config.getInitParameter("pathToBeIgnored");
+		userAgentMatch = config.getInitParameter("userAgentMatch");
+		xuacompatible = config.getInitParameter("X-UA-Compatible");
 	}
 
 	/**

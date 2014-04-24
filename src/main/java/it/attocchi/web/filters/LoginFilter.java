@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  */
 public class LoginFilter implements Filter {
 
-	protected final Logger logger = Logger.getLogger(LoginFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	public static final String CURRENT_USER = "CURRENT_USER";
 

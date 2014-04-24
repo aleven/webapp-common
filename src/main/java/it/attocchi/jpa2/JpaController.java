@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2;
 
@@ -97,7 +97,6 @@ public class JpaController implements Serializable {
 	public JpaController(String persistenceUnit, Map<String, String> dbConf) {
 		this(persistenceUnit);
 		this.dbConf = dbConf;
-
 	}
 
 	// private void assegnaNumero() {

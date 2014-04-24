@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  */
 public class IE9TextFilter implements Filter {
 
-	protected static final Logger logger = Logger.getLogger(IE9TextFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

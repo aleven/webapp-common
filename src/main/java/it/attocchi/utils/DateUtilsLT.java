@@ -33,7 +33,13 @@ public class DateUtilsLT {
 
 	protected static final Logger logger = Logger.getLogger(DateUtils.class.getName());
 
+	/**
+	 * yyyy-MM-dd'T'HH:mm:ss'Z'
+	 */
 	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	/**
+	 * yyyyMMdd
+	 */
 	public final static String FORMAT_ISO = "yyyyMMdd";
 
 	public final static String FORMAT_ISO_HHmm = "yyyyMMdd HH:mm";
@@ -43,6 +49,9 @@ public class DateUtilsLT {
 	public static final String FORMAT_HHmmssSS = "HHmmssSS";
 	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
 
+	/**
+	 * yyyyMMddHHmmssSSS
+	 */
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
 
 	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
@@ -60,9 +69,17 @@ public class DateUtilsLT {
 		return new SimpleDateFormat(pattern).format(Now());
 	}
 
-	public static String getNowFormatISO() {
+	public static String NowFormatISO() {
 		return new SimpleDateFormat(FORMAT_ISO).format(Now());
 	}
+	
+	public static String NowYear2() {
+		return new SimpleDateFormat("yy").format(Now());
+	}
+	
+	public static String NowYear4() {
+		return new SimpleDateFormat("yyyy").format(Now());
+	}	
 
 	public static String getYear(Date aDate) {
 		return new SimpleDateFormat("yyyy").format(aDate);

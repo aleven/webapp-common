@@ -17,14 +17,14 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.attocchi.jpa2;
+package it.attocchi.db;
 
+import it.attocchi.utils.JdbcUtils;
 import it.attocchi.web.config.SoftwareProperties;
 
+import java.sql.Connection;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -35,18 +35,15 @@ import org.apache.log4j.Logger;
  * 
  * @author Mirco Attocchi
  */
-public class JPASessionListener implements HttpSessionListener {
+public class DbConnectionSessionListener implements HttpSessionListener {
 
-	// protected static final Logger logger =
-	// Logger.getLogger(JPASessionListener.class.getName());
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	// private Controller chachedController;
+	public final static String SESSION_CONN = "SESSION_CONN";
 
 	/**
 	 * Default constructor.
 	 */
-	public JPASessionListener() {
+	public DbConnectionSessionListener() {
 
 	}
 
@@ -61,24 +58,18 @@ public class JPASessionListener implements HttpSessionListener {
 		SoftwareProperties.init(e.getSession().getServletContext());
 		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
-		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-
-		String persistenceUnitName = e.getSession().getServletContext().getInitParameter("PersistenceUnitName");
-		if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
-			persistenceUnitName = IJpaListernes.DEFAULT_PU;
-		}
-
-		EntityManagerFactory emf = null;
+		Connection conn = null;
 		if (dbProps != null) {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
-		} else {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+			// conn = new JdbcConnector(, , , ).getConnection();
+			try {
+				conn = JdbcUtils.getConnection(SoftwareProperties.driverClass, SoftwareProperties.connString, SoftwareProperties.userName, SoftwareProperties.password);
+				// JdbcUtils.testConn(conn);
+			} catch (Exception ex) {
+				logger.error(ex);
+			}
 		}
-		// emfShared = emf;
-		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
-		logger.info(IJpaListernes.SESSION_EMF + " start");
-		//
-		// chachedController = new Controller(Controller.DEFAULT_PU);
+		e.getSession().setAttribute(SESSION_CONN, conn);
+		logger.info(SESSION_CONN + " start");
 	}
 
 	/**
@@ -86,11 +77,16 @@ public class JPASessionListener implements HttpSessionListener {
 	 */
 	public void sessionDestroyed(HttpSessionEvent e) {
 
-		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);
-		if (emf != null) {
-			emf.close();
+		Connection conn = (Connection) e.getSession().getAttribute(SESSION_CONN);
+		if (conn != null) {
+			try {
+				conn.close();
+				logger.info(SESSION_CONN + " close");
+			} catch (Exception ex) {
+				logger.error(ex);
+			}
 		}
-		logger.info(IJpaListernes.SESSION_EMF + " close");
+
 		//
 		// chachedController.close();
 	}

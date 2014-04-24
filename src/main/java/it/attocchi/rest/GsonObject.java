@@ -19,10 +19,13 @@
 
 package it.attocchi.rest;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.google.gson.Gson;
 
 public abstract class GsonObject implements JsonObject {
 
+	@XmlTransient
 	@Override
 	public String toJson() {
 

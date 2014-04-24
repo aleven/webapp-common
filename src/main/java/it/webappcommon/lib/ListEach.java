@@ -15,34 +15,46 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-package it.attocchi.web.filters;
+package it.webappcommon.lib;
 
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
+import it.attocchi.utils.ListUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import java.util.List;
 
-import org.apache.log4j.Logger;
+public abstract class ListEach<E> {
 
-public class CharResponseWrapper extends HttpServletResponseWrapper {
+	List<E> aList;
+	//
+	// public ListEach(List<E> aList) {
+	// super();
+	// this.aList = aList;
+	// }
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	private CharArrayWriter output;
-
-	public CharResponseWrapper(HttpServletResponse response) {
-		super(response);
-		this.output = new CharArrayWriter();
+	public ListEach(List<E> aList) {
+		this.aList = aList;
 	}
-
-	public String toString() {
-		return output.toString();
+	
+	public void forEach() {
+		if (ListUtils.isNotEmpty(aList)) {
+			for (E item : aList) {
+				eachDo(item);
+			}
+		}
 	}
-
-	public PrintWriter getWriter() {
-		return new PrintWriter(output);
-	}
+	
+	protected abstract void eachDo(E item);
+	
+//	public static <T> ListEach forEach2(List<T> aList) {
+//		if (ListUtils.isNotEmpty(aList)) {
+//			
+//
+//			for (T item : aList) {
+//				eachDo(item);
+//			}
+//		}
+//	}
+	
+	// abstract static <T> void eachDo2(T item);
 }

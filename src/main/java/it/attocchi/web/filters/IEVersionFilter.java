@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
 
@@ -29,6 +29,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 /*
  * Usage on web.xml:
@@ -49,9 +51,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class IEVersionFilter implements Filter {
 
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+
 	@Override
 	public void destroy() {
-		
 
 	}
 
@@ -61,7 +64,8 @@ public class IEVersionFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		/*
-		 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.html
+		 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable.
+		 * html
 		 */
 		res.setHeader("X-UA-Compatible", "IE=EDGE");
 
@@ -70,7 +74,6 @@ public class IEVersionFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		
 
 	}
 

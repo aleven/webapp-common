@@ -15,34 +15,30 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package it.webappcommon.lib;
+
+import java.io.Serializable;
+
+/**
+ * 
+ * @author Mirco
+ *
+ * @param <T>
  */
+public class XMLUtils<T extends Serializable> {
 
-package it.attocchi.web.filters;
+	public String encodeXML(T aSerializableObject) {
+		String res = null;
 
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-
-import org.apache.log4j.Logger;
-
-public class CharResponseWrapper extends HttpServletResponseWrapper {
-
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	private CharArrayWriter output;
-
-	public CharResponseWrapper(HttpServletResponse response) {
-		super(response);
-		this.output = new CharArrayWriter();
+		return res;
 	}
+	
+	public T decodeXML(String xmlSource) {
+		T res = null;
 
-	public String toString() {
-		return output.toString();
-	}
+		return res;
+	}	
 
-	public PrintWriter getWriter() {
-		return new PrintWriter(output);
-	}
 }

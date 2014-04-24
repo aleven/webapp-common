@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.utils;
 
@@ -92,10 +92,19 @@ public class BookmarkParser {
 										 * stampare
 										 */
 										if (arrayProperty.length == i + 1) {
-											// if (getMethod.getReturnType() != Date.class && getMethod.getReturnType() != Integer.class && getMethod.getReturnType() != int.class) {
+											// if (getMethod.getReturnType() !=
+											// Date.class &&
+											// getMethod.getReturnType() !=
+											// Integer.class &&
+											// getMethod.getReturnType() !=
+											// int.class) {
 											if (getMethod.getReturnType() != Date.class) {
-												// strValore = (String) getMethod.invoke(oggetto);
-												/*if the argument is null, then a string equal to "null"*/
+												// strValore = (String)
+												// getMethod.invoke(oggetto);
+												/*
+												 * if the argument is null, then
+												 * a string equal to "null"
+												 */
 												strValore = String.valueOf(getMethod.invoke(oggetto));
 												if (strValore == null || strValore.equals("null")) {
 													strValore = "";
@@ -108,12 +117,19 @@ public class BookmarkParser {
 													strCalValue = formatter.format(dateValue);
 												}
 												returnValue = returnValue + strCalValue;
-//											} else if (getMethod.getReturnType() == Integer.class || getMethod.getReturnType() == int.class) {
-//												integerValue = (Integer) getMethod.invoke(oggetto);
-//												if (integerValue != null) {
-//													strCalValue = String.valueOf(integerValue);
-//												}
-//												returnValue = returnValue + strCalValue;
+												// } else if
+												// (getMethod.getReturnType() ==
+												// Integer.class ||
+												// getMethod.getReturnType() ==
+												// int.class) {
+												// integerValue = (Integer)
+												// getMethod.invoke(oggetto);
+												// if (integerValue != null) {
+												// strCalValue =
+												// String.valueOf(integerValue);
+												// }
+												// returnValue = returnValue +
+												// strCalValue;
 											}
 											retobj = null;
 										} else {
@@ -136,8 +152,15 @@ public class BookmarkParser {
 									 * Se l'oggetto e' nullo allora imposto il
 									 * segnaposto a ""
 									 */
-									returnValue = returnValue + "#null#";
 									// returnValue = "";
+
+									/*
+									 * TODO: attenzione con questa modifica
+									 * eventuali campi null nel DB non vengono
+									 * inseriti in modelli come vuoto ma come
+									 * #null#
+									 */
+									returnValue = returnValue + "#null#";
 								}
 							}
 						} else {

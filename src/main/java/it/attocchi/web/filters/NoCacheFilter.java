@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.web.filters;
 
@@ -31,27 +31,30 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /*
  * Usage:
  * 
  * 	
-  	<!-- NoCacheFilter -->
-	<filter>
-		<display-name>NoCacheFilter</display-name>
-		<filter-name>NoCacheFilter</filter-name>
-		<filter-class>it.attocchi.web.filters.NoCacheFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>NoCacheFilter</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>
-	</filter-mapping>
-	<!-- NoCacheFilter -->
+ <!-- NoCacheFilter -->
+ <filter>
+ <display-name>NoCacheFilter</display-name>
+ <filter-name>NoCacheFilter</filter-name>
+ <filter-class>it.attocchi.web.filters.NoCacheFilter</filter-class>
+ </filter>
+ <filter-mapping>
+ <filter-name>NoCacheFilter</filter-name>
+ <servlet-name>Faces Servlet</servlet-name>
+ </filter-mapping>
+ <!-- NoCacheFilter -->
  */
 public class NoCacheFilter implements Filter {
 
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+
 	@Override
 	public void destroy() {
-		
 
 	}
 
@@ -78,7 +81,6 @@ public class NoCacheFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		
 
 	}
 

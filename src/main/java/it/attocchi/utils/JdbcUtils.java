@@ -22,6 +22,9 @@ package it.attocchi.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.log4j.Logger;
 
@@ -65,4 +68,28 @@ public class JdbcUtils {
 
 		return conn;
 	}
+	
+	public static Timestamp convertToTimestamp(Date aJavaDate) {
+		Timestamp retVal = null;
+
+		if (aJavaDate != null) {
+			retVal = new Timestamp(aJavaDate.getTime());
+		}
+
+		return retVal;
+	}
+	
+	@Deprecated
+	public static Date convertToDate(Timestamp aTimeStamp) {
+		Date res = null;
+		
+		if (aTimeStamp != null) {
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setTime(new Date(aTimeStamp.getTime()));
+			
+			res = calendar.getTime();
+		}
+		
+		return res; 
+	}	
 }

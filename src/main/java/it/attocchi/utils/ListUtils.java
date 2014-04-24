@@ -23,6 +23,7 @@ import it.attocchi.jpa2.entities.IEntityWithIdLong;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ListUtils {
 	 * @param aList
 	 * @return
 	 */
-	public static <T> boolean isNotEmpty(List<T> aList) {
+	public static <T> boolean isNotEmpty(Collection<T> aList) {
 		return aList != null && aList.size() > 0;
 		// return !isEmpty(aList);
 	}
@@ -94,7 +95,7 @@ public class ListUtils {
 	 * @return
 	 */
 	public static List<String> fromCommaSepared(String aStringWithValues) {
-		List<String> res = null;
+		List<String> res = new ArrayList<String>();
 
 		if (aStringWithValues != null) {
 			if (aStringWithValues.startsWith("[")) {
@@ -112,7 +113,7 @@ public class ListUtils {
 	}
 
 	public static List<Long> fromCommaSeparedLong(String aStringWithValues) {
-		List<Long> res = null;
+		List<Long> res = new ArrayList<Long>();
 
 		List<String> valori = fromCommaSepared(aStringWithValues);
 		if (ListUtils.isNotEmpty(valori)) {
@@ -131,7 +132,7 @@ public class ListUtils {
 	 * @param aListOfString
 	 * @return [string, string, ... ]
 	 */
-	public static <T> String toCommaSepared(List<T> aListOfString) {
+	public static <T> String toCommaSepared(Collection<T> aListOfString) {
 		String res = "";
 		if (isNotEmpty(aListOfString)) {
 			res = aListOfString.toString();
@@ -139,7 +140,7 @@ public class ListUtils {
 		return res;
 	}
 
-	public static String toCommaSeparedNoBracket(List<String> aListOfString) {
+	public static String toCommaSeparedNoBracket(Collection<String> aListOfString) {
 		String res = "";
 
 		res = toCommaSepared(aListOfString);

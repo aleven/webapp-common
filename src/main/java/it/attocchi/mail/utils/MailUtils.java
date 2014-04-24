@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -281,6 +283,7 @@ public class MailUtils {
 	 * @param mail
 	 * @return
 	 */
+	@Deprecated
 	public static String removeAddress(String indirizziMultipli, String mail) {
 
 		String res = indirizziMultipli;
@@ -319,6 +322,32 @@ public class MailUtils {
 		return res;
 	}
 
+	/**
+	 * 
+	 * @param elencoIndirizzi
+	 * @param emailDaRimuovere
+	 * @return
+	 */
+	public static String cleanDuplicatesAndRemoveAddress2(String elencoIndirizzi, String emailDaRimuovere) {
+		String res = elencoIndirizzi;
+		if (elencoIndirizzi != null && !elencoIndirizzi.isEmpty()) {
+			Set<String> indirizziUnici = new HashSet<String>();
+			String[] indirizzi = StringUtils.split(elencoIndirizzi, ",");
+			for (String indirizzo : indirizzi) {
+				if (indirizzo != null && !indirizzo.isEmpty()) {
+					indirizzo = indirizzo.trim();
+					if (!indirizziUnici.contains(indirizzo)) {
+						if (emailDaRimuovere != null && !emailDaRimuovere.trim().equalsIgnoreCase(indirizzo.trim())) {
+							indirizziUnici.add(indirizzo);
+						}
+					}
+				}
+			}
+			res = ListUtils.toCommaSeparedNoBracket(indirizziUnici);
+		}
+		return res;
+	}
+
 	public static void saveToEml(Message mail, File emlFile) throws Exception {
 		OutputStream os = null;
 		try {
@@ -332,6 +361,7 @@ public class MailUtils {
 		}
 	}
 
+	@Deprecated
 	public static String removeDuplicateAddresses(String indirizziNotifica) {
 		String res = indirizziNotifica;
 
@@ -365,6 +395,7 @@ public class MailUtils {
 	 * @param addresses
 	 * @return
 	 */
+	@Deprecated
 	public static String cleanEmptyAddresses(String addresses) {
 		String indirizziNotifica = addresses;
 

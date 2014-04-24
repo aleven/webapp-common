@@ -15,34 +15,28 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-package it.attocchi.web.filters;
+package it.webappcommon.lib;
 
-import java.io.CharArrayWriter;
 import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import java.io.StringWriter;
 
 import org.apache.log4j.Logger;
 
-public class CharResponseWrapper extends HttpServletResponseWrapper {
-
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
-	private CharArrayWriter output;
-
-	public CharResponseWrapper(HttpServletResponse response) {
-		super(response);
-		this.output = new CharArrayWriter();
+public class ExceptionLogger {
+	public static void logException(Logger logger, Throwable ex) {
+		StringWriter sw = new StringWriter();
+		ex.printStackTrace(new PrintWriter(sw));
+		String stacktrace = sw.toString();
+		logger.error(stacktrace);
 	}
-
-	public String toString() {
-		return output.toString();
-	}
-
-	public PrintWriter getWriter() {
-		return new PrintWriter(output);
-	}
+	
+	public static void logExceptionWithCause(Logger logger, Throwable ex) {		
+		logger.error(ex);
+		Throwable cause = ex.getCause();
+		if (cause != null) {
+			logger.error(cause);
+		}
+	}	
 }
