@@ -19,8 +19,6 @@
 
 package it.webappcommon.lib.jsf;
 
-import it.attocchi.utils.ListUtils;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 /**
- * 
+ *
  * @author Mirco
  */
 public class JsfConverter {
@@ -46,31 +44,29 @@ public class JsfConverter {
 		ArrayList<SelectItem> retVal = null;
 		try {
 			retVal = new ArrayList<SelectItem>();
-			if (ListUtils.isNotEmpty(list)) {
-				for (Object obj : list) {
-					PropertyDescriptor pdValue = new PropertyDescriptor(itemValue, obj.getClass());
-					Method methodValue = pdValue.getReadMethod();
-					Object methodValueRes = methodValue.invoke(obj);
+			for (Object obj : list) {
+				PropertyDescriptor pdValue = new PropertyDescriptor(itemValue, obj.getClass());
+				Method methodValue = pdValue.getReadMethod();
+				Object methodValueRes = methodValue.invoke(obj);
 
-					PropertyDescriptor pdLabel = new PropertyDescriptor(itemLabel, obj.getClass());
-					Method methodLabel = pdLabel.getReadMethod();
-					Object methodLabelRes = methodLabel.invoke(obj);
-					if (methodValueRes == null) {
-						methodValueRes = "";
-					}
-					if (methodLabelRes == null) {
-						methodLabelRes = "";
-					}
-					retVal.add(new SelectItem(methodValueRes.toString(), methodLabelRes.toString()));
-
-					pdValue = null;
-					methodValue = null;
-					methodValueRes = null;
-
-					pdLabel = null;
-					methodLabel = null;
-					methodLabelRes = null;
+				PropertyDescriptor pdLabel = new PropertyDescriptor(itemLabel, obj.getClass());
+				Method methodLabel = pdLabel.getReadMethod();
+				Object methodLabelRes = methodLabel.invoke(obj);
+				if (methodValueRes == null) {
+					methodValueRes = "";
 				}
+				if (methodLabelRes == null) {
+					methodLabelRes = "";
+				}
+				retVal.add(new SelectItem(methodValueRes.toString(), methodLabelRes.toString()));
+
+				pdValue = null;
+				methodValue = null;
+				methodValueRes = null;
+
+				pdLabel = null;
+				methodLabel = null;
+				methodLabelRes = null;
 			}
 		} catch (Exception e) {
 			throw e;
@@ -89,46 +85,44 @@ public class JsfConverter {
 
 		try {
 			retVal = new ArrayList<SelectItem>();
-			if (ListUtils.isNotEmpty(list)) {
-				for (Object obj : list) {
+			for (Object obj : list) {
 
-					PropertyDescriptor pdValue = new PropertyDescriptor(itemValue, obj.getClass());
-					Method methodValue = pdValue.getReadMethod();
-					Object methodValueRes = methodValue.invoke(obj);
+				PropertyDescriptor pdValue = new PropertyDescriptor(itemValue, obj.getClass());
+				Method methodValue = pdValue.getReadMethod();
+				Object methodValueRes = methodValue.invoke(obj);
 
-					sumLabel = new StringBuilder();
-					for (String str : itemLabel) {
-						PropertyDescriptor pdLabel = new PropertyDescriptor(str, obj.getClass());
-						Method methodLabel = pdLabel.getReadMethod();
-						Object methodLabelRes = methodLabel.invoke(obj);
-						if (methodLabelRes == null) {
-							methodLabelRes = "";
-						}
-						if (sumLabel.length() > 0) {
-							sumLabel.append(separatorForLabel);
-							sumLabel.append(methodLabelRes.toString());
-						} else {
-							sumLabel.append(methodLabelRes.toString());
-						}
-
-						str = null;
-
-						pdLabel = null;
-						methodLabel = null;
-						methodLabelRes = null;
+				sumLabel = new StringBuilder();
+				for (String str : itemLabel) {
+					PropertyDescriptor pdLabel = new PropertyDescriptor(str, obj.getClass());
+					Method methodLabel = pdLabel.getReadMethod();
+					Object methodLabelRes = methodLabel.invoke(obj);
+					if (methodLabelRes == null) {
+						methodLabelRes = "";
 					}
-					if (methodValueRes == null) {
-						methodValueRes = "";
+					if (sumLabel.length() > 0) {
+						sumLabel.append(separatorForLabel);
+						sumLabel.append(methodLabelRes.toString());
+					} else {
+						sumLabel.append(methodLabelRes.toString());
 					}
 
-					retVal.add(new SelectItem(methodValueRes.toString(), sumLabel.toString()));
+					str = null;
 
-					sumLabel = null;
-
-					pdValue = null;
-					methodValue = null;
-					methodValueRes = null;
+					pdLabel = null;
+					methodLabel = null;
+					methodLabelRes = null;
 				}
+				if (methodValueRes == null) {
+					methodValueRes = "";
+				}
+
+				retVal.add(new SelectItem(methodValueRes.toString(), sumLabel.toString()));
+
+				sumLabel = null;
+
+				pdValue = null;
+				methodValue = null;
+				methodValueRes = null;
 			}
 		} catch (Exception e) {
 			throw e;
@@ -145,32 +139,30 @@ public class JsfConverter {
 		ArrayList<SelectItem> retVal = null;
 		try {
 			retVal = new ArrayList<SelectItem>();
-			if (ListUtils.isNotEmpty(list)) {
-				for (Object obj : list) {
-					// PropertyDescriptor pdValue = new
-					// PropertyDescriptor(itemValue, obj.getClass());
-					// Method methodValue = pdValue.getReadMethod();
-					// Object methodValueRes = methodValue.invoke(obj);
+			for (Object obj : list) {
+				// PropertyDescriptor pdValue = new
+				// PropertyDescriptor(itemValue, obj.getClass());
+				// Method methodValue = pdValue.getReadMethod();
+				// Object methodValueRes = methodValue.invoke(obj);
 
-					PropertyDescriptor pdLabel = new PropertyDescriptor(itemLabel, obj.getClass());
-					Method methodLabel = pdLabel.getReadMethod();
-					Object methodLabelRes = methodLabel.invoke(obj);
-					// if (methodValueRes == null) {
-					// methodValueRes = "";
-					// }
-					if (methodLabelRes == null) {
-						methodLabelRes = "";
-					}
-					retVal.add(new SelectItem(obj, methodLabelRes.toString()));
-
-					// pdValue = null;
-					// methodValue = null;
-					// methodValueRes = null;
-
-					pdLabel = null;
-					methodLabel = null;
-					methodLabelRes = null;
+				PropertyDescriptor pdLabel = new PropertyDescriptor(itemLabel, obj.getClass());
+				Method methodLabel = pdLabel.getReadMethod();
+				Object methodLabelRes = methodLabel.invoke(obj);
+				// if (methodValueRes == null) {
+				// methodValueRes = "";
+				// }
+				if (methodLabelRes == null) {
+					methodLabelRes = "";
 				}
+				retVal.add(new SelectItem(obj, methodLabelRes.toString()));
+
+				// pdValue = null;
+				// methodValue = null;
+				// methodValueRes = null;
+
+				pdLabel = null;
+				methodLabel = null;
+				methodLabelRes = null;
 			}
 		} catch (Exception e) {
 			throw e;
@@ -189,42 +181,67 @@ public class JsfConverter {
 
 		try {
 			retVal = new ArrayList<SelectItem>();
-			if (ListUtils.isNotEmpty(list)) {
-				for (Object obj : list) {
+			for (Object obj : list) {
 
-					sumLabel = new StringBuilder();
-					for (String str : itemLabel) {
-						PropertyDescriptor pdLabel = new PropertyDescriptor(str, obj.getClass());
-						Method methodLabel = pdLabel.getReadMethod();
-						Object methodLabelRes = methodLabel.invoke(obj);
-						if (methodLabelRes == null) {
-							methodLabelRes = "";
-						}
-						if (sumLabel.length() > 0) {
-							sumLabel.append(separatorForLabel);
-							sumLabel.append(methodLabelRes.toString());
-						} else {
-							sumLabel.append(methodLabelRes.toString());
-						}
-
-						str = null;
-
-						pdLabel = null;
-						methodLabel = null;
-						methodLabelRes = null;
+				sumLabel = new StringBuilder();
+				for (String str : itemLabel) {
+					PropertyDescriptor pdLabel = new PropertyDescriptor(str, obj.getClass());
+					Method methodLabel = pdLabel.getReadMethod();
+					Object methodLabelRes = methodLabel.invoke(obj);
+					if (methodLabelRes == null) {
+						methodLabelRes = "";
+					}
+					if (sumLabel.length() > 0) {
+						sumLabel.append(separatorForLabel);
+						sumLabel.append(methodLabelRes.toString());
+					} else {
+						sumLabel.append(methodLabelRes.toString());
 					}
 
-					retVal.add(new SelectItem(obj, sumLabel.toString()));
+					str = null;
 
-					sumLabel = null;
-
+					pdLabel = null;
+					methodLabel = null;
+					methodLabelRes = null;
 				}
+
+				retVal.add(new SelectItem(obj, sumLabel.toString()));
+
+				sumLabel = null;
+
 			}
 		} catch (Exception e) {
 			throw e;
 		}
 
 		return retVal;
+	}
+
+	public static ArrayList<SelectItem> getSelectOptionFromText(String text, String splitter) throws Exception {
+		ArrayList<SelectItem> returnValue = null;
+		String[] valori = null;
+		String string = null;
+		try {
+			if (text != null) {
+				// valori = text.split("\n");
+				valori = text.split(splitter);
+			}
+			returnValue = new ArrayList<SelectItem>();
+			for (int i = 0; i < valori.length; i++) {
+				string = valori[i];
+				if (string != null && string.length() > 1) {
+					string = string.trim();
+					returnValue.add(new SelectItem(string, string));
+				}
+			}
+		} catch (Exception exception) {
+			throw exception;
+		} finally {
+			valori = null;
+			string = null;
+		}
+		return returnValue;
+
 	}
 
 }
