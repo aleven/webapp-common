@@ -28,9 +28,9 @@ import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
-public abstract class AbstractBeanElenco<T extends Serializable, E extends AbstractFiltro, P extends AbstractPageBase> extends AbstractPageBase {
+public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends AbstractFiltro, P extends AbstractPageBase> extends AbstractPageBase {
 
-	protected static final Logger logger = Logger.getLogger(AbstractBeanElenco.class.getName());
+	protected static final Logger logger = Logger.getLogger(AbstractBeanElencoWAP.class.getName());
 
 	/**
      *
@@ -79,7 +79,7 @@ public abstract class AbstractBeanElenco<T extends Serializable, E extends Abstr
 
 	protected P pageBaseOfProject;
 
-	protected AbstractBeanElenco() {
+	protected AbstractBeanElencoWAP() {
 		try {
 
 			initProgectPageBase();

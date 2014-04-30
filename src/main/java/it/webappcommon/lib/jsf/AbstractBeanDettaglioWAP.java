@@ -33,13 +33,13 @@ import org.apache.log4j.Logger;
  * @param <T>
  * @param <P>
  *            Classe che Estende PageBase specifica del progetto, per dare
- *            visibilit√† dei metodi specifici
+ *            visibilit‡† dei metodi specifici
  */
-public abstract class AbstractBeanDettaglio<T extends Serializable, P extends AbstractPageBase> extends AbstractPageBase {
+public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends AbstractPageBase> extends AbstractPageBase {
 
 	private static final String PARAM_ID = "id";
 
-	protected static final Logger logger = Logger.getLogger(AbstractBeanDettaglio.class.getName());
+	protected static final Logger logger = Logger.getLogger(AbstractBeanDettaglioWAP.class.getName());
 
 	protected enum TIPO_ID {
 		numerico,
@@ -112,7 +112,7 @@ public abstract class AbstractBeanDettaglio<T extends Serializable, P extends Ab
 		this.utentePrivilegiato = utentePrivilegiato;
 	}
 
-	protected AbstractBeanDettaglio() {
+	protected AbstractBeanDettaglioWAP() {
 		try {
 
 			initProgectPageBase();
