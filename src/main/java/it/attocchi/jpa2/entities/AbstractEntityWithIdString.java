@@ -20,7 +20,7 @@
 package it.attocchi.jpa2.entities;
 
 /**
- * An entity with id long
+ * An entity with id String
  * 
  * @author Mirco
  * 
@@ -31,7 +31,6 @@ public abstract class AbstractEntityWithIdString extends EntityBase implements I
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-
 		return super.clone();
 	}
 
