@@ -15,12 +15,13 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2.entities;
 
 /**
  * An entity with id long
+ * 
  * @author Mirco
  *
  */
@@ -30,7 +31,7 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		
+
 		return super.clone();
 	}
 
