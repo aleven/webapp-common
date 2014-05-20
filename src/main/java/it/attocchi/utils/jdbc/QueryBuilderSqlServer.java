@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.utils.jdbc;
 
@@ -257,6 +257,7 @@ public class QueryBuilderSqlServer {
 
 	/**
 	 * Stesso metodo del like, ma su un singolo campo
+	 * 
 	 * @param semeRicerca
 	 * @param field
 	 * @return
@@ -283,17 +284,22 @@ public class QueryBuilderSqlServer {
 		 * anziche' spezzare in tante piccole parole altrimenti cerca su un
 		 * campo %Microsoft% AND .Net% e non lo trovera' mai
 		 */
-		if (semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR) || semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)
-			|| (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR) && semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR))) {
-			
-//			/* Caso "ciao" */
-//			if (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR) && semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR)) {
-//				semeRicerca = StringUtils.removeStart(semeRicerca, QueryBuilderSqlServer.RICERCA_STRING_CHAR);
-//				semeRicerca = StringUtils.removeEnd(semeRicerca, QueryBuilderSqlServer.RICERCA_STRING_CHAR);	
-//			}
-			
+		if (semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR) || semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR) || (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR) && semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR))) {
+
+			// /* Caso "ciao" */
+			// if
+			// (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR)
+			// &&
+			// semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_STRING_CHAR))
+			// {
+			// semeRicerca = StringUtils.removeStart(semeRicerca,
+			// QueryBuilderSqlServer.RICERCA_STRING_CHAR);
+			// semeRicerca = StringUtils.removeEnd(semeRicerca,
+			// QueryBuilderSqlServer.RICERCA_STRING_CHAR);
+			// }
+
 			words = new String[] { semeRicerca };
-			
+
 		} else {
 			words = semeRicerca.split(" ");
 		}
@@ -351,12 +357,11 @@ public class QueryBuilderSqlServer {
 
 		return res.toString();
 	}
-	
+
 	/**
-	 * ciao esegue ricerca =
-	 * ciao* esegue ricerca ciao%
-	 * *ciao esegue ricerca %ciao
-	 * *ciao* esegue ricerca %ciao%
+	 * ciao esegue ricerca = ciao* esegue ricerca ciao% *ciao esegue ricerca
+	 * %ciao *ciao* esegue ricerca %ciao%
+	 * 
 	 * @param campo
 	 * @param semeRicerca
 	 * @return
@@ -383,7 +388,38 @@ public class QueryBuilderSqlServer {
 		}
 
 		return res.toString();
-	}	
+	}
+
+	/**
+	 * 
+	 * @param campo
+	 * @param semeRicerca
+	 * @param multipleValuesSeparator
+	 * @return
+	 */
+	public static String likeOrEquaByUser2(String campo, String semeRicerca, String multipleValuesSeparator) {
+		StringBuilder res = new StringBuilder();
+
+		if (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR) && semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CASO *ciao* */
+			semeRicerca = StringUtils.removeStart(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			semeRicerca = StringUtils.removeEnd(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			res.append(campo + " LIKE '%" + multipleValuesSeparator + "%" + encodeStringSQL(semeRicerca) + "%" + multipleValuesSeparator + "%'");
+		} else if (semeRicerca.endsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CERCO ciao* quindi LIKE '%;%CIAO;%' */
+			semeRicerca = StringUtils.removeEnd(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			res.append(campo + " LIKE '%" + multipleValuesSeparator + encodeStringSQL(semeRicerca) + "%" + multipleValuesSeparator + "%'");
+		} else if (semeRicerca.startsWith(QueryBuilderSqlServer.RICERCA_JOLLY_CHAR)) {
+			/* CERCO *ciao quindi LIKE '%;%CIAO;%' */
+			semeRicerca = StringUtils.removeStart(semeRicerca, QueryBuilderSqlServer.RICERCA_JOLLY_CHAR);
+			res.append(campo + " LIKE '%" + multipleValuesSeparator + "%" + encodeStringSQL(semeRicerca) + multipleValuesSeparator + "%'");
+		} else {
+			/* CERCO ciao quindi LIKE '%;ciao;%' */
+			res.append(campo + " LIKE '%" + multipleValuesSeparator + encodeStringSQL(semeRicerca) + multipleValuesSeparator + "%'");
+		}
+
+		return res.toString();
+	}
 
 	public static boolean isAdvancedSearchCommand(String semeRicerca) {
 		boolean res = false;
