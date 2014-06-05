@@ -36,6 +36,8 @@ import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Months;
+import org.joda.time.Weeks;
 
 public class DateUtils {
 
@@ -129,11 +131,35 @@ public class DateUtils {
 		DateTime startDate = new DateTime(start);
 		DateTime endDate = new DateTime(end);
 
-		Days d = Days.daysBetween(startDate, endDate);
-		res = d.getDays();
+		Days giorni = Days.daysBetween(startDate, endDate);
+		res = giorni.getDays();
 
 		return res;
 	}
+	
+	public static int differenzaInSettimane(Date start, Date end) {
+		int res = 0;
+
+		DateTime startDate = new DateTime(start);
+		DateTime endDate = new DateTime(end);
+
+		Weeks settimane = Weeks.weeksBetween(startDate, endDate);
+		res = settimane.getWeeks();
+
+		return res;
+	}
+	
+	public static int differenzaInMesi(Date start, Date end) {
+		int res = 0;
+
+		DateTime startDate = new DateTime(start);
+		DateTime endDate = new DateTime(end);
+
+		Months mesi = Months.monthsBetween(startDate, endDate);
+		res = mesi.getMonths();
+
+		return res;
+	}	
 
 	public static List<Date> calcolaDateIntermedie(Date start, Date end) {
 		List<Date> res = new ArrayList<Date>();
