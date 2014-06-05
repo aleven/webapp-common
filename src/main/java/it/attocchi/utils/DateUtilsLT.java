@@ -41,6 +41,7 @@ public class DateUtilsLT {
 	 * yyyyMMdd
 	 */
 	public final static String FORMAT_ISO = "yyyyMMdd";
+	public final static String FORMAT_ISO_SEPARATOR = "yyyy-MM-dd";
 
 	public final static String FORMAT_ISO_HHmm = "yyyyMMdd HH:mm";
 	public final static String FORMAT_ISO_HHmm_SEPARATOR = "yyyy-MM-dd HH:mm";
@@ -55,6 +56,7 @@ public class DateUtilsLT {
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
 
 	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
+	public static final String FORMAT_DATE_IT_SEPARATOR_MINUS = "dd-MM-yyyy";
 	public static final String FORMAT_DATE_TIME_IT = "dd/MM/yyyy HH:mm";
 	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
 	public static final String FORMAT_TIME_IT = "HH:mm";
