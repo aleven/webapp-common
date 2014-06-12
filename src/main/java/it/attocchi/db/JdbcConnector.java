@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  */
 public class JdbcConnector {
 
-	protected static final Logger logger = Logger.getLogger(JdbcConnector.class.getName());
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	private Connection conn;
 	private boolean passedConnection = false;
