@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.webappcommon.lib;
 
@@ -240,8 +240,16 @@ public class StringUtils {
 		} catch (Exception ex) {
 			logger.error("removeDoubleSpace", ex);
 		}
-		
+
 		return tempo;
 	}
 
+	public static boolean equalsToAny(String aString, String... strings) {
+		boolean found = false;
+		for (String a : strings) {
+			found = aString.equals(a);
+			if (found) break;
+		}
+		return found;
+	}
 }
