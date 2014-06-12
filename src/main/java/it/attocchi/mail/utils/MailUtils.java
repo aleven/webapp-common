@@ -334,7 +334,7 @@ public class MailUtils {
 			Set<String> indirizziUnici = new HashSet<String>();
 			String[] indirizzi = StringUtils.split(elencoIndirizzi, ",");
 			for (String indirizzo : indirizzi) {
-				if (indirizzo != null && !indirizzo.isEmpty()) {
+				if (indirizzo != null && !indirizzo.trim().isEmpty()) {
 					indirizzo = indirizzo.trim();
 					if (!indirizziUnici.contains(indirizzo)) {
 						if (emailDaRimuovere != null && !emailDaRimuovere.trim().equalsIgnoreCase(indirizzo.trim())) {
