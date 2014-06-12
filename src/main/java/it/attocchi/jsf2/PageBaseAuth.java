@@ -63,6 +63,9 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 		String param = getParamObject(AuthFilter.PARAM_AUTH);
 
+		/* l'opzione debug si puo' inizializzare da web.xml */
+		debug = getInitParam("debug") != null && getInitParam("debug").equalsIgnoreCase("true");
+			
 		if (idUtenteLoggato == null || (param != null && !param.equals(idUtenteLoggato))) {
 
 			if (param == null && debug) {
