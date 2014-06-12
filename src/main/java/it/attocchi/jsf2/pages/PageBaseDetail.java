@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jsf2.pages;
 
@@ -89,11 +89,11 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	protected void loadData() throws Exception {
 
 		if (id > 0) {
-			if (StringUtils.isNotBlank(persistentUnit))
+			if (StringUtils.isNotBlank(persistentUnit)) {
 				elemento = JpaController.callFindByIdPU(persistentUnit, clazz, id);
-			else
+			} else {
 				elemento = JpaController.callFindById(getEmfShared(), clazz, id);
-
+			}
 			if (elemento == null) {
 				addErrorMessage("Nessun Dato");
 			}
@@ -124,12 +124,25 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 
 	protected abstract void onPostLoadData() throws Exception;
 
-	// protected String actionSave() {
-	// try {
-	// JpaController.callUpdate(getEmfShared(), elemento);
-	// } catch (Exception ex) {
-	// addErrorMessage(ex);
-	// }
-	// }
+	/**
+	 * 
+	 * @return
+	 */
+	protected void doActionSave() throws Exception {
 
+		if (id > 0) {
+			if (StringUtils.isNotBlank(persistentUnit)) {
+				JpaController.callUpdatePU(persistentUnit, elemento);
+			} else {
+				JpaController.callUpdate(getEmfShared(), elemento);
+			}
+		} else {
+			if (StringUtils.isNotBlank(persistentUnit)) {
+				JpaController.callInsertPU(persistentUnit, elemento);
+			} else {
+				JpaController.callInsert(getEmfShared(), elemento);
+			}
+		}
+
+	}
 }
