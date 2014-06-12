@@ -177,4 +177,10 @@ public class DbUtilsConnector extends JdbcConnector {
 		return h;
 	}
 
+	public static void close(DbUtilsConnector connector) {
+		if (connector != null) {
+			connector.close();
+		}
+	}
+
 }
