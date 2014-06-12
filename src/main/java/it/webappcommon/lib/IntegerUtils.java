@@ -31,5 +31,15 @@ public class IntegerUtils {
 
 		return res;
 	}
+	
+	public static int tryParse(String value, int defaultValue) {
+		int res = defaultValue;
+		try {
+			res = Integer.parseInt(value);
+		} catch (Exception ex) {
+			// 
+		}
+		return res;
+	}
 
 }
