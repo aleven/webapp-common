@@ -21,11 +21,13 @@ package it.webappcommon.lib;
 
 import it.attocchi.utils.ListUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class StringUtils {
+public class StringHelper {
 
 	protected static Logger logger = Logger.getLogger(StringUtils.class.getName());
 
@@ -58,35 +60,36 @@ public class StringUtils {
 		return res;
 	}
 
-	public static String concat(String... strings) {
-
-		String res = null;
-
-		StringBuilder sb = null;
-		// if (str1 != null || str2 != null || str3 != null || str4 != null ||
-		// str5 != null) {
-		if (strings != null) {
-			for (String str : strings) {
-
-				if (str != null) {
-					if (sb == null)
-						sb = new StringBuilder();
-
-					if (sb.length() > 0) {
-						sb.append(" ");
-					}
-
-					sb.append(str.trim());
-				}
-
-			}
-
-			if (sb != null && sb.length() > 0) {
-				res = sb.toString();
-			}
-		}
-		return res;
-	}
+//	public static String concat(String... strings) {
+//
+////		String res = null;
+////
+////		StringBuilder sb = null;
+////		// if (str1 != null || str2 != null || str3 != null || str4 != null ||
+////		// str5 != null) {
+////		if (strings != null) {
+////			for (String str : strings) {
+////
+////				if (str != null) {
+////					if (sb == null)
+////						sb = new StringBuilder();
+////
+////					if (sb.length() > 0) {
+////						sb.append(" ");
+////					}
+////
+////					sb.append(str.trim());
+////				}
+////
+////			}
+////
+////			if (sb != null && sb.length() > 0) {
+////				res = sb.toString();
+////			}
+////		}
+//		
+//		return concat(" ", strings);
+//	}
 
 	public static String calculateWithSeparators(String string1, String separator1, String string2, String separator2) {
 
@@ -252,4 +255,50 @@ public class StringUtils {
 		}
 		return found;
 	}
+	
+	/*
+	 * from StringFunc
+	 */
+	
+	public static final String NEW_LINE = "\r\n";
+
+	public static String concat(String separator, String... strings) {
+		StringBuilder sb = new StringBuilder();
+
+		for (String aString : strings) {
+			if (StringUtils.isNotBlank(aString)) {
+				if (sb.length() > 0)
+					sb.append(separator);
+				sb.append(aString);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static boolean equalsIgnoreCase(String string1, String string2) {
+		return (string1 != null && string2 != null && string1.equalsIgnoreCase(string2));
+	}
+
+	public static boolean contains(String string, String subString) {
+		return string != null && !string.isEmpty() && string.indexOf(subString) >= 0;
+	}
+
+	public static List<String> readLines(String aText) {
+		List<String> res = null;
+
+		if (StringUtils.isNotBlank(aText))
+			res = Arrays.asList(StringUtils.split(aText, NEW_LINE));
+
+		return res;
+	}
+
+	public static String writeLines(List<String> lines, String defaultValueIfEmpty) {
+		String res = defaultValueIfEmpty;
+
+		if (ListUtils.isNotEmpty(lines))
+			res = StringUtils.join(lines.toArray(), NEW_LINE);
+
+		return res;
+	}	
 }
