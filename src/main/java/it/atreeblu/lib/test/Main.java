@@ -20,7 +20,7 @@
 package it.atreeblu.lib.test;
 
 import it.webappcommon.lib.DateUtils;
-import it.webappcommon.lib.StringUtils;
+import it.webappcommon.lib.StringHelper;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -61,7 +61,7 @@ public class Main {
 
 		// testSize();
 
-		// testStringUtils();
+		// testStringHelper();
 
 		// testDateUtils();
 
@@ -163,15 +163,15 @@ public class Main {
 		// System.out.println(HtmlUtils.encodeWebUrl("ftps://www.google.com"));
 	}
 
-	private static void testStringUtils() {
+	private static void testStringHelper() {
 
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 8));
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 5));
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 10));
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 2));
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 1));
-		System.out.println(StringUtils.stringPart("AABBCCDDEE", 0));
-		System.out.println(StringUtils.stringPart("", 0));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 8));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 5));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 10));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 2));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 1));
+		System.out.println(StringHelper.stringPart("AABBCCDDEE", 0));
+		System.out.println(StringHelper.stringPart("", 0));
 
 	}
 
