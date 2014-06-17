@@ -267,9 +267,8 @@ public class MailUtils {
 			out.close();
 			in.close();
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException ex) {
+			logger.error(ex);
 		} finally {
 
 		}
