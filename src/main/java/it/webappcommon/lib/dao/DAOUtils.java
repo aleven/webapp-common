@@ -52,7 +52,6 @@ public class DAOUtils {
 				// logger.info("Perform a System.gc");
 				// System.gc();
 				// } catch (Exception e) {
-				// // TODO Auto-generated catch block
 				// logger.error(e);
 				// }
 
