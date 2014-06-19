@@ -29,9 +29,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+/**
+ * DateUtils that not require Joda
+ * 
+ * @author Mirco
+ *
+ */
 public class DateUtilsLT {
 
-	protected static final Logger logger = Logger.getLogger(DateUtils.class.getName());
+	protected static final Logger logger = Logger.getLogger(DateUtilsLT.class.getName());
 
 	/**
 	 * yyyy-MM-dd'T'HH:mm:ss'Z'
@@ -74,14 +80,14 @@ public class DateUtilsLT {
 	public static String NowFormatISO() {
 		return new SimpleDateFormat(FORMAT_ISO).format(Now());
 	}
-	
+
 	public static String NowYear2() {
 		return new SimpleDateFormat("yy").format(Now());
 	}
-	
+
 	public static String NowYear4() {
 		return new SimpleDateFormat("yyyy").format(Now());
-	}	
+	}
 
 	public static String getYear(Date aDate) {
 		return new SimpleDateFormat("yyyy").format(aDate);
@@ -145,7 +151,7 @@ public class DateUtilsLT {
 	 * @throws ParseException
 	 */
 	public static Date parseISO(String aIsoString) throws ParseException {
-		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
+		return new SimpleDateFormat(FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
 	}
 
 	/**
@@ -156,7 +162,7 @@ public class DateUtilsLT {
 	 * @throws ParseException
 	 */
 	public static Date parseISOSeparator(String aIsoString) throws ParseException {
-		return new SimpleDateFormat(DateUtils.FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
+		return new SimpleDateFormat(FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
 	}
 
 	/**

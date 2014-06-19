@@ -28,8 +28,10 @@ public class TestDateUtils {
 		cal1 = Calendar.getInstance();
 		cal2 = Calendar.getInstance();
 
-		cal1.set(2014, 06 - 1, 03, 16, 00);
-		cal2.set(2014, 07 - 1, 03, 16, 00);
+		// cal1.set(2014, 06 - 1, 03, 16, 00);
+		// cal2.set(2014, 07 - 1, 03, 16, 00);
+		cal2.add(Calendar.DAY_OF_MONTH, 10);
+		// cal2.set(Calendar.HOUR_OF_DAY, 2);
 
 		inizio = cal1.getTime();
 		fine = cal2.getTime();
@@ -51,7 +53,7 @@ public class TestDateUtils {
 	private static void testSuddivisione() {
 
 		DateTime now = new DateTime();
-		List<Interval> list = it.attocchi.utils.DateUtils.splitDuration(now, now.plusDays(10), 3, 60 * 60 * 24 * 7 * 1000);
+		List<Interval> list = DateUtils.splitDuration(now, now.plusDays(10), 3, 60 * 60 * 24 * 7 * 1000);
 
 		for (Interval i : list) {
 			System.out.println(i.getStart() + " - " + i.getEnd() + " - " + i.toDurationMillis());

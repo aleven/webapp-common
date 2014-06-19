@@ -19,8 +19,8 @@
 
 package it.attocchi.utils.jdbc;
 
-import it.attocchi.utils.DateUtils;
 import it.attocchi.utils.ListUtils;
+import it.webappcommon.lib.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
