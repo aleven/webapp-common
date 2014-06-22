@@ -892,7 +892,7 @@ public class DateUtils extends DateUtilsLT {
 		int m = time.getMinutes();
 		int s = time.getSeconds();
 
-		logger.info(String.format("%s-%s-%s %s:%s:%s", year, month, day, h, m, s));
+		logger.debug(String.format("%s-%s-%s %s:%s:%s", year, month, day, h, m, s));
 
 		DateTime dt = new DateTime(year, month, day, h, m, s, DateTimeZone.UTC);
 
