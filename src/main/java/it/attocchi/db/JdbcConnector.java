@@ -239,7 +239,7 @@ public class JdbcConnector {
 				Connection connection = getConnection();
 
 				// connection.setAutoCommit(false);
-
+				
 				Statement statement = connection.createStatement();
 				for (String aQuery : batchQuery) {
 					statement.addBatch(aQuery);
