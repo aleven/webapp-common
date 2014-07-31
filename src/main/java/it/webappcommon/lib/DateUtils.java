@@ -300,9 +300,13 @@ public class DateUtils extends DateUtilsLT {
 	 *             if either date is <code>null</code>
 	 */
 	public static boolean isSameDay(Date date1, Date date2) {
+//		if (date1 == null || date2 == null) {
+//			throw new IllegalArgumentException("The dates must not be null");
+//		}
 		if (date1 == null || date2 == null) {
-			throw new IllegalArgumentException("The dates must not be null");
+			return false;
 		}
+		
 		Calendar cal1 = Calendar.getInstance();
 		cal1.setTime(date1);
 		Calendar cal2 = Calendar.getInstance();
@@ -1837,5 +1841,14 @@ public class DateUtils extends DateUtilsLT {
 
 		return list;
 	}
-
+	
+	/**
+	 * verifica se una data e' diversa da vuota e superiore ad adesso
+	 * @param aDate
+	 * @return
+	 */
+	public static boolean greaterThanToday(Date aDate) {
+		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();
+	}
+	
 }
