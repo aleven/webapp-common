@@ -19,8 +19,11 @@
 
 package it.attocchi.jpa2;
 
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1122,6 +1125,23 @@ public class JpaController implements Serializable {
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
+		return res;
+	}
+
+	/**
+	 * Return a Map based on element ID
+	 * @param clazz
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz) throws Exception {
+		Map<Long, T> res = new HashMap<Long, T>();
+
+		List<T> list = findAll(clazz, null);
+		for (T item : list) {
+			res.put(item.getId(), item);
+		}
+
 		return res;
 	}
 }
