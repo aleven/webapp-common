@@ -56,6 +56,12 @@ public abstract class AbstactEntityMarks extends EntityBase {
 		getEntityMarks().utenteCancellazioneId = idUtente;
 		getEntityMarks().dataCancellazione = new Date();
 	}
+	
+	public void markAsUnDeleted(long idUtente) {
+		init();
+		getEntityMarks().utenteCancellazioneId = 0;
+		getEntityMarks().dataCancellazione = null;
+	}
 
 	private void init() {
 		if (getEntityMarks() == null) {
