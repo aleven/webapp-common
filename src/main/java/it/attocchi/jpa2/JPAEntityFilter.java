@@ -217,10 +217,15 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.includiEliminati = includiEliminati;
 	}
 
-	public JPAEntityFilter<T> setIncludiEliminatiL(boolean includiEliminati) {
+	public JPAEntityFilter<T> includiEliminati(boolean includiEliminati) {
 		setIncludiEliminati(includiEliminati);
 		return this;
 	}
+	
+//	public JPAEntityFilter<T> setIncludiEliminatiL(boolean includiEliminati) {
+//		setIncludiEliminati(includiEliminati);
+//		return this;
+//	}
 
 	protected String buildMultiIds(List<Long> longs) {
 		StringBuilder res = new StringBuilder();
