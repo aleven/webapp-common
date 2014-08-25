@@ -1,0 +1,6 @@
+
+http://stackoverflow.com/questions/3037593/how-to-generate-jpa-2-0-metamodel
+http://jinahya.wordpress.com/2014/03/29/jpa-metamodels-with-maven/
+
+
+http://relation.to/Bloggers/HibernateStaticMetamodelGeneratorAnnotationProcessor
