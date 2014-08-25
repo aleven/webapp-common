@@ -18,9 +18,11 @@ public class TestDateUtils {
 		cal2;
 
 	public static void main(String[] args) {
-		testDifferenza();
+		// testDifferenza();
 
 		// testSuddivisione();
+		
+		testWorkingDays();
 	}
 
 	private static void testDifferenza() {
@@ -66,5 +68,18 @@ public class TestDateUtils {
 		System.out.println(DateUtilsLT.isBetween(new Date(), DateUtilsLT.addDays(new Date(), -1), new Date()));
 		System.out.println(DateUtilsLT.isBetween(new Date(), DateUtilsLT.addDays(new Date(), -10), DateUtilsLT.addDays(new Date(), 10)));
 		System.out.println(DateUtilsLT.isBetween(new Date(), DateUtilsLT.addDays(new Date(), 10), DateUtilsLT.addDays(new Date(), 50)));
+	}
+	
+	private static void testWorkingDays() {
+		
+		Date start = new Date();
+		Date end = DateUtilsLT.addDays(new Date(), 8);
+//		start = DateUtilsLT.setTime(start, 12, 0);
+//		end = DateUtilsLT.setTime(end, 12, 0);
+		
+		System.out.println(start + "," + end);
+		System.out.println(DateUtilsLT.getWorkingDaysBetweenTwoDates(start, end));
+		
+		
 	}
 }
