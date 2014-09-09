@@ -72,4 +72,12 @@ public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks i
 	public int compareTo(Long o) {
 		return new Long(this.getId()).compareTo(o);
 	}
+	
+	/**
+	 * verifica se la data cancellazione per questo oggetto e' impostata
+	 * @return
+	 */
+	public boolean isDeleted() {
+		return (getEntityMarks() != null && getEntityMarks().getDataCancellazione() != null);
+	}
 }
