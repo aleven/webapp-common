@@ -15,12 +15,13 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.lang3.StringUtils;
@@ -140,7 +141,7 @@ public class HtmlUtils {
 	// Document doc = Jsoup.connect(uri).get();
 	// doc.get
 	// }
-	
+
 	/**
 	 * Funzione che converte
 	 * 
@@ -171,18 +172,37 @@ public class HtmlUtils {
 	public static String encodeWebUrl(String aString) {
 		String res = null;
 
-		// res = aString.replaceAll("(?:https?|ftps?)://[\\w/%.-]+",
-		// "<a href='$0'>$0</a>");
+//		// res = aString.replaceAll("(?:https?|ftps?)://[\\w/%.-]+",
+//		// "<a href='$0'>$0</a>");
+//
+//		String regexp = "(?:https?|ftps?)://[\\w/%.-]+";
+//
+//		/**
+//		 * http://www.regexguru.com/2008/11/detecting-urls-in-a-block-of-text/
+//		 */
+//		// regexp = "\\b(?:(?:https?|ftp|file)://|www\\.|ftp\\.)[-A-Z0-9+&@#/%=~_|$?!:,.]*[A-Z0-9+&@#/%=~_|$]";
+//
+//		// if (aString != null) {
+//		if (StringUtils.isNotEmpty(aString)) {
+//			res = aString.replaceAll(regexp, "<a href='$0' class='LinkChiaveEsterna' target='_blank'>$0</a>");
+//		}
+//		// res = aString.replaceAll("(?:wwws?)://[\\w/%.-]+",
+//		// "<a href='http://$0'>$0</a>");
 
-		String regexp = "(?:https?|ftps?)://[\\w/%.-]+";
-
-		// if (aString != null) {
-		if (StringUtils.isNotEmpty(aString)) {
-			res = aString.replaceAll(regexp, "<a href='$0' class='LinkChiaveEsterna' target='_blank'>$0</a>");
-		}
-		// res = aString.replaceAll("(?:wwws?)://[\\w/%.-]+",
-		// "<a href='http://$0'>$0</a>");
+		// separate input by spaces ( URLs don't have spaces )
+		String[] parts = aString.split("\\s+");
+		res = aString;
+		// Attempt to convert each item into an URL.
+		for (String item : parts)
+			try {
+				URL url = new URL(item);
+				// If possible then replace with anchor...
+				res = res.replace(item, "<a href='" + url + "' class='LinkChiaveEsterna' target='_blank'>" + url + "</a>");
+			} catch (MalformedURLException e) {
+				// If there was an URL that was not it!...
+				// System.out.print(item + " ");
+			}
 
 		return res;
-	}	
+	}
 }
