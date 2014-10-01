@@ -30,7 +30,7 @@ public class SelectItemConverter {
 
 	// public static List<SelectItem> convert(List<ISelectItemConvertible>
 	// aList) throws Exception {
-	public static <T extends ISelectItemConvertible> List<SelectItem> convert(List<T> aList) throws Exception {
+	public static <T extends ISelectItemConvertible> List<SelectItem> convert(Collection<T> aList) throws Exception {
 		List<SelectItem> res = new ArrayList<SelectItem>();
 
 		for (ISelectItemConvertible item : aList) {
