@@ -59,10 +59,12 @@ abstract class PageBase implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
-	// protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+	/**
+	 * transient e' richiesto per l'istanza che con jsf 2.1 non e' serializable
+	 * http://javarevisited.blogspot.com.br/2012/12/javaionotserializableexception-orgapache-log4j-logger-error-exception-fix.html
+	 */
+	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
 	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
-	// protected static final Logger loggerStatic = LoggerFactory.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
 		return (ServletContext) getExternalContext().getContext();
