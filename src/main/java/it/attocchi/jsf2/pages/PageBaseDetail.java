@@ -130,7 +130,7 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	 */
 	protected void doActionSave() throws Exception {
 
-		if (id > 0) {
+		if (elemento.getId() > 0) {
 			if (StringUtils.isNotBlank(persistentUnit)) {
 				JpaController.callUpdatePU(persistentUnit, elemento);
 			} else {
