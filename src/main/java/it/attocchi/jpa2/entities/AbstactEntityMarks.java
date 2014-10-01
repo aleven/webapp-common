@@ -25,7 +25,10 @@ import org.apache.log4j.Logger;
 
 public abstract class AbstactEntityMarks extends EntityBase {
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	/**
+	 * non puo essere serializzato in JSF 2.1
+	 */
+	// protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
 	
 	// private static final long serialVersionUID = 1L;
 
