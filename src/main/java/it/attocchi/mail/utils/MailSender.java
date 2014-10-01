@@ -57,10 +57,10 @@ public class MailSender {
 
 		m.setAuthUser(authUser);
 		m.setAuthPassword(authPassword);
-		
+
 		return m;
 	}
-	
+
 	public static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName) {
 		MailSender m = createMailSender(hostName, port);
 
@@ -163,7 +163,7 @@ public class MailSender {
 		this.disableSSLCertCheck = disableSSLCertCheck;
 	}
 
-	private void prepareEmail(Email email, String toEmail, String subject, String message, List<MailHeader> customHeaders) throws Exception {
+	private void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws Exception {
 
 		// String host = "smtps.pec.aruba.it";
 		// String host = "smtps.pec.aruba.it";
@@ -222,10 +222,20 @@ public class MailSender {
 
 		// email.addTo("amirco@gmail.com", "Mirco Attocchi");
 
-		List<MailRecipient> recipients = parseEmails(toEmail);
+		List<MailRecipient> recipients = parseEmails(to);
 		for (MailRecipient recipient : recipients) {
 			// email.addTo(toEmail, toName);
 			email.addTo(recipient.getToEmail(), recipient.getToName());
+		}
+
+		List<MailRecipient> recipientsCC = parseEmails(toCC);
+		for (MailRecipient recipientCC : recipientsCC) {
+			email.addCc(recipientCC.getToEmail(), recipientCC.getToName());
+		}
+
+		List<MailRecipient> recipientsCCN = parseEmails(toCCN);
+		for (MailRecipient recipientCCN : recipientsCCN) {
+			email.addBcc(recipientCCN.getToEmail(), recipientCCN.getToName());
 		}
 
 		// email.setSubject("Test message");
@@ -241,18 +251,18 @@ public class MailSender {
 		}
 	}
 
-	public void sendMail(String toEmail, String subject, String message) throws Exception {
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message) throws Exception {
 		SimpleEmail email = new SimpleEmail();
 
-		prepareEmail(email, toEmail, subject, message, null);
+		prepareEmail(email, to, toCC, toCCN, subject, message, null);
 
 		email.send();
 	}
 
-	public void sendMailHtml(String toEmail, String subject, String message, List<EmailAttachment> attachments) throws Exception {
+	public void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws Exception {
 		HtmlEmail email = new HtmlEmail();
 
-		prepareEmail(email, toEmail, subject, message, null);
+		prepareEmail(email, to, toCC, toCCN, subject, message, null);
 		email.setHtmlMsg(message);
 
 		if (attachments != null) {
@@ -264,22 +274,22 @@ public class MailSender {
 		email.send();
 	}
 
-	public void sendMail(String toEmail, String subject, String message, List<EmailAttachment> attachments) throws Exception {
-		sendMail(toEmail, subject, message, null, attachments, null);
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws Exception {
+		sendMail(to, toCC, toCCN, subject, message, null, attachments, null);
 	}
 
-	public void sendMail(String toEmail, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws Exception {
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws Exception {
 
 		SimpleEmail email = new SimpleEmail();
 
-		prepareEmail(email, toEmail, subject, message, customHeaders);
+		prepareEmail(email, to, toCC, toCCN, subject, message, customHeaders);
 
 		email.send();
 
 		storeOnEml(email, emlToStore);
 	}
 
-	public void sendMail(String toEmail, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws Exception {
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws Exception {
 		// Create the attachment
 		// EmailAttachment attachment = new EmailAttachment();
 		// attachment.setPath("mypictures/john.jpg");
@@ -290,7 +300,7 @@ public class MailSender {
 		// Create the email message
 		MultiPartEmail email = new MultiPartEmail();
 
-		prepareEmail(email, toEmail, subject, message, customHeaders);
+		prepareEmail(email, to, toCC, toCCN, subject, message, customHeaders);
 
 		// email.setHostName("mail.myserver.com");
 		// email.addTo("jdoe@somewhere.org", "John Doe");
@@ -362,24 +372,26 @@ public class MailSender {
 
 		// "Mirco Attocchi" <amirco@gmail.com>,
 
-		String splitter = ";";
-		String[] addresses = null;
+		if (StringUtils.isNotBlank(toEmail)) {
+			String splitter = ";";
+			String[] addresses = null;
 
-		if (toEmail.indexOf(splitter) >= 0) {
-			addresses = toEmail.split(splitter);
-		}
-
-		splitter = ",";
-		if (toEmail.indexOf(splitter) >= 0) {
-			addresses = toEmail.split(splitter);
-		}
-
-		if (addresses != null) {
-			for (String address : addresses) {
-				res.add(new MailRecipient(address.trim(), null));
+			if (toEmail.indexOf(splitter) >= 0) {
+				addresses = toEmail.split(splitter);
 			}
-		} else {
-			res.add(new MailRecipient(toEmail, null));
+
+			splitter = ",";
+			if (toEmail.indexOf(splitter) >= 0) {
+				addresses = toEmail.split(splitter);
+			}
+
+			if (addresses != null) {
+				for (String address : addresses) {
+					res.add(new MailRecipient(address.trim(), null));
+				}
+			} else {
+				res.add(new MailRecipient(toEmail, null));
+			}
 		}
 
 		return res;
