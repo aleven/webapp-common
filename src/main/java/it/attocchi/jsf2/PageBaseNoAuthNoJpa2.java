@@ -42,7 +42,8 @@ public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
 			init();
 
 		} catch (Exception ex) {
-			addErrorMessage("postConstruct", ex);
+			// addErrorMessage("postConstruct", ex);
+			addErrorMessage(ex.getMessage(), ex);
 		}
 	}
 
