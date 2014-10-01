@@ -55,30 +55,34 @@ public class JPASessionListener implements HttpSessionListener {
 	 */
 	public void sessionCreated(HttpSessionEvent e) {
 
-		/*
-		 * Aggiunta del Supporto alla Configurazione
-		 */
-		SoftwareProperties.init(e.getSession().getServletContext());
-		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
+		try {
+			/*
+			 * Aggiunta del Supporto alla Configurazione
+			 */
+			SoftwareProperties.init(e.getSession().getServletContext());
+			Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
-		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
-		String persistenceUnitName = e.getSession().getServletContext().getInitParameter("PersistenceUnitName");
-		if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
-			persistenceUnitName = IJpaListernes.DEFAULT_PU;
+			String persistenceUnitName = e.getSession().getServletContext().getInitParameter("PersistenceUnitName");
+			if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
+				persistenceUnitName = IJpaListernes.DEFAULT_PU;
+			}
+
+			EntityManagerFactory emf = null;
+			if (dbProps != null) {
+				emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
+			} else {
+				emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+			}
+			// emfShared = emf;
+			e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
+			logger.info(IJpaListernes.SESSION_EMF + " start");
+			//
+			// chachedController = new Controller(Controller.DEFAULT_PU);
+		} catch (Exception ex) {
+			logger.error("sessionCreated", ex);
 		}
-
-		EntityManagerFactory emf = null;
-		if (dbProps != null) {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
-		} else {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-		}
-		// emfShared = emf;
-		e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
-		logger.info(IJpaListernes.SESSION_EMF + " start");
-		//
-		// chachedController = new Controller(Controller.DEFAULT_PU);
 	}
 
 	/**
