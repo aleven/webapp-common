@@ -39,7 +39,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	// protected static final Logger logger =
 	// Logger.getLogger(JPAEntityFilter.class.getName());
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	/**
+	 * per JSF 2.1 non può essere serializato 
+	 */
+	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
 
 	public enum SortOrder {
 		ASC,
@@ -168,6 +172,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		setSemeRicerca(semeRicerca);
 		return this;
 	}
+	
+	public JPAEntityFilter<T> semeRicerca(String semeRicerca) {
+		setSemeRicerca(semeRicerca);
+		return this;
+	}	
 
 	/**
 	 * 
@@ -291,6 +300,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
+	
+	public JPAEntityFilter<T>  limit(int limit) {
+		setLimit(limit);
+		return this;
+	}	
 
 	// private Predicate buildLikePredicateForFields(CriteriaBuilder
 	// criteriaBuilder, String semeRicercaForLike, Path<String>... fields) {
