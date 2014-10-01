@@ -1134,10 +1134,10 @@ public class JpaController implements Serializable {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz) throws Exception {
+	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Map<Long, T> res = new HashMap<Long, T>();
 
-		List<T> list = findAll(clazz, null);
+		List<T> list = findBy(clazz, filter); // findAll(clazz, null);
 		for (T item : list) {
 			res.put(item.getId(), item);
 		}
