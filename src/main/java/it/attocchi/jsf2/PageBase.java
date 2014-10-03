@@ -45,7 +45,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-
 /**
  * Pagina Base con Metodi di Gestione JSF
  * 
@@ -61,7 +60,9 @@ abstract class PageBase implements Serializable {
 
 	/**
 	 * transient e' richiesto per l'istanza che con jsf 2.1 non e' serializable
-	 * http://javarevisited.blogspot.com.br/2012/12/javaionotserializableexception-orgapache-log4j-logger-error-exception-fix.html
+	 * http
+	 * ://javarevisited.blogspot.com.br/2012/12/javaionotserializableexception
+	 * -orgapache-log4j-logger-error-exception-fix.html
 	 */
 	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
 	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
@@ -239,12 +240,14 @@ abstract class PageBase implements Serializable {
 		String res = null;
 
 		try {
-			Object o = getExternalContext().getRequestParameterMap().get(paramName);
-			if (o != null) {
-				res = o.toString();
-			}
+			// if (hasParam(paramName)) {
+				Object o = getExternalContext().getRequestParameterMap().get(paramName);
+				if (o != null) {
+					res = o.toString();
+				}
+			// }
 		} catch (Exception ex) {
-			logger.error("getParamObject", ex);
+			logger.error("getParamObject " + paramName, ex);
 		}
 
 		return res;
@@ -253,9 +256,11 @@ abstract class PageBase implements Serializable {
 	protected int getParamObjectAsInt(String paramName) {
 		int res = 0;
 		try {
-			Object o = getParamObject(paramName);
-			if (o != null) {
-				res = Integer.parseInt(o.toString());
+			if (hasParam(paramName)) {
+				Object o = getParamObject(paramName);
+				if (o != null) {
+					res = Integer.parseInt(o.toString());
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("getParamObjectAsInt", ex);
@@ -266,9 +271,11 @@ abstract class PageBase implements Serializable {
 	protected Long getParamObjectAsLong(String paramName) {
 		Long res = 0l;
 		try {
-			Object o = getParamObject(paramName);
-			if (o != null) {
-				res = Long.parseLong(o.toString());
+			if (hasParam(paramName)) {
+				Object o = getParamObject(paramName);
+				if (o != null) {
+					res = Long.parseLong(o.toString());
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("getParamObjectAsLong", ex);
@@ -280,9 +287,11 @@ abstract class PageBase implements Serializable {
 		T res = null;
 
 		try {
-			Object o = getExternalContext().getRequestParameterMap().get(paramName);
-			if (o != null) {
-				res = clazz.cast(o);
+			if (hasParam(paramName)) {
+				Object o = getExternalContext().getRequestParameterMap().get(paramName);
+				if (o != null) {
+					res = clazz.cast(o);
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("getParamObject", ex);
