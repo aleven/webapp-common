@@ -29,5 +29,5 @@ import java.io.Serializable;
 public interface IEntityWithIdLong extends Serializable {
 
 	long getId();
-
+	
 }

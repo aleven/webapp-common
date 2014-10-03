@@ -26,7 +26,7 @@ import java.io.Serializable;
  * @author Mirco
  * 
  */
-public interface IEntityWithIdString extends Serializable {
+public interface IEntityWithIdString extends IEntityWithId<String> {
 
 	String getId();
 
