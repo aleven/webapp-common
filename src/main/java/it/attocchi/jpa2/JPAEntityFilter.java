@@ -29,6 +29,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -39,9 +40,9 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	// protected static final Logger logger =
 	// Logger.getLogger(JPAEntityFilter.class.getName());
-	
+
 	/**
-	 * per JSF 2.1 non può essere serializato 
+	 * per JSF 2.1 non può essere serializato
 	 */
 	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -172,11 +173,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		setSemeRicerca(semeRicerca);
 		return this;
 	}
-	
+
 	public JPAEntityFilter<T> semeRicerca(String semeRicerca) {
 		setSemeRicerca(semeRicerca);
 		return this;
-	}	
+	}
 
 	/**
 	 * 
@@ -226,15 +227,16 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		this.includiEliminati = includiEliminati;
 	}
 
-	public JPAEntityFilter<T> includiEliminati(boolean includiEliminati) {
-		setIncludiEliminati(includiEliminati);
+	public JPAEntityFilter<T> includiEliminati() {
+		setIncludiEliminati(true);
 		return this;
 	}
-	
-//	public JPAEntityFilter<T> setIncludiEliminatiL(boolean includiEliminati) {
-//		setIncludiEliminati(includiEliminati);
-//		return this;
-//	}
+
+	// public JPAEntityFilter<T> setIncludiEliminatiL(boolean includiEliminati)
+	// {
+	// setIncludiEliminati(includiEliminati);
+	// return this;
+	// }
 
 	protected String buildMultiIds(List<Long> longs) {
 		StringBuilder res = new StringBuilder();
@@ -300,11 +302,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
-	
-	public JPAEntityFilter<T>  limit(int limit) {
+
+	public JPAEntityFilter<T> limit(int limit) {
 		setLimit(limit);
 		return this;
-	}	
+	}
 
 	// private Predicate buildLikePredicateForFields(CriteriaBuilder
 	// criteriaBuilder, String semeRicercaForLike, Path<String>... fields) {
@@ -332,4 +334,34 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	public int totalPages(long count) {
 		return (limit > 0 && count > limit) ? (int) ((count / limit) + 1) : 0;
 	}
+
+	/**
+	 * 
+	 * @param criteriaBuilder
+	 * @param paths
+	 * @return
+	 */
+	protected Predicate buildMultiWordLikePredicate(CriteriaBuilder criteriaBuilder, Path<String>... paths) {
+
+		String[] words = semeRicerca.split(" ");
+
+		List<Predicate> likeAllFields = new ArrayList<Predicate>();
+
+		for (Path<String> path : paths) {
+
+			List<Predicate> likeOnWord = new ArrayList<Predicate>();
+			for (String word : words) {
+				likeOnWord.add(criteriaBuilder.like(path, getForLike(word)));
+			}
+			Predicate p1 = criteriaBuilder.and(likeOnWord.toArray(new Predicate[likeOnWord.size()]));
+			likeAllFields.add(p1);
+
+			likeOnWord.clear();
+		}
+
+		Predicate res = criteriaBuilder.or(likeAllFields.toArray(new Predicate[likeAllFields.size()]));
+
+		return res;
+	}
+
 }
