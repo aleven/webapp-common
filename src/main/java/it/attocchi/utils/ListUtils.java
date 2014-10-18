@@ -80,6 +80,7 @@ public class ListUtils {
 
 		if (aList != null) {
 			res = aList.toArray(new String[aList.size()]);
+
 			// for (String s : anArray) {
 			// res.add(s);
 			// }
