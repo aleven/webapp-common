@@ -1129,12 +1129,25 @@ public class JpaController implements Serializable {
 	}
 
 	/**
+	 * Use findAsMap
+	 * @param clazz
+	 * @param filter
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
+	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		return findAsMap(clazz, filter);
+	}
+	
+	/**
 	 * Return a Map based on element ID
+	 * 
 	 * @param clazz
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public <T extends IEntityWithIdLong> Map<Long, T> findAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Map<Long, T> res = new HashMap<Long, T>();
 
 		List<T> list = findBy(clazz, filter); // findAll(clazz, null);
@@ -1142,6 +1155,35 @@ public class JpaController implements Serializable {
 			res.put(item.getId(), item);
 		}
 
+		return res;
+	}
+
+	/**
+	 * Use callFindAsMap
+	 * @param emf
+	 * @param clazz
+	 * @param filter
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
+	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAllAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		return callFindAsMap(emf, clazz, filter);
+	}
+	
+	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		Map<Long, T> res = new HashMap<Long, T>();
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			
+			res = controller.findAllAsMap(clazz, filter);
+		} catch (Exception ex) {
+			logger.error("callFindAllAsMap", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
 		return res;
 	}
 }
