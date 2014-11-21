@@ -214,7 +214,6 @@ public class MailSender {
 			}
 		}
 
-		// email.setFrom("info@pec.atreeblu.it", "AtreeBlu");
 		email.setFrom(fromAddress, fromName);
 
 		// email.setSmtpPort(port);
