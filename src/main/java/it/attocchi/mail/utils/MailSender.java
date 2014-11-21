@@ -174,7 +174,6 @@ public class MailSender {
 		email.setSmtpPort(port);
 
 		if (authUser != null && authPassword != null) {
-			// email.setAuthentication("info@pec.atreeblu.it", "3Dr5hmSq");
 			email.setAuthentication(authUser, authPassword);
 		}
 
