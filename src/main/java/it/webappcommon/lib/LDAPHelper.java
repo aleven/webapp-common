@@ -219,16 +219,13 @@ public class LDAPHelper {
 	//
 	private static final String FILTER_USERS_ACTIVE = "(&(objectCategory=user)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))";
 	//
-	private String server; // = "schsms001";
+	private String server;
 	private String port = "389";
 	//
-	private String loginDomain; // = "ANDRITZ";
-	private String loginUserName; // = "schbes01sa";
-	private String loginPassword; // = "4Ward2Mob!le";
-	//
-	// private String areaWhereSearch =
-	// "ou=Users,ou=Accounts,ou=SCH,ou=IT,ou=Europe,ou=Hydro Group,dc=andritz,dc=com";
-	// private String areaWhereSearch = "ou=ULSS5 Utenti,dc=sanita,dc=vi";
+	private String loginDomain;
+	private String loginUserName;
+	private String loginPassword;
+
 	private String areaWhereSearch;
 
 	//
@@ -254,12 +251,7 @@ public class LDAPHelper {
 
 		env.put(Context.INITIAL_CONTEXT_FACTORY, INITIAL_CONTEXT);
 
-		// env.put(Context.PROVIDER_URL, );
 		env.put(Context.PROVIDER_URL, "ldap://" + server + ":" + port);
-
-		// env.put(Context.SECURITY_PRINCIPAL,
-		// "cn=schbes01sa,dc=andritz,dc=com");
-		// env.put(Context.SECURITY_CREDENTIALS, "4Ward2Mob!le");
 
 		env.put(Context.SECURITY_AUTHENTICATION, "simple");
 
@@ -283,10 +275,6 @@ public class LDAPHelper {
 			// Tutti i membri di un gruppo
 			// (objectCategory=user)(memberOf=CN=QA Users,OU=Help
 			// Desk,DC=dpetri,DC=net)
-
-			// filter =
-			// "(objectCategory=user)(memberOf=ou=Hydro Group,ou=Europe,ou=IT,ou=SCH,ou=Accounts,ou=Users,DC=andritz,DC=com)";
-			// ,ou=Hydro Group,ou=Europe,ou=IT,ou=SCH,ou=Accounts,ou=Users
 
 			// ESEMPI
 			// http://www.petri.co.il/ldap_search_samples_for_windows_2003_and_exchange.htm
