@@ -5,3 +5,5 @@
 /cestino/
 /.factorypath
 /release/
+/.idea/
+/webapp-common.iml
