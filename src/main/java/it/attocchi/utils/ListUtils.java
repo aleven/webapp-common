@@ -141,7 +141,7 @@ public class ListUtils {
 		return res;
 	}
 
-	public static String toCommaSeparedNoBracket(Collection<String> aListOfString) {
+	public static <T> String toCommaSeparedNoBracket(Collection<T> aListOfString) {
 		String res = "";
 
 		res = toCommaSepared(aListOfString);
