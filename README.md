@@ -1,5 +1,7 @@
 #A set o class usefull to build a new WebApp with JSF2 and JPA2.
 
+Charset source UTF-8
+
 ##_it.attocchi.jpa2_
 
 A set of class for work with JPA Entitites. You can find Session or Context Listener to use for lazy close of JPA Controller (EntityManagerFactory lifecicle)
