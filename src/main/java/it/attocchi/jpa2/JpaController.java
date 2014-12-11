@@ -92,7 +92,9 @@ public class JpaController implements Serializable {
 
 	public JpaController(String persistenceUnit) {
 		this();
-		this.persistenceUnit = persistenceUnit;
+		if (StringUtils.isNotBlank(persistenceUnit)) {
+			this.persistenceUnit = persistenceUnit;
+		}
 		// passedEmf = false;
 
 	}
