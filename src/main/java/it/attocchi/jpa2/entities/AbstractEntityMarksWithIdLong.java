@@ -25,7 +25,7 @@ package it.attocchi.jpa2.entities;
  * @author Mirco
  * 
  */
-public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks implements IEntityWithIdLong, Comparable<Long> {
+public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMarksWithIdLong<T>> extends AbstactEntityMarks implements IEntityWithIdLong, Comparable<T> {
 
 	public abstract long getId();
 
@@ -59,8 +59,8 @@ public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks i
 			return false;
 		}
 
-		if (obj instanceof AbstractEntityMarksWithIdLong) {
-			AbstractEntityMarksWithIdLong cast = (AbstractEntityMarksWithIdLong) obj;
+		if (obj instanceof AbstractEntityMarksWithIdLong<?>) {
+			AbstractEntityMarksWithIdLong<?> cast = (AbstractEntityMarksWithIdLong<?>) obj;
 			return new Long(this.getId()).equals(cast.getId());
 		} else
 			return false;
@@ -69,8 +69,8 @@ public abstract class AbstractEntityMarksWithIdLong extends AbstactEntityMarks i
 	}
 
 	@Override
-	public int compareTo(Long o) {
-		return new Long(this.getId()).compareTo(o);
+	public int compareTo(T o) {
+		return new Long(this.getId()).compareTo(o.getId());
 	}
 	
 	/**

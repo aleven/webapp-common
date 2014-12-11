@@ -1,5 +1,10 @@
 package it.attocchi.jsf2.exceptions;
 
+/**
+ * 
+ * @author Mirco
+ *
+ */
 public class WebAppException extends Exception {
 
 	public WebAppException(String message) {

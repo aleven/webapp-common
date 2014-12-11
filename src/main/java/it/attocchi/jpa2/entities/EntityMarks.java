@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2.entities;
 
@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Embeddable
-public class EntityMarks implements Serializable {
+public class EntityMarks implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -104,4 +104,25 @@ public class EntityMarks implements Serializable {
 		this.utenteCancellazioneId = utenteCancellazioneId;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	@Deprecated
+	public EntityMarks deepClone() {
+
+		EntityMarks copy = new EntityMarks();
+		if (this.dataCreazione != null)
+			copy.setDataCreazione((Date) this.dataCreazione.clone());
+		if (this.dataModifica != null)
+			copy.setDataModifica((Date) this.dataModifica.clone());
+		if (this.dataCancellazione != null)
+			copy.setDataCancellazione((Date) this.dataCancellazione.clone());
+
+		copy.setUtenteCreazioneId(this.utenteCreazioneId);
+		copy.setUtenteModificaId(this.utenteModificaId);
+		copy.setUtenteModificaId(this.utenteModificaId);
+
+		return copy;
+	}
 }

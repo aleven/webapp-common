@@ -10,7 +10,7 @@ public class EntityUtils {
 	 * @param list
 	 * @return
 	 */
-	public static <T extends AbstractEntityMarksWithIdLong> List<Long> toListOfId(List<T> list) {
+	public static <T extends IEntityWithIdLong> List<Long> toListOfId(List<T> list) {
 		List<Long> ids = new ArrayList<Long>();
 		for (T entity : list) {
 			ids.add(entity.getId());

@@ -38,13 +38,14 @@ import org.apache.log4j.Logger;
 
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
 
-	// protected static final Logger logger =
-	// Logger.getLogger(JPAEntityFilter.class.getName());
+	protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
 
 	/**
 	 * per JSF 2.1 non può essere serializato
 	 */
-	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
+	// protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
+	// per fare un post-back in JSF 2.1 devo poter riassegnare con getLogger perche' dopo la deserializzazione e' null
+	// protected transient Logger logger = Logger.getLogger(this.getClass().getName());
 
 	public enum SortOrder {
 		ASC,
@@ -364,4 +365,15 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return res;
 	}
 
+//	/**
+//	 * Trovare una soluzione per Logger
+//	 * @return
+//	 */
+//	@Deprecated
+//	private Logger getLogger() {
+//		if (logger == null) {
+//			logger = Logger.getLogger(this.getClass().getName());
+//		}
+//		return logger;
+//	}
 }

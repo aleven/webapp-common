@@ -19,6 +19,8 @@
 
 package it.attocchi.jsf2;
 
+import it.attocchi.utils.ListUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -28,6 +30,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -64,8 +68,12 @@ abstract class PageBase implements Serializable {
 	 * ://javarevisited.blogspot.com.br/2012/12/javaionotserializableexception
 	 * -orgapache-log4j-logger-error-exception-fix.html
 	 */
-	protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
-	protected static final Logger loggerStatic = Logger.getLogger(PageBase.class.getName());
+	protected static final Logger logger = Logger.getLogger(PageBase.class);
+
+	// protected final transient Logger logger =
+	// Logger.getLogger(this.getClass().getName());
+	// protected static final Logger loggerStatic =
+	// Logger.getLogger(PageBase.class.getName());
 
 	protected ServletContext getServletContext() {
 		return (ServletContext) getExternalContext().getContext();
@@ -158,8 +166,9 @@ abstract class PageBase implements Serializable {
 
 		} else {
 
-			logger.error("Error", ex);
-			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Null"));
+			String errorMessage = (summary != null && !summary.isEmpty()) ? summary : "Error";
+			logger.error(errorMessage, ex);
+			getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Null"));
 		}
 
 	}
@@ -241,10 +250,10 @@ abstract class PageBase implements Serializable {
 
 		try {
 			// if (hasParam(paramName)) {
-				Object o = getExternalContext().getRequestParameterMap().get(paramName);
-				if (o != null) {
-					res = o.toString();
-				}
+			Object o = getExternalContext().getRequestParameterMap().get(paramName);
+			if (o != null) {
+				res = o.toString();
+			}
 			// }
 		} catch (Exception ex) {
 			logger.error("getParamObject " + paramName, ex);
@@ -279,6 +288,19 @@ abstract class PageBase implements Serializable {
 			}
 		} catch (Exception ex) {
 			logger.error("getParamObjectAsLong", ex);
+		}
+		return res;
+	}
+
+	protected List<Long> getParamObjectAsLongList(String paramName) {
+		List<Long> res = new ArrayList<Long>();
+		try {
+			if (hasParam(paramName)) {
+				String list = getParamObject(paramName);
+				res = ListUtils.fromCommaSeparedLong(list);
+			}
+		} catch (Exception ex) {
+			logger.error("getParamObjectAsLongList", ex);
 		}
 		return res;
 	}
@@ -504,7 +526,7 @@ abstract class PageBase implements Serializable {
 				// know that this will generally only be thrown when the client
 				// aborted the download.
 				// e.printStackTrace();
-				loggerStatic.error("close", e);
+				logger.error("close", e);
 			}
 		}
 	}

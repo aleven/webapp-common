@@ -64,6 +64,8 @@ public abstract class AbstactEntityMarks extends EntityBase {
 		init();
 		getEntityMarks().utenteCancellazioneId = 0;
 		getEntityMarks().dataCancellazione = null;
+		
+		// markAsUpdated(idUtente);
 	}
 
 	private void init() {

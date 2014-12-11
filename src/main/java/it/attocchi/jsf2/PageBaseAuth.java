@@ -45,6 +45,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		} else {
 			logger.warn("Necessaria Autenticazione");
 			initNonLogged();
+			throw new Exception("Necessaria Autenticazione");
 		}
 	}
 

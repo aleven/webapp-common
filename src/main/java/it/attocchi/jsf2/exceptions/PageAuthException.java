@@ -19,6 +19,11 @@
 
 package it.attocchi.jsf2.exceptions;
 
+/**
+ * 
+ * @author Mirco
+ *
+ */
 public class PageAuthException extends WebAppException {
 
 	public PageAuthException() {
