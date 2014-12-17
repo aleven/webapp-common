@@ -260,4 +260,13 @@ public class JdbcConnector {
 
 		return res;
 	}
+	
+	/**
+	 * 
+	 */
+	protected boolean keepConnOpen = false;
+
+	public void keepConnOpen() {
+		keepConnOpen = true;
+	}	
 }
