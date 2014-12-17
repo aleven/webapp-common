@@ -51,7 +51,7 @@ public class QueryBuilder {
 	public static String equal(String nomeCampo, String valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		equalBulder.append("( " + nomeCampo + " = '" + encodeStringSQL(valore) + "' )");
+		equalBulder.append("(" + nomeCampo + "='" + encodeStringSQL(valore) + "')");
 
 		return equalBulder.toString();
 	}
@@ -59,7 +59,7 @@ public class QueryBuilder {
 	public static String equal(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		equalBulder.append("( " + nomeCampo + " = " + String.valueOf(valore) + " )");
+		equalBulder.append("(" + nomeCampo + "=" + String.valueOf(valore) + ")");
 
 		return equalBulder.toString();
 	}
@@ -74,9 +74,9 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		if (valore) {
-			equalBulder.append("( " + nomeCampo + " = 1 )");
+			equalBulder.append("(" + nomeCampo + "=1)");
 		} else {
-			equalBulder.append("( " + nomeCampo + " = 0 )");
+			equalBulder.append("(" + nomeCampo + "=0)");
 		}
 
 		return equalBulder.toString();
@@ -97,9 +97,9 @@ public class QueryBuilder {
 		int giorno = DateUtils.getGiorno(valore);
 
 		equalBulder.append("(");
-		equalBulder.append(" YEAR(" + nomeCampo + ") = " + anno + " AND");
-		equalBulder.append(" MONTH(" + nomeCampo + ") = " + mese + " AND");
-		equalBulder.append(" DAY(" + nomeCampo + ") = " + giorno + " ");
+		equalBulder.append("YEAR(" + nomeCampo + ")=" + anno + " AND ");
+		equalBulder.append("MONTH(" + nomeCampo + ")=" + mese + " AND ");
+		equalBulder.append("DAY(" + nomeCampo + ")=" + giorno + "");
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -117,7 +117,7 @@ public class QueryBuilder {
 		// " MONTH(" + nomeCampo + ") <= " + mese);
 		// equalBulder.append(" DAY(" + nomeCampo + ") >= " + giorno + " AND " +
 		// " DAY(" + nomeCampo + ") <= " + giorno);
-		equalBulder.append(" " + nomeCampo + " BETWEEN '" + sdf.format(start) + "' AND '" + sdf.format(end) + "' ");
+		equalBulder.append(nomeCampo + " BETWEEN '" + sdf.format(start) + "' AND '" + sdf.format(end) + "'");
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -131,9 +131,9 @@ public class QueryBuilder {
 		int giorno = DateUtils.getGiorno(valore);
 
 		equalBulder.append("(");
-		equalBulder.append(" YEAR(" + nomeCampo + ") >= " + anno + " AND");
-		equalBulder.append(" MONTH(" + nomeCampo + ") >= " + mese + " AND");
-		equalBulder.append(" DAY(" + nomeCampo + ") >= " + giorno + " ");
+		equalBulder.append("YEAR(" + nomeCampo + ") >= " + anno + " AND ");
+		equalBulder.append("MONTH(" + nomeCampo + ") >= " + mese + " AND ");
+		equalBulder.append("DAY(" + nomeCampo + ") >= " + giorno + "");
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -150,7 +150,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + nomeCampo + " > " + valore + " ");
+		equalBulder.append(nomeCampo + ">" + valore);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -160,7 +160,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + nomeCampo + " >= " + valore + " ");
+		equalBulder.append(nomeCampo + ">=" + valore);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -170,7 +170,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + valore + " >= " + nomeCampo + " ");
+		equalBulder.append(valore + ">=" + nomeCampo);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -186,7 +186,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + nomeCampo + " < " + valore + " ");
+		equalBulder.append(nomeCampo + "<" + valore);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -196,7 +196,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + nomeCampo + " <= " + valore + " ");
+		equalBulder.append(nomeCampo + "<=" + valore);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -206,7 +206,7 @@ public class QueryBuilder {
 		StringBuilder equalBulder = new StringBuilder();
 
 		equalBulder.append("(");
-		equalBulder.append(" " + valore + " <= " + nomeCampo + " ");
+		equalBulder.append(valore + "<=" + nomeCampo);
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -220,9 +220,9 @@ public class QueryBuilder {
 		int giorno = DateUtils.getGiorno(valore);
 
 		equalBulder.append("(");
-		equalBulder.append(" YEAR(" + nomeCampo + ") <= " + anno + " AND");
-		equalBulder.append(" MONTH(" + nomeCampo + ") <= " + mese + " AND");
-		equalBulder.append(" DAY(" + nomeCampo + ") <= " + giorno + " ");
+		equalBulder.append("YEAR(" + nomeCampo + ")<=" + anno + " AND ");
+		equalBulder.append("MONTH(" + nomeCampo + ")<=" + mese + " AND ");
+		equalBulder.append("DAY(" + nomeCampo + ")<=" + giorno + "");
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -260,7 +260,7 @@ public class QueryBuilder {
 	public static String isNotNull(String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		equalBulder.append("( " + nomeCampo + " IS NOT NULL )");
+		equalBulder.append("(" + nomeCampo + " IS NOT NULL)");
 
 		return equalBulder.toString();
 	}
@@ -268,7 +268,7 @@ public class QueryBuilder {
 	public static String isNull(String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		equalBulder.append("( " + nomeCampo + " IS NULL )");
+		equalBulder.append("(" + nomeCampo + " IS NULL)");
 
 		return equalBulder.toString();
 	}
@@ -374,7 +374,7 @@ public class QueryBuilder {
 	public static String inListBuilder(String field, List<String> listaID, boolean asStrings) {
 		StringBuilder res = new StringBuilder();
 
-		res.append("( " + ALWAYS_FALSE + " ");
+		res.append("(" + ALWAYS_FALSE + " ");
 
 		if (ListUtils.isNotEmpty(listaID)) {
 			// res.append("(");
@@ -385,9 +385,9 @@ public class QueryBuilder {
 				}
 
 				if (asStrings)
-					res.append(field + " = '" + encodeStringSQL(id) + "'");
+					res.append(field + "='" + encodeStringSQL(id) + "'");
 				else
-					res.append(field + " = " + id);
+					res.append(field + "=" + id);
 			}
 			// res.append(")");
 		}
@@ -411,7 +411,7 @@ public class QueryBuilder {
 	public static String inListBuilder(String field, List<Integer> listaID) {
 		StringBuilder res = new StringBuilder();
 
-		res.append("( " + ALWAYS_FALSE + " ");
+		res.append("(" + ALWAYS_FALSE + " ");
 
 		if (ListUtils.isNotEmpty(listaID)) {
 			// res.append("(");
@@ -421,7 +421,7 @@ public class QueryBuilder {
 					res.append(" OR ");
 				}
 
-				res.append(field + " = " + id);
+				res.append(field + "=" + id);
 			}
 			// res.append(")");
 		}
