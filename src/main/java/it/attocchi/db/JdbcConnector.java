@@ -115,7 +115,7 @@ public class JdbcConnector {
 		if (!passedConnection) {
 			try {
 				// DbUtils.close(conn);
-				if (conn != null) {
+				if (conn != null && !conn.isClosed()) {
 					conn.close();
 				}
 			} catch (Exception ex) {
