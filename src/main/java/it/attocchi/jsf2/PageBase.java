@@ -413,7 +413,7 @@ abstract class PageBase implements Serializable {
 		try {
 			getFacesContext().getExternalContext().redirect(relativeUrl);
 		} catch (IOException e) {
-			logger.error(e);
+			logger.error("redirect", e);
 		}
 	}
 
