@@ -53,6 +53,10 @@ public class RestBaseJpa2 {
 
 			Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
+			
+//			ServletContext c = restServletContext;
+//			DataSource source = (DataSource) (c.lookup("java:comp/env/jdbc/MySource"));
+			
 			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
 			// EntityManagerFactory emf = null;
