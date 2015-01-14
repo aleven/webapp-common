@@ -63,6 +63,8 @@ public class JdbcConnector {
 
 		this.conn = conn;
 		passedConnection = true;
+		/* se la connessione viene passata di default impostiamo che sia lasciata aperta */
+		keepConnOpen = true;
 	}
 
 	@Override
@@ -262,11 +264,11 @@ public class JdbcConnector {
 	}
 	
 	/**
-	 * 
+	 * utilizzato da chi estende questa classe, quando estentendo c'e' un metodo che esegue piu query in sequenza
 	 */
 	protected boolean keepConnOpen = false;
 
-	public void keepConnOpen() {
+	protected void keepConnOpen() {
 		keepConnOpen = true;
 	}	
 }
