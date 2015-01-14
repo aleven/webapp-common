@@ -268,7 +268,7 @@ public class JdbcConnector {
 	 */
 	protected boolean keepConnOpen = false;
 
-	protected void keepConnOpen() {
+	public void keepConnOpen() {
 		keepConnOpen = true;
 	}	
 }
