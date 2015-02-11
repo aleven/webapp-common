@@ -149,21 +149,22 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String encodeForEscape(String aString) {
-		String res = null;
+		String res = aString;
 
 		// if (aString != null) {
-		if (StringUtils.isNotEmpty(aString)) {
+		if (StringUtils.isNotEmpty(res)) {
 			/*
 			 * Succede che poi in HTML ho tutte le entita HTML se uso escapeHtml
 			 */
-			res = aString;
+			// res = aString;
 			// res = StringEscapeUtils.escapeHtml(aString);
 
 			/*
 			 * Per Ultimo questo altrimenti converte <BR> nelle entita' quello
 			 * fatto prima
 			 */
-			res = res.replaceAll("\n", "<br/>").replaceAll("\r", "");
+			// res = res.replaceAll("\n", "<br/>").replaceAll("\r", "");
+			res = res.replaceAll("(\r\n|\n)", "<br />");
 		}
 
 		return res;
