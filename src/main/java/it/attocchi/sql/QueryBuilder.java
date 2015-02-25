@@ -273,9 +273,42 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
-//	public static String like(String semeRicerca, String... fields) {
-//		return like(semeRicerca, fields);
-//	}
+	/**
+	 * ricerca in like per parola, ovvero ogni parola specificata deve essere contentuta in almeno uno dei campi indicati
+	 */
+	public static String likeAnyWords(String semeRicerca, String... fields) {
+		StringBuilder likeBulder = new StringBuilder();
+		String[] words = semeRicerca.split(" ");
+
+		/*
+		 * Gestisco la Ricerca "Mircosoft .Net*" come fosse una unica parola
+		 * anziche' spezzare in tante piccole parole altrimenti cerca su un
+		 * campo %Microsoft% AND .Net% e non lo trovera' mai
+		 */
+		if (semeRicerca.endsWith(QueryBuilder.RICERCA_JOLLY_CHAR) || semeRicerca.startsWith(QueryBuilder.RICERCA_JOLLY_CHAR)) {
+			words = new String[] { semeRicerca };
+		} else {
+			words = semeRicerca.split(" ");
+		}
+
+		if (fields.length > 0 && words.length > 0) {
+
+			likeBulder.append("( " + ALWAYS_TRUE);
+			// for (int i = 0; i < fields.length; i++) {
+			for (int j = 0; j < words.length; j++) {
+
+				likeBulder.append(" AND ( " + ALWAYS_FALSE);
+				// for (int j = 0; j < words.length; j++) {
+				for (int i = 0; i < fields.length; i++) {
+					likeBulder.append(" OR ");
+					likeBulder.append(likeSimple(fields[i], words[j]));
+				}
+				likeBulder.append(")");
+			}
+			likeBulder.append(")");
+		}
+		return likeBulder.toString();
+	}
 	
 	/**
 	 * Costruisce una stringa da usare nelle query come fosse un like ma nel
@@ -286,7 +319,7 @@ public class QueryBuilder {
 	 * @param fields
 	 * @return
 	 */
-	public static String like(String semeRicerca, String... fields) {
+	private static String like(String semeRicerca, String... fields) {
 		StringBuilder likeBulder = new StringBuilder();
 		String[] words = semeRicerca.split(" ");
 
@@ -309,8 +342,6 @@ public class QueryBuilder {
 				likeBulder.append(" OR ( " + ALWAYS_TRUE);
 				for (int j = 0; j < words.length; j++) {
 					likeBulder.append(" AND ");
-					// likeBulder.append(fields[i] + " LIKE '%" +
-					// encode(words[j]) + "%'");
 					likeBulder.append(likeSimple(fields[i], words[j]));
 				}
 				likeBulder.append(")");
@@ -318,7 +349,6 @@ public class QueryBuilder {
 			likeBulder.append(")");
 		}
 		return likeBulder.toString();
-
 	}
 
 	/**
