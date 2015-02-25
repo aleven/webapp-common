@@ -39,7 +39,7 @@ public class QueryBuilder {
 	/**
 	 * FALSE
 	 */
-	public static final String ALWAYS_FALSE = " FALSE ";
+	public static final String ALWAYS_FALSE = " 1 <> 1 "; // AS400 non accetta FALSE
 
 	private static final String PREFIX_FROM = "FROM:";
 	private static final String PREFIX_TO = "TO:";
@@ -273,6 +273,10 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+//	public static String like(String semeRicerca, String... fields) {
+//		return like(semeRicerca, fields);
+//	}
+	
 	/**
 	 * Costruisce una stringa da usare nelle query come fosse un like ma nel
 	 * caso di seme di ricerca con piu' parole riesce ad evitare che l'ordine
@@ -282,7 +286,7 @@ public class QueryBuilder {
 	 * @param fields
 	 * @return
 	 */
-	public static String like(String semeRicerca, String[] fields) {
+	public static String like(String semeRicerca, String... fields) {
 		StringBuilder likeBulder = new StringBuilder();
 		String[] words = semeRicerca.split(" ");
 
