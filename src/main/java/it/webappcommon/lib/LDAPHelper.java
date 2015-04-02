@@ -46,17 +46,8 @@ import org.apache.log4j.Logger;
  */
 public class LDAPHelper {
 
-	public class UserInfo {
+	public class UserInfo implements Comparable<UserInfo> {
 
-		// private String FIELD_ACCOUNT_NAME;
-		// private String FIELD_EMAIL;
-		// private String FIELD_TEL;
-		// private String FIELD_UFFICIO;
-		// private String FIELD_NOME_COMPLETO;
-		// private String FIELD_NOME;
-		// private String FIELD_COGNOME;
-		// private String FIELD_NOME_VISUALIZZATO;
-		// private String FIELD_GROUPS;
 		private String tel;
 		private String nomeCompleto;
 		private String email;
@@ -129,78 +120,11 @@ public class LDAPHelper {
 		public void setCognome(String cognome) {
 			this.cognome = cognome;
 		}
-		// public String getFIELD_ACCOUNT_NAME() {
-		// return FIELD_ACCOUNT_NAME;
-		// }
-		//
-		// public void setFIELD_ACCOUNT_NAME(String FIELD_ACCOUNT_NAME) {
-		// this.FIELD_ACCOUNT_NAME = FIELD_ACCOUNT_NAME;
-		// }
-		//
-		// public String getFIELD_EMAIL() {
-		// return FIELD_EMAIL;
-		// }
-		//
-		// public void setFIELD_EMAIL(String FIELD_EMAIL) {
-		// this.FIELD_EMAIL = FIELD_EMAIL;
-		// }
-		//
-		// public String getFIELD_TEL() {
-		// return FIELD_TEL;
-		// }
-		//
-		// public void setFIELD_TEL(String FIELD_TEL) {
-		// this.FIELD_TEL = FIELD_TEL;
-		// }
-		//
-		// public String getFIELD_UFFICIO() {
-		// return FIELD_UFFICIO;
-		// }
-		//
-		// public void setFIELD_UFFICIO(String FIELD_UFFICIO) {
-		// this.FIELD_UFFICIO = FIELD_UFFICIO;
-		// }
-		//
-		// public String getFIELD_NOME_COMPLETO() {
-		// return FIELD_NOME_COMPLETO;
-		// }
-		//
-		// public void setFIELD_NOME_COMPLETO(String FIELD_NOME_COMPLETO) {
-		// this.FIELD_NOME_COMPLETO = FIELD_NOME_COMPLETO;
-		// }
-		//
-		// public String getFIELD_NOME() {
-		// return FIELD_NOME;
-		// }
-		//
-		// public void setFIELD_NOME(String FIELD_NOME) {
-		// this.FIELD_NOME = FIELD_NOME;
-		// }
-		//
-		// public String getFIELD_COGNOME() {
-		// return FIELD_COGNOME;
-		// }
-		//
-		// public void setFIELD_COGNOME(String FIELD_COGNOME) {
-		// this.FIELD_COGNOME = FIELD_COGNOME;
-		// }
-		//
-		// public String getFIELD_NOME_VISUALIZZATO() {
-		// return FIELD_NOME_VISUALIZZATO;
-		// }
-		//
-		// public void setFIELD_NOME_VISUALIZZATO(String
-		// FIELD_NOME_VISUALIZZATO) {
-		// this.FIELD_NOME_VISUALIZZATO = FIELD_NOME_VISUALIZZATO;
-		// }
-		//
-		// public String getFIELD_GROUPS() {
-		// return FIELD_GROUPS;
-		// }
-		//
-		// public void setFIELD_GROUPS(String FIELD_GROUPS) {
-		// this.FIELD_GROUPS = FIELD_GROUPS;
-		// }
+
+		@Override
+		public int compareTo(UserInfo o) {
+			return this.getNomeCompleto().compareTo(o.getNomeCompleto());
+		}
 	}
 
 	protected static Logger logger = Logger.getLogger(LDAPHelper.class.getName());
@@ -488,4 +412,6 @@ public class LDAPHelper {
 
 		return res;
 	}
+	
+	
 }
