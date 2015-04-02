@@ -309,7 +309,7 @@ public class QueryBuilder {
 		}
 		return likeBulder.toString();
 	}
-	
+		
 	/**
 	 * Costruisce una stringa da usare nelle query come fosse un like ma nel
 	 * caso di seme di ricerca con piu' parole riesce ad evitare che l'ordine
@@ -319,7 +319,7 @@ public class QueryBuilder {
 	 * @param fields
 	 * @return
 	 */
-	private static String like(String semeRicerca, String... fields) {
+	public static String like(String semeRicerca, String... fields) {
 		StringBuilder likeBulder = new StringBuilder();
 		String[] words = semeRicerca.split(" ");
 
