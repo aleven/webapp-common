@@ -1335,17 +1335,20 @@ public abstract class ControllerStandard {
 	protected EntityManagerFactory getEntityManagerFactory() {
 		EntityManagerFactory res = null;
 
+		/*
+		 * Mirco: per il progetto katia-server modifico in modo che eventuali richieste non-scooped creino istanze normali,
+		 * precedentemente usavo il ManagerTEST (forse per qualche progetto con multi PU)
+		 */
 		if (scoopedEM) {
+			// res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
 			res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			logger.debug("create scoped emf");
 		} else {
-			// res =
-			// Persistence.createEntityManagerFactory(getPersistenceUnitName());
+			/* res = Persistence.createEntityManagerFactory(getPersistenceUnitName()); */
 			res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
-
-			// res =
-			// PersistenceManager.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			logger.debug("create un-scoped emf (note: actually same as scopped)");
 		}
-
+		
 		return res;
 	}
 
