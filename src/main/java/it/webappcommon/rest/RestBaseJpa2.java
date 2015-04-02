@@ -10,11 +10,15 @@ import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RestBaseJpa2 {
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	// protected final Logger logger =
+	// Logger.getLogger(this.getClass().getName());
+	// slf4j
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	/* GESTIONE ACCESSO DATI PER I TEST */
 	protected EntityManagerFactory emf;
@@ -53,10 +57,10 @@ public class RestBaseJpa2 {
 
 			Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
-			
-//			ServletContext c = restServletContext;
-//			DataSource source = (DataSource) (c.lookup("java:comp/env/jdbc/MySource"));
-			
+			// ServletContext c = restServletContext;
+			// DataSource source = (DataSource)
+			// (c.lookup("java:comp/env/jdbc/MySource"));
+
 			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
 			// EntityManagerFactory emf = null;
@@ -70,4 +74,18 @@ public class RestBaseJpa2 {
 		return this.emf;
 	}
 
+	/**
+	 * 
+	 */
+	protected void closeContextEmf() {
+		if (this.emf != null) {
+			emf.close();
+		}
+	}
+	
+//	@Override
+//	protected void finalize() throws Throwable {
+//		closeContextEmf();
+//		super.finalize();
+//	}
 }
