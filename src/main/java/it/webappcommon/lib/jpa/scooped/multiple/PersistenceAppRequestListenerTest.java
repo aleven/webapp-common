@@ -17,7 +17,7 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
 import java.util.Map.Entry;
 import java.util.Set;
@@ -74,7 +74,7 @@ public class PersistenceAppRequestListenerTest implements ServletRequestListener
 					if (lem != null) {
 						lem.lazyClose();
 
-						logger.debug("\n*** LazyCloseEtityManager " + emfEntry.getKey() + " close " + new java.util.Date());
+						logger.debug("*** LazyClose EntityManager " + emfEntry.getKey() + " close " + new java.util.Date());
 					}
 
 				}

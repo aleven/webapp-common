@@ -17,7 +17,7 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
 import it.webappcommon.lib.jsf.AbstractFiltro;
 

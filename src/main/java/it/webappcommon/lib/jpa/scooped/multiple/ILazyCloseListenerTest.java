@@ -17,18 +17,9 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
-import javax.persistence.EntityManagerFactory;
+public interface ILazyCloseListenerTest {
 
-public class ScopedMultiplePersistenceManagerTest extends MultiplePersistenceManagerTest {
-
-	protected ScopedMultiplePersistenceManagerTest() {
-	}
-
-	@Override
-	protected EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
-
-		return new ScopedEntityManagerFactoryTest(super.createEntityManagerFactory(persistenceUnit));
-	}
+	public void lazilyClosed();
 }

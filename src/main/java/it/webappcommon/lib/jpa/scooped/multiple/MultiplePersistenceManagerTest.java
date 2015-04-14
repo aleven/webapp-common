@@ -17,7 +17,7 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class MultiplePersistenceManagerTest {
 
 	private static final Logger logger = Logger.getLogger(MultiplePersistenceManagerTest.class.getName());
 
-	public static final boolean DEBUG = true;
+	// public static final boolean DEBUG = true;
 	public static final String PERSISTENCE_UNIT = "DefaultPU";
 
 	private static final MultiplePersistenceManagerTest singletonScooped = new ScopedMultiplePersistenceManagerTest();
@@ -91,7 +91,6 @@ public class MultiplePersistenceManagerTest {
 
 		if (emfMap.get(persisteceUnit) == null) {
 			emfMap.put(persisteceUnit, createEntityManagerFactory(persisteceUnit));
-
 			logger.debug("\n*** Persistence " + persisteceUnit + " enabled " + new java.util.Date());
 		}
 		// emfToClose = emfMap.get(persisteceUnit);
@@ -124,11 +123,13 @@ public class MultiplePersistenceManagerTest {
 					emf.close();
 					emf = null;
 
-					logger.debug("\n*** Persistence " + persisteceUnit + " destroyed " + new java.util.Date());
+					logger.debug("*** Persistence " + persisteceUnit + " destroyed " + new java.util.Date());
 				}
-				emfMap.clear();
+				// Mirco: errore pulirla qui, se non sono chiuse tutte??
+				// emfMap.clear();
 			}
-			emfMap = null;
+			// Mirco: errore pulirla qui, se non sono chiuse tutte??
+			// emfMap = null;
 		}
 	}
 
@@ -136,13 +137,17 @@ public class MultiplePersistenceManagerTest {
 
 		if (emfMap != null) {
 			if (!emfMap.isEmpty()) {
-				for (Entry<String, EntityManagerFactory> emfEntry : emfMap.entrySet()) {
-					EntityManagerFactory emf = emfEntry.getValue();
-
-					emf.close();
-					emf = null;
-
-					logger.debug("\n*** Persistence " + emfEntry.getKey() + " destroyed " + new java.util.Date());
+//				for (Entry<String, EntityManagerFactory> emfEntry : emfMap.entrySet()) {
+//					EntityManagerFactory emf = emfEntry.getValue();
+//
+//					emf.close();
+//					emf = null;
+//
+//					logger.debug("\n*** Persistence " + emfEntry.getKey() + " destroyed " + new java.util.Date());
+//				}
+				// Mirco: ottimizzazione, chiudo usando il metodo dedicato
+				for (String key : emfMap.keySet()) {
+					closeEntityManagerFactory(key);
 				}
 				emfMap.clear();
 			}
@@ -159,7 +164,6 @@ public class MultiplePersistenceManagerTest {
 	}
 
 	protected EntityManagerFactory createEntityManagerFactory(String pu) {
-
 		return Persistence.createEntityManagerFactory(pu);
 	}
 }

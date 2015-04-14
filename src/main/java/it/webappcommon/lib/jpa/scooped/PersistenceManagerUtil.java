@@ -21,53 +21,11 @@ package it.webappcommon.lib.jpa.scooped;
 
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
+
 public class PersistenceManagerUtil {
 
-	// public static final boolean DEBUG = true;
-	// public static final String PERSISTENCE_UNIT = "DefaultPU";
-	// //new PersistenceManager(); // For not scoped em
-	// private static final PersistenceManager singleton = new
-	// PersistenceManager(); // for request scope (lazy close) (requiere
-	// declarar request listener)
-	// //new PersistenceManager(); // For not scoped em
-	// private EntityManagerFactory emf;
-	//
-	// public static PersistenceManager getInstance() {
-	//
-	// return singleton;
-	// }
-	//
-	// protected PersistenceManager() {
-	// }
-	//
-	// public synchronized EntityManagerFactory getEntityManagerFactory() {
-	//
-	// if (emf == null) {
-	// emf = createEntityManagerFactory();
-	// if (DEBUG) {
-	// System.out.println(
-	// "\n*** Persistence enabled " + new java.util.Date());
-	// }
-	// }
-	// return emf;
-	// }
-	//
-	// public synchronized void closeEntityManagerFactory() {
-	//
-	// if (emf != null) {
-	// emf.close();
-	// emf = null;
-	// if (DEBUG) {
-	// System.out.println(
-	// "\n*** Persistence destroyed " + new java.util.Date());
-	// }
-	// }
-	//
-	// }
-	//
-	// protected EntityManagerFactory createEntityManagerFactory() {
-	// return Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-	// }
+	private static final Logger logger = Logger.getLogger(PersistenceManagerUtil.class.getName());
 
 	/**
 	 * Chiude l'entity manager passato come parametro se non e' null ed e'
@@ -78,6 +36,7 @@ public class PersistenceManagerUtil {
 	public static void close(EntityManager em) {
 		if (em != null && em.isOpen()) {
 			em.close();
+			logger.debug("em close() called");
 		}
 	}
 }

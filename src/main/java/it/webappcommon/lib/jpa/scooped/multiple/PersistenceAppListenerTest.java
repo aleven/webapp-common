@@ -17,9 +17,33 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
-public interface ILazyCloseListenerTest {
+import it.webappcommon.lib.jpa.scooped.PersistenceManager;
 
-	public void lazilyClosed();
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import org.apache.log4j.Logger;
+
+/**
+ * 
+ * @author Mirco Attocchi
+ * 
+ *         Web application lifecycle listener.
+ */
+
+public class PersistenceAppListenerTest implements ServletContextListener {
+
+	private static final Logger logger = Logger.getLogger(PersistenceAppListenerTest.class.getName());
+
+	public void contextInitialized(ServletContextEvent evt) {
+
+	}
+
+	public void contextDestroyed(ServletContextEvent evt) {
+
+		MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory();
+		PersistenceManager.getInstance().closeEntityManagerFactory();
+	}
 }

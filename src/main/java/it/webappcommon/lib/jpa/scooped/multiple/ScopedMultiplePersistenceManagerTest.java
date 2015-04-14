@@ -17,42 +17,17 @@
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.webappcommon.lib.jpa.scooped;
+package it.webappcommon.lib.jpa.scooped.multiple;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
-/**
- * 
- * @author puche
- */
-public class LazyCloseEntityManagerTest extends EntityManagerProxyTest {
+public class ScopedMultiplePersistenceManagerTest extends MultiplePersistenceManagerTest {
 
-	private ILazyCloseListenerTest listener;
-
-	public LazyCloseEntityManagerTest(EntityManager delegate) {
-
-		super(delegate);
-	}
-
-	public void setLazyCloseListener(ILazyCloseListenerTest listener) {
-
-		this.listener = listener;
-	}
-
-	public ILazyCloseListenerTest getLazyCloseListener() {
-
-		return listener;
+	protected ScopedMultiplePersistenceManagerTest() {
 	}
 
 	@Override
-	public void close() {
-
-	}
-
-	protected void lazyClose() {
-
-		super.close();
-		if (listener != null)
-			listener.lazilyClosed();
+	protected EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
+		return new ScopedEntityManagerFactoryTest(super.createEntityManagerFactory(persistenceUnit));
 	}
 }
