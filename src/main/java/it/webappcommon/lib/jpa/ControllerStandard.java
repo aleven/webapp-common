@@ -21,7 +21,7 @@ package it.webappcommon.lib.jpa;
 
 import it.attocchi.utils.ListUtils;
 import it.webappcommon.lib.ExceptionLogger;
-import it.webappcommon.lib.jpa.scooped.MultiplePersistenceManagerTest;
+import it.webappcommon.lib.jpa.scooped.PersistenceManager;
 import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
 
 import java.io.Serializable;
@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,7 +50,7 @@ public abstract class ControllerStandard {
 	 * Questa variabile serve ad indicare che tipo di EM usare (se chiusura du
 	 * Listener oppure Normalissimo)
 	 */
-	protected boolean scoopedEM = true;
+	protected boolean scoopedEM = false;
 
 	protected EntityManager em = null;
 	protected boolean passedEm = false;
@@ -83,13 +84,14 @@ public abstract class ControllerStandard {
 
 	public void create(EntityBaseStandard entity) throws Exception {
 		EntityManagerFactory emf = null;
-		// EntityManager em = null;
+		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
 
 		if (entity == null)
 			return;
 
 		try {
+
 			if (!passedEm) {
 				emf = getEntityManagerFactory();
 				em = emf.createEntityManager();
@@ -130,13 +132,14 @@ public abstract class ControllerStandard {
 
 	public void edit(EntityBaseStandard entity) throws Exception {
 		EntityManagerFactory emf = null;
-		// EntityManager em = null;
+		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
 
 		if (entity == null)
 			return;
 
 		try {
+
 			if (!passedEm) {
 				emf = getEntityManagerFactory();
 				em = emf.createEntityManager();
@@ -167,6 +170,7 @@ public abstract class ControllerStandard {
 			ExceptionLogger.logExceptionWithCause(logger, ex);
 			throw ex;
 		} finally {
+
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
 				emf = null;
@@ -177,13 +181,14 @@ public abstract class ControllerStandard {
 
 	public void editSimple(EntityBaseStandard entity) throws Exception {
 		EntityManagerFactory emf = null;
-		// EntityManager em = null;
+		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
 
 		if (entity == null)
 			return;
 
 		try {
+
 			if (!passedEm) {
 				emf = getEntityManagerFactory();
 				em = emf.createEntityManager();
@@ -214,6 +219,7 @@ public abstract class ControllerStandard {
 			ExceptionLogger.logExceptionWithCause(logger, ex);
 			throw ex;
 		} finally {
+
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
 				emf = null;
@@ -224,13 +230,14 @@ public abstract class ControllerStandard {
 
 	public void destroy(EntityBaseStandard entity) throws Exception {
 		EntityManagerFactory emf = null;
-		// EntityManager em = null;
+		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
 
 		if (entity == null)
 			return;
 
 		try {
+
 			if (!passedEm) {
 				emf = getEntityManagerFactory();
 				em = emf.createEntityManager();
@@ -267,6 +274,7 @@ public abstract class ControllerStandard {
 
 			throw ex;
 		} finally {
+
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
 				emf = null;
@@ -278,7 +286,7 @@ public abstract class ControllerStandard {
 	// public void destroyBeta(EntityBaseStandard entity, Long id) throws
 	// Exception {
 	// EntityManagerFactory emf = null;
-	// // EntityManager em = null;
+	// // // EntityManager em = null;
 	// boolean tAlreadyActive = false;
 	//
 	// if (entity == null)
@@ -288,9 +296,9 @@ public abstract class ControllerStandard {
 	// return;
 	//
 	// try {
-	// if (!passedEm) {
-	// emf = getEntityManagerFactory();
-	// em = emf.createEntityManager();
+	//
+	// if (!passedEm) { emf = getEntityManagerFactory();
+	// em = emf.createEntityManager(); }
 	// }
 	//
 	// tAlreadyActive = em.getTransaction().isActive();
@@ -325,7 +333,7 @@ public abstract class ControllerStandard {
 	//
 	// throw ex;
 	// } finally {
-	// if (!passedEm) {
+	//
 	// if (em != null) {
 	// if (em!=null) { em.close(); }
 	// }
@@ -339,10 +347,13 @@ public abstract class ControllerStandard {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			returnValue = (T) em.find(classObj, id);
 		} catch (Exception e) {
@@ -353,8 +364,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 		}
 		return returnValue;
 	}
@@ -374,10 +385,13 @@ public abstract class ControllerStandard {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			returnValue = (T) em.find(classObj, id);
 
@@ -395,8 +409,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 		}
 		return returnValue;
 	}
@@ -405,13 +419,16 @@ public abstract class ControllerStandard {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		Iterator i = null;
 		Map.Entry entry = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			q = em.createNamedQuery(query);
 			if (map != null) {
@@ -430,8 +447,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 			entry = null;
@@ -443,13 +460,16 @@ public abstract class ControllerStandard {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		Iterator i = null;
 		Map.Entry entry = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			q = em.createNamedQuery(query);
 			if (batchSize > 0) {
@@ -468,8 +488,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 			entry = null;
@@ -481,7 +501,7 @@ public abstract class ControllerStandard {
 	// Class<T> classObj, int firstItem, int batchSize) throws Exception {
 	// List<T> returnValue = null;
 	//
-	// EntityManager em = null;
+	// // EntityManager em = null;
 	// Query q = null;
 	// Iterator i = null;
 	// try {
@@ -510,12 +530,15 @@ public abstract class ControllerStandard {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		StringBuffer hsqlQuery = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			hsqlQuery = new StringBuffer();
 			hsqlQuery.append("select count(*) from ");
@@ -528,8 +551,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			hsqlQuery = null;
 		}
@@ -540,13 +563,16 @@ public abstract class ControllerStandard {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		Iterator i = null;
 		Map.Entry entry = null;
 		try {
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			q = em.createNamedQuery(query);
 
@@ -562,8 +588,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 			entry = null;
@@ -670,11 +696,14 @@ public abstract class ControllerStandard {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Calcolo l'oggetto */
 			returnValue = (T) em.find(classObj, id);
@@ -683,8 +712,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 		}
 		return returnValue;
 	}
@@ -703,14 +732,17 @@ public abstract class ControllerStandard {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Map.Entry entry = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			q = em.createNamedQuery(query);
@@ -736,9 +768,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			entry = null;
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -764,14 +796,17 @@ public abstract class ControllerStandard {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Map.Entry entry = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Genero la query */
 			q = em.createNamedQuery(query);
@@ -801,9 +836,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			entry = null;
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -829,14 +864,17 @@ public abstract class ControllerStandard {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Map.Entry entry = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Genero la query */
 			q = em.createQuery(query);
@@ -866,9 +904,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			entry = null;
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -895,13 +933,16 @@ public abstract class ControllerStandard {
 													// del chiamante
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzia l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Crea la query */
 			q = em.createQuery("from " + classObj.getName());
@@ -922,8 +963,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -943,12 +984,15 @@ public abstract class ControllerStandard {
 
 		StringBuffer hsqlQuery = null;
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			hsqlQuery = new StringBuffer();
@@ -965,9 +1009,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			hsqlQuery = null;
-			em = null;
 			q = null;
 		}
 		return returnValue;
@@ -978,12 +1022,15 @@ public abstract class ControllerStandard {
 
 		StringBuffer hsqlQuery = null;
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			hsqlQuery = new StringBuffer();
@@ -1000,9 +1047,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			hsqlQuery = null;
-			em = null;
 			q = null;
 		}
 		return returnValue;
@@ -1013,12 +1060,15 @@ public abstract class ControllerStandard {
 
 		StringBuffer hsqlQuery = null;
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			hsqlQuery = new StringBuffer();
@@ -1057,9 +1107,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			hsqlQuery = null;
-			em = null;
 			q = null;
 		}
 		return returnValue;
@@ -1078,14 +1128,17 @@ public abstract class ControllerStandard {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Map.Entry entry = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			q = em.createNamedQuery(query);
@@ -1107,9 +1160,9 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
 			entry = null;
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -1129,14 +1182,17 @@ public abstract class ControllerStandard {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Map.Entry entry = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			/* Creo la query */
 			q = em.createQuery(query);
@@ -1158,8 +1214,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 			entry = null;
@@ -1179,13 +1235,16 @@ public abstract class ControllerStandard {
 		ArrayList<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Session session = null;
 		Criteria cri = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			session = (Session) em.getDelegate();
 
@@ -1201,9 +1260,12 @@ public abstract class ControllerStandard {
 		} catch (Exception e) {
 			throw e;
 		} finally {
+			if (!passedEm) {
+				PersistenceManagerUtil.close(em);
+				em = null;
+			}
 			session = null;
 			cri = null;
-			em = null;
 		}
 		return returnValue;
 	}
@@ -1212,13 +1274,16 @@ public abstract class ControllerStandard {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzia l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			StringBuilder hqlQuery = new StringBuilder();
 
@@ -1263,8 +1328,8 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 		}
@@ -1275,13 +1340,16 @@ public abstract class ControllerStandard {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Iterator i = null;
 		Query q = null;
 		try {
 			/* Istanzia l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			StringBuilder hqlQuery = new StringBuilder();
 
@@ -1324,32 +1392,69 @@ public abstract class ControllerStandard {
 		} finally {
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-			em = null;
 			q = null;
 			i = null;
 		}
 		return returnValue;
 	}
 
+	private EntityManagerFactory nonScopedEMF = null;
+
 	protected EntityManagerFactory getEntityManagerFactory() {
 		EntityManagerFactory res = null;
 
 		/*
-		 * Mirco: per il progetto katia-server modifico in modo che eventuali richieste non-scooped creino istanze normali,
-		 * precedentemente usavo il ManagerTEST (forse per qualche progetto con multi PU)
+		 * Mirco: per il progetto katia-server modifico in modo che eventuali
+		 * richieste non-scooped creino istanze normali, precedentemente usavo
+		 * il ManagerTEST (forse per qualche progetto con multi PU)
 		 */
 		if (scoopedEM) {
-			// res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
-			res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
-			logger.debug("create scoped emf");
+			// res =
+			// Persistence.createEntityManagerFactory(getPersistenceUnitName());
+			// res =
+			// MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			res = PersistenceManager.getInstance().getEntityManagerFactory();
+			logger.debug("get scoped emf multiple pu");
 		} else {
-			/* res = Persistence.createEntityManagerFactory(getPersistenceUnitName()); */
-			res = MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
-			logger.debug("create un-scoped emf (note: actually same as scopped)");
+			if (nonScopedEMF == null) {
+				nonScopedEMF = Persistence.createEntityManagerFactory(getPersistenceUnitName());
+				logger.debug("create un-scoped emf");
+			}
+			res = nonScopedEMF;
+			// res =
+			// MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			// logger.warn("requested un-scoped emf (WARN: actually is SCOOPED)");
 		}
-		
+
 		return res;
+	}
+
+	public void close() {
+		if (scoopedEM) {
+			// MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory(persistenceUnitName);
+		} else {
+			// MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory(persistenceUnitName);
+			// Mirco: gestione dell'istanza non scooped che ho tentuto in
+			// nonScopedEMF
+			if (!passedEm) {
+				if (em != null) {
+					em.close();
+					em = null;
+				}
+				if (nonScopedEMF != null) {
+					nonScopedEMF.close();
+					nonScopedEMF = null;
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		close();
+		super.finalize();
 	}
 
 	protected void closeResource() {
@@ -1361,25 +1466,20 @@ public abstract class ControllerStandard {
 		return ListUtils.isEmpty(res);
 	}
 
-	public void close() {
-		if (scoopedEM) {
-			MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory(persistenceUnitName);
-		} else {
-			MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory(persistenceUnitName);
-		}
-	}
-
 	public <T extends EntityBaseStandard> List<T> listByExample(Class<T> classObj, T anExample) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
-		EntityManager em = null;
+		// EntityManager em = null;
 		Session session = null;
 		Criteria cri = null;
 		try {
 			/* Istanzio l'entity manager */
-			emf = getEntityManagerFactory();
-			em = emf.createEntityManager();
+
+			if (!passedEm) {
+				emf = getEntityManagerFactory();
+				em = emf.createEntityManager();
+			}
 
 			session = (Session) em.getDelegate();
 
@@ -1393,14 +1493,12 @@ public abstract class ControllerStandard {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-
 			if (!passedEm) {
 				PersistenceManagerUtil.close(em);
+				em = null;
 			}
-
 			session = null;
 			cri = null;
-			em = null;
 		}
 		return returnValue;
 	}
