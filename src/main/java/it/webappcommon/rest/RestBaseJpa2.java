@@ -13,6 +13,11 @@ import javax.ws.rs.core.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author mirco
+ *
+ */
 public class RestBaseJpa2 {
 
 	// protected final Logger logger =
@@ -21,7 +26,12 @@ public class RestBaseJpa2 {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	/* GESTIONE ACCESSO DATI PER I TEST */
+	/*
+	 * da specifiche JPA l'istanza dovrebbe essere unica per tutta l'app, quindi
+	 * il contesto dovrebbe averne una
+	 */
 	protected EntityManagerFactory emf;
+	private boolean emfFromContext = false;
 
 	// @Resource
 	// protected WebServiceContext context;
@@ -29,14 +39,13 @@ public class RestBaseJpa2 {
 	protected ServletContext restServletContext;
 
 	// @WebMethod(exclude = true)
-	protected void initContextEmf(EntityManagerFactory emf) {
-
-		if (emf != null)
-			this.emf = emf;
-		else {
-
-		}
-	}
+	// protected void initContextEmf(EntityManagerFactory emf) {
+	// if (emf != null)
+	// this.emf = emf;
+	// else {
+	//
+	// }
+	// }
 
 	// @WebMethod(exclude = true)
 	// protected ServletContext getServletContext() {
@@ -44,30 +53,46 @@ public class RestBaseJpa2 {
 	// restServletContext.getMessageContext().get(MessageContext.SERVLET_CONTEXT);
 	// }
 
+	/**
+	 * Verifica innanzitutto se esiste un EMF di contesto (inizializzato con il
+	 * listener. Nel caso non esiste ne crea uno nuovo (sconsigliato per
+	 * lentezza)
+	 * 
+	 * @return
+	 */
 	protected EntityManagerFactory getContextEmf() {
 		if (this.emf == null) {
 			/*
-			 * Aggiunta del Supporto alla Configurazione
+			 * verifico se nel context o nella sessione già c'e' un emf
+			 * inizializzato
 			 */
-			// SoftwareConfig.init(e.getSession().getServletContext());
-			// if (context != null)
-			// SoftwareProperties.init(context);
-			// else
-			SoftwareProperties.init(restServletContext);
-
-			Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
-
-			// ServletContext c = restServletContext;
-			// DataSource source = (DataSource)
-			// (c.lookup("java:comp/env/jdbc/MySource"));
-
-			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-
-			// EntityManagerFactory emf = null;
-			if (dbProps != null) {
-				this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU, dbProps);
+			if (restServletContext != null && restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF) != null) {
+				emf = (EntityManagerFactory) restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF);
+				emfFromContext = true;
 			} else {
-				this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+				/*
+				 * Aggiunta del Supporto alla Configurazione
+				 */
+				// SoftwareConfig.init(e.getSession().getServletContext());
+				// if (context != null)
+				// SoftwareProperties.init(context);
+				// else
+				SoftwareProperties.init(restServletContext);
+
+				Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
+
+				// ServletContext c = restServletContext;
+				// DataSource source = (DataSource)
+				// (c.lookup("java:comp/env/jdbc/MySource"));
+
+				// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+
+				// EntityManagerFactory emf = null;
+				if (dbProps != null) {
+					this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU, dbProps);
+				} else {
+					this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+				}
 			}
 		}
 
@@ -75,17 +100,19 @@ public class RestBaseJpa2 {
 	}
 
 	/**
-	 * 
+	 * Si occupa di chiudere EMF nel caso in precedenza non sia stato recuperato
+	 * dal context
 	 */
 	protected void closeContextEmf() {
-		if (this.emf != null) {
+		if (!emfFromContext && this.emf != null) {
 			emf.close();
+			emf = null;
 		}
 	}
-	
-//	@Override
-//	protected void finalize() throws Throwable {
-//		closeContextEmf();
-//		super.finalize();
-//	}
+
+	// @Override
+	// protected void finalize() throws Throwable {
+	// closeContextEmf();
+	// super.finalize();
+	// }
 }
