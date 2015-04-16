@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.db;
 
@@ -63,10 +63,29 @@ public class JdbcConnector {
 
 		this.conn = conn;
 		passedConnection = true;
-		/* se la connessione viene passata di default impostiamo che sia lasciata aperta */
+		/*
+		 * se la connessione viene passata di default impostiamo che sia
+		 * lasciata aperta
+		 */
 		keepConnOpen = true;
 	}
 
+	/**
+	 * Costruttore specificatamente pensato per utilizzo delle connessioni da pool
+	 * @param conn la connessione istanziata esternamente 
+	 * @param connectionComeFromPool specifica se la connessione proviene da un pool, in questo caso non la tratta come una passata da non chiudere
+	 */
+	public JdbcConnector(Connection conn, boolean connectionComeFromPool) {
+		this(conn);
+
+		// se chiamo il close del connector così viene chiusa (e lasciata in gestione al pool)
+		passedConnection = !connectionComeFromPool;
+		
+		if (connectionComeFromPool) {
+			logger.warn(this.getClass().getName() + " utilizza una connessione da un pool");
+		}
+	}
+	
 	@Override
 	protected void finalize() throws Throwable {
 		close();
@@ -119,6 +138,7 @@ public class JdbcConnector {
 				// DbUtils.close(conn);
 				if (conn != null && !conn.isClosed()) {
 					conn.close();
+					conn = null;
 				}
 			} catch (Exception ex) {
 				logger.error(ex);
@@ -241,7 +261,7 @@ public class JdbcConnector {
 				Connection connection = getConnection();
 
 				// connection.setAutoCommit(false);
-				
+
 				Statement statement = connection.createStatement();
 				for (String aQuery : batchQuery) {
 					statement.addBatch(aQuery);
@@ -262,13 +282,15 @@ public class JdbcConnector {
 
 		return res;
 	}
-	
+
 	/**
-	 * utilizzato da chi estende questa classe, quando estentendo c'e' un metodo che esegue piu query in sequenza
+	 * utilizzato da chi estende questa classe, quando estentendo c'e' un metodo
+	 * che esegue piu query in sequenza
 	 */
 	protected boolean keepConnOpen = false;
 
 	public void keepConnOpen() {
 		keepConnOpen = true;
-	}	
+	}
+	
 }

@@ -43,6 +43,10 @@ public class DbUtilsConnector extends JdbcConnector {
 		super(conn);
 	}
 
+	public DbUtilsConnector(Connection conn, boolean connectionComeFromPool) {
+		super(conn, connectionComeFromPool);
+	}
+	
 	public DbUtilsConnector(String connString, String driverClass, String userName, String password) {
 		super(connString, driverClass, userName, password);
 	}
