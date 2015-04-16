@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="WebAppCommon">
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="webapp-common">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<!-- embeddable -->
 		<class>it.attocchi.jpa2.entities.EntityMarks</class>
-		<class>it.attocchi.jpa2.entities.uuid.EntityMarksUUID</class>	
+		<class>it.attocchi.jpa2.entities.uuid.EntityMarksUUID</class>
 	</persistence-unit>
 </persistence>
