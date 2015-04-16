@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with WebAppCommon.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package it.attocchi.jpa2;
 
@@ -40,12 +40,13 @@ public class JPAContextListener implements ServletContextListener {
 	protected static final Logger logger = Logger.getLogger(JPAContextListener.class.getName());
 
 	// private JpaController chachedController;
+	private String persistenceUnitName = null;
 
 	/**
 	 * Default constructor.
 	 */
 	public JPAContextListener() {
-		
+
 	}
 
 	/**
@@ -61,12 +62,16 @@ public class JPAContextListener implements ServletContextListener {
 		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+		persistenceUnitName = e.getServletContext().getInitParameter("PersistenceUnitName");
+		if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
+			persistenceUnitName = IJpaListernes.DEFAULT_PU;
+		}
 
 		EntityManagerFactory emf = null;
 		if (dbProps != null) {
-			emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU, dbProps);
+			emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
 		} else {
-			emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+			emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 		}
 
 		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
@@ -78,8 +83,8 @@ public class JPAContextListener implements ServletContextListener {
 
 		// EntityManagerFactory emf =
 		// Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
-		e.getServletContext().setAttribute(IJpaListernes.SESSION_EMF, emf);
-		logger.info(IJpaListernes.SESSION_EMF + " start");
+		e.getServletContext().setAttribute(IJpaListernes.APPLICATION_EMF, emf);
+		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") start");
 
 		// chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
 		// chachedController.test();
@@ -93,10 +98,10 @@ public class JPAContextListener implements ServletContextListener {
 		// e.getServletContext().getAttribute("emf");
 		// emf.close();
 
-		EntityManagerFactory emf = (EntityManagerFactory) e.getServletContext().getAttribute(IJpaListernes.SESSION_EMF);
+		EntityManagerFactory emf = (EntityManagerFactory) e.getServletContext().getAttribute(IJpaListernes.APPLICATION_EMF);
 		if (emf != null)
 			emf.close();
-		logger.info(IJpaListernes.SESSION_EMF + " close");
+		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") close");
 
 		// chachedController.closeEmf();
 	}
