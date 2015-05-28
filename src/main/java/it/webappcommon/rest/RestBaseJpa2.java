@@ -87,11 +87,21 @@ public class RestBaseJpa2 {
 
 				// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
+				// Mirco: nel caso in cui ho specificato un nome di PU diverso
+				// dal default leggo dal web.xml
+				String persistenceUnitName = IJpaListernes.DEFAULT_PU;
+				if (restServletContext != null) {
+					persistenceUnitName = restServletContext.getInitParameter(IJpaListernes.WEB_XML_INITPARAMETER_NAME);
+					if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
+						persistenceUnitName = IJpaListernes.DEFAULT_PU;
+					}
+				}
+
 				// EntityManagerFactory emf = null;
 				if (dbProps != null) {
-					this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU, dbProps);
+					this.emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
 				} else {
-					this.emf = Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+					this.emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 				}
 			}
 		}
