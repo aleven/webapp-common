@@ -65,7 +65,8 @@ public class JPASessionListener implements HttpSessionListener {
 
 			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 
-			persistenceUnitName = e.getSession().getServletContext().getInitParameter("PersistenceUnitName");
+			// Mirco: nel caso in cui ho specificato un nome di PU diverso dal default leggo dal web.xml
+			persistenceUnitName = e.getSession().getServletContext().getInitParameter(IJpaListernes.WEB_XML_INITPARAMETER_NAME);
 			if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
 				persistenceUnitName = IJpaListernes.DEFAULT_PU;
 			}

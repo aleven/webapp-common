@@ -34,6 +34,7 @@ package it.attocchi.jpa2;
 public interface IJpaListernes {
 	
 	public static final String DEFAULT_PU = "DEFAULT_PU";
+	public static final String WEB_XML_INITPARAMETER_NAME = "PersistenceUnitName";
 	
 	public static final String APPLICATION_EMF = "APPLICATION_EMF";
 	public static final String SESSION_EMF = "SESSION_EMF";
