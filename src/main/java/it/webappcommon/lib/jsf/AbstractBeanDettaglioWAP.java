@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * @param <T>
  * @param <P>
  *            Classe che Estende PageBase specifica del progetto, per dare
- *            visibilità  dei metodi specifici
+ *            visibilita' dei metodi specifici
  */
 public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends AbstractPageBase> extends AbstractPageBase {
 
