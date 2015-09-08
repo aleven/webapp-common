@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
  * @author Mirco
  * 
  */
-// public abstract class PageBaseNoAuth extends PageBaseJpa2Data {
+// public abstract class PageBaseNoAuth extends @PageBaseJpa2Data {
 public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 	/**
 	 * 
