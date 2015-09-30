@@ -7,3 +7,7 @@
 /release/
 /.idea/
 /webapp-common.iml
+/target\generated-sources\annotations/
+/target/
+/target/
+/target/
