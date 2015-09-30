@@ -19,6 +19,7 @@
 
 package it.attocchi.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,26 +48,58 @@ public class DateUtilsLT {
 	 * yyyyMMdd
 	 */
 	public final static String FORMAT_ISO = "yyyyMMdd";
+	/**
+	 * yyyy-MM-dd
+	 */
 	public final static String FORMAT_ISO_SEPARATOR = "yyyy-MM-dd";
-
+	/**
+	 * yyyyMMdd HH:mm
+	 */
 	public final static String FORMAT_ISO_HHmm = "yyyyMMdd HH:mm";
+	/**
+	 * yyyy-MM-dd HH:mm
+	 */
 	public final static String FORMAT_ISO_HHmm_SEPARATOR = "yyyy-MM-dd HH:mm";
+	/**
+	 * yyyy-MM-dd HH:mm:ss
+	 */
 	public final static String FORMAT_ISO_HHmmss_SEPARATOR = "yyyy-MM-dd HH:mm:ss";
-
+	/**
+	 * HHmmssSS
+	 */
 	public static final String FORMAT_HHmmssSS = "HHmmssSS";
+	/**
+	 * HH:mm:ss:SS
+	 */
 	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
 
 	/**
 	 * yyyyMMddHHmmssSSS
 	 */
 	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
-
+	/**
+	 * dd/MM/yyyy
+	 */
 	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
+	/**
+	 * dd-MM-yyyy
+	 */
 	public static final String FORMAT_DATE_IT_SEPARATOR_MINUS = "dd-MM-yyyy";
+	/**
+	 * dd/MM/yyyy HH:mm
+	 */
 	public static final String FORMAT_DATE_TIME_IT = "dd/MM/yyyy HH:mm";
+	/**
+	 * dd/MM/yy
+	 */
 	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
+	/**
+	 * HH:mm
+	 */
 	public static final String FORMAT_TIME_IT = "HH:mm";
-
+	/**
+	 * yyyyMMdd.HHmmss
+	 */
 	public static final String FORMAT_yyyyMMdd_dot_HHmmss = "yyyyMMdd.HHmmss";
 
 	public static Date Now() {
@@ -376,13 +409,12 @@ public class DateUtilsLT {
 	 * @return
 	 */
 	public static int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
-		
+
 		startDate = setTime(startDate, 12, 0);
 		endDate = setTime(endDate, 12, 0);
-		
+
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);
-
 
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(endDate);
@@ -412,4 +444,30 @@ public class DateUtilsLT {
 		return workDays;
 	}
 
+	public static Date getDate(Date date, String inputTime) throws ParseException {
+		DateFormat format = new SimpleDateFormat("HH:mm");
+		Date time = format.parse(inputTime);
+		return getDate(date, time);
+	}
+
+	public static Date getDate(Date date, Date time) {
+		Calendar calendarA = Calendar.getInstance();
+		calendarA.setTime(date);
+
+		Calendar calendarB = Calendar.getInstance();
+		calendarB.setTime(time);
+
+		calendarA.set(Calendar.HOUR_OF_DAY, calendarB.get(Calendar.HOUR_OF_DAY));
+		calendarA.set(Calendar.MINUTE, calendarB.get(Calendar.MINUTE));
+		calendarA.set(Calendar.SECOND, calendarB.get(Calendar.SECOND));
+		calendarA.set(Calendar.MILLISECOND, calendarB.get(Calendar.MILLISECOND));
+
+		Date result = calendarA.getTime();
+
+		return result;
+	}
+
+	public static String format(Date aDate, String format) {
+		return new SimpleDateFormat(format).format(aDate);
+	}
 }
