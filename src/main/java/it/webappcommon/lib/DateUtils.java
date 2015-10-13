@@ -325,6 +325,10 @@ public class DateUtils extends DateUtilsLT {
 		return isSameDay(cal1, cal2);
 	}
 
+	public static boolean isNotSameDay(Date date1, Date date2) {
+		return !isSameDay(date1, date2);
+	}
+	
 	public static boolean isSameMonth(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException("The dates must not be null");
