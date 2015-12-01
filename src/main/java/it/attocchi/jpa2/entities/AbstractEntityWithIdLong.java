@@ -31,7 +31,6 @@ public abstract class AbstractEntityWithIdLong extends EntityBase implements IEn
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-
 		return super.clone();
 	}
 
