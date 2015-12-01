@@ -34,6 +34,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -1109,8 +1110,9 @@ public class JpaController implements Serializable {
 	}
 
 	private void testClazz(Class clazz) throws Exception {
-		if (clazz == null)
+		if (clazz == null) {
 			throw new Exception("JPAController Entity Class (clazz) not specified.");
+		}
 	}
 
 	public static <T extends Serializable> boolean callDelete(EntityManagerFactory emf, Class<T> clazz, T o, Object id) throws Exception {
@@ -1132,6 +1134,7 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Use findAsMap
+	 * 
 	 * @param clazz
 	 * @param filter
 	 * @return
@@ -1141,7 +1144,7 @@ public class JpaController implements Serializable {
 	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		return findAsMap(clazz, filter);
 	}
-	
+
 	/**
 	 * Return a Map based on element ID
 	 * 
@@ -1162,6 +1165,7 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Use callFindAsMap
+	 * 
 	 * @param emf
 	 * @param clazz
 	 * @param filter
@@ -1172,13 +1176,13 @@ public class JpaController implements Serializable {
 	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAllAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		return callFindAsMap(emf, clazz, filter);
 	}
-	
+
 	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Map<Long, T> res = new HashMap<Long, T>();
 		JpaController controller = null;
 		try {
 			controller = new JpaController(emf);
-			
+
 			res = controller.findAllAsMap(clazz, filter);
 		} catch (Exception ex) {
 			logger.error("callFindAllAsMap", ex);
@@ -1186,6 +1190,48 @@ public class JpaController implements Serializable {
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
+		return res;
+	}
+
+	public static <T extends IEntityWithIdLong, F> List<F> callFindProjection(EntityManagerFactory emf, Class<T> clazzT, Class<F> clazzF, SingularAttribute<T, F> fieldDefinition, JPAEntityFilter<T> filter) throws Exception {
+		List<F> res = new ArrayList<F>();
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+			res = controller.findProjection(emf, clazzT, clazzF, fieldDefinition, filter);
+		} catch (Exception ex) {
+			logger.error("callFindAllAsMap", ex);
+			throw ex;
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}
+
+	public <T extends IEntityWithIdLong, F> List<F> findProjection(EntityManagerFactory emf, Class<T> clazzT, Class<F> clazzF, SingularAttribute<T, F> fieldDefinition, JPAEntityFilter<T> filter) throws Exception {
+		List<F> res = new ArrayList<F>();
+
+		testClazz(clazzT);
+		testClazz(clazzF);
+
+		EntityManager em = getEntityManager();
+
+		try {
+
+			TypedQuery<F> query = em.createQuery("SELECT o." + fieldDefinition.getName() + " FROM " + clazzT.getCanonicalName() + " o", clazzF);
+			res = query.getResultList();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// Close the database connection:
+			if (!globalTransactionOpen) {
+				// if (em.getTransaction().isActive())
+				// em.getTransaction().rollback();
+				closeEm(); // em.close();
+			}
+		}
+
 		return res;
 	}
 }
