@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.attocchi</groupId>
 	<artifactId>webapp-common</artifactId>
-	<version>3.2.1</version>
+	<version>3.2.2-SNAPSHOT</version>
 	<!-- https://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
 	<!-- https://developer.jboss.org/en/tools/blog/2012/05/20/annotation-processing-support-in-m2e-or-m2e-apt-100-is-out -->
 	<build>
