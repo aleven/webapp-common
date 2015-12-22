@@ -178,6 +178,10 @@ public class MailUtils {
 		return fromAddresses;
 	}
 
+	public static String getAllSendersAsString(Message message) throws MessagingException, IOException {
+		return ListUtils.toCommaSeparedNoBracket(getAllSenders(message));
+	}
+	
 	public static List<String> getAllRecipents(Message message) throws MessagingException, IOException {
 		List<String> toAddresses = new ArrayList<String>();
 
