@@ -36,7 +36,7 @@ public abstract class AbstractEntityWithIdString extends EntityBase implements I
 
 	@Override
 	public int hashCode() {
-		return new Long(getId()).hashCode();
+		return toString().hashCode();
 	}
 
 	@Override
@@ -45,8 +45,12 @@ public abstract class AbstractEntityWithIdString extends EntityBase implements I
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
+	public boolean equals(Object object) {
+	    if (this == object) return true;
+	    if (object == null || this.getClass() != object.getClass()) return false;
+	    final AbstractEntityWithIdString other = (AbstractEntityWithIdString) object;
+	    if (this.getId() == null || other.getId() == null) return false;
+		return this.getId().equals(other.getId());
 	}
 
 }
