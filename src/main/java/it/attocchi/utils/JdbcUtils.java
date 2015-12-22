@@ -69,6 +69,10 @@ public class JdbcUtils {
 		return conn;
 	}
 	
+	public static Timestamp convertToTimestampNow() {
+		return convertToTimestamp(new Date());
+	}
+	
 	public static Timestamp convertToTimestamp(Date aJavaDate) {
 		Timestamp retVal = null;
 
