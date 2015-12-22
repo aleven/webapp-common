@@ -52,53 +52,57 @@ public class JPAContextListener implements ServletContextListener {
 	/**
 	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
 	 */
-	public void contextInitialized(ServletContextEvent e) {
+	public void contextInitialized(ServletContextEvent sce) {
+		logger.info("initializing JPAContextListener@" + sce.getServletContext().getContextPath());
+		try {
+			/*
+			 * Aggiunta del Supporto alla Configurazione
+			 */
+			// SoftwareConfig.init(e.getSession().getServletContext());
+			SoftwareProperties.init(sce.getServletContext());
+			Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
-		/*
-		 * Aggiunta del Supporto alla Configurazione
-		 */
-		// SoftwareConfig.init(e.getSession().getServletContext());
-		SoftwareProperties.init(e.getServletContext());
-		Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
+			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+			persistenceUnitName = sce.getServletContext().getInitParameter("PersistenceUnitName");
+			if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
+				persistenceUnitName = IJpaListernes.DEFAULT_PU;
+			}
 
-		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-		persistenceUnitName = e.getServletContext().getInitParameter("PersistenceUnitName");
-		if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
-			persistenceUnitName = IJpaListernes.DEFAULT_PU;
+			EntityManagerFactory emf = null;
+			if (dbProps != null) {
+				emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
+			} else {
+				emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+			}
+
+			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+			// EntityManagerFactory emf =
+			// Persistence.createEntityManagerFactory("$objectdb/db/caderplink.odb");
+			// e.getServletContext().setAttribute("emf", emf);
+
+			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
+
+			// EntityManagerFactory emf =
+			// Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
+			sce.getServletContext().setAttribute(IJpaListernes.APPLICATION_EMF, emf);
+			logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") start");
+
+			// chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
+			// chachedController.test();
+		} catch (Exception ex) {
+			logger.error("error initializing JPAContextListener", ex);
 		}
-
-		EntityManagerFactory emf = null;
-		if (dbProps != null) {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
-		} else {
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-		}
-
-		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-		// EntityManagerFactory emf =
-		// Persistence.createEntityManagerFactory("$objectdb/db/caderplink.odb");
-		// e.getServletContext().setAttribute("emf", emf);
-
-		// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
-
-		// EntityManagerFactory emf =
-		// Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
-		e.getServletContext().setAttribute(IJpaListernes.APPLICATION_EMF, emf);
-		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") start");
-
-		// chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
-		// chachedController.test();
 	}
 
 	/**
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
 	 */
-	public void contextDestroyed(ServletContextEvent e) {
+	public void contextDestroyed(ServletContextEvent sce) {
 		// EntityManagerFactory emf = (EntityManagerFactory)
 		// e.getServletContext().getAttribute("emf");
 		// emf.close();
 
-		EntityManagerFactory emf = (EntityManagerFactory) e.getServletContext().getAttribute(IJpaListernes.APPLICATION_EMF);
+		EntityManagerFactory emf = (EntityManagerFactory) sce.getServletContext().getAttribute(IJpaListernes.APPLICATION_EMF);
 		if (emf != null)
 			emf.close();
 		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") close");
