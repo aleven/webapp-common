@@ -165,11 +165,6 @@ public class MailSender {
 
 	private void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws Exception {
 
-		// String host = "smtps.pec.aruba.it";
-		// String host = "smtps.pec.aruba.it";
-		// int port = 465;
-		// int port = 487;
-
 		email.setHostName(hostName);
 		email.setSmtpPort(port);
 
@@ -216,31 +211,24 @@ public class MailSender {
 
 		email.setFrom(fromAddress, fromName);
 
-		// email.setSmtpPort(port);
-
-		// email.addTo("amirco@gmail.com", "Mirco Attocchi");
-
 		List<MailRecipient> recipients = parseEmails(to);
 		for (MailRecipient recipient : recipients) {
-			// email.addTo(toEmail, toName);
 			email.addTo(recipient.getToEmail(), recipient.getToName());
 		}
-
 		List<MailRecipient> recipientsCC = parseEmails(toCC);
 		for (MailRecipient recipientCC : recipientsCC) {
 			email.addCc(recipientCC.getToEmail(), recipientCC.getToName());
 		}
-
 		List<MailRecipient> recipientsCCN = parseEmails(toCCN);
 		for (MailRecipient recipientCCN : recipientsCCN) {
 			email.addBcc(recipientCCN.getToEmail(), recipientCCN.getToName());
 		}
-
-		// email.setSubject("Test message");
-		// email.setMsg("This is a simple test of commons-email");
-		email.setSubject(subject);
-		email.setMsg(message);
-
+		if (StringUtils.isNotBlank(subject)) {
+			email.setSubject(subject);
+		}
+		if (StringUtils.isNotBlank(message)) {
+			email.setMsg(message);
+		}
 		if (customHeaders != null) {
 			for (MailHeader header : customHeaders) {
 				if (StringUtils.isNotBlank(header.getValue()))
@@ -276,7 +264,7 @@ public class MailSender {
 		sendMail(to, toCC, toCCN, subject, message, null, attachments, null);
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws Exception {
+	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws Exception {
 
 		SimpleEmail email = new SimpleEmail();
 
@@ -285,9 +273,11 @@ public class MailSender {
 		email.send();
 
 		storeOnEml(email, emlToStore);
+
+		return email.getMimeMessage().getMessageID();
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws Exception {
+	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws Exception {
 		// Create the attachment
 		// EmailAttachment attachment = new EmailAttachment();
 		// attachment.setPath("mypictures/john.jpg");
@@ -319,6 +309,8 @@ public class MailSender {
 		email.send();
 
 		storeOnEml(email, emlToStore);
+
+		return email.getMimeMessage().getMessageID();
 	}
 
 	private void storeOnEml(Email email, File emlToStore) throws Exception {
@@ -336,28 +328,29 @@ public class MailSender {
 		}
 	}
 
-//	@Deprecated
-//	private void sendHtmlEmail() throws Exception {
-//		// Create the email message
-//		HtmlEmail email = new HtmlEmail();
-//		email.setHostName("mail.myserver.com");
-//		email.addTo("jdoe@somewhere.org", "John Doe");
-//		email.setFrom("me@apache.org", "Me");
-//		email.setSubject("Test email with inline image");
-//
-//		// embed the image and get the content id
-//		URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
-//		String cid = email.embed(url, "Apache logo");
-//
-//		// set the html message
-//		email.setHtmlMsg("<html>The apache logo - <img src=\"cid:" + cid + "\"></html>");
-//
-//		// set the alternative message
-//		email.setTextMsg("Your email client does not support HTML messages");
-//
-//		// send the email
-//		email.send();
-//	}
+	// @Deprecated
+	// private void sendHtmlEmail() throws Exception {
+	// // Create the email message
+	// HtmlEmail email = new HtmlEmail();
+	// email.setHostName("mail.myserver.com");
+	// email.addTo("jdoe@somewhere.org", "John Doe");
+	// email.setFrom("me@apache.org", "Me");
+	// email.setSubject("Test email with inline image");
+	//
+	// // embed the image and get the content id
+	// URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
+	// String cid = email.embed(url, "Apache logo");
+	//
+	// // set the html message
+	// email.setHtmlMsg("<html>The apache logo - <img src=\"cid:" + cid +
+	// "\"></html>");
+	//
+	// // set the alternative message
+	// email.setTextMsg("Your email client does not support HTML messages");
+	//
+	// // send the email
+	// email.send();
+	// }
 
 	/**
 	 * Extract multi recipient from a string separed with ; or ,
