@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class RestBaseJpa2 {
 	@Context
 	protected ServletContext restServletContext;
 
+	@Context
+	protected UriInfo uriInfo;
+	
 	// @WebMethod(exclude = true)
 	// protected void initContextEmf(EntityManagerFactory emf) {
 	// if (emf != null)
