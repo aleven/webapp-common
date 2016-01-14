@@ -4,6 +4,23 @@
 	<groupId>it.attocchi</groupId>
 	<artifactId>webapp-common</artifactId>
 	<version>3.2.2-SNAPSHOT</version>
+	
+	  <name>webapp-common</name>
+	  <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
+	  <url>https://github.com/mattocchi/webapp-common</url>
+	 
+	  <licenses>
+	    <license>
+	      <name>GNU Lesser General Public License 3.0</name>
+	      <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+	      <distribution>repo</distribution>
+	    </license>
+	  </licenses>
+	 
+	  <scm>
+	    <url>https://github.com/mattocchi/webapp-common</url>
+	  </scm>
+  	
 	<!-- https://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
 	<!-- https://developer.jboss.org/en/tools/blog/2012/05/20/annotation-processing-support-in-m2e-or-m2e-apt-100-is-out -->
 	<build>
@@ -23,6 +40,24 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>build-helper-maven-plugin</artifactId>
+		        <version>1.7</version>
+		        <executions>           
+		            <execution>             
+		                <id>remove-old-artifacts</id>             
+		                <phase>clean</phase>             
+		                <goals>               
+		                    <goal>remove-project-artifact</goal>             
+		                </goals>            
+		                <configuration>  
+		                    <removeAll>true</removeAll><!-- remove all versions of built artifacts including all versions.  Install phase will regenerate -->             
+		                </configuration>          
+		                </execution>         
+		        </executions>             
+		    </plugin>			
 		</plugins>
 	</build>
 	<dependencies>
