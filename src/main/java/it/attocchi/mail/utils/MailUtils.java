@@ -10,15 +10,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.mail.Address;
+import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 
 import org.apache.commons.lang3.StringUtils;
@@ -167,7 +172,19 @@ public class MailUtils {
 		return res;
 	}
 
-	public static List<String> getAllSenders(Message message) throws MessagingException, IOException {
+	public static String getSenderAddress(Message message) throws MessagingException {
+		Address[] froms = message.getFrom();
+		String email = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
+		return email;
+	}
+	
+	public static String getReplyToAddress(Message message) throws MessagingException {
+		Address[] froms = message.getReplyTo();
+		String email = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
+		return email;
+	}	
+
+	public static List<String> getAllSenders(Message message) throws MessagingException {
 		List<String> fromAddresses = new ArrayList<String>();
 
 		Address[] senders = message.getFrom();
@@ -178,11 +195,11 @@ public class MailUtils {
 		return fromAddresses;
 	}
 
-	public static String getAllSendersAsString(Message message) throws MessagingException, IOException {
+	public static String getAllSendersAsString(Message message) throws MessagingException {
 		return ListUtils.toCommaSeparedNoBracket(getAllSenders(message));
 	}
-	
-	public static List<String> getAllRecipents(Message message) throws MessagingException, IOException {
+
+	public static List<String> getAllRecipents(Message message) throws MessagingException {
 		List<String> toAddresses = new ArrayList<String>();
 
 		// Address[] recipients =
@@ -410,5 +427,23 @@ public class MailUtils {
 			indirizziNotifica = indirizziNotifica.substring(0, indirizziNotifica.length() - 1);
 		}
 		return indirizziNotifica;
+	}
+	
+	public static Map<String, String> getAllHeaders(Message mail) throws MessagingException {
+		Map<String, String> res = new HashMap<String, String>();
+		
+		if (mail.getAllHeaders() != null) {
+			Enumeration headers = mail.getAllHeaders();
+			while (headers.hasMoreElements()) {
+				Header h = (Header) headers.nextElement();
+				
+				String headerName = h.getName();
+				String headerValue = h.getValue();
+				
+				res.put(headerName, headerValue);
+			}
+		}	
+		
+		return res;
 	}
 }
