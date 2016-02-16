@@ -16,6 +16,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.URLName;
 import javax.mail.internet.MimeMessage;
+import javax.mail.search.FlagTerm;
 
 import org.apache.log4j.Logger;
 
@@ -288,11 +289,13 @@ public class MailConnection {
 		return getMessages(0, 0);
 	}
 
+	private int folderMode = Folder.READ_ONLY;
+
 	public List<Message> getMessages(int start, int end) throws MessagingException {
 		List<Message> res = new ArrayList<Message>();
 		if (getCurrentFolder() != null) {
 
-			int folderMode = Folder.READ_ONLY;
+			// int folderMode = Folder.READ_ONLY;
 			if (enableDeleteMessageFromServer) {
 				folderMode = Folder.READ_WRITE;
 			}
@@ -309,6 +312,33 @@ public class MailConnection {
 			res = Arrays.asList(msgs);
 		}
 		return res;
+	}
+
+	public List<Message> getMessagesUnread() throws MessagingException {
+		List<Message> res = new ArrayList<Message>();
+		if (getCurrentFolder() != null) {
+
+			// int folderMode = Folder.READ_ONLY;
+			if (enableDeleteMessageFromServer) {
+				folderMode = Folder.READ_WRITE;
+			}
+			getCurrentFolder().open(folderMode);
+
+			// search for all "unseen" messages
+			boolean readStatus = false;
+			Flags seen = new Flags(Flags.Flag.SEEN);
+			FlagTerm unseenFlagTerm = new FlagTerm(seen, readStatus);
+
+			Message[] msgs = null;
+			msgs = getCurrentFolder().search(unseenFlagTerm);
+
+			res = Arrays.asList(msgs);
+		}
+		return res;
+	}
+
+	public void enableFolderWrite() {
+		folderMode = Folder.READ_WRITE;
 	}
 
 	public List<Message> deleteMessagesFromServer() throws MessagingException {
@@ -453,17 +483,25 @@ public class MailConnection {
 		mail.setFlag(Flags.Flag.DELETED, true);
 	}
 
-//	public void saveToEml(Message mail, File emlFile) throws Exception {
-//		OutputStream os = null;
-//		try {
-//			os = new FileOutputStream(emlFile);
-//
-//			mail.writeTo(os);
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//	}
+	public void markMessageAsRead(Message mail) throws MessagingException {
+		mail.setFlag(Flags.Flag.SEEN, true);
+	}
+
+	public void markMessageAsUnRead(Message mail) throws MessagingException {
+		mail.setFlag(Flags.Flag.SEEN, false);
+	}
+
+	// public void saveToEml(Message mail, File emlFile) throws Exception {
+	// OutputStream os = null;
+	// try {
+	// os = new FileOutputStream(emlFile);
+	//
+	// mail.writeTo(os);
+	// } finally {
+	// if (os != null) {
+	// os.close();
+	// }
+	// }
+	// }
 
 }
