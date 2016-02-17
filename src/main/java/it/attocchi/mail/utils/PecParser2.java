@@ -189,7 +189,7 @@ public class PecParser2 {
 			if (disp != null && disp.equalsIgnoreCase(Part.ATTACHMENT)) {
 				if (filename == null)
 					filename = "Attachment" + attnum++;
-				MimeUtility.decodeText(filename);
+				filename = MimeUtility.decodeText(filename);
 				log("Saving attachment to file " + filename);
 				try {
 					File f = new File(filename);
