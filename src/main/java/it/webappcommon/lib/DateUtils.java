@@ -283,7 +283,8 @@ public class DateUtils extends DateUtilsLT {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException("The dates must not be null");
 		}
-		return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
+		return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2
+				.get(Calendar.DAY_OF_YEAR));
 	}
 
 	/**
@@ -300,13 +301,13 @@ public class DateUtils extends DateUtilsLT {
 	 *             if either date is <code>null</code>
 	 */
 	public static boolean isSameDay(Date date1, Date date2) {
-//		if (date1 == null || date2 == null) {
-//			throw new IllegalArgumentException("The dates must not be null");
-//		}
+		// if (date1 == null || date2 == null) {
+		// throw new IllegalArgumentException("The dates must not be null");
+		// }
 		if (date1 == null || date2 == null) {
 			return false;
 		}
-		
+
 		Calendar cal1 = Calendar.getInstance();
 		cal1.setTime(date1);
 		Calendar cal2 = Calendar.getInstance();
@@ -328,7 +329,7 @@ public class DateUtils extends DateUtilsLT {
 	public static boolean isNotSameDay(Date date1, Date date2) {
 		return !isSameDay(date1, date2);
 	}
-	
+
 	public static boolean isSameMonth(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException("The dates must not be null");
@@ -1336,6 +1337,7 @@ public class DateUtils extends DateUtilsLT {
 		c2.setTime(d2);
 		return getDaysBetween(c1, c2);
 	}
+
 	//
 	// /**
 	// * Calculates the number of days between two calendar days in a manner
@@ -1845,14 +1847,78 @@ public class DateUtils extends DateUtilsLT {
 
 		return list;
 	}
-	
+
 	/**
 	 * verifica se una data e' diversa da vuota e superiore ad adesso
+	 * 
 	 * @param aDate
 	 * @return
 	 */
 	public static boolean greaterThanToday(Date aDate) {
 		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();
 	}
-	
+
+	public static int getSemester(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH); /* 0 through 11 */
+		int quarter = (month / 6) + 1;
+		return quarter;
+	}
+
+	public static Date getSemesterStartDate(Date aDate) {
+		Date res = null;
+		int semester = getSemester(aDate);
+		if (semester >= 1 && semester <= 7) {
+			Calendar cal = new GregorianCalendar();
+			cal.set(getAnno(aDate), 6 * semester - 6, 1);
+			res = cal.getTime();
+		}
+		return res;
+	}
+
+	public static Date getPrevSemesterStartDate(Date aDate) {
+		Date res = null;
+		int semester = getSemester(aDate);
+		if (semester >= 1 && semester <= 2) {
+			int prevS = semester - 1;
+			int anno = getAnno(aDate);
+			if (prevS == 0) {
+				prevS = 2;
+				anno = anno - 1;
+			}
+			Calendar cal = new GregorianCalendar();
+			cal.set(anno, 6 * prevS - 6, 1);
+			res = cal.getTime();
+		}
+		return res;
+	}
+
+	public static Date getSemesterEndDate(Date aDate) throws Exception {
+		Date res = null;
+		int semester = getSemester(aDate);
+		if (semester >= 1 && semester <= 2) {
+			Calendar cal = new GregorianCalendar();
+			cal.set(getAnno(aDate), 6 * semester - 1, getLastDayOfMont(6 * semester, getAnno(aDate)));
+			res = cal.getTime();
+		}
+		return res;
+	}
+
+	public static Date getPrevSemesterEndDate(Date aDate) throws Exception {
+		Date res = null;
+		int semester = getSemester(aDate);
+		if (semester >= 1 && semester <= 7) {
+			int prevS = semester - 1;
+			int anno = getAnno(aDate);
+			if (prevS == 0) {
+				prevS = 2;
+				anno = anno - 1;
+			}
+			Calendar cal = new GregorianCalendar();
+			cal.set(anno, 6 * prevS - 1, getLastDayOfMont(6 * prevS, anno));
+			res = cal.getTime();
+		}
+		return res;
+	}
 }
