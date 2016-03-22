@@ -68,7 +68,7 @@ public class IE7VersionFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		logger.debug("IE7VersionFilter");
+		logger.debug("IE7VersionFilter check");
 
 		String path = httpRequest.getRequestURI();
 		// if (path.startsWith("/specialpath")) {
@@ -88,6 +88,7 @@ public class IE7VersionFilter implements Filter {
 				logger.debug("IE7VersionFilter applied agent " + userAgent);
 				// "IE=EmulateIE7"
 				httpResponse.setHeader("X-UA-Compatible", xuacompatible);
+				logger.debug("X-UA-Compatible=" + xuacompatible);
 			} else {
 				logger.debug("IE7VersionFilter not applied for agent " + userAgent);
 			}
