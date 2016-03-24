@@ -1,12 +1,13 @@
 package it.attocchi.mail.utils;
 
+import it.attocchi.mail.parts.EmailBody;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.activation.DataHandler;
@@ -18,49 +19,87 @@ import javax.mail.Part;
 import javax.mail.internet.ContentType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.mail.internet.ParseException;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+
+import com.sun.mail.util.BASE64DecoderStream;
 
 public class PecParser2 {
 
 	protected static final Logger logger = Logger.getLogger(PecParser2.class.getName());
 
-	int level = 0;
-	boolean showStructure = false;
-	boolean saveAttachments = true;
-	int attnum = 1;
-	static String indentStr = "                                               ";
-	// String emlFileName = "";
+	private int level = 0;
+	private boolean showStructure = true;
+	private boolean saveAttachments = false;
+	private int attnum = 1;
+	private static String indentStr = "                                               ";
+
+	private final String postacertemlName = "postacert.eml";
+	private final String daticertxmlName = "daticert.xml";
 	// boolean emlFound = false;
 	// File f;
 	// EmailBody testo;
 
+	private String daticertXml;
+	private DataHandler postacertEml;
+	private String postacertEmlSubject;
+	private EmailBody postacertEmlBody;
+
 	Map<String, DataHandler> attachments = new HashMap<String, DataHandler>();
-	
-//	public EmailBody getTesto() {
-//		return testo;
-//	}
+
+	// public EmailBody getTesto() {
+	// return testo;
+	// }
 
 	/**
-	 * Ritorna una lista degli allegati all'email.
-	 * Gli allegati devono essere specificati come javax.mail.Part.ATTACHMENT altrimenti non vengono considerati
-	 * Nel caso di nomi doppi, oppure dello stesso allegato contenuto in un eml allegato il nome viene generato con incluso livello o progessivo
+	 * Ritorna una lista degli allegati all'email. Gli allegati devono essere
+	 * specificati come javax.mail.Part.ATTACHMENT altrimenti non vengono
+	 * considerati Nel caso di nomi doppi, oppure dello stesso allegato
+	 * contenuto in un eml allegato il nome viene generato con incluso livello o
+	 * progessivo
+	 * 
 	 * @return
 	 */
 	public Map<String, DataHandler> getAttachments() {
 		return attachments;
 	}
 
+	/**
+	 * ritorna il contenuto xml di daticert.xml
+	 * 
+	 * @return
+	 */
+	public String getDaticertXml() {
+		return daticertXml;
+	}
+
+	/**
+	 * ritorna il messaggio postacert.eml
+	 * 
+	 * @return
+	 */
+	public DataHandler getPostacertEml() {
+		return postacertEml;
+	}
+
+	public String getPostacertEmlSubject() {
+		return postacertEmlSubject;
+	}
+	
+	public EmailBody getPostacertEmlBody() {
+		return postacertEmlBody;
+	}
 	
 	public PecParser2() {
 		super();
 		// String emlFileName, boolean saveFile, File f
-//		this.emlFileName = emlFileName;
-//		this.saveAttachments = saveFile;
-//		this.f = f;
+		// this.emlFileName = emlFileName;
+		// this.saveAttachments = saveFile;
+		// this.f = f;
 	}
 
 	/*
@@ -79,15 +118,15 @@ public class PecParser2 {
 		 * int c; while ((c = is.read()) != -1) System.out.write(c);
 		 **/
 
-		String ct = part.getContentType();
+		String partContentType = part.getContentType();
 		try {
-			log("CONTENT-TYPE: " + (new ContentType(ct)).toString());
+			log("CONTENT-TYPE: " + (new ContentType(partContentType)).toString());
 		} catch (ParseException pex) {
-			log("BAD CONTENT-TYPE: " + ct);
+			log("BAD CONTENT-TYPE: " + partContentType);
 		}
-		String filename = part.getFileName();
-		if (filename != null)
-			log("FILENAME: " + filename);
+		String partFilename = part.getFileName();
+		if (partFilename != null)
+			log("FILENAME: " + partFilename);
 
 		/*
 		 * Using isMimeType to determine the content type avoids fetching the
@@ -101,10 +140,34 @@ public class PecParser2 {
 			if (!showStructure && !saveAttachments)
 				logger.debug((String) part.getContent());
 
-//			if (emlFound) {
-//				testo = new EmailBody((String) part.getContent(), part.getContentType());
-//				return;
-//			}
+			// if (emlFound) {
+			// testo = new EmailBody((String) part.getContent(),
+			// part.getContentType());
+			// return;
+			// }
+		} else if (part.isMimeType("application/xml")) {
+			log("This is xml");
+			log("---------------------------");
+			if (!showStructure && !saveAttachments)
+				logger.debug((String) part.getContent());
+
+			// verifica daticert.xml
+			if (daticertxmlName.equals(partFilename) && level <= 2) {
+				log("use of " + daticertxmlName + " at level " + level);
+				// da specifiche sempre UTF-8
+				if (part.getContent() instanceof BASE64DecoderStream) {
+					BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream) part.getContent();
+					StringWriter writer = new StringWriter();
+					IOUtils.copy(base64DecoderStream, writer);
+					String base64decodedString = writer.toString();
+					// byte[] encodedMimeByteArray =
+					// Base64.encodeBase64(base64decodedString.getBytes());
+					// String encodedMimeString = new
+					// String(encodedMimeByteArray);
+
+					daticertXml = base64decodedString;
+				}
+			}
 
 		} else if (part.isMimeType("multipart/*")) {
 			log("This is a Multipart");
@@ -114,28 +177,35 @@ public class PecParser2 {
 			int count = mp.getCount();
 			for (int i = 0; i < count; i++) {
 				dumpPart(mp.getBodyPart(i));
-//				/*
-//				 * Blocco se ne ho trovato il testo (per evitare di assegnare il
-//				 * contenuto di eventuali allegati txt
-//				 */
-//				if (testo != null)
-//					break;
+				// /*
+				// * Blocco se ne ho trovato il testo (per evitare di assegnare
+				// il
+				// * contenuto di eventuali allegati txt
+				// */
+				// if (testo != null)
+				// break;
 			}
 			level--;
 		} else if (part.isMimeType("message/rfc822")) {
 			log("This is a Nested Message");
 			log("---------------------------");
+
+			// verifica postacert.eml
+			if (postacertemlName.equals(partFilename) && level <= 2) {
+				log("use of " + postacertemlName + " at level " + level);
+				// saveAttachment((Part) part.getContent(), filename);
+				// emlFound = true;
+				Message tmp = (Message) ((Part) part.getContent());
+				postacertEml = part.getDataHandler();
+				postacertEmlSubject = tmp.getSubject();
+				postacertEmlBody = MailUtils.getBody(tmp);
+			}
+
 			level++;
-
-//			if (filename.equals(emlFileName)) {
-//				saveAttachment((Part) part.getContent(), filename);
-//				emlFound = true;
-//			}
-
 			dumpPart((Part) part.getContent());
 
-//			if (emlFound)
-//				return;
+			// if (emlFound)
+			// return;
 
 			level--;
 		} else {
@@ -149,10 +219,11 @@ public class PecParser2 {
 					log("This is a string");
 					log("---------------------------");
 					logger.debug((String) o);
-//					if (emlFound) {
-//						testo = new EmailBody((String) part.getContent(), part.getContentType());
-//						return;
-//					}
+					// if (emlFound) {
+					// testo = new EmailBody((String) part.getContent(),
+					// part.getContentType());
+					// return;
+					// }
 
 				} else if (o instanceof InputStream) {
 					log("This is just an input stream");
@@ -166,10 +237,11 @@ public class PecParser2 {
 					log("This is an unknown type");
 					log("---------------------------");
 					log(o.toString());
-//					if (emlFound) {
-//						testo = new EmailBody(o.toString(), part.getContentType());
-//						return;
-//					}
+					// if (emlFound) {
+					// testo = new EmailBody(o.toString(),
+					// part.getContentType());
+					// return;
+					// }
 				}
 			} else {
 				// just a separator
@@ -182,35 +254,43 @@ public class PecParser2 {
 		 * attachment into an appropriately named file. Don't overwrite existing
 		 * files to prevent mistakes.
 		 */
-		if (saveAttachments && level != 0 && part instanceof MimeBodyPart && !part.isMimeType("multipart/*")) {
+		if (level != 0 && part instanceof MimeBodyPart && !part.isMimeType("multipart/*")) {
 			String disp = part.getDisposition();
 			// many mailers don't include a Content-Disposition
 			// if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT)) {
 			if (disp != null && disp.equalsIgnoreCase(Part.ATTACHMENT)) {
-				if (filename == null)
-					filename = "Attachment" + attnum++;
-				filename = MimeUtility.decodeText(filename);
-				log("Saving attachment to file " + filename);
+				if (partFilename == null) {
+					partFilename = "Attachment" + attnum++;
+				}
+				partFilename = MimeUtility.decodeText(partFilename);
+				
 				try {
-					File f = new File(filename);
-					if (f.exists())
-						// XXX - could try a series of names
-						throw new IOException("file exists");
-					// ((MimeBodyPart) part).saveFile(f);
+					if (saveAttachments) {
+						log("Saving attachment to file " + partFilename);
+						File f = new File(partFilename);
+						if (f.exists())
+							// XXX - could try a series of names
+							throw new IOException("file exists");
+						((MimeBodyPart) part).saveFile(f);
+					}
 					// attachments.add(((MimeBodyPart) part).getDataHandler());
-					/* alcuni allegati potrebbero avere lo stesso nome, nel caso di eml annidati, quindi concateno un tocken univoco per livello*/
+					/*
+					 * alcuni allegati potrebbero avere lo stesso nome, nel caso
+					 * di eml annidati, quindi concateno un tocken univoco per
+					 * livello
+					 */
 					int count = 0;
-					while (attachments.containsKey(filename)) {
-						String ext = FileNameUtils.getFileExtension(filename, true);
-						String filenameNoExt = FileNameUtils.getFileNameWithOutExtension(filename);
+					while (attachments.containsKey(partFilename)) {
+						String ext = FileNameUtils.getFileExtension(partFilename, true);
+						String filenameNoExt = FileNameUtils.getFileNameWithOutExtension(partFilename);
 						if (count == 0)
-							filename = filenameNoExt + "_Level" + level + ext;
-						else 
-							filename = filenameNoExt + "_Level" + level + "_" + count + ext; 
+							partFilename = filenameNoExt + "_Level" + level + ext;
+						else
+							partFilename = filenameNoExt + "_Level" + level + "_" + count + ext;
 						count++;
 					}
-					attachments.put(filename, ((MimeBodyPart) part).getDataHandler());
-					
+					attachments.put(partFilename, ((MimeBodyPart) part).getDataHandler());
+
 				} catch (IOException ex) {
 					log("Failed to save attachment: " + ex);
 				}
@@ -288,40 +368,42 @@ public class PecParser2 {
 
 	public void log(String s) {
 		if (showStructure)
-			logger.debug(indentStr.substring(0, level * 2));
+			s = indentStr.substring(0, level * 2) + s;
 		logger.debug(s);
 	}
 
-//	private void saveAttachment(Part part, String filename) throws Exception {
-//		/*
-//		 * If we're saving attachments, write out anything that looks like an
-//		 * attachment into an appropriately named file. Don't overwrite existing
-//		 * files to prevent mistakes.
-//		 */
-//		// if (saveAttachments && level != 0 && p instanceof MimeBodyPart &&
-//		// !p.isMimeType("multipart/*")) {
-//		if (saveAttachments && level != 0 && part instanceof MimeMessage) {
-//			String disp = part.getDisposition();
-//			// many mailers don't include a Content-Disposition
-//			// if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT)) {
-//			if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE)) {
-//				if (filename == null)
-//					filename = "Attachment" + attnum++;
-//				log("Saving attachment to file " + filename);
-//				try {
-//					File f = new File(filename);
-//					if (f == null)
-//						f = new File(filename);
-//					if (f.exists())
-//						// XXX - could try a series of names
-//						throw new IOException("file exists");
-//					((MimeBodyPart) p).saveFile(f);
-//					MailUtils.saveToEml((MimeMessage) part, f);
-//				} catch (IOException ex) {
-//					log("Failed to save attachment: " + ex);
-//				}
-//				log("---------------------------");
-//			}
-//		}
-//	}
+	// private void saveAttachment(Part part, String filename) throws Exception
+	// {
+	// /*
+	// * If we're saving attachments, write out anything that looks like an
+	// * attachment into an appropriately named file. Don't overwrite existing
+	// * files to prevent mistakes.
+	// */
+	// // if (saveAttachments && level != 0 && p instanceof MimeBodyPart &&
+	// // !p.isMimeType("multipart/*")) {
+	// if (saveAttachments && level != 0 && part instanceof MimeMessage) {
+	// String disp = part.getDisposition();
+	// // many mailers don't include a Content-Disposition
+	// // if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT)) {
+	// if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT) ||
+	// disp.equalsIgnoreCase(Part.INLINE)) {
+	// if (filename == null)
+	// filename = "Attachment" + attnum++;
+	// log("Saving attachment to file " + filename);
+	// try {
+	// File f = new File(filename);
+	// if (f == null)
+	// f = new File(filename);
+	// if (f.exists())
+	// // XXX - could try a series of names
+	// throw new IOException("file exists");
+	// ((MimeBodyPart) p).saveFile(f);
+	// MailUtils.saveToEml((MimeMessage) part, f);
+	// } catch (IOException ex) {
+	// log("Failed to save attachment: " + ex);
+	// }
+	// log("---------------------------");
+	// }
+	// }
+	// }
 }
