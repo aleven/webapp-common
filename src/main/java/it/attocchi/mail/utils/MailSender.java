@@ -6,17 +6,19 @@ import it.attocchi.mail.utils.ssl.DummySSLSocketFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
@@ -163,7 +165,7 @@ public class MailSender {
 		this.disableSSLCertCheck = disableSSLCertCheck;
 	}
 
-	private void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws Exception {
+	private void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws EmailException {
 
 		email.setHostName(hostName);
 		email.setSmtpPort(port);
@@ -237,7 +239,7 @@ public class MailSender {
 		}
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message) throws Exception {
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message) throws EmailException {
 		SimpleEmail email = new SimpleEmail();
 
 		prepareEmail(email, to, toCC, toCCN, subject, message, null);
@@ -245,7 +247,7 @@ public class MailSender {
 		email.send();
 	}
 
-	public void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws Exception {
+	public void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException {
 		HtmlEmail email = new HtmlEmail();
 
 		prepareEmail(email, to, toCC, toCCN, subject, message, null);
@@ -260,11 +262,11 @@ public class MailSender {
 		email.send();
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws Exception {
+	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException, IOException, MessagingException {
 		sendMail(to, toCC, toCCN, subject, message, null, attachments, null);
 	}
 
-	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws Exception {
+	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws EmailException, IOException, MessagingException {
 
 		SimpleEmail email = new SimpleEmail();
 
@@ -277,7 +279,7 @@ public class MailSender {
 		return email.getMimeMessage().getMessageID();
 	}
 
-	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws Exception {
+	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws EmailException, IOException, MessagingException {
 		// Create the attachment
 		// EmailAttachment attachment = new EmailAttachment();
 		// attachment.setPath("mypictures/john.jpg");
@@ -313,15 +315,17 @@ public class MailSender {
 		return email.getMimeMessage().getMessageID();
 	}
 
-	private void storeOnEml(Email email, File emlToStore) throws Exception {
+	private void storeOnEml(Email email, File emlToStore) throws IOException, MessagingException {
 		if (emlToStore != null) {
 			/* Tentativo di Salvataggio */
 			MimeMessage mimeMessage = email.getMimeMessage();
 			OutputStream os = new FileOutputStream(emlToStore);
 			try {
 				mimeMessage.writeTo(os);
-			} catch (Exception ex) {
-				throw ex;
+			} catch (IOException ioEx) {
+				throw ioEx;
+			} catch (MessagingException mesEx) {
+				throw mesEx;
 			} finally {
 				os.close();
 			}
@@ -329,7 +333,7 @@ public class MailSender {
 	}
 
 	// @Deprecated
-	// private void sendHtmlEmail() throws Exception {
+	// private void sendHtmlEmail() throws EmailException {
 	// // Create the email message
 	// HtmlEmail email = new HtmlEmail();
 	// email.setHostName("mail.myserver.com");
