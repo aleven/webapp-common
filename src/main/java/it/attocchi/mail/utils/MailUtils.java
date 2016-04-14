@@ -25,6 +25,7 @@ import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -120,7 +121,10 @@ public class MailUtils {
 		String testo = null;
 		EmailBody res = null;
 
-		Object content = message.getContent();
+		/* Gestione javax.mail.MessagingException: Unable to load BODYSTRUCTURE */
+		// Object content = message.getContent();
+		Object content = getEmailContent(message);
+		
 		if (message.isMimeType(MailUtils.CONTENT_TYPE_TEXT_PLAIN)) {
 			testo = (String) content;
 			res = new EmailBody(testo, false);
@@ -138,6 +142,29 @@ public class MailUtils {
 
 		return res;
 	}
+	
+	/**
+	 * Gestione javax.mail.MessagingException: Unable to load BODYSTRUCTURE
+	 * @param email
+	 * @return
+	 * @throws IOException
+	 * @throws MessagingException
+	 */
+	private static Object getEmailContent(Message email) throws IOException, MessagingException {
+        Object content;
+        try {
+            content = email.getContent();
+        } catch (MessagingException e) {
+            // did this due to a bug
+            // check: http://goo.gl/yTScnE and http://goo.gl/P4iPy7
+            if (email instanceof MimeMessage && "Unable to load BODYSTRUCTURE".equalsIgnoreCase(e.getMessage())) {
+                content = new MimeMessage((MimeMessage) email).getContent();
+            } else {
+                throw e;
+            }
+        }
+        return content;
+    } 
 
 	/**
 	 * 
