@@ -382,7 +382,7 @@ public class JpaController implements Serializable {
 
 			/*
 			 * Questo controllo sembra causare il problema con AJAX che
-			 * "EMF e' gi� registrato"
+			 * "EMF e' gia' registrato"
 			 */
 			// if (emf == null || !emf.isOpen()) {
 
@@ -703,7 +703,7 @@ public class JpaController implements Serializable {
 		 * 
 		 * 25/05 la imposto nuovamente per qui progetti che non usano i listener
 		 * ed aprono e chiudono quando serve (in caso di errore o non chiusura
-		 * almeno cos� si chiude)
+		 * almeno cosi' si chiude)
 		 */
 
 		// logger.debug(String.format("Finalize Controller %s", numero));
