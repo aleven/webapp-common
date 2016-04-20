@@ -22,11 +22,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeUtility;
 import javax.mail.internet.ParseException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.sun.mail.util.BASE64DecoderStream;
+import com.sun.mail.util.QPDecoderStream;
 
 public class PecParser2 {
 
@@ -89,11 +89,11 @@ public class PecParser2 {
 	public String getPostacertEmlSubject() {
 		return postacertEmlSubject;
 	}
-	
+
 	public EmailBody getPostacertEmlBody() {
 		return postacertEmlBody;
 	}
-	
+
 	public PecParser2() {
 		super();
 		// String emlFileName, boolean saveFile, File f
@@ -164,8 +164,40 @@ public class PecParser2 {
 					// Base64.encodeBase64(base64decodedString.getBytes());
 					// String encodedMimeString = new
 					// String(encodedMimeByteArray);
-
 					daticertXml = base64decodedString;
+
+					// byte[] inCodec =
+					// IOUtils.toByteArray(part.getInputStream());
+					// byte[] outCodec = Base64.decodeBase64(inCodec);
+					// daticertXml = new String(outCodec);
+
+				} else if (part.getContent() instanceof String) {
+					daticertXml = IOUtils.toString(part.getInputStream());
+				} else if (part.getContent() instanceof QPDecoderStream) {
+					/*
+					 * nelle ricevute provenienti da alcuni provider e' di
+					 * questo tipo
+					 * https://docs.oracle.com/cd/E19957-01/816-6028-
+					 * 10/asd3j.htm#1028352
+					 */
+					// BufferedInputStream bis = new
+					// BufferedInputStream(part.getContent());
+					// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					// while (true) {
+					// int c = bis.read();
+					// if (c == -1) {
+					// break;
+					// }
+					// baos.write(c);
+					// }
+					// daticertXml = new String(baos.toByteArray());
+					daticertXml = IOUtils.toString(part.getInputStream());
+
+					// byte[] inCodec =
+					// IOUtils.toByteArray(part.getInputStream());
+					// byte[] outCodec =
+					// QuotedPrintableCodec.decodeQuotedPrintable(inCodec);
+					// daticertXml = new String(outCodec);
 				}
 			}
 
@@ -196,7 +228,7 @@ public class PecParser2 {
 				// saveAttachment((Part) part.getContent(), filename);
 				// emlFound = true;
 				Message tmp = (Message) ((Part) part.getContent());
-				postacertEml = part.getDataHandler();
+				postacertEml = tmp.getDataHandler();
 				postacertEmlSubject = tmp.getSubject();
 				postacertEmlBody = MailUtils.getBody(tmp);
 			}
@@ -263,7 +295,7 @@ public class PecParser2 {
 					partFilename = "Attachment" + attnum++;
 				}
 				partFilename = MimeUtility.decodeText(partFilename);
-				
+
 				try {
 					if (saveAttachments) {
 						log("Saving attachment to file " + partFilename);
