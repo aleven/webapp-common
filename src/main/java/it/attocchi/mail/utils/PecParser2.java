@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeUtility;
 import javax.mail.internet.ParseException;
+import javax.mail.util.SharedByteArrayInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -153,7 +154,7 @@ public class PecParser2 {
 
 			// verifica daticert.xml
 			if (daticertxmlName.equals(partFilename) && level <= 2) {
-				log("use of " + daticertxmlName + " at level " + level);
+				log("detected of " + daticertxmlName + " at level " + level);
 				// da specifiche sempre UTF-8
 				if (part.getContent() instanceof BASE64DecoderStream) {
 					BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream) part.getContent();
@@ -170,9 +171,6 @@ public class PecParser2 {
 					// IOUtils.toByteArray(part.getInputStream());
 					// byte[] outCodec = Base64.decodeBase64(inCodec);
 					// daticertXml = new String(outCodec);
-
-				} else if (part.getContent() instanceof String) {
-					daticertXml = IOUtils.toString(part.getInputStream());
 				} else if (part.getContent() instanceof QPDecoderStream) {
 					/*
 					 * nelle ricevute provenienti da alcuni provider e' di
@@ -198,6 +196,15 @@ public class PecParser2 {
 					// byte[] outCodec =
 					// QuotedPrintableCodec.decodeQuotedPrintable(inCodec);
 					// daticertXml = new String(outCodec);
+//				} else if (part.getContent() instanceof String) {
+//					daticertXml = IOUtils.toString(part.getInputStream());
+//				} else if (part.getContent() instanceof javax.mail.util.SharedByteArrayInputStream) {
+//					// SharedByteArrayInputStream sbais =
+//					// (SharedByteArrayInputStream) contentObject;
+//					daticertXml = IOUtils.toString(part.getInputStream());
+				} else {
+					logger.warn("unknow daticert.xml type used as String: " + part.getContent().toString() );
+					daticertXml = IOUtils.toString(part.getInputStream());
 				}
 			}
 
