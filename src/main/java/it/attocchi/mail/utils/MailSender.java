@@ -44,7 +44,7 @@ public class MailSender {
 		super();
 	}
 
-	public static MailSender createMailSender(String hostName, int port) {
+	public synchronized static MailSender createMailSender(String hostName, int port) {
 		MailSender m = new MailSender();
 		m.setHostName(hostName);
 		m.setPort(port);
@@ -52,7 +52,7 @@ public class MailSender {
 		return m;
 	}
 
-	public static MailSender createMailSenderAuth(String hostName, int port, String authUser, String authPassword) {
+	public synchronized static MailSender createMailSenderAuth(String hostName, int port, String authUser, String authPassword) {
 		MailSender m = new MailSender();
 		m.setHostName(hostName);
 		m.setPort(port);
@@ -63,7 +63,7 @@ public class MailSender {
 		return m;
 	}
 
-	public static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName) {
+	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName) {
 		MailSender m = createMailSender(hostName, port);
 
 		if (StringUtils.isBlank(fromAddress))
@@ -78,7 +78,7 @@ public class MailSender {
 		return m;
 	}
 
-	public static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, String authUser, String authPassword) {
+	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, String authUser, String authPassword) {
 		MailSender m = createMailSender(hostName, port, fromAddress, fromName);
 
 		m.setAuthUser(authUser);
@@ -87,7 +87,7 @@ public class MailSender {
 		return m;
 	}
 
-	public static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, boolean enableSSL, boolean disableSSLCertCheck, String authUser, String authPassword) {
+	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, boolean enableSSL, boolean disableSSLCertCheck, String authUser, String authPassword) {
 		// MailSender m = createMailSender(hostName, port, fromAddress,
 		// fromName);
 		// m.setAuthUser(authUser);
@@ -165,7 +165,7 @@ public class MailSender {
 		this.disableSSLCertCheck = disableSSLCertCheck;
 	}
 
-	private void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws EmailException {
+	private synchronized void prepareEmail(Email email, String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders) throws EmailException {
 
 		email.setHostName(hostName);
 		email.setSmtpPort(port);
@@ -239,7 +239,7 @@ public class MailSender {
 		}
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message) throws EmailException {
+	public synchronized void sendMail(String to, String toCC, String toCCN, String subject, String message) throws EmailException {
 		SimpleEmail email = new SimpleEmail();
 
 		prepareEmail(email, to, toCC, toCCN, subject, message, null);
@@ -247,7 +247,7 @@ public class MailSender {
 		email.send();
 	}
 
-	public void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException {
+	public synchronized void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException {
 		HtmlEmail email = new HtmlEmail();
 
 		prepareEmail(email, to, toCC, toCCN, subject, message, null);
@@ -262,11 +262,11 @@ public class MailSender {
 		email.send();
 	}
 
-	public void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException, IOException, MessagingException {
+	public synchronized void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException, IOException, MessagingException {
 		sendMail(to, toCC, toCCN, subject, message, null, attachments, null);
 	}
 
-	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws EmailException, IOException, MessagingException {
+	public synchronized String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws EmailException, IOException, MessagingException {
 
 		SimpleEmail email = new SimpleEmail();
 
@@ -279,7 +279,7 @@ public class MailSender {
 		return email.getMimeMessage().getMessageID();
 	}
 
-	public String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws EmailException, IOException, MessagingException {
+	public synchronized String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws EmailException, IOException, MessagingException {
 		// Create the attachment
 		// EmailAttachment attachment = new EmailAttachment();
 		// attachment.setPath("mypictures/john.jpg");

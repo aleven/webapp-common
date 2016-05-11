@@ -93,7 +93,7 @@ public class MailConnection {
 		this.enableSSLNoCertCheck = enableSSLNoCertCheck;
 	}
 
-	private void connect(String protocollo) throws MessagingException {
+	private synchronized void connect(String protocollo) throws MessagingException {
 		// Get a Properties object
 		Properties props = System.getProperties();
 
@@ -184,14 +184,14 @@ public class MailConnection {
 		// store.close();
 	}
 
-	private Store getStore() throws MessagingException {
+	private synchronized Store getStore() throws MessagingException {
 		if (store == null) {
 			throw new MessagingException("Cant find default namespace");
 		}
 		return store;
 	}
 
-	public Folder getDefaultFolder() throws MessagingException {
+	public synchronized Folder getDefaultFolder() throws MessagingException {
 
 		Folder folder = getStore().getDefaultFolder();
 
@@ -204,7 +204,7 @@ public class MailConnection {
 		return folder;
 	}
 
-	public Folder getFolder(String mailBox) throws MessagingException {
+	public synchronized Folder getFolder(String mailBox) throws MessagingException {
 		Folder folder = store.getDefaultFolder().getFolder(mailBox);
 
 		if (folder == null) {
@@ -216,7 +216,7 @@ public class MailConnection {
 		return folder;
 	}
 
-	public List<Folder> getFolders() throws MessagingException {
+	public synchronized List<Folder> getFolders() throws MessagingException {
 
 		if (folderList == null) {
 
@@ -232,7 +232,7 @@ public class MailConnection {
 
 	}
 
-	static void dumpFolder(Folder folder, boolean recurse, String tab, boolean verbose, List<Folder> folderList) throws MessagingException {
+	static synchronized void dumpFolder(Folder folder, boolean recurse, String tab, boolean verbose, List<Folder> folderList) throws MessagingException {
 
 		logger.debug(tab + "Name:      " + folder.getName());
 		logger.debug(tab + "Full Name: " + folder.getFullName());
@@ -281,17 +281,17 @@ public class MailConnection {
 		}
 	}
 
-	public List<Message> getMessages(int msgNum) throws MessagingException {
+	public synchronized List<Message> getMessages(int msgNum) throws MessagingException {
 		return getMessages(1, msgNum);
 	}
 
-	public List<Message> getMessages() throws MessagingException {
+	public synchronized List<Message> getMessages() throws MessagingException {
 		return getMessages(0, 0);
 	}
 
 	private int folderMode = Folder.READ_ONLY;
 
-	public List<Message> getMessages(int start, int end) throws MessagingException {
+	public synchronized List<Message> getMessages(int start, int end) throws MessagingException {
 		List<Message> res = new ArrayList<Message>();
 		if (getCurrentFolder() != null) {
 
@@ -314,7 +314,7 @@ public class MailConnection {
 		return res;
 	}
 
-	public List<Message> getMessagesUnread() throws MessagingException {
+	public synchronized List<Message> getMessagesUnread() throws MessagingException {
 		List<Message> res = new ArrayList<Message>();
 		if (getCurrentFolder() != null) {
 
@@ -337,15 +337,15 @@ public class MailConnection {
 		return res;
 	}
 
-	public void enableFolderWrite() {
+	public synchronized void enableFolderWrite() {
 		folderMode = Folder.READ_WRITE;
 	}
 
-	public List<Message> deleteMessagesFromServer() throws MessagingException {
+	public synchronized List<Message> deleteMessagesFromServer() throws MessagingException {
 		return getMessages(0, 0);
 	}
 
-	public void deleteMessagesFromServer(int start, int end) throws MessagingException {
+	public synchronized void deleteMessagesFromServer(int start, int end) throws MessagingException {
 
 		if (getCurrentFolder() != null) {
 
@@ -367,24 +367,24 @@ public class MailConnection {
 
 	}
 
-	public void connectIMAP() throws MessagingException {
+	public synchronized void connectIMAP() throws MessagingException {
 		connect(PROTOCOL_IMAP);
 	}
 
-	public void connectIMAPS() throws MessagingException {
+	public synchronized void connectIMAPS() throws MessagingException {
 		connect(PROTOCOL_IMAPS);
 	}
 
-	public void connectPOP3() throws MessagingException {
+	public synchronized void connectPOP3() throws MessagingException {
 		connect(PROTOCOL_POP3);
 	}
 
-	public void connectPOP3S() throws MessagingException {
+	public synchronized void connectPOP3S() throws MessagingException {
 		// enableSSL = true;
 		connect(PROTOCOL_POP3S);
 	}
 
-	private void closeFolder(Folder folder) throws MessagingException {
+	private synchronized void closeFolder(Folder folder) throws MessagingException {
 		if (folder != null && folder.isOpen()) {
 
 			// http://www.jguru.com/faq/view.jsp?EID=17035
@@ -400,7 +400,7 @@ public class MailConnection {
 		}
 	}
 
-	public void close() throws MessagingException {
+	public synchronized void close() throws MessagingException {
 		if (store != null) {
 			try {
 				closeFolder(currentFolder);
@@ -425,7 +425,7 @@ public class MailConnection {
 		}
 	}
 
-	public static void close(MailConnection conn) throws MessagingException {
+	public synchronized static void close(MailConnection conn) throws MessagingException {
 		if (conn != null) {
 			conn.close();
 		}
@@ -440,23 +440,23 @@ public class MailConnection {
 		}
 	}
 
-	public int getMessageCount() throws MessagingException {
+	public synchronized int getMessageCount() throws MessagingException {
 		return getCurrentFolder().getMessageCount();
 	}
 
-	public int getUnreadMessageCount() throws MessagingException {
+	public synchronized int getUnreadMessageCount() throws MessagingException {
 		return getCurrentFolder().getUnreadMessageCount();
 	}
 
-	public int getNewMessageCount() throws MessagingException {
+	public synchronized int getNewMessageCount() throws MessagingException {
 		return getCurrentFolder().getNewMessageCount();
 	}
 
-	public void setCurrentFolder(String folderName) throws MessagingException {
+	public synchronized void setCurrentFolder(String folderName) throws MessagingException {
 		currentFolder = this.getFolder(folderName);
 	}
 
-	public Folder getCurrentFolder() throws MessagingException {
+	public synchronized Folder getCurrentFolder() throws MessagingException {
 		if (currentFolder == null) {
 			setCurrentFolder(MailConnection.FOLDER_INBOX);
 			// throw new MessagingException("Current Folder is not Setted");
@@ -464,7 +464,7 @@ public class MailConnection {
 		return currentFolder;
 	}
 
-	public MimeMessage getMimeMessage(Message message) throws MessagingException, IOException {
+	public synchronized MimeMessage getMimeMessage(Message message) throws MessagingException, IOException {
 		MimeMessage m2 = new MimeMessage(session, message.getInputStream());
 		return m2;
 	}
@@ -475,19 +475,19 @@ public class MailConnection {
 		return enableDeleteMessageFromServer;
 	}
 
-	public void setEnableDeleteMessageFromServer(boolean enableDeleteMessageFromServer) {
+	public synchronized void setEnableDeleteMessageFromServer(boolean enableDeleteMessageFromServer) {
 		this.enableDeleteMessageFromServer = enableDeleteMessageFromServer;
 	}
 
-	public void markMessageDeleted(Message mail) throws MessagingException {
+	public synchronized void markMessageDeleted(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.DELETED, true);
 	}
 
-	public void markMessageAsRead(Message mail) throws MessagingException {
+	public synchronized void markMessageAsRead(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.SEEN, true);
 	}
 
-	public void markMessageAsUnRead(Message mail) throws MessagingException {
+	public synchronized void markMessageAsUnRead(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.SEEN, false);
 	}
 
