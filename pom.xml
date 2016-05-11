@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.attocchi</groupId>
 	<artifactId>webapp-common</artifactId>
-	<version>3.2.3-SNAPSHOT</version>
+	<version>3.2.4-SNAPSHOT</version>
 	
 	  <name>webapp-common</name>
 	  <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
@@ -134,15 +134,15 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
-			<version>1.3.2</version>
+			<version>1.4</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
