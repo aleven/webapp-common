@@ -1,7 +1,5 @@
 package it.attocchi.mail.utils;
 
-import it.attocchi.mail.parts.EmailBody;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +12,7 @@ import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.internet.ContentType;
@@ -21,13 +20,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeUtility;
 import javax.mail.internet.ParseException;
-import javax.mail.util.SharedByteArrayInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.sun.mail.util.BASE64DecoderStream;
 import com.sun.mail.util.QPDecoderStream;
+
+import it.attocchi.mail.parts.EmailBody;
 
 public class PecParser2 {
 
@@ -39,19 +39,28 @@ public class PecParser2 {
 	private int attnum = 1;
 	private static String indentStr = "                                               ";
 
-	private final String postacertemlName = "postacert.eml";
-	private final String daticertxmlName = "daticert.xml";
+	private final String postacertEmlName = "postacert.eml";
+	private final String daticertXmlName = "daticert.xml";
+	private final String segnaturaXmlName = "Segnatura.xml";
+
 	// boolean emlFound = false;
 	// File f;
 	// EmailBody testo;
 
 	private String daticertXml;
+	private String segnaturaXml;
 	private DataHandler postacertEml;
 	private String postacertEmlSubject;
 	private EmailBody postacertEmlBody;
 
 	Map<String, DataHandler> attachments = new HashMap<String, DataHandler>();
 
+	private StringBuffer dumpLog = new StringBuffer();
+	
+	public StringBuffer getDumpLog() {
+		return dumpLog;
+	}
+	
 	// public EmailBody getTesto() {
 	// return testo;
 	// }
@@ -76,6 +85,10 @@ public class PecParser2 {
 	 */
 	public String getDaticertXml() {
 		return daticertXml;
+	}
+
+	public String getSegnaturaXml() {
+		return segnaturaXml;
 	}
 
 	/**
@@ -146,66 +159,19 @@ public class PecParser2 {
 			// part.getContentType());
 			// return;
 			// }
-		} else if (part.isMimeType("application/xml")) {
+		} else if (part.isMimeType("application/xml") || part.isMimeType("text/xml")) {
 			log("This is xml");
 			log("---------------------------");
 			if (!showStructure && !saveAttachments)
 				logger.debug((String) part.getContent());
 
-			// verifica daticert.xml
-			if (daticertxmlName.equals(partFilename) && level <= 2) {
-				log("detected of " + daticertxmlName + " at level " + level);
-				// da specifiche sempre UTF-8
-				if (part.getContent() instanceof BASE64DecoderStream) {
-					BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream) part.getContent();
-					StringWriter writer = new StringWriter();
-					IOUtils.copy(base64DecoderStream, writer);
-					String base64decodedString = writer.toString();
-					// byte[] encodedMimeByteArray =
-					// Base64.encodeBase64(base64decodedString.getBytes());
-					// String encodedMimeString = new
-					// String(encodedMimeByteArray);
-					daticertXml = base64decodedString;
-
-					// byte[] inCodec =
-					// IOUtils.toByteArray(part.getInputStream());
-					// byte[] outCodec = Base64.decodeBase64(inCodec);
-					// daticertXml = new String(outCodec);
-				} else if (part.getContent() instanceof QPDecoderStream) {
-					/*
-					 * nelle ricevute provenienti da alcuni provider e' di
-					 * questo tipo
-					 * https://docs.oracle.com/cd/E19957-01/816-6028-
-					 * 10/asd3j.htm#1028352
-					 */
-					// BufferedInputStream bis = new
-					// BufferedInputStream(part.getContent());
-					// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					// while (true) {
-					// int c = bis.read();
-					// if (c == -1) {
-					// break;
-					// }
-					// baos.write(c);
-					// }
-					// daticertXml = new String(baos.toByteArray());
-					daticertXml = IOUtils.toString(part.getInputStream());
-
-					// byte[] inCodec =
-					// IOUtils.toByteArray(part.getInputStream());
-					// byte[] outCodec =
-					// QuotedPrintableCodec.decodeQuotedPrintable(inCodec);
-					// daticertXml = new String(outCodec);
-//				} else if (part.getContent() instanceof String) {
-//					daticertXml = IOUtils.toString(part.getInputStream());
-//				} else if (part.getContent() instanceof javax.mail.util.SharedByteArrayInputStream) {
-//					// SharedByteArrayInputStream sbais =
-//					// (SharedByteArrayInputStream) contentObject;
-//					daticertXml = IOUtils.toString(part.getInputStream());
-				} else {
-					logger.warn("unknow daticert.xml type used as String: " + part.getContent().toString() );
-					daticertXml = IOUtils.toString(part.getInputStream());
-				}
+			// verifica daticert.xml e segnatura.xml
+			if (daticertXmlName.equalsIgnoreCase(partFilename) && level <= 2) {
+				log("detected " + daticertXmlName + " at level " + level);
+				daticertXml = decodeXml(part);
+			} else if (segnaturaXmlName.equalsIgnoreCase(partFilename) && level <= 4) {
+				log("detected " + segnaturaXmlName + " at level " + level);
+				segnaturaXml = decodeXml(part);
 			}
 
 		} else if (part.isMimeType("multipart/*")) {
@@ -230,8 +196,8 @@ public class PecParser2 {
 			log("---------------------------");
 
 			// verifica postacert.eml
-			if (postacertemlName.equals(partFilename) && level <= 2) {
-				log("use of " + postacertemlName + " at level " + level);
+			if (postacertEmlName.equalsIgnoreCase(partFilename) && level <= 2) {
+				log("detected " + postacertEmlName + " at level " + level);
 				// saveAttachment((Part) part.getContent(), filename);
 				// emlFound = true;
 				Message tmp = (Message) ((Part) part.getContent());
@@ -338,6 +304,64 @@ public class PecParser2 {
 		}
 	}
 
+	private String decodeXml(Part part) throws IOException, MessagingException {
+		String xmlDecoded = null;
+
+		// da specifiche sempre UTF-8
+		if (part.getContent() instanceof BASE64DecoderStream) {
+			BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream) part.getContent();
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(base64DecoderStream, writer);
+			String base64decodedString = writer.toString();
+			// byte[] encodedMimeByteArray =
+			// Base64.encodeBase64(base64decodedString.getBytes());
+			// String encodedMimeString = new
+			// String(encodedMimeByteArray);
+			xmlDecoded = base64decodedString;
+
+			// byte[] inCodec =
+			// IOUtils.toByteArray(part.getInputStream());
+			// byte[] outCodec = Base64.decodeBase64(inCodec);
+			// daticertXml = new String(outCodec);
+		} else if (part.getContent() instanceof QPDecoderStream) {
+			/*
+			 * nelle ricevute provenienti da alcuni provider e' di questo tipo
+			 * https://docs.oracle.com/cd/E19957-01/816-6028-
+			 * 10/asd3j.htm#1028352
+			 */
+			// BufferedInputStream bis = new
+			// BufferedInputStream(part.getContent());
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			// while (true) {
+			// int c = bis.read();
+			// if (c == -1) {
+			// break;
+			// }
+			// baos.write(c);
+			// }
+			// daticertXml = new String(baos.toByteArray());
+			xmlDecoded = IOUtils.toString(part.getInputStream());
+
+			// byte[] inCodec =
+			// IOUtils.toByteArray(part.getInputStream());
+			// byte[] outCodec =
+			// QuotedPrintableCodec.decodeQuotedPrintable(inCodec);
+			// daticertXml = new String(outCodec);
+			// } else if (part.getContent() instanceof String) {
+			// daticertXml = IOUtils.toString(part.getInputStream());
+			// } else if (part.getContent() instanceof
+			// javax.mail.util.SharedByteArrayInputStream) {
+			// // SharedByteArrayInputStream sbais =
+			// // (SharedByteArrayInputStream) contentObject;
+			// daticertXml = IOUtils.toString(part.getInputStream());
+		} else {
+			logger.warn("unknow xml encoding instance type, used as String: " + part.getContent().toString());
+			xmlDecoded = IOUtils.toString(part.getInputStream());
+		}
+
+		return xmlDecoded;
+	}
+
 	public void dumpEnvelope(Message m) throws Exception {
 		log("This is the message envelope");
 		log("---------------------------");
@@ -409,6 +433,7 @@ public class PecParser2 {
 		if (showStructure)
 			s = indentStr.substring(0, level * 2) + s;
 		logger.debug(s);
+		dumpLog.append(s + "\n");
 	}
 
 	// private void saveAttachment(Part part, String filename) throws Exception
