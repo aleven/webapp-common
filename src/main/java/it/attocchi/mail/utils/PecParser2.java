@@ -56,11 +56,11 @@ public class PecParser2 {
 	Map<String, DataHandler> attachments = new HashMap<String, DataHandler>();
 
 	private StringBuffer dumpLog = new StringBuffer();
-	
+
 	public StringBuffer getDumpLog() {
 		return dumpLog;
 	}
-	
+
 	// public EmailBody getTesto() {
 	// return testo;
 	// }
@@ -139,8 +139,12 @@ public class PecParser2 {
 			log("BAD CONTENT-TYPE: " + partContentType);
 		}
 		String partFilename = part.getFileName();
-		if (partFilename != null)
+		String partFilenameDecoded = partFilename;
+		if (partFilename != null) {
 			log("FILENAME: " + partFilename);
+			// rilevati dei casi con =?utf-8?Q?segnatura.xml?=;
+			partFilenameDecoded = MimeUtility.decodeText(partFilename);
+		}
 
 		/*
 		 * Using isMimeType to determine the content type avoids fetching the
@@ -159,17 +163,27 @@ public class PecParser2 {
 			// part.getContentType());
 			// return;
 			// }
-		} else if (part.isMimeType("application/xml") || part.isMimeType("text/xml")) {
-			log("This is xml");
+		} else if (part.isMimeType("application/xml") || part.isMimeType("text/xml") || part.isMimeType("application/octet-stream")) {
+			log("This is xml or octet-stream");
 			log("---------------------------");
 			if (!showStructure && !saveAttachments)
 				logger.debug((String) part.getContent());
 
 			// verifica daticert.xml e segnatura.xml
-			if (daticertXmlName.equalsIgnoreCase(partFilename) && level <= 2) {
+			if (daticertXmlName.equalsIgnoreCase(partFilenameDecoded) && level <= 2) {
+				/*
+				 * il filtro sul livello 2 viene impostato per evitare di
+				 * leggere dati da eventuali eml allegati dentro la pec
+				 */
 				log("detected " + daticertXmlName + " at level " + level);
 				daticertXml = decodeXml(part);
-			} else if (segnaturaXmlName.equalsIgnoreCase(partFilename) && level <= 4) {
+			} else if (segnaturaXmlName.equalsIgnoreCase(partFilenameDecoded) && level <= 4) {
+				/*
+				 * il filtro sul livello 4 viene impostato per arrivare a
+				 * leggere nel messaggio ricevuto
+				 * esempio: 
+				 * messaggio/busta pec --> * embedded message postacert.eml --> allegato segnatura.xml
+				 */
 				log("detected " + segnaturaXmlName + " at level " + level);
 				segnaturaXml = decodeXml(part);
 			}
@@ -196,7 +210,7 @@ public class PecParser2 {
 			log("---------------------------");
 
 			// verifica postacert.eml
-			if (postacertEmlName.equalsIgnoreCase(partFilename) && level <= 2) {
+			if (postacertEmlName.equalsIgnoreCase(partFilenameDecoded) && level <= 2) {
 				log("detected " + postacertEmlName + " at level " + level);
 				// saveAttachment((Part) part.getContent(), filename);
 				// emlFound = true;
@@ -264,15 +278,15 @@ public class PecParser2 {
 			// many mailers don't include a Content-Disposition
 			// if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT)) {
 			if (disp != null && disp.equalsIgnoreCase(Part.ATTACHMENT)) {
-				if (partFilename == null) {
-					partFilename = "Attachment" + attnum++;
+				if (partFilenameDecoded == null) {
+					partFilenameDecoded = "Attachment" + attnum++;
 				}
-				partFilename = MimeUtility.decodeText(partFilename);
+				// partFilename = MimeUtility.decodeText(partFilename);
 
 				try {
 					if (saveAttachments) {
-						log("Saving attachment to file " + partFilename);
-						File f = new File(partFilename);
+						log("Saving attachment to file " + partFilenameDecoded);
+						File f = new File(partFilenameDecoded);
 						if (f.exists())
 							// XXX - could try a series of names
 							throw new IOException("file exists");
@@ -285,16 +299,16 @@ public class PecParser2 {
 					 * livello
 					 */
 					int count = 0;
-					while (attachments.containsKey(partFilename)) {
-						String ext = FileNameUtils.getFileExtension(partFilename, true);
-						String filenameNoExt = FileNameUtils.getFileNameWithOutExtension(partFilename);
+					while (attachments.containsKey(partFilenameDecoded)) {
+						String ext = FileNameUtils.getFileExtension(partFilenameDecoded, true);
+						String filenameNoExt = FileNameUtils.getFileNameWithOutExtension(partFilenameDecoded);
 						if (count == 0)
-							partFilename = filenameNoExt + "_Level" + level + ext;
+							partFilenameDecoded = filenameNoExt + "_Level" + level + ext;
 						else
-							partFilename = filenameNoExt + "_Level" + level + "_" + count + ext;
+							partFilenameDecoded = filenameNoExt + "_Level" + level + "_" + count + ext;
 						count++;
 					}
-					attachments.put(partFilename, ((MimeBodyPart) part).getDataHandler());
+					attachments.put(partFilenameDecoded, ((MimeBodyPart) part).getDataHandler());
 
 				} catch (IOException ex) {
 					log("Failed to save attachment: " + ex);
