@@ -22,6 +22,7 @@ package it.attocchi.db;
 import it.attocchi.utils.JdbcUtils;
 import it.attocchi.utils.ListUtils;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
  * @author Mirco Attocchi
  * 
  */
-public class JdbcConnector {
+public class JdbcConnector implements Closeable {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -132,6 +133,7 @@ public class JdbcConnector {
 	 * Close a Connection if not is passed in constructor. If you pass in
 	 * constructor you close manually, not with this method
 	 */
+	@Override
 	public void close() {
 		if (!passedConnection) {
 			try {
@@ -145,7 +147,7 @@ public class JdbcConnector {
 			}
 		}
 	}
-
+	
 	public ResultSet executeSelect(boolean keepConnOpen, String aQuery) throws Exception {
 		ResultSet res = null;
 
