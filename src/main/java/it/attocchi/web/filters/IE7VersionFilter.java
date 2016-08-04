@@ -91,6 +91,11 @@ public class IE7VersionFilter implements Filter {
 				logger.debug("X-UA-Compatible=" + xuacompatible);
 			} else {
 				logger.debug("IE7VersionFilter not applied for agent " + userAgent);
+				/* per tutti i Browser che non matchano potrebbe essere IE11 ad esempio, quindi per quello specifico EDGE */
+				/* ho notato che in alcuni casi non specificando niente con IE11 per i siti intranet va in automatico in COMPATIBILITA e proviamo a bypassare così */ 
+				// <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+				httpResponse.setHeader("X-UA-Compatible", "IE=EDGE");
+				logger.debug("X-UA-Compatible=" + "IE=EDGE");
 			}
 
 			chain.doFilter(request, response);
