@@ -1,5 +1,5 @@
 /*  
-    Copyright (c) 2012,2015 Mirco Attocchi
+    Copyright (c) 2012,2016 Mirco Attocchi (Aleven Software Studio)
 	
     This file is part of webapp-common.
 

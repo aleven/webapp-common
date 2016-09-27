@@ -308,4 +308,14 @@ public abstract class AbstractFiltro implements Serializable {
 	// this.uiUtentePrivilegiato = uiUtentePrivilegiato;
 	// }
 
+	/* rappresenta un frammeto di query che può essere concatenato alla query composta dal filtro */
+	protected String queryFragment;
+	
+	public void setQueryFragment(String queryFragment) {
+		this.queryFragment = queryFragment;
+	}
+	
+	public String getQueryFragment() {
+		return queryFragment;
+	}
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) 2012-2016 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -22,7 +22,9 @@ package it.attocchi.db;
 import it.attocchi.utils.JdbcUtils;
 import it.attocchi.utils.ListUtils;
 
+import java.io.Closeable;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author Mirco Attocchi
  * 
  */
-public class JdbcConnector {
+public class JdbcConnector implements Closeable {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -49,6 +51,8 @@ public class JdbcConnector {
 	protected String userName;
 	protected String password;
 
+	protected String url;
+
 	public JdbcConnector(String connString, String driverClass, String userName, String password) {
 		super();
 
@@ -56,6 +60,11 @@ public class JdbcConnector {
 		this.driverClass = driverClass;
 		this.userName = userName;
 		this.password = password;
+	}
+
+	public JdbcConnector(String url) {
+		super();
+		this.url = url;
 	}
 
 	public JdbcConnector(Connection conn) {
@@ -71,21 +80,27 @@ public class JdbcConnector {
 	}
 
 	/**
-	 * Costruttore specificatamente pensato per utilizzo delle connessioni da pool
-	 * @param conn la connessione istanziata esternamente 
-	 * @param connectionComeFromPool specifica se la connessione proviene da un pool, in questo caso non la tratta come una passata da non chiudere
+	 * Costruttore specificatamente pensato per utilizzo delle connessioni da
+	 * pool
+	 * 
+	 * @param conn
+	 *            la connessione istanziata esternamente
+	 * @param connectionComeFromPool
+	 *            specifica se la connessione proviene da un pool, in questo
+	 *            caso non la tratta come una passata da non chiudere
 	 */
 	public JdbcConnector(Connection conn, boolean connectionComeFromPool) {
 		this(conn);
 
-		// se chiamo il close del connector così viene chiusa (e lasciata in gestione al pool)
+		// se chiamo il close del connector così viene chiusa (e lasciata in
+		// gestione al pool)
 		passedConnection = !connectionComeFromPool;
-		
+
 		if (connectionComeFromPool) {
 			logger.warn(this.getClass().getName() + " utilizza una connessione da un pool");
 		}
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 		close();
@@ -118,8 +133,11 @@ public class JdbcConnector {
 			// throw ex;
 			// }
 
-			conn = JdbcUtils.getConnection(driverClass, connString, userName, password);
-
+			if (url != null) {
+				conn = DriverManager.getConnection(url);
+			} else {
+				conn = JdbcUtils.getConnection(driverClass, connString, userName, password);
+			}
 		}
 		return conn;
 	}
@@ -132,6 +150,7 @@ public class JdbcConnector {
 	 * Close a Connection if not is passed in constructor. If you pass in
 	 * constructor you close manually, not with this method
 	 */
+	@Override
 	public void close() {
 		if (!passedConnection) {
 			try {
@@ -292,5 +311,5 @@ public class JdbcConnector {
 	public void keepConnOpen() {
 		keepConnOpen = true;
 	}
-	
+
 }

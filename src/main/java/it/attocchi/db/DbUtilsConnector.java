@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) 2012-2016 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -41,6 +41,10 @@ public class DbUtilsConnector extends JdbcConnector {
 
 	public DbUtilsConnector(Connection conn) {
 		super(conn);
+	}
+
+	public DbUtilsConnector(String url) {
+		super(url);
 	}
 
 	public DbUtilsConnector(Connection conn, boolean connectionComeFromPool) {

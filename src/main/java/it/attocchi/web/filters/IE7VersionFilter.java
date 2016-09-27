@@ -56,7 +56,8 @@ public class IE7VersionFilter implements Filter {
 
 	String pathToBeIgnored;
 	String userAgentMatch;
-	String xuacompatible;
+	String xuaCompatible;
+	String xuaDefault;
 
 	@Override
 	public void destroy() {
@@ -73,7 +74,13 @@ public class IE7VersionFilter implements Filter {
 		String path = httpRequest.getRequestURI();
 		// if (path.startsWith("/specialpath")) {
 		if (pathToBeIgnored != null && wildCardMatch(path, pathToBeIgnored)) {
-			logger.debug("IE7VersionFilter not applied for " + path);
+			logger.debug("IE7VersionFilter not applied for: " + path);
+			
+			if (StringUtils.isNotBlank(xuaDefault)) {
+				httpResponse.setHeader("x-ua-compatible", xuaDefault);
+				logger.debug("appling the default x-ua-compatible: " + xuaDefault);
+			}
+			
 			chain.doFilter(request, response); // Just continue chain.
 		} else {
 			// Do your business stuff here for all paths other than
@@ -82,15 +89,29 @@ public class IE7VersionFilter implements Filter {
 			 * http://twigstechtips.blogspot.com/2010/03/css-ie8-meta-tag-to-disable
 			 * .html
 			 */
+			
+			/* 
+			 * https://msdn.microsoft.com/it-it/library/hh869301(v=vs.85).aspx
+			 * https://msdn.microsoft.com/it-it/library/hh920767(v=vs.85).aspx
+			 * Specifying legacy document modes
+			 * https://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx
+			 */
 
 			String userAgent = httpRequest.getHeader("User-Agent");
 			if (StringUtils.isBlank(userAgentMatch) || userAgent.contains(userAgentMatch)) {
-				logger.debug("IE7VersionFilter applied agent " + userAgent);
+				logger.debug("IE7VersionFilter applied agent: " + userAgent);
 				// "IE=EmulateIE7"
-				httpResponse.setHeader("X-UA-Compatible", xuacompatible);
-				logger.debug("X-UA-Compatible=" + xuacompatible);
+				httpResponse.setHeader("x-ua-compatible", xuaCompatible);
+				logger.debug("x-ua-compatible: " + xuaCompatible);
 			} else {
 				logger.debug("IE7VersionFilter not applied for agent " + userAgent);
+				/* per tutti i Browser che non matchano potrebbe essere IE11 ad esempio, quindi per quello specifico EDGE */
+				/* ho notato che in alcuni casi non specificando niente con IE11 per i siti intranet va in automatico in COMPATIBILITA e proviamo a bypassare così */ 
+				// <meta http-equiv="x-ua-compatible" content="IE=edge" />
+				if (StringUtils.isNotBlank(xuaDefault)) {
+					httpResponse.setHeader("x-ua-compatible", xuaDefault);
+					logger.debug("appling the default x-ua-compatible: " + xuaDefault);
+				}
 			}
 
 			chain.doFilter(request, response);
@@ -102,7 +123,8 @@ public class IE7VersionFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 		pathToBeIgnored = config.getInitParameter("pathToBeIgnored");
 		userAgentMatch = config.getInitParameter("userAgentMatch");
-		xuacompatible = config.getInitParameter("X-UA-Compatible");
+		xuaCompatible = config.getInitParameter("X-UA-Compatible");
+		xuaDefault = config.getInitParameter("X-UA-Compatible-DEFAULT");
 	}
 
 	/**
