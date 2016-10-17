@@ -19,8 +19,6 @@
 
 package it.attocchi.utils;
 
-import it.attocchi.jpa2.entities.IEntityWithIdLong;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,6 +27,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
 
 public class ListUtils {
 
@@ -107,7 +107,7 @@ public class ListUtils {
 				aStringWithValues = aStringWithValues.substring(0, aStringWithValues.length() - 1);
 			}
 
-			res = Arrays.asList(aStringWithValues.split("\\s*,\\s*"));
+			res = new ArrayList<String>(Arrays.asList(aStringWithValues.split("\\s*,\\s*"))); // Arrays.asList(aStringWithValues.split("\\s*,\\s*"));
 		}
 
 		return res;
@@ -278,26 +278,26 @@ public class ListUtils {
 	 */
 	public static String addToListOfString(String aCommaSeparatedList, String newValue) {
 		List<String> list = null;
-		ListUtils.newIfNull(list);
+		list = ListUtils.newIfNull(list);
 
 		if (StringUtils.isNotBlank(aCommaSeparatedList)) {
 			list = fromCommaSepared(aCommaSeparatedList);
-			ListUtils.newIfNull(list);
-			list.add(newValue);
+			list = ListUtils.newIfNull(list);
 		}
+		list.add(newValue);
 
 		return toCommaSepared(list);
 	}
-
+	
 	public static String addToListOfLong(String aCommaSeparatedList, long newValue) {
 		List<Long> list = null;
-		ListUtils.newIfNull(list);
+		list = ListUtils.newIfNull(list);
 
 		if (StringUtils.isNotBlank(aCommaSeparatedList)) {
 			list = fromCommaSeparedLong(aCommaSeparatedList);
-			ListUtils.newIfNull(list);
-			list.add(newValue);
+			list = ListUtils.newIfNull(list);
 		}
+		list.add(newValue);
 
 		return toCommaSepared(list);
 	}
