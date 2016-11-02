@@ -164,6 +164,16 @@ public class JdbcConnector implements Closeable {
 			}
 		}
 	}
+	
+	public boolean isClosed() {
+		boolean res = true;
+		try {
+			res = conn != null && conn.isClosed();
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		return res;
+	}
 
 	public ResultSet executeSelect(boolean keepConnOpen, String aQuery) throws Exception {
 		ResultSet res = null;
