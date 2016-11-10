@@ -73,6 +73,7 @@ public class RestBaseJpa2 {
 			if (restServletContext != null && restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF) != null) {
 				emf = (EntityManagerFactory) restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF);
 				emfFromContext = true;
+				logger.debug("rest use entitymanagerfactory from application scope");
 			} else {
 				/*
 				 * Aggiunta del Supporto alla Configurazione
@@ -104,8 +105,10 @@ public class RestBaseJpa2 {
 				// EntityManagerFactory emf = null;
 				if (dbProps != null) {
 					this.emf = Persistence.createEntityManagerFactory(persistenceUnitName, dbProps);
+					logger.debug("created new rest emf with {} and properties {}", persistenceUnitName, dbProps);
 				} else {
 					this.emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+					logger.debug("created new rest emf with {}", persistenceUnitName);
 				}
 			}
 		}
@@ -121,6 +124,7 @@ public class RestBaseJpa2 {
 		if (!emfFromContext && this.emf != null) {
 			emf.close();
 			emf = null;
+			logger.debug("closed rest context emf");
 		}
 	}
 
