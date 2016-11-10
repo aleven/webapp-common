@@ -85,7 +85,7 @@ public class JPAContextListener implements ServletContextListener {
 			// EntityManagerFactory emf =
 			// Persistence.createEntityManagerFactory(IJpaListernes.DEFAULT_PU);
 			sce.getServletContext().setAttribute(IJpaListernes.APPLICATION_EMF, emf);
-			logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") start");
+			logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") created");
 
 			// chachedController = new JpaController(IJpaListernes.DEFAULT_PU);
 			// chachedController.test();
@@ -105,7 +105,7 @@ public class JPAContextListener implements ServletContextListener {
 		EntityManagerFactory emf = (EntityManagerFactory) sce.getServletContext().getAttribute(IJpaListernes.APPLICATION_EMF);
 		if (emf != null)
 			emf.close();
-		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") close");
+		logger.info(IJpaListernes.APPLICATION_EMF + "(" + persistenceUnitName + ") closed");
 
 		// chachedController.closeEmf();
 	}
