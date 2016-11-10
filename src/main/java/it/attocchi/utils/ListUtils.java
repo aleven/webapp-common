@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -98,7 +99,7 @@ public class ListUtils {
 	public static List<String> fromCommaSepared(String aStringWithValues) {
 		List<String> res = new ArrayList<String>();
 
-		if (aStringWithValues != null) {
+		if (StringUtils.isNotBlank(aStringWithValues)) {
 			if (aStringWithValues.startsWith("[")) {
 				aStringWithValues = aStringWithValues.substring(1);
 			}
@@ -230,7 +231,6 @@ public class ListUtils {
 
 	public static <T extends IEntityWithIdLong> List<T> findByIdsLong(List<T> aList, String ids) {
 		List<T> res = new ArrayList<T>();
-
 		if (StringUtils.isNotBlank(ids)) {
 			for (T item : aList) {
 				List<Long> idsLong = fromCommaSeparedLong(ids);
@@ -242,7 +242,19 @@ public class ListUtils {
 				}
 			}
 		}
+		return res;
+	}
 
+	public static <T extends IEntityWithIdLong> List<T> findByIdsLong(Map<Long, T> aMap, String ids) {
+		List<T> res = new ArrayList<T>();
+		if (StringUtils.isNotBlank(ids)) {
+			List<Long> idsLong = fromCommaSeparedLong(ids);
+			for (Long id : idsLong) {
+				if (aMap.containsKey(id)) {
+					res.add(aMap.get(id));
+				}
+			}
+		}
 		return res;
 	}
 
@@ -288,7 +300,7 @@ public class ListUtils {
 
 		return toCommaSepared(list);
 	}
-	
+
 	public static String addToListOfLong(String aCommaSeparatedList, long newValue) {
 		List<Long> list = null;
 		list = ListUtils.newIfNull(list);
