@@ -331,7 +331,7 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	/**
 	 * Permette di ricercare un Campo ID e di Ritornare una Lista di Interi E'
-	 * possibile scegliere il campo sul quale fare il distinct cos�' si pu�
+	 * possibile scegliere il campo sul quale fare il distinct cosi' si puo' *
 	 * usare anche per i LINKS efare il distinct su id tabella 1 o 2 Se non
 	 * viene specificato un campoID viene fatto sul campo ID del Dao
 	 * 
@@ -373,10 +373,15 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 			if (getCampoDataCancellazione() != null && !filtro.isIncludeDeleted()) {
 				sqlQuery.append(" AND " + getCampoDataCancellazione() + " IS NULL");
 			}
+			/*
+			 * NON ORDINO, i campi predefiniti di ordinamento del filtro
+			 * potrebbero essere non specificati nel distinct e query con MySQL
+			 * 5.7 va in errore
+			 */
 			// Verifico se e' specificato un ordinamento
-			if (filtro != null) {
-				sqlQuery.append(filtro.getSQLSort());
-			}
+//			if (filtro != null) {
+//				sqlQuery.append(filtro.getSQLSort());
+//			}
 			// Verifico se e' specificato un limit per le paginazioni
 			if (filtro != null) {
 				sqlQuery.append(filtro.getSQLLimit());
