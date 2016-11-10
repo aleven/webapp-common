@@ -24,13 +24,18 @@
 	<!-- https://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
 	<!-- https://developer.jboss.org/en/tools/blog/2012/05/20/annotation-processing-support-in-m2e-or-m2e-apt-100-is-out -->
 	<build>
-		<plugins>
+		<plugins>		
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<!--
+			        <compilerArguments>
+			            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+			        </compilerArguments>
+			        -->				
 				</configuration>
 				<dependencies>
 					<dependency>

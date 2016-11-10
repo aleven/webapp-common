@@ -19,20 +19,17 @@
 
 package it.attocchi.jpa2.entities.api;
 
-import it.attocchi.jpa2.JpaController;
-import it.attocchi.jpa2.entities.AbstractEntityMarksWithIdLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.attocchi.jpa2.entities.IEntityWithIdLong;
-
-import javax.persistence.EntityManagerFactory;
-
-import org.apache.log4j.Logger;
 
 // public class CrudApi<T extends IEntityWithIdLong, C extends Class<T>> {
 public class CrudApi<T extends IEntityWithIdLong> {
 
 	// protected static final Logger logger =
 	// Logger.getLogger(CrudApi.class.getName());
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	// private final org.slf4j.Logger log =
 	// org.slf4j.LoggerFactory.getLogger(this.getClass());

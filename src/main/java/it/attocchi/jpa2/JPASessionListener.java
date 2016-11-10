@@ -79,7 +79,7 @@ public class JPASessionListener implements HttpSessionListener {
 			}
 			// emfShared = emf;
 			e.getSession().setAttribute(IJpaListernes.SESSION_EMF, emf);
-			logger.info(IJpaListernes.SESSION_EMF + "(" + persistenceUnitName + ") start");
+			logger.info(IJpaListernes.SESSION_EMF + "(" + persistenceUnitName + ") created");
 			//
 			// chachedController = new Controller(Controller.DEFAULT_PU);
 		} catch (Exception ex) {
@@ -96,7 +96,7 @@ public class JPASessionListener implements HttpSessionListener {
 		if (emf != null) {
 			emf.close();
 		}
-		logger.info(IJpaListernes.SESSION_EMF + "(" + persistenceUnitName + ") close");
+		logger.info(IJpaListernes.SESSION_EMF + "(" + persistenceUnitName + ") closed");
 		//
 		// chachedController.close();
 	}

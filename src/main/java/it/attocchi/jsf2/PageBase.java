@@ -425,15 +425,15 @@ abstract class PageBase implements Serializable {
 	}
 
 	protected void redirectContextCall(String relativeUrl) {
-
 		String uri = getRequest().getRequestURI();
+		String params = getRequest().getQueryString();
 		/* rimuoviamo il context dal parametro che chiamiamo */
 		uri = uri.replace(getRequest().getContextPath(), "");
-
+		if (StringUtils.isNotBlank(params))
+			uri = uri + "?" + params;
+		uri = encodeParam(uri);
 		String newUrl = String.format("%s?call=%s", relativeUrl, uri);
-
 		logger.warn(newUrl);
-
 		redirectContext(newUrl);
 	}
 
@@ -556,7 +556,8 @@ abstract class PageBase implements Serializable {
 	 * 
 	 */
 	public String getJsfRedirect(String outcome) {
-		return outcome + "?faces-redirect=true";
+		String concat = (outcome.indexOf("?") >= 0) ? "&" : "?";
+		return outcome + concat + "faces-redirect=true";
 	}
 
 	protected HttpServletResponse getResponse() {

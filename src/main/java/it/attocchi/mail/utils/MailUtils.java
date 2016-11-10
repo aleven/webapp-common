@@ -155,10 +155,12 @@ public class MailUtils {
         try {
             content = email.getContent();
         } catch (MessagingException e) {
+        	logger.warn(e.getMessage() + " for Message of type + " + email.getClass().getName());
             // did this due to a bug
             // check: http://goo.gl/yTScnE and http://goo.gl/P4iPy7
             if (email instanceof MimeMessage && "Unable to load BODYSTRUCTURE".equalsIgnoreCase(e.getMessage())) {
                 content = new MimeMessage((MimeMessage) email).getContent();
+                logger.warn("content loaded as MimeMessage");
             } else {
                 throw e;
             }

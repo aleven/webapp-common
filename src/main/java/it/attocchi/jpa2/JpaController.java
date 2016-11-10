@@ -19,11 +19,9 @@
 
 package it.attocchi.jpa2;
 
-import it.attocchi.jpa2.entities.IEntityWithIdLong;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +39,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
+
 /**
  * 
  * @author Mirco Attocchi
@@ -56,8 +56,8 @@ public class JpaController implements Serializable {
 
 	protected static final Logger logger = Logger.getLogger(JpaController.class.getName());
 
-	private EntityManagerFactory emf;
-	private boolean passedEmf;
+	private EntityManagerFactory emf = null;
+	private boolean passedEmf = false;
 
 	private Map<String, String> dbConf;
 
@@ -86,6 +86,7 @@ public class JpaController implements Serializable {
 		if (emf != null) {
 			this.emf = emf;
 			passedEmf = true;
+			logger.debug("created jpacontroller with scoped emf");
 		} else {
 
 		}
@@ -112,78 +113,63 @@ public class JpaController implements Serializable {
 	// }
 
 	public <T extends Serializable> void insert(T o) throws Exception {
-
 		EntityManager em = getEntityManager();
-
 		try {
-
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().begin();
 			em.persist(o);
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
-
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 				closeEm(); // em.close();
 			}
 		}
-
 	}
 
 	public <T extends Serializable> void update(T o) throws Exception {
-
 		EntityManager em = getEntityManager();
-
 		try {
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().begin();
 			em.merge(o);
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
-
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 				closeEm(); // em.close();
 			}
 		}
-
 	}
 
 	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
-
 		testClazz(clazz);
-
 		EntityManager em = getEntityManager();
-
 		try {
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().begin();
-
 			T attached = em.find(clazz, id);
 			if (attached != null) {
 				em.remove(attached);
 				// em.remove(o);
 			}
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
-
 		} catch (Exception e) {
 			throw e;
 		} finally {
-
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -230,7 +216,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -255,7 +241,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -280,7 +266,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -321,7 +307,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -401,16 +387,19 @@ public class JpaController implements Serializable {
 	}
 
 	private void closeEm() {
-
 		/* Gestione delle Transazioni */
-		if (!globalTransactionOpen) {
+		if (!controllerTransactionOpen) {
 			if (em != null) {
-				// logger.debug(String.format("Close EM %s", numero));
 				em.close();
 				em = null;
+				if (closedFromFinalize)
+					logger.warn("closed jpacontroller em from finalize");
+				else
+					logger.debug("closed jpacontroller em");
 			}
+		} else {
+			logger.debug("jpacontroller em cannot be closed: controller active transaction");
 		}
-
 	}
 
 	/**
@@ -418,15 +407,18 @@ public class JpaController implements Serializable {
 	 * passed from outside
 	 */
 	public void closeEmAndEmf() {
-
 		closeEm();
-
 		if (!passedEmf) {
 			if (emf != null) {
-				// logger.debug(String.format("Close EMF %s", numero));
 				emf.close();
-				// emf = null;
+				emf = null;
+				if (closedFromFinalize)
+					logger.warn("closed jpacontroller emf from finalize");
+				else
+					logger.debug("closed jpacontroller emf");
 			}
+		} else {
+			logger.debug("jpacontroller emf cannot be closed: emf come from outside controller");
 		}
 	}
 
@@ -445,7 +437,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -470,7 +462,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -514,7 +506,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -549,7 +541,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -624,7 +616,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -646,7 +638,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -662,7 +654,7 @@ public class JpaController implements Serializable {
 		EntityManager em = getEntityManager();
 
 		try {
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().begin();
 
 			Query q = em.createQuery(query);
@@ -677,14 +669,14 @@ public class JpaController implements Serializable {
 
 			res = q.executeUpdate();
 
-			if (!globalTransactionOpen)
+			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
 
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -694,6 +686,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	private boolean closedFromFinalize = false;
 	@Override
 	protected void finalize() throws Throwable {
 
@@ -707,11 +700,9 @@ public class JpaController implements Serializable {
 		 */
 
 		// logger.debug(String.format("Finalize Controller %s", numero));
-
 		closeEmAndEmf();
-
 		super.finalize();
-
+		logger.debug("jpacontroller finalized");
 		// System.gc();
 	}
 
@@ -750,7 +741,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -760,7 +751,8 @@ public class JpaController implements Serializable {
 	}
 
 	private EntityManager em = null;
-	private boolean globalTransactionOpen = false;
+	private boolean controllerTransactionOpen = false;
+	private int nestedTransactionCount = 0;
 
 	private EntityManager getEntityManager() {
 
@@ -774,34 +766,36 @@ public class JpaController implements Serializable {
 	}
 
 	public void beginTransaction() {
-		if (!globalTransactionOpen) {
+		if (!controllerTransactionOpen) {
 			EntityManager em = getEntityManager();
 
 			em.getTransaction().begin();
 
-			globalTransactionOpen = true;
+			controllerTransactionOpen = true;
 		}
+		nestedTransactionCount++;
 	}
 
 	public void commitTransaction() {
-		if (globalTransactionOpen) {
+		if (controllerTransactionOpen && nestedTransactionCount == 1) {
 			EntityManager em = getEntityManager();
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().commit();
 			}
-			globalTransactionOpen = false;
+			controllerTransactionOpen = false;
 		}
+		nestedTransactionCount--;
 	}
 
 	public void rollbackTransaction() {
-		if (globalTransactionOpen) {
+		if (controllerTransactionOpen && nestedTransactionCount == 1) {
 			EntityManager em = getEntityManager();
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
-			globalTransactionOpen = false;
+			controllerTransactionOpen = false;
 		}
-
+		nestedTransactionCount--;
 	}
 
 	/**
@@ -1153,7 +1147,7 @@ public class JpaController implements Serializable {
 	 * @throws Exception
 	 */
 	public <T extends IEntityWithIdLong> Map<Long, T> findAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
-		Map<Long, T> res = new HashMap<Long, T>();
+		Map<Long, T> res = new LinkedHashMap<Long, T>();
 
 		List<T> list = findBy(clazz, filter); // findAll(clazz, null);
 		for (T item : list) {
@@ -1178,7 +1172,7 @@ public class JpaController implements Serializable {
 	}
 
 	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
-		Map<Long, T> res = new HashMap<Long, T>();
+		Map<Long, T> res = new LinkedHashMap<Long, T>();
 		JpaController controller = null;
 		try {
 			controller = new JpaController(emf);
@@ -1225,7 +1219,7 @@ public class JpaController implements Serializable {
 			throw e;
 		} finally {
 			// Close the database connection:
-			if (!globalTransactionOpen) {
+			if (!controllerTransactionOpen) {
 				// if (em.getTransaction().isActive())
 				// em.getTransaction().rollback();
 				closeEm(); // em.close();
@@ -1233,5 +1227,17 @@ public class JpaController implements Serializable {
 		}
 
 		return res;
+	}
+
+	public <T extends Serializable> T findById(Class<T> clazz, long id) throws Exception {
+		return find(clazz, id);
+	}
+
+	public static <T extends Serializable> List<T> callFindBy(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+		return callFind(emf, clazz, filter);
+	}
+
+	public static <T extends Serializable> T callFindBy(EntityManagerFactory emf, Class<T> clazz, long id) throws Exception {
+		return callFindById(emf, clazz, id);
 	}
 }

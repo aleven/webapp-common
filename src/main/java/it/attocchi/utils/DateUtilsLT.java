@@ -132,10 +132,20 @@ public class DateUtilsLT {
 		return c.get(Calendar.YEAR);
 	}
 
+	/**
+	 * Data nel formato MM
+	 * @param aDate
+	 * @return
+	 */
 	public static String getMonth(Date aDate) {
 		return new SimpleDateFormat("MM").format(aDate);
 	}
 
+	/**
+	 * Data nel formato dd
+	 * @param aDate
+	 * @return
+	 */
 	public static String getDay(Date aDate) {
 		return new SimpleDateFormat("dd").format(aDate);
 	}
@@ -331,18 +341,18 @@ public class DateUtilsLT {
 	 * @return
 	 */
 	public static int getAnno(Date aDate) {
-
 		Calendar tempCal = new GregorianCalendar();
 		tempCal.setTime(aDate);
-
 		return tempCal.get(Calendar.YEAR);
 	}
 
+	public static int getMonthZeroBased(Date aDate) {
+		return getMeseZeroBased(aDate);
+	}
+	
 	public static int getMeseZeroBased(Date aDate) {
-
 		Calendar tempCal = new GregorianCalendar();
 		tempCal.setTime(aDate);
-
 		return tempCal.get(Calendar.MONTH);
 	}
 
