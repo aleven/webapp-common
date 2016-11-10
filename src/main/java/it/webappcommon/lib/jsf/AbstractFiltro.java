@@ -278,7 +278,7 @@ public abstract class AbstractFiltro implements Serializable {
 	/**
 	 * Ci sono casi in cui il filtro usa la connessione per caricare ad esempio
 	 * gli ID della LINKS da filtrare in quei casi aper una sua connessione ma
-	 * forse pu� essere utile passare al filtro la connessione e farla usare
+	 * forse puo' essere utile passare al filtro la connessione e farla usare
 	 * al filtro stesso. Nel caso del programma di test qeusto e' utile ma anche
 	 * nel caso di transazioni
 	 * 
