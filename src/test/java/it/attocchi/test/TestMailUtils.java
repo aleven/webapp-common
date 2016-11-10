@@ -5,6 +5,7 @@ import it.attocchi.mail.utils.MailUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 
@@ -58,4 +59,17 @@ public class TestMailUtils {
 		
 		Assert.assertNotNull(body);
 	}
+	
+	@Test
+	public void testGetAllRecipents() throws Exception {
+		File f = new File("/home/mirco/Downloads/message(1).eml");
+		// MimeMessage mail = MimeMessageUtils.createMimeMessage(null, f);
+		MimeMessage mail = new MimeMessage(null, new FileInputStream(f));
+		System.out.println(mail.getSubject());
+		List<String> destinatari = MailUtils.getAllRecipents(mail);
+		System.out.println(destinatari);
+		Assert.assertNotNull(destinatari);
+	}	
+	
+	
 }
