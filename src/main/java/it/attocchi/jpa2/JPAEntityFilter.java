@@ -43,9 +43,12 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	/**
 	 * per JSF 2.1 non può essere serializato
 	 */
-	// protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
-	// per fare un post-back in JSF 2.1 devo poter riassegnare con getLogger perche' dopo la deserializzazione e' null
-	// protected transient Logger logger = Logger.getLogger(this.getClass().getName());
+	// protected final transient Logger logger =
+	// Logger.getLogger(this.getClass().getName());
+	// per fare un post-back in JSF 2.1 devo poter riassegnare con getLogger
+	// perche' dopo la deserializzazione e' null
+	// protected transient Logger logger =
+	// Logger.getLogger(this.getClass().getName());
 
 	public enum SortOrder {
 		ASC,
@@ -329,11 +332,11 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	 * FUNZIONI UTILI PER PAGINATORI
 	 */
 	public int getCurrentPage() {
-		return (limit > 0) ? pageNumber + 1 : 0;
+		return (limit > 0) ? pageNumber + 1 : 1;
 	}
 
 	public int totalPages(long count) {
-		return (limit > 0 && count > limit) ? (int) ((count / limit) + 1) : 0;
+		return (limit > 0 && count > limit) ? (int) ((count / limit) + 1) : 1;
 	}
 
 	/**
@@ -365,15 +368,25 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return res;
 	}
 
-//	/**
-//	 * Trovare una soluzione per Logger
-//	 * @return
-//	 */
-//	@Deprecated
-//	private Logger getLogger() {
-//		if (logger == null) {
-//			logger = Logger.getLogger(this.getClass().getName());
-//		}
-//		return logger;
-//	}
+	// /**
+	// * Trovare una soluzione per Logger
+	// * @return
+	// */
+	// @Deprecated
+	// private Logger getLogger() {
+	// if (logger == null) {
+	// logger = Logger.getLogger(this.getClass().getName());
+	// }
+	// return logger;
+	// }
+
+	private boolean filtriAvanzati;
+
+	public boolean isFiltriAvanzati() {
+		return filtriAvanzati;
+	}
+
+	public void setFiltriAvanzati(boolean filtriAvanzati) {
+		this.filtriAvanzati = filtriAvanzati;
+	}
 }
