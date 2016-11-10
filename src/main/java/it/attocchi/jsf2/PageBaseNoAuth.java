@@ -88,8 +88,10 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 
 		if (emfSession != null) {
 			emf = emfSession;
+			logger.error("getEmfShared: using EntityManagerFactory from Session");
 		} else if (emfContext != null) {
 			emf = emfContext;
+			logger.error("getEmfShared: using EntityManagerFactory from Context");
 		} else {
 			logger.error("getEmfShared: EntityManagerFactory is not in Session or in Context ");
 		}
