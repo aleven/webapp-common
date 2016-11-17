@@ -19,8 +19,6 @@
 
 package it.webappcommon.lib.jsf;
 
-import it.attocchi.sql.QueryBuilder;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -32,6 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
+import it.attocchi.sql.QueryBuilder;
 
 public abstract class AbstractFiltro implements Serializable {
 
@@ -318,4 +318,5 @@ public abstract class AbstractFiltro implements Serializable {
 	public String getQueryFragment() {
 		return queryFragment;
 	}
+	
 }
