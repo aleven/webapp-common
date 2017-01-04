@@ -200,6 +200,33 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	public List<Map<String, Object>> executeMapTrimmed(boolean keepConnOpen, String aQuery) throws Exception {
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+		// No DataSource so we must handle Connections manually
+		QueryRunner run = new QueryRunner() {
+			protected ResultSet wrap(ResultSet rs) {
+				return StringTrimmedResultSet.wrap(rs);
+			}
+		};
+
+		try {
+
+			/*
+			 * Sembra che il like con i parametri ufficiali non funzioni, forse
+			 * dovuto al fatto che son tutti object
+			 */
+			logger.debug(aQuery);
+			result = run.query(getConnection(), aQuery, new MapListHandler());
+
+		} finally {
+			if (!keepConnOpen)
+				close();
+		}
+
+		return result;
+	}
+	
 	private <T> ResultSetHandler<List<T>> getResultSetHandler(Class<T> clazz) {
 
 		ResultSetHandler<List<T>> h = new BeanListHandler<T>(clazz);

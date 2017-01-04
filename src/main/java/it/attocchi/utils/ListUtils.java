@@ -24,8 +24,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -113,6 +115,24 @@ public class ListUtils {
 
 		return res;
 	}
+	
+	public static Set<String> fromCommaSeparedSet(String aStringWithValues) {
+		Set<String> res = new HashSet<String>();
+
+		if (StringUtils.isNotBlank(aStringWithValues)) {
+			if (aStringWithValues.startsWith("[")) {
+				aStringWithValues = aStringWithValues.substring(1);
+			}
+
+			if (aStringWithValues.endsWith("]")) {
+				aStringWithValues = aStringWithValues.substring(0, aStringWithValues.length() - 1);
+			}
+
+			res = new HashSet<String>(Arrays.asList(aStringWithValues.split("\\s*,\\s*"))); // Arrays.asList(aStringWithValues.split("\\s*,\\s*"));
+		}
+
+		return res;
+	}	
 
 	public static List<Long> fromCommaSeparedLong(String aStringWithValues) {
 		List<Long> res = new ArrayList<Long>();
@@ -276,6 +296,14 @@ public class ListUtils {
 		return res;
 	}
 
+	public static <T> Set<T> newIfNullSet(Set<T> listaTags) {
+		Set<T> res = listaTags;
+		if (res == null)
+			res = new HashSet<T>();
+
+		return res;
+	}
+	
 	public static <T> void clear(List<T> aList) {
 		if (aList != null) {
 			aList.clear();
@@ -301,6 +329,19 @@ public class ListUtils {
 		return toCommaSepared(list);
 	}
 
+	public static String addToSetOfString(String aCommaSeparatedList, String newValue) {
+		Set<String> list = null;
+		list = ListUtils.newIfNullSet(list);
+
+		if (StringUtils.isNotBlank(aCommaSeparatedList)) {
+			list = fromCommaSeparedSet(aCommaSeparatedList);
+			list = ListUtils.newIfNullSet(list);
+		}
+		list.add(newValue);
+
+		return toCommaSepared(list);
+	}
+	
 	public static String addToListOfLong(String aCommaSeparatedList, long newValue) {
 		List<Long> list = null;
 		list = ListUtils.newIfNull(list);
