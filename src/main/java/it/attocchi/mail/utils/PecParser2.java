@@ -51,6 +51,7 @@ public class PecParser2 {
 	private String segnaturaXml;
 	private DataHandler postacertEml;
 	private String postacertEmlSubject;
+	private String postacertEmlSenderAddress;
 	private EmailBody postacertEmlBody;
 
 	Map<String, DataHandler> attachments = new HashMap<String, DataHandler>();
@@ -102,6 +103,10 @@ public class PecParser2 {
 
 	public String getPostacertEmlSubject() {
 		return postacertEmlSubject;
+	}
+	
+	public String getPostacertEmlSenderAddress() {
+		return postacertEmlSenderAddress;
 	}
 
 	public EmailBody getPostacertEmlBody() {
@@ -216,6 +221,7 @@ public class PecParser2 {
 				// emlFound = true;
 				Message tmp = (Message) ((Part) part.getContent());
 				postacertEml = tmp.getDataHandler();
+				postacertEmlSenderAddress = MailUtils.getSenderAddress(tmp);
 				postacertEmlSubject = tmp.getSubject();
 				postacertEmlBody = MailUtils.getBody(tmp);
 			}
