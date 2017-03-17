@@ -1,18 +1,21 @@
-#A set o class usefull to build a new WebApp with JSF2 and JPA2.
+# A set of class usefull to build a new WebApp with JSF2 and JPA2, REST, JAXB, JSON, etc.
 
 Charset source UTF-8
 
-##_it.attocchi.jpa2_
+## _it.attocchi.jpa2_
 
 A set of class for work with JPA Entitites. You can find Session or Context Listener to use for lazy close of JPA Controller (EntityManagerFactory lifecicle)
 
-###Example for JPAController usage:
+### Example for JPAController usage:
 
-    /* you can use this code on standalone java program, for JSF web-app is better to work with a shared emf */
-    List<MyEntity> list = JPAController.callFindPU("PU_NAME", MyEntity.class, myEntityFilter);
+```java
+/* you can use this code on standalone java program, for JSF web-app is better to work with a shared emf */
+List<MyEntity> list = JPAController.callFindPU("PU_NAME", MyEntity.class, myEntityFilter);
+```   
 
-###Example for JPAEntityFilter
+### Example for JPAEntityFilter
 
+```java
     public class MyEntityFilter extends JPAEntityFilter<MyEntity> {
 
 	private String fieldValue;
@@ -36,22 +39,21 @@ A set of class for work with JPA Entitites. You can find Session or Context List
 	}
 
 	@Override
-	public void buildSort(CriteriaQuery<Attivita> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<Attivita> root) {
+	public void buildSort(CriteriaQuery<Attivita> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<Attivita> root) 	{
 
 		criteriaQuery.orderBy(criteriaBuilder.asc(root.get(MyEntity_.sample)));
 
 	}
+```
 
-
-
-##_it.attocchi.jsf2_
+## _it.attocchi.jsf2_
 
 you can find base class for your BackBean 
 
-##_it.attocchi.utils_
+## _it.attocchi.utils_
 
 a set of utils
 
-##_it.attocchi.db_
+## _it.attocchi.db_
 
 something to work easy with org.apache.commons.dbutils.DbUtils or JDBC
