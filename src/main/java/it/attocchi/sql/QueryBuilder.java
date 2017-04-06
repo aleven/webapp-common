@@ -64,6 +64,14 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	public static String equal(String nomeCampo, long valore) {
+		StringBuilder equalBulder = new StringBuilder();
+
+		equalBulder.append("(" + nomeCampo + "=" + String.valueOf(valore) + ")");
+
+		return equalBulder.toString();
+	}
+	
 	/**
 	 * 
 	 * @param nomeCampo
