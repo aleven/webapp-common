@@ -72,8 +72,12 @@ public class RestBaseJpa2 {
 			 */
 			if (restServletContext != null && restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF) != null) {
 				emf = (EntityManagerFactory) restServletContext.getAttribute(IJpaListernes.APPLICATION_EMF);
-				emfFromContext = true;
-				logger.debug("rest use entitymanagerfactory from application scope");
+				if (emf.isOpen()) {
+					emfFromContext = true;
+					logger.debug("rest use entitymanagerfactory from application scope");
+				} else {
+					logger.warn("entitymanagerfactory from application scope is closed");
+				}
 			} else {
 				/*
 				 * Aggiunta del Supporto alla Configurazione
