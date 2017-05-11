@@ -2,6 +2,12 @@
 
 Charset source UTF-8
 
+## MAVEN DOC and JAVA DOC
+
+- [https://aleven.github.io/webapp-common/](https://aleven.github.io/webapp-common/)
+- [https://aleven.github.io/webapp-common/apidocs/](https://aleven.github.io/webapp-common/apidocs/)
+
+
 ## _it.attocchi.jpa2_
 
 A set of class for work with JPA Entitites. You can find Session or Context Listener to use for lazy close of JPA Controller (EntityManagerFactory lifecicle)
