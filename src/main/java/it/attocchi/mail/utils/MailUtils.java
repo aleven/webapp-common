@@ -1,9 +1,5 @@
 package it.attocchi.mail.utils;
 
-import it.attocchi.mail.parts.EmailBody;
-import it.attocchi.mail.parts.MailAttachmentUtil;
-import it.attocchi.utils.ListUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.mail.Address;
+import javax.mail.BodyPart;
 import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -28,11 +25,17 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import it.attocchi.mail.parts.EmailBody;
+import it.attocchi.mail.parts.MailAttachmentUtil;
+import it.attocchi.utils.ListUtils;
+
 
 public class MailUtils {
 
-	protected static Logger logger = Logger.getLogger(MailUtils.class.getName());
+	protected static final Logger logger = LoggerFactory.getLogger(MailUtils.class);
 
 	public static final String CONTENT_TYPE_MULTIPART = "multipart/*";
 	public static final String CONTENT_TYPE_MULTIPART_ALTERNATIVE = "multipart/alternative";
@@ -121,9 +124,12 @@ public class MailUtils {
 		String testo = null;
 		EmailBody res = null;
 
+		logger.info("extracting body from message...");
+		
 		/* Gestione javax.mail.MessagingException: Unable to load BODYSTRUCTURE */
 		// Object content = message.getContent();
 		Object content = getEmailContent(message);
+		logger.debug("message content-type={}", message.getContentType());
 		
 		if (message.isMimeType(MailUtils.CONTENT_TYPE_TEXT_PLAIN)) {
 			testo = (String) content;
@@ -180,24 +186,46 @@ public class MailUtils {
 		EmailBody res = null;
 
 		int numParts = mp.getCount();
-
+		logger.debug("part content-type: {}", mp.getContentType());
+		logger.debug("part sub-parts: {}", numParts);
+		
 		for (int i = 0; i < numParts; ++i) {
-
-			if (mp.getBodyPart(i).isMimeType(MailUtils.CONTENT_TYPE_TEXT_PLAIN)) {
-				testo = (String) mp.getBodyPart(i).getContent();
+			BodyPart bodyPart = mp.getBodyPart(i);
+			logger.debug("sub-part {} {}", i, bodyPart.getContentType());
+			if (bodyPart.isMimeType(MailUtils.CONTENT_TYPE_TEXT_PLAIN)) {
+				testo = manageBodyPart(bodyPart); // (String) bodyPart.getContent();
 				res = new EmailBody(testo, false);
 				break;
-			} else if (mp.getBodyPart(i).isMimeType(MailUtils.CONTENT_TYPE_TEXT_HTML)) {
-				testo = (String) mp.getBodyPart(i).getContent();
+			} else if (bodyPart.isMimeType(MailUtils.CONTENT_TYPE_TEXT_HTML)) {
+				testo = manageBodyPart(bodyPart); // (String) bodyPart.getContent();
 				res = new EmailBody(testo, true);
 				break;
-			} else if (mp.getBodyPart(i).isMimeType(MailUtils.CONTENT_TYPE_MULTIPART_ALTERNATIVE) || mp.getBodyPart(i).isMimeType(MailUtils.CONTENT_TYPE_MULTIPART) || mp.getBodyPart(i).isMimeType(MailUtils.CONTENT_TYPE_MULTIPART_MIXED)) {
-				Multipart sub = (Multipart) mp.getBodyPart(i).getContent();
+			} else if (bodyPart.isMimeType(MailUtils.CONTENT_TYPE_MULTIPART_ALTERNATIVE) || bodyPart.isMimeType(MailUtils.CONTENT_TYPE_MULTIPART) || bodyPart.isMimeType(MailUtils.CONTENT_TYPE_MULTIPART_MIXED)) {
+				Multipart sub = (Multipart) bodyPart.getContent();
 				res = extractMultiPartText(sub);
 				break;
 			}
 		}
 
+		return res;
+	}
+	
+	/**
+	 * Gestione errore Unknown encoding quoted-printable-- con javamail 1.5 non si presenta problema
+	 * @param bodyPart
+	 * @return
+	 */
+	private static String manageBodyPart(BodyPart bodyPart) throws MessagingException, IOException {
+		String res = null;
+		try {
+			res = (String) bodyPart.getContent();
+		} catch (IOException e1) {
+			logger.error("manageBodyPart IOException", e1);
+			throw e1;
+		} catch (MessagingException e2) {
+			logger.error("manageBodyPart MessagingException", e2);
+			throw e2;
+		}
 		return res;
 	}
 
@@ -318,7 +346,7 @@ public class MailUtils {
 			in.close();
 
 		} catch (IOException ex) {
-			logger.error(ex);
+			logger.error("saveFile", ex);
 		} finally {
 
 		}

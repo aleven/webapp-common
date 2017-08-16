@@ -52,11 +52,11 @@ public class TestMailUtils {
 	
 	@Test
 	public void testBodyParser() throws Exception {
-		File f = new File("/home/mirco/Downloads/message.eml");
+		File f = new File("/home/mirco/Downloads/ScadenzaServizi.eml");
 		// MimeMessage mail = MimeMessageUtils.createMimeMessage(null, f);
 		MimeMessage mail = new MimeMessage(null, new FileInputStream(f));
 		EmailBody body = MailUtils.getBody(mail);
-		
+		System.out.println(body.getBody());
 		Assert.assertNotNull(body);
 	}
 	
