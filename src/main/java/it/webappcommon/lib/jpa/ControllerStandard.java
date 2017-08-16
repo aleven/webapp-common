@@ -1415,10 +1415,12 @@ public abstract class ControllerStandard {
 			// Persistence.createEntityManagerFactory(getPersistenceUnitName());
 			// res =
 			// MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			logger.debug("retriving scoped emf...");
 			res = PersistenceManager.getInstance().getEntityManagerFactory();
 			logger.debug("get scoped emf multiple pu");
 		} else {
 			if (nonScopedEMF == null) {
+				logger.debug("creating un-scoped emf...");
 				nonScopedEMF = Persistence.createEntityManagerFactory(getPersistenceUnitName());
 				logger.debug("create un-scoped emf");
 			}
@@ -1447,6 +1449,7 @@ public abstract class ControllerStandard {
 					nonScopedEMF.close();
 					nonScopedEMF = null;
 				}
+				logger.debug("closed em and emf not scoped");
 			}
 		}
 	}
