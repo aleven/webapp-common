@@ -19,11 +19,6 @@
 
 package it.webappcommon.lib.jpa;
 
-import it.attocchi.utils.ListUtils;
-import it.webappcommon.lib.ExceptionLogger;
-import it.webappcommon.lib.jpa.scooped.PersistenceManager;
-import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +38,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
+
+import it.attocchi.utils.ListUtils;
+import it.webappcommon.lib.ExceptionLogger;
+import it.webappcommon.lib.jpa.scooped.PersistenceManager;
+import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
 
 public abstract class ControllerStandard {
 
