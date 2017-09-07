@@ -1458,6 +1458,7 @@ public abstract class ControllerStandard {
 	protected void finalize() throws Throwable {
 		close();
 		super.finalize();
+		logger.debug("ControllerStandard finalized");
 	}
 
 	protected void closeResource() {
