@@ -480,4 +480,14 @@ public class DateUtilsLT {
 	public static String format(Date aDate, String format) {
 		return new SimpleDateFormat(format).format(aDate);
 	}
+	
+	/**
+	 * HH:mm
+	 * @param timeString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseTime(String timeString) throws ParseException {
+		return new SimpleDateFormat(FORMAT_TIME_IT).parse(timeString);
+	}
 }
