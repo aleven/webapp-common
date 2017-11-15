@@ -499,7 +499,7 @@ public class DateUtilsLT {
 	 */
 	public static boolean exists(int anno, int mese, int giorno) {
 		boolean res = false;
-		try {
+		
 //		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 ////		format.parse("2010-02-31"); //=> Ok, rolls to "Wed Mar 03 00:00:00 PST 2010".
 //		format.setLenient(false);
@@ -511,10 +511,12 @@ public class DateUtilsLT {
 		c.set(Calendar.MONTH, mese);
 		c.set(Calendar.DAY_OF_MONTH, giorno);		
 		
-		res = true;
-		} catch (Exception ex) {
-			
-		}
+		int annoTest = c.get(Calendar.YEAR);
+		int meseTest = c.get(Calendar.MONTH);
+		int giornoTest = c.get(Calendar.DAY_OF_MONTH);	
+		
+		res = (anno == annoTest && mese == meseTest && giorno == giornoTest);
+
 		return res;
 	}
 }

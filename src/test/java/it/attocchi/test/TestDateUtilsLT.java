@@ -14,8 +14,13 @@ public class TestDateUtilsLT {
 	@Test
 	public void testExists() {
 		logger.info("testExists");
-		boolean res = DateUtilsLT.exists(2017, 02, 30);
-		logger.info("{} {} {} = {}", 2017, 02, 30, res);
+		int anno = 2017;
+		int mese = 1;
+		int giorno = 30;
+		boolean res = DateUtilsLT.exists(anno, mese, giorno);
+		
+		logger.info("{} {} {} = {}", anno, mese, giorno, res);
+		
 		Assert.assertFalse(res);
 	}
 
