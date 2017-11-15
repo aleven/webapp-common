@@ -1,81 +1,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.attocchi</groupId>
+	<groupId>it.aleven</groupId>
 	<artifactId>webapp-common</artifactId>
 	<version>3.2.5-SNAPSHOT</version>
-	
-	  <name>webapp-common</name>
-	  <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
-	  <url>https://github.com/mattocchi/webapp-common</url>
-	 
-	  <licenses>
-	    <license>
-	      <name>GNU Lesser General Public License 3.0</name>
-	      <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-	      <distribution>repo</distribution>
-	    </license>
-	  </licenses>
-	 
-	  <scm>
-	    <url>https://github.com/mattocchi/webapp-common</url>
-	  </scm>
-	  
+	<name>webapp-common</name>
+	<description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
+	<url>https://github.com/aleven/webapp-common</url>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/aleven/webapp-common</url>
+	</scm>
 	<properties>
-	    <maven.test.skip>true</maven.test.skip>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 	</properties>
-  	
-	<!-- https://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
-	<!-- https://developer.jboss.org/en/tools/blog/2012/05/20/annotation-processing-support-in-m2e-or-m2e-apt-100-is-out -->
-	<build>
-		<plugins>		
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<!--
-			        <compilerArguments>
-			            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-			        </compilerArguments>
-			        -->				
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>1.2.0.Final</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			
-			<plugin>
-		        <groupId>org.codehaus.mojo</groupId>
-		        <artifactId>build-helper-maven-plugin</artifactId>
-		        <version>1.7</version>
-		        <executions>           
-		            <execution>             
-		                <id>remove-old-artifacts</id>             
-		                <phase>clean</phase>             
-		                <goals>               
-		                    <goal>remove-project-artifact</goal>             
-		                </goals>            
-		                <configuration>  
-		                    <removeAll>true</removeAll><!-- remove all versions of built artifacts including all versions.  Install phase will regenerate -->             
-		                </configuration>          
-		                </execution>         
-		        </executions>             
-		    </plugin>			
-		</plugins>
-	</build>
 	<dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -136,12 +90,8 @@
 			<version>6.0.35</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>1.2.0.Final</version>
-			<scope>provided</scope>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-jpamodelgen</artifactId> 
+			<version>1.2.0.Final</version> <scope>provided</scope> </dependency> -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -167,7 +117,7 @@
 			<classifier>jdk15</classifier>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core" -->
