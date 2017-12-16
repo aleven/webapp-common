@@ -355,4 +355,16 @@ public class ListUtils {
 		return toCommaSepared(list);
 	}
 
+	/**
+	 * se la lista non è vuota ritorna il primo elemento
+	 * @param aList una lista 
+	 * @return il primo elemento della lista
+	 */
+	public static <T> T fistItem(List<T> aList) {
+		T res = null;
+		if (isNotEmpty(aList))
+			res = aList.get(0);
+		return res;
+	}
+
 }

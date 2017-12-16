@@ -19,11 +19,6 @@
 
 package it.webappcommon.lib.jpa;
 
-import it.attocchi.utils.ListUtils;
-import it.webappcommon.lib.ExceptionLogger;
-import it.webappcommon.lib.jpa.scooped.PersistenceManager;
-import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +38,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
+
+import it.attocchi.utils.ListUtils;
+import it.webappcommon.lib.ExceptionLogger;
+import it.webappcommon.lib.jpa.scooped.PersistenceManager;
+import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
 
 public abstract class ControllerStandard {
 
@@ -1415,10 +1415,12 @@ public abstract class ControllerStandard {
 			// Persistence.createEntityManagerFactory(getPersistenceUnitName());
 			// res =
 			// MultiplePersistenceManagerTest.getInstance().getEntityManagerFactory(getPersistenceUnitName());
+			logger.debug("retriving scoped emf "+PersistenceManager.getPersistenceUnit()+"...");
 			res = PersistenceManager.getInstance().getEntityManagerFactory();
 			logger.debug("get scoped emf multiple pu");
 		} else {
 			if (nonScopedEMF == null) {
+				logger.debug("creating un-scoped emf "+getPersistenceUnitName()+"...");
 				nonScopedEMF = Persistence.createEntityManagerFactory(getPersistenceUnitName());
 				logger.debug("create un-scoped emf");
 			}
@@ -1447,6 +1449,7 @@ public abstract class ControllerStandard {
 					nonScopedEMF.close();
 					nonScopedEMF = null;
 				}
+				logger.debug("closed em and emf not scoped");
 			}
 		}
 	}
@@ -1455,6 +1458,7 @@ public abstract class ControllerStandard {
 	protected void finalize() throws Throwable {
 		close();
 		super.finalize();
+		logger.debug("ControllerStandard finalized");
 	}
 
 	protected void closeResource() {

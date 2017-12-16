@@ -7,7 +7,7 @@
 	
 	  <name>webapp-common</name>
 	  <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
-	  <url>https://github.com/mattocchi/webapp-common</url>
+	  <url>https://github.com/aleven/webapp-common</url>
 	 
 	  <licenses>
 	    <license>
@@ -18,11 +18,13 @@
 	  </licenses>
 	 
 	  <scm>
-	    <url>https://github.com/mattocchi/webapp-common</url>
+	    <url>https://github.com/aleven/webapp-common</url>
 	  </scm>
 	  
 	<properties>
-	    <maven.test.skip>true</maven.test.skip>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>	
+	    <!-- <maven.test.skip>true</maven.test.skip> -->
 	</properties>
   	
 	<!-- https://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
@@ -66,7 +68,45 @@
 		                </configuration>          
 		                </execution>         
 		        </executions>             
-		    </plugin>			
+		    </plugin>
+		    
+			<!-- <plugin>
+			    <groupId>org.bsc.maven</groupId>
+			    <artifactId>maven-processor-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <id>process</id>
+			            <goals>
+			                <goal>process</goal>
+			            </goals>
+			            <phase>generate-sources</phase>
+			            <configuration>
+			                source output directory
+			                <outputDirectory>target/metamodel</outputDirectory>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <version>1.3</version>
+			    <executions>
+			        <execution>
+			            <id>add-source</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+			                <goal>add-source</goal>
+			            </goals>
+			            <configuration>
+			                <sources>
+			                    <source>target/metamodel</source>
+			                </sources>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin> -->
+		    
 		</plugins>
 	</build>
 	<dependencies>

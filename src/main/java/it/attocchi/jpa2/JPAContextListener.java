@@ -23,8 +23,10 @@ import it.attocchi.web.config.SoftwareProperties;
 
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -74,7 +76,7 @@ public class JPAContextListener implements ServletContextListener {
 			} else {
 				emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 			}
-
+		
 			// com.objectdb.Enhancer.enhance("it.caderplink.entities.*");
 			// EntityManagerFactory emf =
 			// Persistence.createEntityManagerFactory("$objectdb/db/caderplink.odb");
@@ -91,6 +93,9 @@ public class JPAContextListener implements ServletContextListener {
 			// chachedController.test();
 		} catch (Exception ex) {
 			logger.error("error initializing JPAContextListener", ex);
+			if (ex.getCause() != null) {
+				logger.error("error cause", ex.getCause());
+			}
 		}
 	}
 

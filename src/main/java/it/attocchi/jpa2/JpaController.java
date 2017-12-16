@@ -112,7 +112,7 @@ public class JpaController implements Serializable {
 	// logger.debug(String.format("Creazione Controller %s", numero));
 	// }
 
-	public <T extends Serializable> void insert(T o) throws Exception {
+	public <T extends Serializable> void insert(T o) throws JpaControllerException {
 		EntityManager em = getEntityManager();
 		try {
 			if (!controllerTransactionOpen)
@@ -121,7 +121,7 @@ public class JpaController implements Serializable {
 			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
 		} catch (Exception e) {
-			throw e;
+			throw new JpaControllerException("error insert", e);
 		} finally {
 			// Close the database connection:
 			if (!controllerTransactionOpen) {
@@ -132,7 +132,7 @@ public class JpaController implements Serializable {
 		}
 	}
 
-	public <T extends Serializable> void update(T o) throws Exception {
+	public <T extends Serializable> void update(T o) throws JpaControllerException {
 		EntityManager em = getEntityManager();
 		try {
 			if (!controllerTransactionOpen)
@@ -141,7 +141,7 @@ public class JpaController implements Serializable {
 			if (!controllerTransactionOpen)
 				em.getTransaction().commit();
 		} catch (Exception e) {
-			throw e;
+			throw new JpaControllerException("error insert", e);
 		} finally {
 			// Close the database connection:
 			if (!controllerTransactionOpen) {
@@ -178,7 +178,7 @@ public class JpaController implements Serializable {
 
 	}
 
-	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws Exception {
+	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
 		res = findAll(clazz, null);
@@ -186,7 +186,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws Exception {
+	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
@@ -447,7 +447,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws Exception {
+	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
@@ -458,8 +458,8 @@ public class JpaController implements Serializable {
 
 			res = em.createQuery(query, clazz).getResultList();
 
-		} catch (Exception e) {
-			throw e;
+//		} catch (Exception e) {
+//			throw e;
 		} finally {
 			// Close the database connection:
 			if (!controllerTransactionOpen) {
@@ -516,7 +516,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 		List<T> res = new ArrayList<T>();
 
 		testClazz(clazz);
@@ -537,8 +537,8 @@ public class JpaController implements Serializable {
 				res = findAll(clazz);
 			}
 
-		} catch (Exception e) {
-			throw e;
+//		} catch (JpaEntityFilterException e) {
+//			throw e;
 		} finally {
 			// Close the database connection:
 			if (!controllerTransactionOpen) {
@@ -985,7 +985,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> T callFindFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> T callFindFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 
 		List<T> list = new ArrayList<T>();
 		T res = null;
@@ -1000,9 +1000,12 @@ public class JpaController implements Serializable {
 				res = list.get(0);
 			}
 
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException ex) {
 			logger.error("callFindFirst", ex);
 			throw ex;
+		} catch (JpaEntityFilterException ex) {
+			logger.error("callFindFirst", ex);
+			throw ex;	
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
@@ -1010,7 +1013,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> T callFindFirstPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
+	public static <T extends Serializable> T callFindFirstPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 
 		List<T> list = new ArrayList<T>();
 		T res = null;
@@ -1025,9 +1028,12 @@ public class JpaController implements Serializable {
 				res = list.get(0);
 			}
 
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException ex) {
 			logger.error("callFindFirstPU", ex);
 			throw ex;
+		} catch (JpaEntityFilterException ex) {
+			logger.error("callFindFirstPU", ex);
+			throw ex;			
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
@@ -1035,7 +1041,7 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
-	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws Exception {
+	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -1043,33 +1049,39 @@ public class JpaController implements Serializable {
 
 			controller.update(object);
 			res = true;
-		} catch (Exception ex) {
-			logger.error("callUpdate", ex);
-			throw ex;
-		} finally {
-			JpaController.callCloseEmf(controller);
-		}
-		return res;
-	}
-
-	public static <T extends Serializable> boolean callInsert(EntityManagerFactory emf, T object) throws Exception {
-		boolean res = false;
-		JpaController controller = null;
-		try {
-			controller = new JpaController(emf);
-
-			controller.insert(object);
-			res = true;
-		} catch (Exception ex) {
+		} catch (JpaControllerException ex) {
 			logger.error("callInsert", ex);
 			throw ex;
+		} catch (Exception ex) {
+			logger.error("callInsert", ex);
+			throw new JpaControllerException("error calling update", ex);
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
 		return res;
 	}
 
-	public static <T extends Serializable> boolean callInsertPU(String persistenceUnit, T object) throws Exception {
+	public static <T extends Serializable> boolean callInsert(EntityManagerFactory emf, T object) throws JpaControllerException {
+		boolean res = false;
+		JpaController controller = null;
+		try {
+			controller = new JpaController(emf);
+
+			controller.insert(object);
+			res = true;
+		} catch (JpaControllerException ex) {
+			logger.error("callInsert", ex);
+			throw ex;
+		} catch (Exception ex) {
+			logger.error("callInsert", ex);
+			throw new JpaControllerException("error calling insert", ex);
+		} finally {
+			JpaController.callCloseEmf(controller);
+		}
+		return res;
+	}
+
+	public static <T extends Serializable> boolean callInsertPU(String persistenceUnit, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -1077,16 +1089,19 @@ public class JpaController implements Serializable {
 
 			controller.insert(object);
 			res = true;
-		} catch (Exception ex) {
-			logger.error("callInsertPU", ex);
+		} catch (JpaControllerException ex) {
+			logger.error("callInsert", ex);
 			throw ex;
+		} catch (Exception ex) {
+			logger.error("callInsert", ex);
+			throw new JpaControllerException("error calling insert pu", ex);
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
 		return res;
 	}
 
-	public static <T extends Serializable> boolean callUpdatePU(String persistenceUnit, T object) throws Exception {
+	public static <T extends Serializable> boolean callUpdatePU(String persistenceUnit, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
 		try {
@@ -1094,18 +1109,21 @@ public class JpaController implements Serializable {
 
 			controller.update(object);
 			res = true;
-		} catch (Exception ex) {
-			logger.error("callUpdatePU", ex);
+		} catch (JpaControllerException ex) {
+			logger.error("callInsert", ex);
 			throw ex;
+		} catch (Exception ex) {
+			logger.error("callInsert", ex);
+			throw new JpaControllerException("error calling update pu", ex);
 		} finally {
 			JpaController.callCloseEmf(controller);
 		}
 		return res;
 	}
 
-	private void testClazz(Class clazz) throws Exception {
+	private void testClazz(Class clazz) throws ClassNotFoundException {
 		if (clazz == null) {
-			throw new Exception("JPAController Entity Class (clazz) not specified.");
+			throw new ClassNotFoundException("JPAController Entity Class (clazz) not specified.");
 		}
 	}
 

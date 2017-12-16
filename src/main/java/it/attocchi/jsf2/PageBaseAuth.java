@@ -56,7 +56,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	/*
 	 * Gestione Autorizzazione Utente in Sessione
 	 */
-	private String idUtenteLoggato;
+	protected String idUtenteLoggato;
 
 	public String getAuthKey() {
 
@@ -87,5 +87,4 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	protected boolean isUtenteLoggato() {
 		return StringUtils.isNotBlank(getAuthKey());
 	}
-
 }
