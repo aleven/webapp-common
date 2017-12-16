@@ -71,7 +71,7 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 
 		ServletContext context = getServletContext();
 		if (context != null) {
-			emf = (EntityManagerFactory) context.getAttribute(IJpaListernes.SESSION_EMF);
+			emf = (EntityManagerFactory) context.getAttribute(IJpaListernes.APPLICATION_EMF);
 		} else {
 			logger.error("Context is null ");
 		}
