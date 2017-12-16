@@ -19,9 +19,8 @@
 
 package it.webappcommon.lib;
 
-import it.attocchi.utils.DateUtilsLT;
-
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,66 +29,122 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Days;
-import org.joda.time.Duration;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.Months;
-import org.joda.time.Weeks;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.apache.log4j.Logger;
+
+//import org.joda.time.DateTime;
+//import org.joda.time.DateTimeZone;
+//import org.joda.time.Days;
+//import org.joda.time.Duration;
+//import org.joda.time.Interval;
+//import org.joda.time.LocalDate;
+//import org.joda.time.LocalDateTime;
+//import org.joda.time.Months;
+//import org.joda.time.Weeks;
+//import org.joda.time.format.DateTimeFormat;
+//import org.joda.time.format.DateTimeFormatter;
 
 /**
- * DateUtils that extends @DateUtilsLT with use of @org.joda.time
+ * 
+ * DateUtils that not require Joda
  * 
  * @author Mirco
  *
  */
-public class DateUtils extends DateUtilsLT {
+public class DateUtils {
 
-	// protected static final Logger logger =
-	// Logger.getLogger(DateUtils.class.getName());
-
-	// public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-	// public final static String FORMAT_ISO = "yyyyMMdd";
-	//
-	// public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
-	//
-	// public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
-
-	// /**
-	// *
-	// * @param aDate
-	// * @return
-	// */
-	// public static int getAnno(Date aDate) {
-	//
-	// Calendar tempCal = new GregorianCalendar();
-	// tempCal.setTime(aDate);
-	//
-	// return tempCal.get(Calendar.YEAR);
-	// }
+	protected static final Logger logger = Logger.getLogger(DateUtils.class.getName());
 
 	/**
-	 * Ritorna il mese della data specificata non 0 based
-	 * 
-	 * @param aDate
-	 * @return
+	 * yyyy-MM-dd'T'HH:mm:ss'Z'
 	 */
-	public static int getMese(Date aDate) {
-		return getMeseZeroBased(aDate) + 1;
+	public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	/**
+	 * yyyyMMdd
+	 */
+	public final static String FORMAT_ISO = "yyyyMMdd";
+	/**
+	 * yyyy-MM-dd
+	 */
+	public final static String FORMAT_ISO_SEPARATOR = "yyyy-MM-dd";
+	/**
+	 * yyyyMMdd HH:mm
+	 */
+	public final static String FORMAT_ISO_HHmm = "yyyyMMdd HH:mm";
+	/**
+	 * yyyy-MM-dd HH:mm
+	 */
+	public final static String FORMAT_ISO_HHmm_SEPARATOR = "yyyy-MM-dd HH:mm";
+	/**
+	 * yyyy-MM-dd HH:mm:ss
+	 */
+	public final static String FORMAT_ISO_HHmmss_SEPARATOR = "yyyy-MM-dd HH:mm:ss";
+	/**
+	 * HHmmssSS
+	 */
+	public static final String FORMAT_HHmmssSS = "HHmmssSS";
+	/**
+	 * HH:mm:ss:SS
+	 */
+	public static final String FORMAT_HHmmssSS_SEPARATOR = "HH:mm:ss:SS";
+
+	/**
+	 * yyyyMMddHHmmssSSS
+	 */
+	public static final String FORMAT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
+	/**
+	 * dd/MM/yyyy
+	 */
+	public static final String FORMAT_DATE_IT = "dd/MM/yyyy";
+	/**
+	 * dd-MM-yyyy
+	 */
+	public static final String FORMAT_DATE_IT_SEPARATOR_MINUS = "dd-MM-yyyy";
+	/**
+	 * dd/MM/yyyy HH:mm
+	 */
+	public static final String FORMAT_DATE_TIME_IT = "dd/MM/yyyy HH:mm";
+	/**
+	 * dd/MM/yy
+	 */
+	public static final String FORMAT_DATE_IT_COMPACT = "dd/MM/yy";
+	/**
+	 * HH:mm
+	 */
+	public static final String FORMAT_TIME_IT = "HH:mm";
+	/**
+	 * yyyyMMdd.HHmmss
+	 */
+	public static final String FORMAT_yyyyMMdd_dot_HHmmss = "yyyyMMdd.HHmmss";
+
+	public static Date Now() {
+		return new Date();
 	}
 
-	// public static int getMeseZeroBased(Date aDate) {
-	//
-	// Calendar tempCal = new GregorianCalendar();
-	// tempCal.setTime(aDate);
-	//
-	// return tempCal.get(Calendar.MONTH);
-	// }
+	public static String Now(String pattern) {
+		return new SimpleDateFormat(pattern).format(Now());
+	}
+
+	public static String NowFormatISO() {
+		return new SimpleDateFormat(FORMAT_ISO).format(Now());
+	}
+
+	public static String NowYear2() {
+		return new SimpleDateFormat("yy").format(Now());
+	}
+
+	public static String NowYear4() {
+		return new SimpleDateFormat("yyyy").format(Now());
+	}
+
+	public static String getYear(Date aDate) {
+		return new SimpleDateFormat("yyyy").format(aDate);
+	}
+
+	public static int getYearAsInt(Date aDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(aDate);
+		return c.get(Calendar.YEAR);
+	}
 
 	/**
 	 * Ritorna il giorno del mese della data specificata
@@ -116,6 +171,525 @@ public class DateUtils extends DateUtilsLT {
 
 		return dateFormatGmt.format(aDate);
 	}
+	
+	/**
+	 * Data nel formato MM
+	 * @param aDate
+	 * @return
+	 */
+	public static String getMonth(Date aDate) {
+		return new SimpleDateFormat("MM").format(aDate);
+	}
+
+	/**
+	 * Data nel formato dd
+	 * @param aDate
+	 * @return
+	 */
+	public static String getDay(Date aDate) {
+		return new SimpleDateFormat("dd").format(aDate);
+	}
+
+	public static Date addDays(Date aDate, int days) {
+
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(aDate);
+
+		cal.add(Calendar.DATE, days);
+
+		return cal.getTime();
+	}
+
+	public static Date addMonths(Date aDate, int months) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aDate);
+		cal.add(Calendar.MONTH, months);
+
+		return cal.getTime();
+	}
+
+	public static List<Date> dateBetweens(Date start, Date end) {
+		List<Date> res = new ArrayList<Date>();
+
+		Calendar startCal = getCalendar(start);
+		while (startCal.getTime().before(end)) {
+			Date resultado = startCal.getTime();
+			res.add(resultado);
+
+			startCal.add(Calendar.DATE, 1);
+		}
+
+		return res;
+	}
+
+	/**
+	 * Aggiunge 12:00 per evitare problemi con CET CEST. Una data 20120309
+	 * potrebbe diventare 2012 03 08 perche viene valorizzata con ora 00:00 e
+	 * quando la si formatta nel locale Italiano Java la fa diventare il giorno
+	 * precedente passando da CET a CEST
+	 * 
+	 * @param aIsoString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseISO(String aIsoString) throws ParseException {
+		return new SimpleDateFormat(FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
+	}
+
+	/**
+	 * 2013-12-13
+	 * 
+	 * @param aIsoString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseISOSeparator(String aIsoString) throws ParseException {
+		return new SimpleDateFormat(FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
+	}
+
+	/**
+	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
+	 * minutes)
+	 * 
+	 * @param HHmm
+	 * @return value of duration as numeric value
+	 */
+	public static float calculateDuration(String HHmm) {
+
+		String[] data = HHmm.split(":");
+		int hours = Integer.parseInt(data[0]);
+		int minutes = Integer.parseInt(data[1]);
+
+		float res = hours * 60 * 60 * 1000 + minutes * 60 * 1000;
+
+		res = res / (1000 * 60 * 60);
+
+		return res;
+	}
+
+	public static Calendar getCalendar(Date dt) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(dt);
+		return cal;
+	}
+
+	public static boolean isWorkDay(Date data) {
+
+		int theDay = getCalendar(data).get(Calendar.DAY_OF_WEEK);
+
+		return theDay != Calendar.SUNDAY && theDay != Calendar.SATURDAY;
+
+	}
+
+	/**
+	 * Week number of the date. From the help this may be different by Calendar
+	 * Locale
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static int getWeekOfTheYear(Date aDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aDate);
+		return cal.get(Calendar.WEEK_OF_YEAR);
+	}
+
+	/**
+	 * Create a Date from specified data
+	 * 
+	 * @param year
+	 *            YEAR
+	 * @param month
+	 *            MONTH
+	 * @param day
+	 *            DAY_OF_MONTH
+	 * @param hours
+	 *            HOUR_OF_DAY
+	 * @param minutes
+	 *            MINUTE
+	 * @return a date
+	 */
+	public static Date getDate(int year, int month, int day, int hours, int minutes) {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.YEAR, year);
+		c.set(Calendar.MONTH, month);
+		c.set(Calendar.DAY_OF_MONTH, day);
+		c.set(Calendar.HOUR_OF_DAY, hours);
+		c.set(Calendar.MINUTE, minutes);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
+	/**
+	 * crea una data dai dati specificati (imposta orario alle 00:00)
+	 * 
+	 * @param year
+	 *            YEAR
+	 * @param month
+	 *            MONTH
+	 * @param day
+	 *            DAY_OF_MONTH
+	 * @return a date at 00:00
+	 */
+	public static Date getDate(int year, int month, int day) {
+		return getDate(year, month, day, 0, 0);
+	}
+	
+	/**
+	 * crea una data dai dati specificati (imposta orario alle 23:59)
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return a date at 23:59
+	 */
+	public static Date getDateEnd(int year, int month, int day) {
+		return getDate(year, month, day, 23, 59);
+	}
+	
+	/**
+	 * Set time of a Date
+	 * 
+	 * @param aDate
+	 * @param hours
+	 * @param minutes
+	 * @return
+	 */
+	public static Date setTime(Date aDate, int hours, int minutes) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(aDate);
+		c.set(Calendar.HOUR_OF_DAY, hours);
+		c.set(Calendar.MINUTE, minutes);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+
+		return c.getTime();
+	}
+
+	/**
+	 * Verify if a Date is Between other dates, looking only for the date, not
+	 * for the time
+	 * 
+	 * @param aMoment
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public static boolean isBetween(Date aMoment, Date from, Date to) {
+
+		if (aMoment == null)
+			return false;
+
+		if (from == null)
+			from = aMoment;
+
+		if (to == null)
+			to = aMoment;
+
+		Calendar a = Calendar.getInstance();
+		a.setTime(from);
+		Calendar b = Calendar.getInstance();
+		b.setTime(to);
+
+		a.set(Calendar.HOUR_OF_DAY, 0);
+		a.set(Calendar.MINUTE, 0);
+		a.set(Calendar.SECOND, 1);
+
+		b.set(Calendar.HOUR_OF_DAY, 23);
+		b.set(Calendar.MINUTE, 59);
+		b.set(Calendar.SECOND, 59);
+
+		return aMoment.getTime() >= a.getTime().getTime() && aMoment.getTime() <= b.getTime().getTime();
+	}
+
+	/**
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static int getAnno(Date aDate) {
+		Calendar tempCal = new GregorianCalendar();
+		tempCal.setTime(aDate);
+		return tempCal.get(Calendar.YEAR);
+	}
+
+	public static int getMonthZeroBased(Date aDate) {
+		return getMeseZeroBased(aDate);
+	}
+	
+	/**
+	 * Ritorna il mese della data specificata non 0 based
+	 * 
+	 * @param aDate
+	 * @return
+	 */
+	public static int getMese(Date aDate) {
+		return getMeseZeroBased(aDate) + 1;
+	}
+	
+	public static int getMeseZeroBased(Date aDate) {
+		Calendar tempCal = new GregorianCalendar();
+		tempCal.setTime(aDate);
+		return tempCal.get(Calendar.MONTH);
+	}
+
+	/**
+	 * 
+	 * @param monthZeroBased
+	 *            numero del mese zero-based
+	 * @return
+	 */
+	public static int getLastDayOfMontZeroBased(int monthZeroBased, int year) throws Exception {
+		return getLastDayOfMont(monthZeroBased + 1, year);
+	}
+
+	/**
+	 * 
+	 * @param monthNonZeroBased
+	 *            Numero del mese non zero-based
+	 * @return
+	 */
+	public static int getLastDayOfMont(int monthNonZeroBased, int year) throws Exception {
+		int res = 0;
+
+		/*
+		 * monthNonZeroBased rappresenta nativamente il mese successivo
+		 */
+
+		if (monthNonZeroBased >= 1 && monthNonZeroBased < 12) {
+
+			Calendar cal = new GregorianCalendar();
+			cal.set(year, monthNonZeroBased, 1);
+
+			cal.add(Calendar.DATE, -1);
+
+			res = cal.get(Calendar.DATE);
+
+		} else if (monthNonZeroBased == 12) {
+
+			Calendar cal = new GregorianCalendar();
+			cal.set(getAnno(cal.getTime()) + 1, 1, 1);
+
+			cal.add(Calendar.DATE, -1);
+
+			res = cal.get(Calendar.DATE);
+		} else {
+			throw new Exception("Mese non valido");
+		}
+
+		return res;
+	}
+
+	public static Date getLastDateOfMonth(Date aDate) throws Exception {
+
+		Calendar cal = new GregorianCalendar(getAnno(aDate), getMeseZeroBased(aDate), getLastDayOfMontZeroBased(getMeseZeroBased(aDate), getAnno(aDate)));
+		return cal.getTime();
+	}
+
+	/**
+	 * Original code from source:
+	 * http://stackoverflow.com/questions/4600034/calculate
+	 * -number-of-weekdays-between-two-dates-in-java
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public static int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
+
+		startDate = setTime(startDate, 12, 0);
+		endDate = setTime(endDate, 12, 0);
+
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(startDate);
+
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(endDate);
+
+		int workDays = 0;
+
+		// Return 0 if start and end are the same
+		if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
+			return 0;
+		}
+
+		if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
+			startCal.setTime(endDate);
+			endCal.setTime(startDate);
+		}
+
+		do {
+			// excluding start date
+			startCal.add(Calendar.DAY_OF_MONTH, 1);
+			if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+				++workDays;
+			}
+		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); // excluding
+																			// end
+																			// date
+
+		return workDays;
+	}
+
+	public static Date getDate(Date date, String inputTime) throws ParseException {
+		DateFormat format = new SimpleDateFormat("HH:mm");
+		Date time = format.parse(inputTime);
+		return getDate(date, time);
+	}
+
+	public static Date getDate(Date date, Date time) {
+		Calendar calendarA = Calendar.getInstance();
+		calendarA.setTime(date);
+
+		Calendar calendarB = Calendar.getInstance();
+		calendarB.setTime(time);
+
+		calendarA.set(Calendar.HOUR_OF_DAY, calendarB.get(Calendar.HOUR_OF_DAY));
+		calendarA.set(Calendar.MINUTE, calendarB.get(Calendar.MINUTE));
+		calendarA.set(Calendar.SECOND, calendarB.get(Calendar.SECOND));
+		calendarA.set(Calendar.MILLISECOND, calendarB.get(Calendar.MILLISECOND));
+
+		Date result = calendarA.getTime();
+
+		return result;
+	}
+
+	public static String format(Date aDate, String format) {
+		return new SimpleDateFormat(format).format(aDate);
+	}
+	
+	public static String format(Calendar aDate, String format) {
+		return format(aDate.getTime(), format);
+	}
+	/**
+	 * HH:mm
+	 * @param timeString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date parseTime(String timeString) throws ParseException {
+		return new SimpleDateFormat(FORMAT_TIME_IT).parse(timeString);
+	}
+
+	/**
+	 * verifica se una data esiste
+	 * @param anno
+	 * @param mese
+	 * @param giorno
+	 */
+	public static boolean exists(int anno, int mese, int giorno) {
+		boolean res = false;
+		
+//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+////		format.parse("2010-02-31"); //=> Ok, rolls to "Wed Mar 03 00:00:00 PST 2010".
+//		format.setLenient(false);
+////		format.parse("2010-02-31"); //=> Throws ParseException "Unparseable date".
+		
+		
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.YEAR, anno);
+		c.set(Calendar.MONTH, mese);
+		c.set(Calendar.DAY_OF_MONTH, giorno);		
+		
+		int annoTest = c.get(Calendar.YEAR);
+		int meseTest = c.get(Calendar.MONTH);
+		int giornoTest = c.get(Calendar.DAY_OF_MONTH);	
+		
+		res = (anno == annoTest && mese == meseTest && giorno == giornoTest);
+
+		return res;
+	}
+	
+	/**
+	 * cerca una data valida se quella specificata non è valida. cercando all'indietro nel tempo
+	 * @param anno YEAR
+	 * @param mese MONTH
+	 * @param giorno DAY_OF_MONTH
+	 * @return la prima data valida trovata se quella specificata non è valida.
+	 */
+	public static Date searchValidBefore(int anno, int mese, int giorno) {
+		Date res = null;
+		if (!exists(anno, mese, giorno)) {
+			// cerco scorrendo i giorni all'indietro 
+			for (int i = giorno - 1; i > 0; i--) {
+				if (exists(anno, mese, i)) {
+					res = getDateEnd(anno, mese, i);
+					break;
+				}
+			}
+		} else {
+			res = getDateEnd(anno, mese, giorno);
+		}
+		return res;
+	}
+	
+	// protected static final Logger logger =
+	// Logger.getLogger(DateUtils.class.getName());
+
+	// public static final String FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	// public final static String FORMAT_ISO = "yyyyMMdd";
+	//
+	// public final static String FORMAT_ISO_HHMM = "yyyyMMdd HH:mm";
+	//
+	// public static final String FORMAT_HHmmssSS = "HH:mm:ss:SS";
+
+	// /**
+	// *
+	// * @param aDate
+	// * @return
+	// */
+	// public static int getAnno(Date aDate) {
+	//
+	// Calendar tempCal = new GregorianCalendar();
+	// tempCal.setTime(aDate);
+	//
+	// return tempCal.get(Calendar.YEAR);
+	// }
+
+//	/**
+//	 * Ritorna il mese della data specificata non 0 based
+//	 * 
+//	 * @param aDate
+//	 * @return
+//	 */
+//	public static int getMese(Date aDate) {
+//		return getMeseZeroBased(aDate) + 1;
+//	}
+
+	// public static int getMeseZeroBased(Date aDate) {
+	//
+	// Calendar tempCal = new GregorianCalendar();
+	// tempCal.setTime(aDate);
+	//
+	// return tempCal.get(Calendar.MONTH);
+	// }
+
+//	/**
+//	 * Ritorna il giorno del mese della data specificata
+//	 * 
+//	 * @param aDate
+//	 * @return
+//	 */
+//	public static int getGiorno(Date aDate) {
+//
+//		Calendar tempCal = new GregorianCalendar();
+//		tempCal.setTime(aDate);
+//
+//		return tempCal.get(Calendar.DAY_OF_MONTH);
+//	}
+//
+//	public static String getNowFormatTZGMT() {
+//		return getFormatTZGMT(new GregorianCalendar().getTime());
+//	}
+//
+//	public static String getFormatTZGMT(Date aDate) {
+//
+//		SimpleDateFormat dateFormatGmt = new SimpleDateFormat(FORMAT_ISO_8601);
+//		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+//
+//		return dateFormatGmt.format(aDate);
+//	}
 
 	// public static String getNowFormatISO() {
 	// return new SimpleDateFormat(FORMAT_ISO).format(new Date());
@@ -135,66 +709,66 @@ public class DateUtils extends DateUtilsLT {
 		return new SimpleDateFormat("HH:mm").format(aDate);
 	}
 
-	public static int differenzaInGiorni(Date start, Date end) {
-		int res = 0;
-
-		DateTime startDate = new DateTime(start);
-		DateTime endDate = new DateTime(end);
-
-		Days giorni = Days.daysBetween(startDate, endDate);
-		res = giorni.getDays();
-
-		return res;
-	}
-
-	public static int differenzaInSettimane(Date start, Date end) {
-		int res = 0;
-
-		DateTime startDate = new DateTime(start);
-		DateTime endDate = new DateTime(end);
-
-		Weeks settimane = Weeks.weeksBetween(startDate, endDate);
-		res = settimane.getWeeks();
-
-		return res;
-	}
-
-	public static int differenzaInMesi(Date start, Date end) {
-		int res = 0;
-
-		DateTime startDate = new DateTime(start);
-		DateTime endDate = new DateTime(end);
-
-		Months mesi = Months.monthsBetween(startDate, endDate);
-		res = mesi.getMonths();
-
-		return res;
-	}
-
-	public static List<Date> calcolaDateIntermedie(Date start, Date end) {
-		List<Date> res = new ArrayList<Date>();
-
-		DateTime startDate = new DateTime(start);
-		DateTime endDate = new DateTime(end);
-
-		if (differenzaInGiorni(start, end) > 0) {
-
-			res.add(startDate.toDate());
-			startDate = startDate.plusDays(1);
-
-			while (differenzaInGiorni(startDate.toDate(), end) != 0) {
-				res.add(startDate.toDate());
-				startDate = startDate.plusDays(1);
-			}
-
-			res.add(startDate.toDate());
-
-		} else {
-			res.add(start);
-		}
-
-		return res;
-	}
+//	public static int differenzaInGiorni(Date start, Date end) {
+//		int res = 0;
+//
+//		DateTime startDate = new DateTime(start);
+//		DateTime endDate = new DateTime(end);
+//
+//		Days giorni = Days.daysBetween(startDate, endDate);
+//		res = giorni.getDays();
+//
+//		return res;
+//	}
+//
+//	public static int differenzaInSettimane(Date start, Date end) {
+//		int res = 0;
+//
+//		DateTime startDate = new DateTime(start);
+//		DateTime endDate = new DateTime(end);
+//
+//		Weeks settimane = Weeks.weeksBetween(startDate, endDate);
+//		res = settimane.getWeeks();
+//
+//		return res;
+//	}
+//
+//	public static int differenzaInMesi(Date start, Date end) {
+//		int res = 0;
+//
+//		DateTime startDate = new DateTime(start);
+//		DateTime endDate = new DateTime(end);
+//
+//		Months mesi = Months.monthsBetween(startDate, endDate);
+//		res = mesi.getMonths();
+//
+//		return res;
+//	}
+//
+//	public static List<Date> calcolaDateIntermedie(Date start, Date end) {
+//		List<Date> res = new ArrayList<Date>();
+//
+//		DateTime startDate = new DateTime(start);
+//		DateTime endDate = new DateTime(end);
+//
+//		if (differenzaInGiorni(start, end) > 0) {
+//
+//			res.add(startDate.toDate());
+//			startDate = startDate.plusDays(1);
+//
+//			while (differenzaInGiorni(startDate.toDate(), end) != 0) {
+//				res.add(startDate.toDate());
+//				startDate = startDate.plusDays(1);
+//			}
+//
+//			res.add(startDate.toDate());
+//
+//		} else {
+//			res.add(start);
+//		}
+//
+//		return res;
+//	}
 
 	public static boolean verificaSovrapposizione(Date dateStartApp1, Date dateEndApp1, Date dateStartApp2, Date dateEndApp2, boolean unEstremoPuoEssereUguale) {
 		return verificaSovrapposizione(dateStartApp1.getTime(), dateEndApp1.getTime(), dateStartApp2.getTime(), dateEndApp2.getTime(), unEstremoPuoEssereUguale);
@@ -224,7 +798,7 @@ public class DateUtils extends DateUtilsLT {
 	 * Aggiunte Gianluca
 	 */
 	/**
-	 * Ritorna se il giorno cade in un fine settimana cio� sabato o domenica
+	 * Ritorna se il giorno cade in un fine settimana cioe' sabato o domenica
 	 * 
 	 * @param dt
 	 * @return
@@ -369,7 +943,7 @@ public class DateUtils extends DateUtilsLT {
 	 * ritorna il giorno della settimana
 	 * 
 	 * @param dt
-	 * @return 1 � domenica, .. 7 sabato
+	 * @return 1 e' domenica, .. 7 sabato
 	 */
 	public static int DayOfTheWeek(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -750,204 +1324,204 @@ public class DateUtils extends DateUtilsLT {
 		return calWeekFine.getTime();
 	}
 
-	/**
-	 * 
-	 * @param _fromDate
-	 * @param _fromTime
-	 * @param _toDate
-	 * @param _toTime
-	 * @return
-	 */
-	public static Double calculateDuration(Date _fromDate, Date _fromTime, Date _toDate, Date _toTime) {
-		Double duration;
-		Calendar calFromDate = null;
-		Calendar calFromTime = null;
-		Calendar calToDate = null;
-		Calendar calToTime = null;
-		Date fromDateTime = null;
-		Date toDateTime = null;
-
-		try {
-			if ((_fromDate != null) && (_fromTime != null) && (_toDate != null) && (_toTime != null)) {
-
-				logger.debug(String.format("%s=%s", _fromDate, _fromDate.getTime()));
-				logger.debug(String.format("%s=%s", _fromTime, _fromTime.getTime()));
-				logger.debug(String.format("%s=%s", _toDate, _toDate.getTime()));
-				logger.debug(String.format("%s=%s", _toTime, _toTime.getTime()));
-
-				// calFromDate = new GregorianCalendar();
-				// calFromDate.setTime(_fromDate);
-
-				// calFromTime = new GregorianCalendar();
-				// calFromTime.setTime(_fromTime);
-
-				// calToDate = new GregorianCalendar();
-				// calToDate.setTime(_toDate);
-
-				// calToTime = new GregorianCalendar();
-				// calToTime.setTime(_toTime);
-
-				// calFromDate.set(Calendar.HOUR_OF_DAY,
-				// calFromTime.get(Calendar.HOUR_OF_DAY));
-				// calFromDate.set(Calendar.MINUTE,
-				// calFromTime.get(Calendar.MINUTE));
-				// calFromDate.set(Calendar.SECOND,
-				// calFromTime.get(Calendar.SECOND));
-				// calFromDate.set(Calendar.MILLISECOND,
-				// calFromTime.get(Calendar.MILLISECOND));
-				//
-				// calToDate.set(Calendar.HOUR_OF_DAY,
-				// calToTime.get(Calendar.HOUR_OF_DAY));
-				// calToDate.set(Calendar.MINUTE,
-				// calToTime.get(Calendar.MINUTE));
-				// calToDate.set(Calendar.SECOND,
-				// calToTime.get(Calendar.SECOND));
-				// calToDate.set(Calendar.MILLISECOND,
-				// calToTime.get(Calendar.MILLISECOND));
-
-				// calFromDate.setTime(mergeDateTime(_fromDate, _fromTime));
-				// calToDate.setTime(mergeDateTime(_toDate, _toTime));
-
-				// fromDateTime = calFromDate.getTime();
-				// toDateTime = calToDate.getTime();
-
-				// logger.debug(String.format("%s=%s", fromDateTime,
-				// fromDateTime.getTime()));
-				// logger.debug(String.format("%s=%s", toDateTime,
-				// fromDateTime.getTime()));
-
-				// duration = ((toDateTime.getTime() - fromDateTime.getTime()) /
-				// 1000d / 60d / 60d);
-
-				// DateTime a = new DateTime(mergeDateTime(_fromDate,
-				// _fromTime));
-				// DateTime b = new DateTime(mergeDateTime(_toDate, _toTime));
-
-				// LocalDateTime a1 = new LocalDateTime(mergeDateTime(_fromDate,
-				// _fromTime).getTime());
-				// LocalDateTime b1 = new LocalDateTime(mergeDateTime(_toDate,
-				// _toTime).getTime());
-
-				// LocalDateTime a1 = mergeLocalDateTime(_fromDate, _fromTime);
-				// LocalDateTime b1 = mergeLocalDateTime(_toDate, _toTime);
-
-				DateTime a1 = mergeDateTime2(_fromDate, _fromTime);
-				DateTime b1 = mergeDateTime2(_toDate, _toTime);
-
-				// Duration d = new Duration(a, b);
-				Duration d1 = new Duration(a1.toDateTime(DateTimeZone.UTC), b1.toDateTime(DateTimeZone.UTC));
-
-				// logger.debug(String.format("%s", duration));
-
-				// logger.debug(d.getMillis() / 1000d / 60d / 60d);
-				logger.debug(d1.getMillis() / 1000d / 60d / 60d);
-
-				duration = d1.getMillis() / 1000d / 60d / 60d;
-
-			} else {
-
-				duration = 0d;
-
-			}
-		} catch (Exception e) {
-			logger.error("calculateDuration", e);
-			duration = 0d;
-		} finally {
-			calFromDate = null;
-			calFromTime = null;
-			calToDate = null;
-			calToTime = null;
-			fromDateTime = null;
-			toDateTime = null;
-		}
-
-		// setDuration(duration);
-		return duration;
-	}
+//	/**
+//	 * 
+//	 * @param _fromDate
+//	 * @param _fromTime
+//	 * @param _toDate
+//	 * @param _toTime
+//	 * @return
+//	 */
+//	public static Double calculateDuration(Date _fromDate, Date _fromTime, Date _toDate, Date _toTime) {
+//		Double duration;
+//		Calendar calFromDate = null;
+//		Calendar calFromTime = null;
+//		Calendar calToDate = null;
+//		Calendar calToTime = null;
+//		Date fromDateTime = null;
+//		Date toDateTime = null;
+//
+//		try {
+//			if ((_fromDate != null) && (_fromTime != null) && (_toDate != null) && (_toTime != null)) {
+//
+//				logger.debug(String.format("%s=%s", _fromDate, _fromDate.getTime()));
+//				logger.debug(String.format("%s=%s", _fromTime, _fromTime.getTime()));
+//				logger.debug(String.format("%s=%s", _toDate, _toDate.getTime()));
+//				logger.debug(String.format("%s=%s", _toTime, _toTime.getTime()));
+//
+//				// calFromDate = new GregorianCalendar();
+//				// calFromDate.setTime(_fromDate);
+//
+//				// calFromTime = new GregorianCalendar();
+//				// calFromTime.setTime(_fromTime);
+//
+//				// calToDate = new GregorianCalendar();
+//				// calToDate.setTime(_toDate);
+//
+//				// calToTime = new GregorianCalendar();
+//				// calToTime.setTime(_toTime);
+//
+//				// calFromDate.set(Calendar.HOUR_OF_DAY,
+//				// calFromTime.get(Calendar.HOUR_OF_DAY));
+//				// calFromDate.set(Calendar.MINUTE,
+//				// calFromTime.get(Calendar.MINUTE));
+//				// calFromDate.set(Calendar.SECOND,
+//				// calFromTime.get(Calendar.SECOND));
+//				// calFromDate.set(Calendar.MILLISECOND,
+//				// calFromTime.get(Calendar.MILLISECOND));
+//				//
+//				// calToDate.set(Calendar.HOUR_OF_DAY,
+//				// calToTime.get(Calendar.HOUR_OF_DAY));
+//				// calToDate.set(Calendar.MINUTE,
+//				// calToTime.get(Calendar.MINUTE));
+//				// calToDate.set(Calendar.SECOND,
+//				// calToTime.get(Calendar.SECOND));
+//				// calToDate.set(Calendar.MILLISECOND,
+//				// calToTime.get(Calendar.MILLISECOND));
+//
+//				// calFromDate.setTime(mergeDateTime(_fromDate, _fromTime));
+//				// calToDate.setTime(mergeDateTime(_toDate, _toTime));
+//
+//				// fromDateTime = calFromDate.getTime();
+//				// toDateTime = calToDate.getTime();
+//
+//				// logger.debug(String.format("%s=%s", fromDateTime,
+//				// fromDateTime.getTime()));
+//				// logger.debug(String.format("%s=%s", toDateTime,
+//				// fromDateTime.getTime()));
+//
+//				// duration = ((toDateTime.getTime() - fromDateTime.getTime()) /
+//				// 1000d / 60d / 60d);
+//
+//				// DateTime a = new DateTime(mergeDateTime(_fromDate,
+//				// _fromTime));
+//				// DateTime b = new DateTime(mergeDateTime(_toDate, _toTime));
+//
+//				// LocalDateTime a1 = new LocalDateTime(mergeDateTime(_fromDate,
+//				// _fromTime).getTime());
+//				// LocalDateTime b1 = new LocalDateTime(mergeDateTime(_toDate,
+//				// _toTime).getTime());
+//
+//				// LocalDateTime a1 = mergeLocalDateTime(_fromDate, _fromTime);
+//				// LocalDateTime b1 = mergeLocalDateTime(_toDate, _toTime);
+//
+//				DateTime a1 = mergeDateTime2(_fromDate, _fromTime);
+//				DateTime b1 = mergeDateTime2(_toDate, _toTime);
+//
+//				// Duration d = new Duration(a, b);
+//				Duration d1 = new Duration(a1.toDateTime(DateTimeZone.UTC), b1.toDateTime(DateTimeZone.UTC));
+//
+//				// logger.debug(String.format("%s", duration));
+//
+//				// logger.debug(d.getMillis() / 1000d / 60d / 60d);
+//				logger.debug(d1.getMillis() / 1000d / 60d / 60d);
+//
+//				duration = d1.getMillis() / 1000d / 60d / 60d;
+//
+//			} else {
+//
+//				duration = 0d;
+//
+//			}
+//		} catch (Exception e) {
+//			logger.error("calculateDuration", e);
+//			duration = 0d;
+//		} finally {
+//			calFromDate = null;
+//			calFromTime = null;
+//			calToDate = null;
+//			calToTime = null;
+//			fromDateTime = null;
+//			toDateTime = null;
+//		}
+//
+//		// setDuration(duration);
+//		return duration;
+//	}
 
 	public static Date mergeDateTime(Date date, Date time) {
 		return new Date(date.getYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
 	}
 
-	public static DateTime mergeDateTime2(Date date, Date time) {
-		// setup objects
-		// LocalDate localDate = new LocalDate(date.getYear(), date.getMonth(),
-		// date.getDate());
+//	public static DateTime mergeDateTime2(Date date, Date time) {
+//		// setup objects
+//		// LocalDate localDate = new LocalDate(date.getYear(), date.getMonth(),
+//		// date.getDate());
+//
+//		// LocalTime localTime = new LocalTime(time.getHours(),
+//		// time.getMinutes(), time.getSeconds());
+//
+//		// LocalDate localDate = new LocalDate(date.getTime());
+//		// LocalTime localTime = new LocalTime(time.getHours(),
+//		// time.getMinutes(), time.getSeconds());
+//		// DateTime dt = localDate.toDateTime(localTime);
+//
+//		// DateTime dt = new DateTime(date.getYear(), date.getMonth(),
+//		// date.getDate(), time.getHours(), time.getMinutes(),
+//		// time.getSeconds());
+//		// DateTime dt1 = new DateTime(date.getTime());
+//		// DateTime dt2 = new DateTime(time.getTime());
+//
+//		// DateTime dt = new DateTime(dt1.getYear(), dt1.getMonthOfYear(),
+//		// dt1.getDayOfMonth(), dt2.getHourOfDay(), dt2.getMinuteOfHour(),
+//		// dt2.getSecondOfMinute());
+//
+//		LocalDate localDate = new LocalDate(date.getTime());
+//
+//		int year = localDate.getYear(); // date.getYear();
+//		int month = localDate.getMonthOfYear(); // date.getMonth();
+//		int day = localDate.getDayOfMonth(); // date.getDate();
+//		int h = time.getHours();
+//		int m = time.getMinutes();
+//		int s = time.getSeconds();
+//
+//		logger.debug(String.format("%s-%s-%s %s:%s:%s", year, month, day, h, m, s));
+//
+//		DateTime dt = new DateTime(year, month, day, h, m, s, DateTimeZone.UTC);
+//
+//		return dt;
+//	}
 
-		// LocalTime localTime = new LocalTime(time.getHours(),
-		// time.getMinutes(), time.getSeconds());
-
-		// LocalDate localDate = new LocalDate(date.getTime());
-		// LocalTime localTime = new LocalTime(time.getHours(),
-		// time.getMinutes(), time.getSeconds());
-		// DateTime dt = localDate.toDateTime(localTime);
-
-		// DateTime dt = new DateTime(date.getYear(), date.getMonth(),
-		// date.getDate(), time.getHours(), time.getMinutes(),
-		// time.getSeconds());
-		// DateTime dt1 = new DateTime(date.getTime());
-		// DateTime dt2 = new DateTime(time.getTime());
-
-		// DateTime dt = new DateTime(dt1.getYear(), dt1.getMonthOfYear(),
-		// dt1.getDayOfMonth(), dt2.getHourOfDay(), dt2.getMinuteOfHour(),
-		// dt2.getSecondOfMinute());
-
-		LocalDate localDate = new LocalDate(date.getTime());
-
-		int year = localDate.getYear(); // date.getYear();
-		int month = localDate.getMonthOfYear(); // date.getMonth();
-		int day = localDate.getDayOfMonth(); // date.getDate();
-		int h = time.getHours();
-		int m = time.getMinutes();
-		int s = time.getSeconds();
-
-		logger.debug(String.format("%s-%s-%s %s:%s:%s", year, month, day, h, m, s));
-
-		DateTime dt = new DateTime(year, month, day, h, m, s, DateTimeZone.UTC);
-
-		return dt;
-	}
-
-	public static LocalDateTime mergeLocalDateTime(Date date, Date time) {
-		// return new LocalDateTime(mergeDateTime(date, time));
-		return new LocalDateTime(mergeDateTime2(date, time));
-	}
-
-	/**
-	 * 
-	 * @param date
-	 * @param time
-	 * @return
-	 */
-	public static DateTime mergeDateTimeUTC(Date date, Date time) {
-		// return new Date(date.getYear(), date.getMonth(), date.getDate(),
-		// time.getHours(), time.getMinutes(), time.getSeconds());
-
-		LocalDateTime a1 = new LocalDateTime(mergeDateTime(date, time).getTime());
-		// LocalDateTime b1 = new LocalDateTime(mergeDateTime(_toDate,
-		// _toTime).getTime());
-
-		// Duration d = new Duration(a, b);
-		// Duration d1 = new Duration(a1.toDateTime(DateTimeZone.UTC),
-		// b1.toDateTime(DateTimeZone.UTC));
-
-		// Calendar calDate =
-		// GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
-		// Calendar calTime =
-		// GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
-		//
-		// calDate.setTime(date);
-		// calTime.setTime(time);
-		// calDate.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY));
-		// calDate.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE));
-		// calDate.set(Calendar.SECOND, calTime.get(Calendar.SECOND));
-		// calDate.set(Calendar.MILLISECOND, calTime.get(Calendar.MILLISECOND));
-		//
-		//
-		// return calDate.getTime();
-
-		return a1.toDateTime(DateTimeZone.UTC);
-	}
+//	public static LocalDateTime mergeLocalDateTime(Date date, Date time) {
+//		// return new LocalDateTime(mergeDateTime(date, time));
+//		return new LocalDateTime(mergeDateTime2(date, time));
+//	}
+//
+//	/**
+//	 * 
+//	 * @param date
+//	 * @param time
+//	 * @return
+//	 */
+//	public static DateTime mergeDateTimeUTC(Date date, Date time) {
+//		// return new Date(date.getYear(), date.getMonth(), date.getDate(),
+//		// time.getHours(), time.getMinutes(), time.getSeconds());
+//
+//		LocalDateTime a1 = new LocalDateTime(mergeDateTime(date, time).getTime());
+//		// LocalDateTime b1 = new LocalDateTime(mergeDateTime(_toDate,
+//		// _toTime).getTime());
+//
+//		// Duration d = new Duration(a, b);
+//		// Duration d1 = new Duration(a1.toDateTime(DateTimeZone.UTC),
+//		// b1.toDateTime(DateTimeZone.UTC));
+//
+//		// Calendar calDate =
+//		// GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
+//		// Calendar calTime =
+//		// GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
+//		//
+//		// calDate.setTime(date);
+//		// calTime.setTime(time);
+//		// calDate.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY));
+//		// calDate.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE));
+//		// calDate.set(Calendar.SECOND, calTime.get(Calendar.SECOND));
+//		// calDate.set(Calendar.MILLISECOND, calTime.get(Calendar.MILLISECOND));
+//		//
+//		//
+//		// return calDate.getTime();
+//
+//		return a1.toDateTime(DateTimeZone.UTC);
+//	}
 
 	// public static Date addDays(Date aDate, int days) {
 	//
@@ -1806,57 +2380,57 @@ public class DateUtils extends DateUtilsLT {
 	// return new Date(0l);
 	// }
 
-	/**
-	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/
-	 * DateTimeFormat.html
-	 * 
-	 * @param aDate
-	 * @return
-	 */
-	public static String getWeekOfTheYearKey(Date aDate) {
-		DateTime dateTime = new DateTime(aDate);
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("x-'W'w");
-		return fmt.print(dateTime);
-
-	}
-
-	/**
-	 * http://stackoverflow.com/questions/15358409/dividing-a-joda-time-period-
-	 * into-intervals-of-desired-size
-	 * 
-	 * @param start
-	 * @param end
-	 * @param chunkAmount
-	 * @param chunkSize
-	 * @return
-	 */
-	public static List<Interval> splitDuration(DateTime start, DateTime end, long chunkAmount, long chunkSize) {
-		long millis = start.getMillis();
-		List<Interval> list = new ArrayList<Interval>();
-
-		// for(int i = 0; i < chunkAmount; ++i) {
-		// list.add(new Interval(millis, millis += chunkSize));
-		// }
-
-		while (millis <= end.getMillis()) {
-			list.add(new Interval(millis, millis += chunkSize));
-		}
-
-		if (millis < end.getMillis())
-			list.add(new Interval(millis, end.getMillis()));
-
-		return list;
-	}
-
-	/**
-	 * verifica se una data e' diversa da vuota e superiore ad adesso
-	 * 
-	 * @param aDate
-	 * @return
-	 */
-	public static boolean greaterThanToday(Date aDate) {
-		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();
-	}
+//	/**
+//	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/
+//	 * DateTimeFormat.html
+//	 * 
+//	 * @param aDate
+//	 * @return
+//	 */
+//	public static String getWeekOfTheYearKey(Date aDate) {
+//		DateTime dateTime = new DateTime(aDate);
+//		DateTimeFormatter fmt = DateTimeFormat.forPattern("x-'W'w");
+//		return fmt.print(dateTime);
+//
+//	}
+//
+//	/**
+//	 * http://stackoverflow.com/questions/15358409/dividing-a-joda-time-period-
+//	 * into-intervals-of-desired-size
+//	 * 
+//	 * @param start
+//	 * @param end
+//	 * @param chunkAmount
+//	 * @param chunkSize
+//	 * @return
+//	 */
+//	public static List<Interval> splitDuration(DateTime start, DateTime end, long chunkAmount, long chunkSize) {
+//		long millis = start.getMillis();
+//		List<Interval> list = new ArrayList<Interval>();
+//
+//		// for(int i = 0; i < chunkAmount; ++i) {
+//		// list.add(new Interval(millis, millis += chunkSize));
+//		// }
+//
+//		while (millis <= end.getMillis()) {
+//			list.add(new Interval(millis, millis += chunkSize));
+//		}
+//
+//		if (millis < end.getMillis())
+//			list.add(new Interval(millis, end.getMillis()));
+//
+//		return list;
+//	}
+//
+//	/**
+//	 * verifica se una data e' diversa da vuota e superiore ad adesso
+//	 * 
+//	 * @param aDate
+//	 * @return
+//	 */
+//	public static boolean greaterThanToday(Date aDate) {
+//		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();
+//	}
 
 	public static int getSemester(Date date) {
 		Calendar cal = Calendar.getInstance();
