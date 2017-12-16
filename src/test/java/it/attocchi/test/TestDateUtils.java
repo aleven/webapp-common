@@ -9,6 +9,7 @@ import org.joda.time.Interval;
 
 import it.attocchi.utils.DateUtilsLT;
 import it.webappcommon.lib.DateUtils;
+import it.webappcommon.lib.DateUtilsIoda;
 
 public class TestDateUtils {
 
@@ -41,21 +42,21 @@ public class TestDateUtils {
 		System.out.println(inizio);
 		System.out.println(fine);
 
-		System.out.println(DateUtils.differenzaInGiorni(fine, inizio));
-		System.out.println(DateUtils.differenzaInGiorni(inizio, fine));
+		System.out.println(DateUtilsIoda.differenzaInGiorni(fine, inizio));
+		System.out.println(DateUtilsIoda.differenzaInGiorni(inizio, fine));
 		System.out.println(DateUtils.DiffDays(inizio, fine));
 		System.out.println(DateUtils.DiffDays(fine, inizio));
 		System.out.println(DateUtils.getDaysBetween(cal2, cal1));
 		System.out.println(DateUtils.getDaysBetween(cal1, cal2));
 
-		System.out.println(DateUtils.differenzaInSettimane(inizio, fine));
-		System.out.println(DateUtils.differenzaInMesi(inizio, fine));
+		System.out.println(DateUtilsIoda.differenzaInSettimane(inizio, fine));
+		System.out.println(DateUtilsIoda.differenzaInMesi(inizio, fine));
 	}
 
 	private static void testSuddivisione() {
 
 		DateTime now = new DateTime();
-		List<Interval> list = DateUtils.splitDuration(now, now.plusDays(10), 3, 60 * 60 * 24 * 7 * 1000);
+		List<Interval> list = DateUtilsIoda.splitDuration(now, now.plusDays(10), 3, 60 * 60 * 24 * 7 * 1000);
 
 		for (Interval i : list) {
 			System.out.println(i.getStart() + " - " + i.getEnd() + " - " + i.toDurationMillis());
