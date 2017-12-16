@@ -29,11 +29,12 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SoftwareProperties {
 
-	protected static final Logger logger = Logger.getLogger(SoftwareProperties.class.getName());
+	protected static final Logger logger = LoggerFactory.getLogger(SoftwareProperties.class.getName());
 
 	public static final String WEB_INF_CONFIG_PROPERTIES = "/WEB-INF/software.properties";
 	// public static final String PU_NAME = "AtreeFLOW-WS";
@@ -100,6 +101,11 @@ public class SoftwareProperties {
 					jpaDbProps.put("javax.persistence.jdbc.user", userName);
 					jpaDbProps.put("javax.persistence.jdbc.password", password);
 
+					logger.debug("javax.persistence.jdbc.url={}", connString);
+					logger.debug("javax.persistence.jdbc.driver={}", driverClass);
+					logger.debug("javax.persistence.jdbc.user={}", userName);
+					logger.debug("javax.persistence.jdbc.password={}", StringUtils.repeat('*', StringUtils.defaultString(password).length()));
+										
 					/*
 					 * Se uno dei Parametri da File e' nullo annullo tutti gli
 					 * oggetti
