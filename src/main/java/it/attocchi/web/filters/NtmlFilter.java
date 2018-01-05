@@ -91,7 +91,7 @@ public class NtmlFilter implements Filter {
 
 				/*
 				 * La tecnica utilizzata (settaggio header) per la
-				 * determinazione dell'utente Windows � funzionante
+				 * determinazione dell'utente Windows e' funzionante
 				 * esclusivamente con browser Microsoft Internet Explorer. Se
 				 * altro browser salta questo step
 				 */

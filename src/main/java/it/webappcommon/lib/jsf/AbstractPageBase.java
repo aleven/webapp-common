@@ -494,9 +494,9 @@ public abstract class AbstractPageBase implements Serializable {
 		/*
 		 * Essendo che questa stringa e' stata pensata come parametro di un
 		 * alert() JavaScript nella pagina JSP, e' necessario rimpiazzare gli
-		 * apici (') con (\\'). Per� al momento degli action i get dei
-		 * back-bean vengono effettuati pi� volte (2) e quindi i rimpiazzi
-		 * risulterebbero troppi, ecco perch� prima si tolgono e poi si
+		 * apici (') con (\\'). Pero' al momento degli action i get dei
+		 * back-bean vengono effettuati piu' volte (2) e quindi i rimpiazzi
+		 * risulterebbero troppi, ecco perche' prima si tolgono e poi si
 		 * rimettono.
 		 */
 		_js_alert_message = _js_alert_message.replace("\\'", "'");
@@ -559,14 +559,14 @@ public abstract class AbstractPageBase implements Serializable {
 	 * @param list
 	 *            ArrayList da ordinare
 	 * @param column
-	 *            Nome della colonna/propriet� dell'oggetto in base alla quale
+	 *            Nome della colonna/proprieta' dell'oggetto in base alla quale
 	 *            effettuare l'ordinamento
 	 * @param ascending
 	 *            Booleano che specifica se l'ordinamento deve essere ascendente
 	 *            o meno
 	 */
 	public void sort(List list, final String column, final boolean ascending) {
-		// TODO: Gestione di property a pi� livelli: ad esempio
+		// TODO: Gestione di property a piu' livelli: ad esempio
 		// ElementBL.element.nome
 		Comparator comparator = null;
 
@@ -790,7 +790,7 @@ public abstract class AbstractPageBase implements Serializable {
 									 * che siano NULL
 									 */
 									/*
-									 * Pu� essere che la propriet� degli
+									 * Puo' essere che la proprieta' degli
 									 * oggetti sia NULL. In quel caso il
 									 * toString() genera errore se non gestito.
 									 * Se resInvoke1 oppure resInvoke2 sono
@@ -875,7 +875,7 @@ public abstract class AbstractPageBase implements Serializable {
 									// <editor-fold defaultstate="collapsed"
 									// desc="Gestione tipo object String">
 									/*
-									 * Pu� essere che la propriet� degli
+									 * Puo' essere che la proprieta' degli
 									 * oggetti sia NULL. In quel caso il
 									 * toString() genera errore se non gestito.
 									 * Se resInvoke1
@@ -925,7 +925,7 @@ public abstract class AbstractPageBase implements Serializable {
 									// <editor-fold defaultstate="collapsed"
 									// desc="Gestione tipo object Date">
 									/*
-									 * Pu� essere che la propriet� degli
+									 * Puo' essere che la proprieta' degli
 									 * oggetti sia NULL. In quel caso il
 									 * toString() genera errore se non gestito.
 									 * Se resInvoke1 oppure resInvoke2 sono
@@ -973,7 +973,7 @@ public abstract class AbstractPageBase implements Serializable {
 									// <editor-fold defaultstate="collapsed"
 									// desc="Gestione tipo object Integer">
 									/*
-									 * Pu� essere che la propriet� degli
+									 * Puo' essere che la proprieta' degli
 									 * oggetti sia NULL. In quel caso il
 									 * toString() genera errore se non gestito.
 									 * Se resInvoke1 oppure resInvoke2 sono
@@ -1021,7 +1021,7 @@ public abstract class AbstractPageBase implements Serializable {
 									// <editor-fold defaultstate="collapsed"
 									// desc="Gestione tipo object Double">
 									/*
-									 * Pu� essere che la propriet� degli
+									 * Puo' essere che la proprieta' degli
 									 * oggetti sia NULL. In quel caso il
 									 * toString() genera errore se non gestito.
 									 * Se resInvoke1 oppure resInvoke2 sono
@@ -1581,9 +1581,9 @@ public abstract class AbstractPageBase implements Serializable {
 	// }
 
 	// public boolean isValidate() {
-	// // inizializzato l'errore... se accade un'eccezzione verr� cmq permesso
+	// // inizializzato l'errore... se accade un'eccezzione verra' cmq permesso
 	// // al sw di proseguire,
-	// // mostrando per� una pagina di errore
+	// // mostrando pero' una pagina di errore
 	// boolean resultValue = false;
 	// SetSession validUser = null;
 	// Object objectUser = null;
@@ -1591,7 +1591,7 @@ public abstract class AbstractPageBase implements Serializable {
 	// resultValue = false;
 	// // ricevo dalla sessione l'utente loggato
 	// objectUser = this.getSessionObject(UtenteLoggato.VALID_USER);
-	// // se non c'� in sessione sparo fuori l'errore
+	// // se non c'e' in sessione sparo fuori l'errore
 	// // ATTENZIONE!! teoricamente questa evenienza dovrebbe essere gia
 	// // stata catturata dalla pagina jsp
 	// if (objectUser != null) {

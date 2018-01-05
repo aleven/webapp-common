@@ -1683,7 +1683,7 @@ public class DateUtils {
 	// * Aggiunte Gianluca
 	// */
 	// /**
-	// * Ritorna se il giorno cade in un fine settimana cio� sabato o domenica
+	// * Ritorna se il giorno cade in un fine settimana cioe' sabato o domenica
 	// *
 	// * @param dt
 	// * @return
@@ -1824,7 +1824,7 @@ public class DateUtils {
 	// * ritorna il giorno della settimana
 	// *
 	// * @param dt
-	// * @return 1 � domenica, .. 7 sabato
+	// * @return 1 e' domenica, .. 7 sabato
 	// */
 	// public static int DayOfTheWeek(Date dt) {
 	// Calendar cal = new GregorianCalendar();
@@ -2494,5 +2494,13 @@ public class DateUtils {
 			res = cal.getTime();
 		}
 		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this date.
+	 */
+	public static synchronized long getTimestampMS() {
+		return new Date().getTime();
 	}
 }

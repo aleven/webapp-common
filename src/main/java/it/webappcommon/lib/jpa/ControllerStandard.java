@@ -256,7 +256,7 @@ public abstract class ControllerStandard {
 			entity.afterDelete();
 			// } else {
 			// throw new
-			// Exception("Impossibile trovare la Entit� da Cancellare");
+			// Exception("Impossibile trovare la Entita' da Cancellare");
 			// }
 
 			// Commit only if local transaction
@@ -313,7 +313,7 @@ public abstract class ControllerStandard {
 	// em.remove(entity);
 	// entity.afterDelete();
 	// } else {
-	// throw new Exception("Impossibile trovare la Entit� da Cancellare");
+	// throw new Exception("Impossibile trovare la Entita' da Cancellare");
 	// }
 	//
 	// // Commit only if local transaction
@@ -928,7 +928,7 @@ public abstract class ControllerStandard {
 	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj, int firstItem, int batchSize) throws Exception {
-		List<T> returnValue = new ArrayList<T>(); // Non piu' null cos� posso
+		List<T> returnValue = new ArrayList<T>(); // Non piu' null cosi' posso
 													// semplificare il codice
 													// del chiamante
 
