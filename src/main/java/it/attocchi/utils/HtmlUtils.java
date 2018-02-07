@@ -23,6 +23,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -192,18 +195,37 @@ public class HtmlUtils {
 
 		// separate input by spaces ( URLs don't have spaces )
 		String[] parts = aString.split("\\s+");
+		// aggiungo gli spazi per garantire il replace delle parole (link esatti)
 		res = aString;
 		// Attempt to convert each item into an URL.
-		for (String item : parts)
+//		StringBuffer concat = new StringBuffer();
+		Map<String, String> bookmarks = new HashMap<String, String>();
+		int count = 0;
+		for (String item : parts) {
 			try {
 				URL url = new URL(item);
+				count++;
+				final String key = "###" + count + "###";
 				// If possible then replace with anchor...
-				res = res.replace(item, "<a href='" + url + "' class='LinkChiaveEsterna' target='_blank'>" + url + "</a>");
+				// res = res.replace(item, "<a href=\"" + url + "\" class=\"LinkChiaveEsterna\" target=\"_blank\">" + url + "</a>");
+				res = res.replace(item, key); // replaceFirst usa regular in caso di link con simbolo + sembra non funzionare
+				bookmarks.put(key, "<a href=\"" + url + "\" class=\"LinkChiaveEsterna\" target=\"_blank\">" + url + "</a>");
+				
+				// il replace su tutto il testo soffre di un problema nel caso ci siano due link simili con parametri diversi il secondo replace lavora anche sul primo
+				
+//				concat.append("<a href=\"" + url + "\" class=\"LinkChiaveEsterna\" target=\"_blank\">" + url + "</a>");
+//				concat.append(" ");
 			} catch (MalformedURLException e) {
 				// If there was an URL that was not it!...
 				// System.out.print(item + " ");
+//				concat.append(item);
+//				concat.append(" ");
 			}
-
+		}
+		for (String key : bookmarks.keySet()) {
+			res = res.replace(key, bookmarks.get(key));
+		}
 		return res;
+//		return concat.toString().trim();
 	}
 }
