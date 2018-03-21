@@ -4,3 +4,10 @@ http://jinahya.wordpress.com/2014/03/29/jpa-metamodels-with-maven/
 
 
 http://relation.to/Bloggers/HibernateStaticMetamodelGeneratorAnnotationProcessor
+
+INTELLIJ
+https://intellij-support.jetbrains.com/hc/en-us/community/posts/206842215-Hibernate-JPA-2-Metamodel-generation
+https://docs.jboss.org/hibernate/stable/jpamodelgen/reference/en-US/html_single/
+
+org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
+
