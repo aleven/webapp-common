@@ -68,7 +68,7 @@ public abstract class ControllerStandard {
 
 	/**
 	 * 
-	 * @param scoopedEMF
+	 * @param scoopedEM
 	 *            Specifica se tenere aperto EMF e EM usando lo scooped
 	 */
 	public ControllerStandard(boolean scoopedEM) {
