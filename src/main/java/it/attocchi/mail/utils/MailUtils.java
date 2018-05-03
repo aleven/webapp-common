@@ -1,10 +1,6 @@
 package it.attocchi.mail.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -425,7 +421,7 @@ public class MailUtils {
 		return res;
 	}
 
-	public static void saveToEml(Message mail, File emlFile) throws Exception {
+	public static void saveToEml(Message mail, File emlFile) throws IOException, MessagingException {
 		OutputStream os = null;
 		try {
 			os = new FileOutputStream(emlFile);
