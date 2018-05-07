@@ -146,18 +146,22 @@ abstract class PageBase implements Serializable {
 
 			if (summary != null) {
 				if (ex.getCause() == null) {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(summary, ex);
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
 				} else {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(summary, ex.getCause());
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
 				}
 			} else {
 				if (ex.getCause() == null) {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(ex);
 					summary = ex.getMessage();
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
 				} else {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(ex.getCause());
 					summary = ex.getCause().getMessage();
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
