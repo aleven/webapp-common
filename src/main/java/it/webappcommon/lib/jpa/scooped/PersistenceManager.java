@@ -1,12 +1,11 @@
 package it.webappcommon.lib.jpa.scooped;
 
-import java.util.logging.Logger;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.logging.Logger;
 
 /**
- *
+ * A scooped persistence manager for JSF
  * @author puche
  */
 public class PersistenceManager {
