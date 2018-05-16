@@ -190,22 +190,24 @@ public class DateUtils {
 		return new SimpleDateFormat("dd").format(aDate);
 	}
 
-	public static Date addDays(Date aDate, int days) {
-
+	public static Date addHours(Date aDate, int hours) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(aDate);
+		cal.add(Calendar.HOUR_OF_DAY, hours);
+		return cal.getTime();
+	}
 
+	public static Date addDays(Date aDate, int days) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(aDate);
 		cal.add(Calendar.DATE, days);
-
 		return cal.getTime();
 	}
 
 	public static Date addMonths(Date aDate, int months) {
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(aDate);
 		cal.add(Calendar.MONTH, months);
-
 		return cal.getTime();
 	}
 
