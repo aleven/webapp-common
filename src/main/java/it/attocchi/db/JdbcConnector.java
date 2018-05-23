@@ -32,7 +32,8 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -41,7 +42,8 @@ import org.apache.log4j.Logger;
  */
 public class JdbcConnector implements Closeable {
 
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+//	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Connection conn;
 	private boolean passedConnection = false;
@@ -160,7 +162,7 @@ public class JdbcConnector implements Closeable {
 					conn = null;
 				}
 			} catch (Exception ex) {
-				logger.error(ex);
+				logger.error("close", ex);
 			}
 		}
 	}
@@ -170,7 +172,7 @@ public class JdbcConnector implements Closeable {
 		try {
 			res = conn != null && conn.isClosed();
 		} catch (Exception ex) {
-			logger.error(ex);
+			logger.error("isClosed", ex);
 		}
 		return res;
 	}
@@ -237,7 +239,7 @@ public class JdbcConnector implements Closeable {
 				}
 			}
 
-			logger.debug(ps);
+			logger.debug("executeStored", ps);
 			res = ps.execute();
 
 		} finally {
@@ -285,7 +287,7 @@ public class JdbcConnector implements Closeable {
 
 			if (ListUtils.isNotEmpty(batchQuery)) {
 
-				logger.debug(batchQuery.size());
+				logger.debug("executeBatchUpdate", batchQuery.size());
 
 				Connection connection = getConnection();
 
