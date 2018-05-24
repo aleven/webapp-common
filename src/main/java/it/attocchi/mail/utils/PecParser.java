@@ -1,6 +1,8 @@
 package it.attocchi.mail.utils;
 
 import it.attocchi.mail.parts.EmailBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +19,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.ParseException;
 
-import org.apache.log4j.Logger;
+
 
 public class PecParser {
 
-	protected static final Logger logger = Logger.getLogger(PecParser.class.getName());
+	protected static final Logger logger = LoggerFactory.getLogger(PecParser.class);
 
 	int level = 0;
 	boolean showStructure = false;
@@ -285,7 +287,7 @@ public class PecParser {
 						// XXX - could try a series of names
 						throw new IOException("file exists");
 					// ((MimeBodyPart) p).saveFile(f);
-					MailUtils.saveToEml((MimeMessage) part, f);
+					MailUtils.saveToEml((MimeMessage) part, f, true);
 				} catch (IOException ex) {
 					log("Failed to save attachment: " + ex);
 				}

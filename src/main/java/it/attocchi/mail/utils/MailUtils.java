@@ -409,16 +409,16 @@ public class MailUtils {
 		return res;
 	}
 
-	/**
-	 * Salvataggio EML su file. Direttamente su file indicato da parametro
-	 * @param mail
-	 * @param emlFile
-	 * @throws IOException
-	 * @throws MessagingException
-	 */
-	public static void saveToEml(Message mail, File emlFile) throws IOException, MessagingException {
-		saveToEml(mail, emlFile, false);
-	}
+//	/**
+//	 * Salvataggio EML su file. Direttamente su file indicato da parametro
+//	 * @param mail
+//	 * @param emlFile
+//	 * @throws IOException
+//	 * @throws MessagingException
+//	 */
+//	public static void saveToEml(Message mail, File emlFile) throws IOException, MessagingException {
+//		saveToEml(mail, emlFile, false);
+//	}
 
 	/**
 	 * Salvataggio EML su file. Prima locale temporaneo e successivamente copiato in file indicato da parametro, se tmp = true
@@ -434,6 +434,7 @@ public class MailUtils {
 			if (tmpEnabled) {
 				File tmp = File.createTempFile("tmpEml", ".eml");
 				logger.debug("inizio scrittura mail su file temporaneo {}...", tmp);
+				os = new FileOutputStream(tmp);
 				mail.writeTo(os);
 				logger.debug("copia file tmp {} su file finale {}...", tmp, emlFile);
 				FileUtils.copyFile(tmp, emlFile);
