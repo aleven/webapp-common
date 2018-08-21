@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2012,2014 Mirco Attocchi
+    Copyright (c) 2012,2018 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
@@ -23,6 +23,12 @@ import java.text.MessageFormat;
 
 public class MessageUtils {
 
+	/**
+	 * Uso di {@link MessageFormat} per formattare un messaggio
+	 * @param message il pattern del messaggio da formattare
+	 * @param params parametri
+	 * @return
+	 */
 	public static String parse(String message, Object... params) {
 		String res = message;
 

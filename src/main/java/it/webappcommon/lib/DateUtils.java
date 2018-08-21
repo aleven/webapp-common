@@ -190,22 +190,24 @@ public class DateUtils {
 		return new SimpleDateFormat("dd").format(aDate);
 	}
 
-	public static Date addDays(Date aDate, int days) {
-
+	public static Date addHours(Date aDate, int hours) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(aDate);
+		cal.add(Calendar.HOUR_OF_DAY, hours);
+		return cal.getTime();
+	}
 
+	public static Date addDays(Date aDate, int days) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(aDate);
 		cal.add(Calendar.DATE, days);
-
 		return cal.getTime();
 	}
 
 	public static Date addMonths(Date aDate, int months) {
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(aDate);
 		cal.add(Calendar.MONTH, months);
-
 		return cal.getTime();
 	}
 
@@ -1683,7 +1685,7 @@ public class DateUtils {
 	// * Aggiunte Gianluca
 	// */
 	// /**
-	// * Ritorna se il giorno cade in un fine settimana cio� sabato o domenica
+	// * Ritorna se il giorno cade in un fine settimana cioe' sabato o domenica
 	// *
 	// * @param dt
 	// * @return
@@ -1824,7 +1826,7 @@ public class DateUtils {
 	// * ritorna il giorno della settimana
 	// *
 	// * @param dt
-	// * @return 1 � domenica, .. 7 sabato
+	// * @return 1 e' domenica, .. 7 sabato
 	// */
 	// public static int DayOfTheWeek(Date dt) {
 	// Calendar cal = new GregorianCalendar();
@@ -2494,5 +2496,13 @@ public class DateUtils {
 			res = cal.getTime();
 		}
 		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this date.
+	 */
+	public static synchronized long getTimestampMS() {
+		return new Date().getTime();
 	}
 }

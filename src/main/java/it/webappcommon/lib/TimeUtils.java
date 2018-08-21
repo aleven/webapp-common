@@ -19,6 +19,11 @@
 
 package it.webappcommon.lib;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
+
 public class TimeUtils {
 	
 	public static float timeToFloat(String aTimeDuration) {
@@ -52,5 +57,117 @@ public class TimeUtils {
 		}
 
 		return hours + ":" + minutes;
+	}
+	
+	/**
+	 * decodifica il testo nella forma
+	 * <ul>
+	 * <li>Nm min minuto minuti</li>
+	 * <li>Ns sec secondo secondi</li>
+	 * <li>Ng gg giorno giorni</li>
+	 * <li>Nh ora ore</li>
+	 * <li>Nms milli millisecondi</li>
+	 * </ul>
+	 * dove N è un numero intero (valido anche se N e unità sono separati da spazio)
+	 * @param value testo da decodificare
+	 * @return secondi
+	 */
+	public static int decode(String value) {
+		int res = 0;
+		int data = 0;
+		int toMS = 1; // 1000
+		if (StringUtils.isNotBlank(value)) {
+			if (value.endsWith("s")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("s")).trim());
+				res = data * toMS;
+			} else if (value.endsWith("sec")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("sec")).trim());
+				res = data * toMS;
+			} else if (value.endsWith("secondo")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("secondo")).trim());
+				res = data * toMS;
+			} else if (value.endsWith("secondi")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("secondi")).trim());
+				res = data * toMS;
+				
+			} else if (value.endsWith("m")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("m")).trim());
+				res = data * 60 * toMS;
+			} else if (value.endsWith("min")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("min")).trim());
+				res = data * 60 * toMS;
+			} else if (value.endsWith("minuto")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("minuto")).trim());
+				res = data * 60 * toMS;
+			} else if (value.endsWith("minuti")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("minuti")).trim());
+				res = data * 60 * toMS;
+				
+			} else if (value.endsWith("h")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("h")).trim());
+				res = data * 60 * 60 * toMS;
+			} else if (value.endsWith("ora")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("ora")).trim());
+				res = data * 60 * 60 * toMS;
+			} else if (value.endsWith("ore")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("ore")).trim());
+				res = data * 60 *60 * toMS;
+				
+			} else if (value.endsWith("ms")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("ms")).trim());
+				res = data;
+			} else if (value.endsWith("milli")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("milli")).trim());
+				res = data;
+			} else if (value.endsWith("millisecondi")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("millisecondi")).trim());
+				res = data;
+				
+			} else if (value.endsWith("g")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("g")).trim());
+				res = data * 24 * 60 * 60 * toMS;
+			} else if (value.endsWith("gg")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("gg")).trim());
+				res = data * 24 * 60 * 60 * toMS;
+			} else if (value.endsWith("giorno")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("giorno")).trim());
+				res = data * 24 * 60 * 60 * toMS;
+			} else if (value.endsWith("giorni")) {
+				data = Integer.parseInt(value.substring(0, value.indexOf("giorni")).trim());
+				res = data * 24 * 60 * 60 * toMS;
+				
+			} else {
+				data = Integer.parseInt(value);
+				res = data;
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * Aggiunge alla data specificata un valore espresso in unità 
+	 * @param aDate la data/ora su cui aggiungere il valore
+	 * @param value un valore valido per {@link decode}
+	 * @return
+	 */
+	public static Date aggiungi(Date aDate, String value) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(aDate);
+		
+		int sec = decode(value);
+		
+		c.add(Calendar.SECOND, sec);
+		
+		return c.getTime();
+	}
+	
+	/**
+	 * indica se allarme risulta scaduto rispetto alla scadenza
+	 * @param allarme data/ora da verificare
+	 * @param scadenza data/ora massimi oltre la quale allarme scade
+	 * @return true  se scaduto (scadenza < allarme)
+	 */
+	public static boolean scaduto(Date allarme, Date scadenza) {		
+		return (scadenza.before(allarme));
 	}
 }

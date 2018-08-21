@@ -1,36 +1,20 @@
 package it.attocchi.mail.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.mail.Address;
-import javax.mail.BodyPart;
-import javax.mail.Header;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-
+import it.attocchi.mail.parts.EmailBody;
+import it.attocchi.mail.parts.MailAttachmentUtil;
+import it.attocchi.utils.ListUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.attocchi.mail.parts.EmailBody;
-import it.attocchi.mail.parts.MailAttachmentUtil;
-import it.attocchi.utils.ListUtils;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import java.io.*;
+import java.util.*;
 
 
 public class MailUtils {
@@ -425,12 +409,42 @@ public class MailUtils {
 		return res;
 	}
 
-	public static void saveToEml(Message mail, File emlFile) throws Exception {
+//	/**
+//	 * Salvataggio EML su file. Direttamente su file indicato da parametro
+//	 * @param mail
+//	 * @param emlFile
+//	 * @throws IOException
+//	 * @throws MessagingException
+//	 */
+//	public static void saveToEml(Message mail, File emlFile) throws IOException, MessagingException {
+//		saveToEml(mail, emlFile, false);
+//	}
+
+	/**
+	 * Salvataggio EML su file. Prima locale temporaneo e successivamente copiato in file indicato da parametro, se tmp = true
+	 * @param mail mail message da salvare
+	 * @param emlFile file destinazione salvataggio
+	 * @param tmpEnabled indica se salvare prima sul temporaneo
+	 * @throws IOException
+	 * @throws MessagingException
+	 */
+	public static void saveToEml(Message mail, File emlFile, boolean tmpEnabled) throws IOException, MessagingException {
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream(emlFile);
-
-			mail.writeTo(os);
+			if (tmpEnabled) {
+				File tmp = File.createTempFile("tmpEml", ".eml");
+				logger.debug("inizio scrittura mail su file temporaneo {}...", tmp);
+				os = new FileOutputStream(tmp);
+				mail.writeTo(os);
+				logger.debug("copia file tmp {} su file finale {}...", tmp, emlFile);
+				FileUtils.copyFile(tmp, emlFile);
+				tmp.delete();
+				logger.debug("file temporaneo cancellato");
+			} else {
+				os = new FileOutputStream(emlFile);
+				logger.debug("inizio scrittura mail su file {}...", emlFile);
+				mail.writeTo(os);
+			}
 		} finally {
 			if (os != null) {
 				os.close();

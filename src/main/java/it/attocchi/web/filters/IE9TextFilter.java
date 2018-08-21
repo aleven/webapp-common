@@ -59,7 +59,7 @@ public class IE9TextFilter implements Filter {
 		// "ContentTypeList does not contain a supported content type: text/css"
 		// Um dies zu verhindern kann man entweder das Myfaces Patchen oder eben
 		// den Request korrigierren.
-		// Wir haben uns f�r die zweite L�sung enschieden und ver�ndern
+		// Wir haben uns fur die zweite Lusung enschieden und verendern
 		// den
 		// Accept header. Neu wird es "text/css, */*" anstatt nur "text/css"
 

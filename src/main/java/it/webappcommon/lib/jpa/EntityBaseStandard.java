@@ -208,7 +208,7 @@ public abstract class EntityBaseStandard implements Serializable {
 	}
 
 	// / Mettiamo questa se dovesse servirci nel Controller ri-caricare una
-	// entit� passata e non sappiamo come recuperare l'ID
+	// entita' passata e non sappiamo come recuperare l'ID
 	// public abstract Long getId();
 
 	/*

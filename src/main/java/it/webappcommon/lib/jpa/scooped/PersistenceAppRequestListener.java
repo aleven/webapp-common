@@ -33,7 +33,7 @@ public class PersistenceAppRequestListener extends PersistenceAppListener implem
 		if (pm instanceof ScopedPersistenceManager) {
 			LazyCloseEntityManager em = ((ScopedEntityManagerFactory) pm.getEntityManagerFactory()).getEntityManager();
 
-			// solo si ya exist�a se cierra, pero es posible que no exista
+			// solo si ya exista se cierra, pero es posible que no exista
 			if (em != null)
 				em.lazyClose();
 		}

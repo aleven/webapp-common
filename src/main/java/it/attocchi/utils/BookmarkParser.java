@@ -75,7 +75,7 @@ public class BookmarkParser {
 								strProperty = arrayProperty[i];
 								if (oggetto != null) {
 									/*
-									 * Se � popolato l'oggetto retobj siamo
+									 * Se e' popolato l'oggetto retobj siamo
 									 * nella situazione in cui devo prendereil
 									 * valore da stampare da un oggetto
 									 * complesso

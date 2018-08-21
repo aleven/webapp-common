@@ -30,11 +30,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -146,18 +142,22 @@ abstract class PageBase implements Serializable {
 
 			if (summary != null) {
 				if (ex.getCause() == null) {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(summary, ex);
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getMessage()));
 				} else {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(summary, ex.getCause());
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ex.getCause().getMessage()));
 				}
 			} else {
 				if (ex.getCause() == null) {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(ex);
 					summary = ex.getMessage();
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));
 				} else {
+					logger.error("page: " + this.getClass().getName());
 					logger.error(ex.getCause());
 					summary = ex.getCause().getMessage();
 					getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, ""));

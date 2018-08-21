@@ -19,6 +19,8 @@
 
 package it.webappcommon.lib.jpa;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ import it.webappcommon.lib.ExceptionLogger;
 import it.webappcommon.lib.jpa.scooped.PersistenceManager;
 import it.webappcommon.lib.jpa.scooped.PersistenceManagerUtil;
 
-public abstract class ControllerStandard {
+public abstract class ControllerStandard implements Closeable {
 
 	/**
 	 * Questa variabile serve ad indicare che tipo di EM usare (se chiusura du
@@ -68,7 +70,7 @@ public abstract class ControllerStandard {
 
 	/**
 	 * 
-	 * @param scoopedEMF
+	 * @param scoopedEM
 	 *            Specifica se tenere aperto EMF e EM usando lo scooped
 	 */
 	public ControllerStandard(boolean scoopedEM) {
@@ -256,7 +258,7 @@ public abstract class ControllerStandard {
 			entity.afterDelete();
 			// } else {
 			// throw new
-			// Exception("Impossibile trovare la Entit� da Cancellare");
+			// Exception("Impossibile trovare la Entita' da Cancellare");
 			// }
 
 			// Commit only if local transaction
@@ -313,7 +315,7 @@ public abstract class ControllerStandard {
 	// em.remove(entity);
 	// entity.afterDelete();
 	// } else {
-	// throw new Exception("Impossibile trovare la Entit� da Cancellare");
+	// throw new Exception("Impossibile trovare la Entita' da Cancellare");
 	// }
 	//
 	// // Commit only if local transaction
@@ -647,6 +649,8 @@ public abstract class ControllerStandard {
 		this.persistenceUnitName = persistenceUnitName;
 	}
 
+	public ControllerStandard setPersistenceUnitNameL(String persistenceUnitName) { this.setPersistenceUnitName(persistenceUnitName); return this; }
+
 	public class StringValuesCount {
 
 		private String itemValue;
@@ -928,7 +932,7 @@ public abstract class ControllerStandard {
 	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj, int firstItem, int batchSize) throws Exception {
-		List<T> returnValue = new ArrayList<T>(); // Non piu' null cos� posso
+		List<T> returnValue = new ArrayList<T>(); // Non piu' null cosi' posso
 													// semplificare il codice
 													// del chiamante
 
@@ -969,6 +973,17 @@ public abstract class ControllerStandard {
 			i = null;
 		}
 		return returnValue;
+	}
+
+	/**
+	 *
+	 * @param classObj
+	 * @param <T>
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj) throws Exception {
+		return findAll(classObj, 0, 0);
 	}
 
 	/**
@@ -1433,6 +1448,7 @@ public abstract class ControllerStandard {
 		return res;
 	}
 
+	@Override
 	public void close() {
 		if (scoopedEM) {
 			// MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory(persistenceUnitName);
@@ -1458,7 +1474,7 @@ public abstract class ControllerStandard {
 	protected void finalize() throws Throwable {
 		close();
 		super.finalize();
-		logger.debug("ControllerStandard finalized");
+		logger.debug(this.toString() + " finalized");
 	}
 
 	protected void closeResource() {
