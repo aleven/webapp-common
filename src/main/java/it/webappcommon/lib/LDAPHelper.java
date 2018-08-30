@@ -24,9 +24,7 @@
  */
 package it.webappcommon.lib;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -38,6 +36,8 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -56,6 +56,7 @@ public class LDAPHelper {
 		private String gruppi;
 		private String nome;
 		private String cognome;
+		private Map<String, String> attributes = new HashMap<String, String>();
 
 		public String getTel() {
 			return tel;
@@ -125,6 +126,19 @@ public class LDAPHelper {
 		public int compareTo(UserInfo o) {
 			return this.getNomeCompleto().compareTo(o.getNomeCompleto());
 		}
+
+		public void addAttribute(String key, String value) {
+			if (!attributes.containsKey(key))
+				attributes.put(key, value);
+		}
+
+		public Map<String, String> getAttributes() {
+			return attributes;
+		}
+
+		public void setAttributes(Map<String, String> attributes) {
+			this.attributes = attributes;
+		}
 	}
 
 	protected static Logger logger = Logger.getLogger(LDAPHelper.class.getName());
@@ -162,10 +176,8 @@ public class LDAPHelper {
 	}
 
 	/**
-	 * @param args
-	 *            the command line arguments
+	 * @param filter LDAP context filter
 	 */
-	// public static void main(String[] args) {
 	private List<UserInfo> search(String filter) throws NamingException {
 		DirContext ctx = null;
 		SearchControls ctls = null;
@@ -241,34 +253,40 @@ public class LDAPHelper {
 						}
 
 						if (att.getID().equalsIgnoreCase(FIELD_ACCOUNT_NAME)) {
-							// userInfo.setFIELD_ACCOUNT_NAME(value);
 							userInfo.setAccount(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_COGNOME)) {
-							// userInfo.setFIELD_COGNOME(value);
 							userInfo.setCognome(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_EMAIL)) {
-							// userInfo.setFIELD_EMAIL(value);
 							userInfo.setEmail(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_GROUPS)) {
-							// userInfo.setFIELD_GROUPS(value);
+//							value = StringUtils.replace(value, "\u003d", "=");
+//							value = StringEscapeUtils.unescapeJava(value);
 							userInfo.setGruppi(value);
+							userInfo.setGruppi(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_NOME)) {
-							// userInfo.setFIELD_NOME(value);
 							userInfo.setNome(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_NOME_COMPLETO)) {
-							// userInfo.setFIELD_NOME_COMPLETO(value);
 							userInfo.setNomeCompleto(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_NOME_VISUALIZZATO)) {
-							// userInfo.setFIELD_NOME_VISUALIZZATO(value);
 							// userInfo.setNome(value);
+//							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_TEL)) {
-							// userInfo.setFIELD_TEL(value);
 							userInfo.setTel(value);
+							userInfo.addAttribute(att.getID(), value);
 						} else if (att.getID().equalsIgnoreCase(FIELD_UFFICIO)) {
-							// userInfo.setFIELD_UFFICIO(value);
 							userInfo.setUfficio(value);
+							userInfo.addAttribute(att.getID(), value);
 						}
-						// res.put(att.getID(), value);
+
+//						if (fillAttributes) {
+//							userInfo.addAttribute(att.getID(), value);
+//						}
 					}
 
 					// Attribute attr = result.get("cn");
