@@ -1,6 +1,6 @@
 /*
 /*
-    Copyright (c) 2012,2013 Mirco Attocchi
+    Copyright (c) 2012,2018 Mirco Attocchi
 	
     This file is part of WebAppCommon.
 
