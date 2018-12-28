@@ -185,21 +185,21 @@
                         </goals>
                         <configuration>
                             <!--<additionalparam>${javadoc.opts}</additionalparam>-->
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                            <additionalOptions>-Xdoclint:none</additionalOptions>
+                            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
+                            <!--<additionalOptions>-Xdoclint:none</additionalOptions>-->
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <additionalparam>-Xdoclint:none</additionalparam>
                     <additionalOptions>-Xdoclint:none</additionalOptions>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
     <dependencies>
@@ -358,14 +358,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                            <additionalOptions>-Xdoclint:none</additionalOptions>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
