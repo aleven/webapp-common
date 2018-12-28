@@ -148,7 +148,7 @@ public class TimeUtils {
 	 * Aggiunge alla data specificata un valore espresso in unità 
 	 * @param aDate la data/ora su cui aggiungere il valore
 	 * @param value un valore valido per {@link decode}
-	 * @return
+	 * @return data
 	 */
 	public static Date aggiungi(Date aDate, String value) {
 		Calendar c = Calendar.getInstance();

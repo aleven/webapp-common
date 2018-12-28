@@ -211,8 +211,6 @@ public abstract class AbstractFiltro implements Serializable {
 	/**
 	 * Ritorna la condizione Where da concatenare alla query in funzione dei
 	 * criteri impostati
-	 * 
-	 * @return
 	 */
 	@XmlTransient
 	public String getSQLWhere() throws Exception {
@@ -281,8 +279,6 @@ public abstract class AbstractFiltro implements Serializable {
 	 * forse puo' essere utile passare al filtro la connessione e farla usare
 	 * al filtro stesso. Nel caso del programma di test qeusto e' utile ma anche
 	 * nel caso di transazioni
-	 * 
-	 * @return
 	 */
 	@XmlTransient
 	public Connection getConnection() {

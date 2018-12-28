@@ -39,7 +39,6 @@ public class ListUtils {
 	 * Verifica se una lista e' nulla o vuota
 	 * 
 	 * @param aList
-	 * @return
 	 */
 	public static <T> boolean isEmpty(List<T> aList) {
 		// boolean res = true;
@@ -56,7 +55,6 @@ public class ListUtils {
 	 * Verifica se una lista non e' nulla e vuota
 	 * 
 	 * @param aList
-	 * @return
 	 */
 	public static <T> boolean isNotEmpty(Collection<T> aList) {
 		return aList != null && aList.size() > 0;
@@ -96,7 +94,6 @@ public class ListUtils {
 	 * Gestisce anche gli elementi con spazi dopo la virgola
 	 * 
 	 * @param aStringWithValues
-	 * @return
 	 */
 	public static List<String> fromCommaSepared(String aStringWithValues) {
 		List<String> res = new ArrayList<String>();
@@ -221,7 +218,6 @@ public class ListUtils {
 	 * 
 	 * @param aList
 	 * @param id
-	 * @return
 	 */
 	public static <T extends IEntityWithIdLong> T findByIdLong(List<T> aList, long id) {
 		T res = null;
@@ -314,7 +310,6 @@ public class ListUtils {
 	 * 
 	 * @param aCommaSeparatedList
 	 * @param newValue
-	 * @return
 	 */
 	public static String addToListOfString(String aCommaSeparatedList, String newValue) {
 		List<String> list = null;

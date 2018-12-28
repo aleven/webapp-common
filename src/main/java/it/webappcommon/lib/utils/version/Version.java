@@ -46,7 +46,7 @@ public class Version implements Comparable {
 	 * Crea un oggetto AtreeFLOWVersion partendo dalla stringa nel fomato
 	 * supportato major.minor.build
 	 * 
-	 * @param version
+	 * @param version stringa versione
 	 */
 	public Version(String version) {
 		String[] splitVersion = version.split("\\.");

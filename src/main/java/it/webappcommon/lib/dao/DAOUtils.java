@@ -68,8 +68,8 @@ public class DAOUtils {
 	 * passo una variabile che dice se la connessione e' stata aperta dentro il
 	 * metodo
 	 * 
-	 * @param connection
-	 * @param close
+	 * @param connection connessione
+	 * @param close true se si vuole chiudere
 	 */
 	public static void close(Connection connection, boolean close) {
 		if (close) {

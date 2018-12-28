@@ -376,12 +376,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * Usato specialmente per aggiornare dopo un salvataggio. Nel caso delle
 	 * applicazioni web usiamo em che si chiude dopo la request quindi gli
 	 * oggetti non si aggiornano in automatico dopo il salvataggio.
-	 * 
-	 * @param <T>
-	 * @param classObj
-	 * @param id
-	 * @return
-	 * @throws Exception
 	 */
 	public <T extends EntityBaseStandard> T findAndRefresh(Class<T> classObj, Object id) throws Exception {
 		T returnValue = null;
@@ -688,13 +682,7 @@ public abstract class ControllerStandard implements Closeable {
 	}
 
 	/**
-	 * 
 	 * Restituisce loggetto relativo specificando classe ed id
-	 * 
-	 * @param classObj
-	 * @param id
-	 * @return EntityBase
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> T find2(Class<T> classObj, Object id) throws Exception {
 		T returnValue = null;
@@ -725,12 +713,6 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * Metodo che restituisce l'oggetto cercato specificando la classe
 	 * dell'oggetto, la query di ricerca e la mappa dei parametri
-	 * 
-	 * @param classObj
-	 * @param query
-	 * @param map
-	 * @return EntityBase
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> T findSingle2(Class<T> classObj, String query, Map<String, Object> map) throws Exception {
 		T returnValue = null;
@@ -787,14 +769,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * parametro, tramite la query da lanciare, la mappa dei parametri,
 	 * l'elemento di inizio e il numero di elementi desiderati (mettendo a 0
 	 * questo parametro li restituisce tutti)
-	 * 
-	 * @param classObj
-	 * @param query
-	 * @param map
-	 * @param firstItem
-	 * @param batchSize
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> List<T> findList2(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = null;
@@ -855,14 +829,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * parametro, tramite la query da lanciare, la mappa dei parametri,
 	 * l'elemento di inizio e il numero di elementi desiderati (mettendo a 0
 	 * questo parametro li restituisce tutti)
-	 * 
-	 * @param classObj
-	 * @param query
-	 * @param map
-	 * @param firstItem
-	 * @param batchSize
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> List<T> findListCustomQuery(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = null;
@@ -922,14 +888,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * Metodo che restituisce tutta la collezione di oggetti specificati come
 	 * parametro, tramite l'elemento di inizio e il numero di elementi
 	 * desiderati (mettendo a 0 questo parametro li restituisce tutti)
-	 * 
-	 * @param classObj
-	 * @param query
-	 * @param map
-	 * @param firstItem
-	 * @param batchSize
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = new ArrayList<T>(); // Non piu' null cosi' posso
@@ -975,13 +933,6 @@ public abstract class ControllerStandard implements Closeable {
 		return returnValue;
 	}
 
-	/**
-	 *
-	 * @param classObj
-	 * @param <T>
-	 * @return
-	 * @throws Exception
-	 */
 	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj) throws Exception {
 		return findAll(classObj, 0, 0);
 	}
@@ -989,10 +940,6 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * 
 	 * Metodo che restituisce il numero di elementi dato un certo tipo
-	 * 
-	 * @param classObj
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public <T extends EntityBaseStandard> int getItemCount3(Class<T> classObj) throws Exception {
 		int returnValue = 0;
@@ -1134,10 +1081,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * 
 	 * Metodo che restituisce il numero di elementi dato un certo tipo, la query
 	 * e la mappa dei parametri
-	 * 
-	 * @param classObj
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public int getItemCount2(Class<? extends EntityBaseStandard> classObj, String query, Map<String, Object> map) throws Exception {
 		int returnValue = 0;
@@ -1188,10 +1131,6 @@ public abstract class ControllerStandard implements Closeable {
 	 * 
 	 * Metodo che restituisce il numero di elementi dato un certo tipo, la query
 	 * e la mappa dei parametri
-	 * 
-	 * @param classObj
-	 * @return
-	 * @throws java.lang.Exception
 	 */
 	public int getItemCountCustomQuery(Class<? extends EntityBaseStandard> classObj, String query, Map<String, Object> map) throws Exception {
 		int returnValue = 0;
@@ -1240,11 +1179,6 @@ public abstract class ControllerStandard implements Closeable {
 
 	/**
 	 * Funziona SOLO CON IMPLEMENTAZIONE HIBERNATE
-	 * 
-	 * @param aList
-	 * @param aFilter
-	 * @return
-	 * @throws Exception
 	 */
 	public <T extends EntityBaseStandard> ArrayList<T> getFilteredList(Class<T> classObj, String aFilter) throws Exception {
 		ArrayList<T> returnValue = null;
@@ -1586,12 +1520,12 @@ public abstract class ControllerStandard implements Closeable {
 	// }
 
 	/**
-	 * 
+	 * costruisce una mappa di parametri
 	 * @param names
 	 *            of parameters param1,param2,...
 	 * @param objects
 	 *            values of params
-	 * @return
+	 * @return mappa di parametri
 	 */
 	public Map<String, Object> buildParams(String names, Object... objects) throws Exception {
 		Map<String, Object> res = new HashMap<String, Object>();
@@ -1613,7 +1547,7 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * Use for close this Controller
 	 * 
-	 * @param istance
+	 * @param istance istanza
 	 */
 	public static void close(ControllerStandard istance) {
 		if (istance != null) {

@@ -148,9 +148,6 @@ public class DateUtils {
 
 	/**
 	 * Ritorna il giorno del mese della data specificata
-	 * 
-	 * @param aDate
-	 * @return
 	 */
 	public static int getGiorno(Date aDate) {
 
@@ -174,8 +171,6 @@ public class DateUtils {
 	
 	/**
 	 * Data nel formato MM
-	 * @param aDate
-	 * @return
 	 */
 	public static String getMonth(Date aDate) {
 		return new SimpleDateFormat("MM").format(aDate);
@@ -183,8 +178,6 @@ public class DateUtils {
 
 	/**
 	 * Data nel formato dd
-	 * @param aDate
-	 * @return
 	 */
 	public static String getDay(Date aDate) {
 		return new SimpleDateFormat("dd").format(aDate);
@@ -230,10 +223,6 @@ public class DateUtils {
 	 * potrebbe diventare 2012 03 08 perche viene valorizzata con ora 00:00 e
 	 * quando la si formatta nel locale Italiano Java la fa diventare il giorno
 	 * precedente passando da CET a CEST
-	 * 
-	 * @param aIsoString
-	 * @return
-	 * @throws ParseException
 	 */
 	public static Date parseISO(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
@@ -241,10 +230,6 @@ public class DateUtils {
 
 	/**
 	 * 2013-12-13
-	 * 
-	 * @param aIsoString
-	 * @return
-	 * @throws ParseException
 	 */
 	public static Date parseISOSeparator(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
@@ -253,9 +238,6 @@ public class DateUtils {
 	/**
 	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
 	 * minutes)
-	 * 
-	 * @param HHmm
-	 * @return value of duration as numeric value
 	 */
 	public static float calculateDuration(String HHmm) {
 
@@ -287,9 +269,6 @@ public class DateUtils {
 	/**
 	 * Week number of the date. From the help this may be different by Calendar
 	 * Locale
-	 * 
-	 * @param aDate
-	 * @return
 	 */
 	public static int getWeekOfTheYear(Date aDate) {
 		Calendar cal = Calendar.getInstance();
@@ -341,9 +320,9 @@ public class DateUtils {
 	
 	/**
 	 * crea una data dai dati specificati (imposta orario alle 23:59)
-	 * @param year
-	 * @param month
-	 * @param day
+	 * @param year anno
+	 * @param month mese
+	 * @param day giorno
 	 * @return a date at 23:59
 	 */
 	public static Date getDateEnd(int year, int month, int day) {
@@ -352,11 +331,6 @@ public class DateUtils {
 	
 	/**
 	 * Set time of a Date
-	 * 
-	 * @param aDate
-	 * @param hours
-	 * @param minutes
-	 * @return
 	 */
 	public static Date setTime(Date aDate, int hours, int minutes) {
 		Calendar c = Calendar.getInstance();
@@ -372,11 +346,6 @@ public class DateUtils {
 	/**
 	 * Verify if a Date is Between other dates, looking only for the date, not
 	 * for the time
-	 * 
-	 * @param aMoment
-	 * @param from
-	 * @param to
-	 * @return
 	 */
 	public static boolean isBetween(Date aMoment, Date from, Date to) {
 
@@ -405,11 +374,6 @@ public class DateUtils {
 		return aMoment.getTime() >= a.getTime().getTime() && aMoment.getTime() <= b.getTime().getTime();
 	}
 
-	/**
-	 * 
-	 * @param aDate
-	 * @return
-	 */
 	public static int getAnno(Date aDate) {
 		Calendar tempCal = new GregorianCalendar();
 		tempCal.setTime(aDate);
@@ -422,9 +386,6 @@ public class DateUtils {
 	
 	/**
 	 * Ritorna il mese della data specificata non 0 based
-	 * 
-	 * @param aDate
-	 * @return
 	 */
 	public static int getMese(Date aDate) {
 		return getMeseZeroBased(aDate) + 1;
@@ -440,7 +401,6 @@ public class DateUtils {
 	 * 
 	 * @param monthZeroBased
 	 *            numero del mese zero-based
-	 * @return
 	 */
 	public static int getLastDayOfMontZeroBased(int monthZeroBased, int year) throws Exception {
 		return getLastDayOfMont(monthZeroBased + 1, year);
@@ -450,7 +410,6 @@ public class DateUtils {
 	 * 
 	 * @param monthNonZeroBased
 	 *            Numero del mese non zero-based
-	 * @return
 	 */
 	public static int getLastDayOfMont(int monthNonZeroBased, int year) throws Exception {
 		int res = 0;
@@ -493,10 +452,6 @@ public class DateUtils {
 	 * Original code from source:
 	 * http://stackoverflow.com/questions/4600034/calculate
 	 * -number-of-weekdays-between-two-dates-in-java
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
 	 */
 	public static int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
 
@@ -564,21 +519,13 @@ public class DateUtils {
 	public static String format(Calendar aDate, String format) {
 		return format(aDate.getTime(), format);
 	}
-	/**
-	 * HH:mm
-	 * @param timeString
-	 * @return
-	 * @throws ParseException
-	 */
+
 	public static Date parseTime(String timeString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_TIME_IT).parse(timeString);
 	}
 
 	/**
 	 * verifica se una data esiste
-	 * @param anno
-	 * @param mese
-	 * @param giorno
 	 */
 	public static boolean exists(int anno, int mese, int giorno) {
 		boolean res = false;
@@ -703,9 +650,6 @@ public class DateUtils {
 
 	/**
 	 * Ritorna l'ora della Data nel formato HH:mm
-	 * 
-	 * @param aDate
-	 * @return
 	 */
 	public static String getOra(Date aDate) {
 		return new SimpleDateFormat("HH:mm").format(aDate);
@@ -801,9 +745,6 @@ public class DateUtils {
 	 */
 	/**
 	 * Ritorna se il giorno cade in un fine settimana cioe' sabato o domenica
-	 * 
-	 * @param dt
-	 * @return
 	 */
 	public static boolean isWeekend(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -915,9 +856,6 @@ public class DateUtils {
 
 	/**
 	 * Settimana dell'anno
-	 * 
-	 * @param dt
-	 * @return
 	 */
 	public static int WeekOfTheYear(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -928,9 +866,6 @@ public class DateUtils {
 	/**
 	 * Mette a zero la componente tempo della data es. 23/04/2010 24:25:01
 	 * diventa 23/04/2010 00:00:00
-	 * 
-	 * @param dt
-	 * @return
 	 */
 	public static Date getDateNoTime(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -944,7 +879,7 @@ public class DateUtils {
 	/**
 	 * ritorna il giorno della settimana
 	 * 
-	 * @param dt
+	 * @param dt data
 	 * @return 1 e' domenica, .. 7 sabato
 	 */
 	public static int DayOfTheWeek(Date dt) {
@@ -969,8 +904,8 @@ public class DateUtils {
 	/**
 	 * Ritona il prefisso del giorno della settimana indicato
 	 * 
-	 * @param dt
-	 * @return
+	 * @param dt data
+	 * @return prefisso del giorno
 	 */
 	public static String DayPrefix(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -1004,7 +939,7 @@ public class DateUtils {
 	 *            Data da formattare
 	 * @param formatString
 	 *            es. "dd-MM-yyyy" oppure "dd-MM-yyyy HH:mm"
-	 * @return
+	 * @return data formattata
 	 */
 	public static String getFormat(Date dt, String formatString) {
 		if (dt == null)
@@ -1015,10 +950,6 @@ public class DateUtils {
 
 	/**
 	 * Ritorna la differenza in giorni tra 2 date
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
 	 */
 	public static int DiffDays(Date startDate, Date endDate) {
 		return (int) ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -1132,11 +1063,6 @@ public class DateUtils {
 		return res;
 	}
 
-	/**
-	 * 
-	 * @param aDate
-	 * @return
-	 */
 	public static Date getSixMonthBefore(Date aDate) {
 		Date res = null;
 
@@ -1274,11 +1200,6 @@ public class DateUtils {
 
 	/**
 	 * Crea una data usando anno mese giorno e i mesi non zero-based
-	 * 
-	 * @param anno
-	 * @param mese
-	 * @param giorno
-	 * @return
 	 */
 	public static Date newDate(int anno, int mese, int giorno) {
 
@@ -1290,9 +1211,6 @@ public class DateUtils {
 
 	/**
 	 * Procedura copiata dal celendario per AppuntamentiDAO
-	 * 
-	 * @param inizio
-	 * @return
 	 */
 	public static Date getInizioSettimana(Date inizio) {
 

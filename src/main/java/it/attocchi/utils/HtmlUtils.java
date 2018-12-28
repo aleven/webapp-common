@@ -35,12 +35,6 @@ public class HtmlUtils {
 
 	protected static Logger logger = Logger.getLogger(HtmlUtils.class.getName());
 
-	/**
-	 * 
-	 * @param uri
-	 * @return
-	 * @throws Exception
-	 */
 	// public static String readUrl(String uri) throws Exception {
 	// StringBuilder sb = new StringBuilder();
 	// URL url = new URL(uri);
@@ -81,14 +75,14 @@ public class HtmlUtils {
 	}
 
 	/**
-	 * 
-	 * @param htmlText
+	 * converti html in string java
+	 * @param htmlText testo html
 	 * @param convertHtmlNewLine
 	 *            if enabled convert <br>
 	 *            and
 	 *            <p>
 	 *            to /n new line
-	 * @return
+	 * @return string con i caratteri convertiti
 	 */
 	public static String convertoHtmlToJavaString(String htmlText, boolean convertHtmlNewLine) {
 		// String res = null;

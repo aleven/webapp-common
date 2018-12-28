@@ -388,7 +388,6 @@ public class LDAPHelper {
 	 * Ricerca il testo nei campi FIELD_NOME_COMPLETO, FIELD_EMAIL, FIELD_TEL,
 	 * FIELD_UFFICIO
 	 * 
-	 * @return
 	 */
 	public List<UserInfo> findActiveUsers(String filtroRicerca) throws NamingException {
 		List<UserInfo> res = null;

@@ -27,10 +27,6 @@ public abstract class AbstactEntityMarksUUID extends EntityBase {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 * @return
-	 */
 	public abstract EntityMarksUUID getEntityMarks();
 
 	public abstract void setEntityMarks(EntityMarksUUID entityMarks);
