@@ -187,14 +187,14 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 	/**
 	 * Specifica se il tipo di chiave da usare e' numerico o stringa
 	 * 
-	 * @return
+	 * @return true se numerico
 	 */
 	protected abstract boolean isIDNumerico();
 
 	/**
 	 * Verifica se e' stato passato un id di un oggetto
 	 * 
-	 * @return
+	 * @return true se numerico maggiore di zero o non numerico e diverso da stringa vuota
 	 */
 	public boolean isEditMode() {
 		// return (idSelezionato > 0);

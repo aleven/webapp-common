@@ -111,7 +111,7 @@ public class JdbcConnector implements Closeable {
 
 	/**
 	 * Uses DriverManager.
-	 * 
+	 * @return the connections
 	 * @throws Exception
 	 */
 	public Connection getConnection() throws Exception {
@@ -252,10 +252,10 @@ public class JdbcConnector implements Closeable {
 
 	/**
 	 * 
-	 * @param aQuery
-	 * @param params
-	 * @return
-	 * @throws SQLException
+	 * @param keepConnOpen keep connection open
+	 * @param aQuery the SQL query
+	 * @return row count
+	 * @throws SQLException sql exception
 	 */
 	public int executeUpdate(boolean keepConnOpen, String aQuery) throws Exception {
 		int res = 0;
@@ -275,10 +275,10 @@ public class JdbcConnector implements Closeable {
 
 	/**
 	 * 
-	 * @param aQuery
-	 * @param params
-	 * @return
-	 * @throws SQLException
+	 * @param keepConnOpen keep connection open
+	 * @param batchQuery list of SQL queries
+	 * @return row count
+	 * @throws SQLException sql exception
 	 */
 	public int executeBatchUpdate(boolean keepConnOpen, List<String> batchQuery) throws Exception {
 		int res = 0;

@@ -358,9 +358,6 @@ public class MailSender {
 
 	/**
 	 * Extract multi recipient from a string separed with ; or ,
-	 * 
-	 * @param toEmail
-	 * @return
 	 */
 	public List<MailRecipient> parseEmails(String toEmail) {
 		List<MailRecipient> res = new ArrayList<MailRecipient>();
@@ -392,11 +389,6 @@ public class MailSender {
 		return res;
 	}
 
-	/**
-	 * 
-	 * @param files
-	 * @return
-	 */
 	public static List<EmailAttachment> prepareAttachment(List<String> files) {
 		List<EmailAttachment> res = null;
 
@@ -408,9 +400,6 @@ public class MailSender {
 
 	/**
 	 * Prepara la lista di attachments partendo dalla lista di nomi files
-	 * 
-	 * @param files
-	 * @return
 	 */
 	public static List<EmailAttachment> prepareAttachment(String... files) {
 		List<EmailAttachment> res = null;

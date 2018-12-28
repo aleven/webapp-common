@@ -126,16 +126,6 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * starndard. Nel caso un campo non sia presente nella tabella, ad esempio
 	 * "utente modifica" basta specificarlo come stringa vuota e non viene
 	 * usato.
-	 * 
-	 * @param conn
-	 * @param nomeTabella
-	 * @param campoID
-	 * @param campoDataCreazioneNonStandard
-	 * @param campoIDUtenteCreazioneNonStd
-	 * @param campoDataModificaNonStandard
-	 * @param campoIDUtenteModificaNonStd
-	 * @param campoDataCancellazioneNonStandard
-	 * @param campoIDUtenteCancellazioneNonStd
 	 */
 	public AbstractBaseDAO(Connection conn, String nomeTabella, String campoID, String campoDataCreazioneNonStandard, String campoIDUtenteCreazioneNonStd, String campoDataModificaNonStandard, String campoIDUtenteModificaNonStd, String campoDataCancellazioneNonStandard, String campoIDUtenteCancellazioneNonStd) {
 
@@ -200,9 +190,9 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	/**
 	 * 
-	 * @param conn
+	 * @param filtro filtro da applicare
 	 * @return un nuovo ArrayList anche se non ci sono risultati dall query
-	 * @throws Exception
+	 * @throws Exception eccezione
 	 */
 	public List<T> getAll(F filtro) throws Exception {
 		List<T> returnValue = new ArrayList<T>();
@@ -335,10 +325,10 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * usare anche per i LINKS efare il distinct su id tabella 1 o 2 Se non
 	 * viene specificato un campoID viene fatto sul campo ID del Dao
 	 * 
-	 * @param filtro
-	 * @param campoIdDistinct
-	 * @return
-	 * @throws Exception
+	 * @param filtro filtro da applicare
+	 * @param campoIdDistinct campo ID su cui applicare DISTINCT
+	 * @return lista da ID
+	 * @throws Exception errore
 	 */
 	public List<Integer> getAllIdDistinct(F filtro, String campoIdDistinct) throws Exception {
 		List<Integer> res = new ArrayList<Integer>();
@@ -473,20 +463,10 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
-	/**
-	 * 
-	 * @param rs
-	 * @return
-	 * @throws Exception
-	 */
 	public abstract T filler(ResultSet rs) throws Exception;
 
 	/**
 	 * Si preoccupa di caricare i dati base di tutti gli AbstractDataMappingBase
-	 * 
-	 * @param oggettoDaCaricare
-	 * @param rs
-	 * @throws Exception
 	 */
 	protected void fillerBase(T oggettoDaCaricare, ResultSet rs) throws Exception {
 
@@ -514,12 +494,6 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
-	/**
-	 * 
-	 * @param oggettoDaInserire
-	 * @param conn
-	 * @throws Exception
-	 */
 	public abstract int insert(T oggettoDaInserire, int idUtente) throws Exception;
 
 	public T insertAndFill(T oggettoDaInserire, int idUtente) throws Exception {
@@ -532,16 +506,6 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return returnValue;
 	}
 
-	/**
-	 * 
-	 * @param oggettoDaAggiornare
-	 * @param id
-	 *            Viene Passato perche' non posso leggerlo dall'interfaccia al
-	 *            momento
-	 * @param idUtente
-	 * @return
-	 * @throws Exception
-	 */
 	public abstract int update(T oggettoDaAggiornare, int idUtente) throws Exception;
 
 	public T updateAndFill(T oggettoDaAggiornare, int id, int idUtente) throws Exception {
@@ -801,7 +765,7 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * Impostato nel dao viene usato nel filler per impostare su ogni singolo
 	 * oggetto se e' stato caricato da un utente privilegiato
 	 * 
-	 * @param uiUtentePrivilegiato
+	 * @param uiUtentePrivilegiato uiUtentePrivilegiato
 	 */
 	public void setUiUtentePrivilegiato(boolean uiUtentePrivilegiato) {
 		this.uiUtentePrivilegiato = uiUtentePrivilegiato;

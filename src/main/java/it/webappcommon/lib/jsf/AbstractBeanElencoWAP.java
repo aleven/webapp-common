@@ -341,7 +341,7 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 	/**
 	 * Verifica se la pagina corrente corrisponde all'ultima pagina
 	 * 
-	 * @return
+	 * @return true se pagina e' l'ultima pagina
 	 */
 	public boolean isUltimaPagina() {
 		return (this.pagina == getPagineTotali());
@@ -349,8 +349,8 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 
 	/**
 	 * Verifica se la pagina corrente e' la prima pagina
-	 * 
-	 * @return
+	 *
+	 * @return true se pagina e' zero o uno
 	 */
 	public boolean isPrimaPagina() {
 		return (this.pagina == 0 || this.pagina == 1);

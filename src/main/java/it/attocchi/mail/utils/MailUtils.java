@@ -33,14 +33,6 @@ public class MailUtils {
 	public static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
 	public static final String CHARSET_UTF8 = "UTF-8";
 
-	/**
-	 * 
-	 * @param mailText
-	 * @param textStart
-	 * @param textEnd
-	 * @param isHtml
-	 * @return
-	 */
 	public static String removeDisclaimer(String mailText, String textStart, String textEnd, boolean isHtml) {
 
 		String res = mailText;
@@ -98,11 +90,6 @@ public class MailUtils {
 
 	/**
 	 * Estrae il Body di una email anche nel caso sia Html o MultiPart
-	 * 
-	 * @param message
-	 * @return
-	 * @throws MessagingException
-	 * @throws java.io.IOException
 	 */
 	public static EmailBody getBody(Message message) throws MessagingException, java.io.IOException {
 		String testo = null;
@@ -135,10 +122,6 @@ public class MailUtils {
 	
 	/**
 	 * Gestione javax.mail.MessagingException: Unable to load BODYSTRUCTURE
-	 * @param email
-	 * @return
-	 * @throws IOException
-	 * @throws MessagingException
 	 */
 	private static Object getEmailContent(Message email) throws IOException, MessagingException {
         Object content;
@@ -158,13 +141,6 @@ public class MailUtils {
         return content;
     } 
 
-	/**
-	 * 
-	 * @param mp
-	 * @return
-	 * @throws MessagingException
-	 * @throws IOException
-	 */
 	private static EmailBody extractMultiPartText(Multipart mp) throws MessagingException, IOException {
 		String testo = "";
 		EmailBody res = null;
@@ -196,8 +172,6 @@ public class MailUtils {
 	
 	/**
 	 * Gestione errore Unknown encoding quoted-printable-- con javamail 1.5 non si presenta problema
-	 * @param bodyPart
-	 * @return
 	 */
 	private static String manageBodyPart(BodyPart bodyPart) throws MessagingException, IOException {
 		String res = null;
@@ -339,10 +313,6 @@ public class MailUtils {
 	/**
 	 * Rimuove un indirizzo email da una serie che sono stati specificati
 	 * separati da virgola o punto e virgola
-	 * 
-	 * @param indirizzoNotifica
-	 * @param mail
-	 * @return
 	 */
 	@Deprecated
 	public static String removeAddress(String indirizziMultipli, String mail) {
@@ -383,12 +353,6 @@ public class MailUtils {
 		return res;
 	}
 
-	/**
-	 * 
-	 * @param elencoIndirizzi
-	 * @param emailDaRimuovere
-	 * @return
-	 */
 	public static String cleanDuplicatesAndRemoveAddress2(String elencoIndirizzi, String emailDaRimuovere) {
 		String res = elencoIndirizzi;
 		if (elencoIndirizzi != null && !elencoIndirizzi.isEmpty()) {
@@ -425,8 +389,6 @@ public class MailUtils {
 	 * @param mail mail message da salvare
 	 * @param emlFile file destinazione salvataggio
 	 * @param tmpEnabled indica se salvare prima sul temporaneo
-	 * @throws IOException
-	 * @throws MessagingException
 	 */
 	public static void saveToEml(Message mail, File emlFile, boolean tmpEnabled) throws IOException, MessagingException {
 		OutputStream os = null;
@@ -482,9 +444,6 @@ public class MailUtils {
 	/***
 	 * Nelle notifiche in cui concateno come destinatario + campi potrei trovare
 	 * dei casi in cui i segnaposti sono vuoti
-	 * 
-	 * @param addresses
-	 * @return
 	 */
 	@Deprecated
 	public static String cleanEmptyAddresses(String addresses) {

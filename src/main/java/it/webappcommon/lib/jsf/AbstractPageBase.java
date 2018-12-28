@@ -1519,8 +1519,6 @@ public abstract class AbstractPageBase implements Serializable {
 
 	/**
 	 * Rappresenta il titolo HTML della pagina
-	 * 
-	 * @param titolo_pagina
 	 */
 	public void setTitolo_pagina(String titolo_pagina) {
 		this.m_titolo_pagina = titolo_pagina;
@@ -1532,8 +1530,6 @@ public abstract class AbstractPageBase implements Serializable {
 
 	/**
 	 * Rappresenta il titolo H1 della pagina
-	 * 
-	 * @param titolo
 	 */
 	public void setTitolo(String titolo) {
 		this.m_titolo = titolo;
@@ -1752,9 +1748,6 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo che restituisce un oggetto messo in sessione, dato il nome
 	 * dell'oggetto stesso
-	 * 
-	 * @param object_name
-	 * @return Object
 	 */
 	public Object getSessionObject(String object_name) {
 		Object returnValue = null;
@@ -1779,10 +1772,6 @@ public abstract class AbstractPageBase implements Serializable {
 	 * 
 	 * Metodo che mette un oggetto in sessione con il nome specificato dal
 	 * parametro Ritorna l'oggetto stesso
-	 * 
-	 * @param object_name
-	 * @param object
-	 * @return Object
 	 */
 	public Object setSessionObject(String object_name, Object object) {
 		Object returnValue = null;
@@ -1806,9 +1795,6 @@ public abstract class AbstractPageBase implements Serializable {
 
 	/**
 	 * Metodo che rimuove un oggetto dalla sessione Ritorna l'oggetto rimosso
-	 * 
-	 * @param object_name
-	 * @return Object
 	 */
 	public Object removeSessionObject(String object_name) {
 		Object returnValue = null;
@@ -1833,9 +1819,6 @@ public abstract class AbstractPageBase implements Serializable {
 	 * 
 	 * Metodo che restituisce il valore di un parametro dato il nome del
 	 * parammetro
-	 * 
-	 * @param parameter_name
-	 * @return Object
 	 */
 	public Object getParamObject(String parameter_name) {
 		Object returnValue = null;
@@ -1904,8 +1887,6 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo che restituisce un arraylist di select item contenente la
 	 * quantità di elementi visualizzabili per pagina selezionabile
-	 * 
-	 * @return
 	 */
 	public ArrayList<SelectItem> getNumeroRighePerPagina() {
 		ArrayList<SelectItem> returnValue = null;

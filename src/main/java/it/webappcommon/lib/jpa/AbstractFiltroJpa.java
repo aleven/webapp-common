@@ -80,9 +80,6 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
 	/**
 	 * Verifica se ci sono da aggiungere
-	 * 
-	 * @param value
-	 * @return
 	 */
 	protected String parseJpaParameterValueForLike(String value) {
 		String res = value;
@@ -231,10 +228,6 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
 	/**
 	 * Da Fare
-	 * 
-	 * @param nomeProprieta
-	 *            '
-	 * @param valore
 	 */
 	protected void aggiungiCondizione(String nomeProprieta, String valore) {
 

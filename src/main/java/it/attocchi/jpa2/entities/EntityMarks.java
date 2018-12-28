@@ -104,10 +104,6 @@ public class EntityMarks implements Serializable, Cloneable {
 		this.utenteCancellazioneId = utenteCancellazioneId;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@Deprecated
 	public EntityMarks deepClone() {
 

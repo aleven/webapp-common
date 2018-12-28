@@ -36,7 +36,7 @@ public class StringHelper {
 	 * string e' piu' lunga della dimensione a cui la funzione deve troncare
 	 * vengono accodati dei "..." ad indicare che la stringa continua
 	 * 
-	 * @return
+	 * @return stringa troncata
 	 */
 	public static String stringPart(String aString, int part) {
 		String res = null;
@@ -163,8 +163,8 @@ public class StringHelper {
 	/**
 	 * Speparated by , and with no start and end []
 	 * 
-	 * @param indirizziAttivi
-	 * @return
+	 * @param indirizziAttivi lista indirizzi email
+	 * @return indirizzi concatenati
 	 */
 	@Deprecated
 	public static String toCommaSeparatedString(List<String> indirizziAttivi) {
@@ -179,8 +179,8 @@ public class StringHelper {
 	/**
 	 * Separated by white spaces
 	 * 
-	 * @param indirizziAttivi
-	 * @return
+	 * @param indirizziAttivi lista indirizzi email
+	 * @return indirizzi concatenati
 	 */
 	public static String toSeparatedString(List<String> indirizziAttivi) {
 		String indirizziSelezionati = ListUtils.toCommaSepared(indirizziAttivi);

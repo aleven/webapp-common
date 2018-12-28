@@ -35,21 +35,21 @@ public @interface StoreInTable {
 	/**
 	 * Table name in database
 	 * 
-	 * @return
+	 * @return table name
 	 */
 	String tableName();
 
 	/**
 	 * Prefix to use for all standard fields of this table
 	 * 
-	 * @return
+	 * @return table prefix
 	 */
 	String tablePrefix();
 
 	/**
 	 * Name of field of primary key
 	 * 
-	 * @return
+	 * @return pk name
 	 */
 	String primaryKeyField();
 

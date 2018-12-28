@@ -27,8 +27,6 @@ public class ChiaviConfigurazioniUtils {
 
     /**
      * Verifica se il valore di una chiave di Configurazione e' true.
-     * @param aValue
-     * @return
      */
     public static boolean isTrue(String aValue) {
         boolean res = false;

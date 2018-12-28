@@ -75,7 +75,7 @@ public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMark
 	
 	/**
 	 * verifica se la data cancellazione per questo oggetto e' impostata
-	 * @return
+	 * @return true se ha data cancellazione diversa da null
 	 */
 	public boolean isDeleted() {
 		return (getEntityMarks() != null && getEntityMarks().getDataCancellazione() != null);

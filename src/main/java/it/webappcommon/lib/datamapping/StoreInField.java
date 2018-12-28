@@ -25,17 +25,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
+ *
  * @author Mirco
- * 
+ *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)
 public @interface StoreInField {
+
 	/**
 	 * Name of Field
 	 * 
-	 * @return
+	 * @return field name
 	 */
 	String fieldName();
 }
