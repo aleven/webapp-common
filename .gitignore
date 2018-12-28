@@ -6,3 +6,5 @@
 /.factorypath
 *.iml
 .idea
+/*.old
+/*.new
