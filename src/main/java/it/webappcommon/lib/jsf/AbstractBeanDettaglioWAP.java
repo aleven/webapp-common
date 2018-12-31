@@ -27,18 +27,19 @@ import org.apache.log4j.Logger;
  * Questo backbean astratto serve come struttura per tutti i backbean delle
  * classi che devono visualizzare i dati di un singolo elemento, ad esempio una
  * pagina di modifica o creazione nuovo oggetto
- * 
+ *
  * @author Mirco
- * 
- * @param <T>
+ * @param <T> classe che estende Serializable
  * @param <P>
  *            Classe che Estende PageBase specifica del progetto, per dare
  *            visibilita' dei metodi specifici
+ * @version $Id: $Id
  */
 public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends AbstractPageBase> extends AbstractPageBase {
 
 	private static final String PARAM_ID = "id";
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(AbstractBeanDettaglioWAP.class.getName());
 
 	protected enum TIPO_ID {
@@ -71,47 +72,100 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 	 */
 	protected boolean utentePrivilegiato;
 
+	/**
+	 * <p>Getter for the field <code>idSelezionato</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getIdSelezionato() {
 		return idSelezionato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>idSelezionato</code>.</p>
+	 *
+	 * @param idSelezionato a int.
+	 */
 	public void setIdSelezionato(int idSelezionato) {
 		this.idSelezionato = idSelezionato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>idStringSelezionato</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getIdStringSelezionato() {
 		return idStringSelezionato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>idStringSelezionato</code>.</p>
+	 *
+	 * @param idStringSelezionato a {@link java.lang.String} object.
+	 */
 	public void setIdStringSelezionato(String idStringSelezionato) {
 		this.idStringSelezionato = idStringSelezionato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>elementoSelezionato</code>.</p>
+	 *
+	 * @return a T object.
+	 */
 	public T getElementoSelezionato() {
 		return elementoSelezionato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>elementoSelezionato</code>.</p>
+	 *
+	 * @param elementoSelezionato a T object.
+	 */
 	public void setElementoSelezionato(T elementoSelezionato) {
 		this.elementoSelezionato = elementoSelezionato;
 	}
 
+	/**
+	 * <p>isNuovo.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isNuovo() {
 		nuovo = ((isIDNumerico() && getIdSelezionato() == 0) || (!isIDNumerico() && (getIdStringSelezionato() == null || getIdStringSelezionato().isEmpty())));
 		return nuovo;
 	}
 
+	/**
+	 * <p>Setter for the field <code>nuovo</code>.</p>
+	 *
+	 * @param nuovo a boolean.
+	 */
 	public void setNuovo(boolean nuovo) {
 		this.nuovo = nuovo;
 	}
 
+	/**
+	 * <p>isUtentePrivilegiato.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isUtentePrivilegiato() {
 		return utentePrivilegiato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>utentePrivilegiato</code>.</p>
+	 *
+	 * @param utentePrivilegiato a boolean.
+	 */
 	public void setUtentePrivilegiato(boolean utentePrivilegiato) {
 		this.utentePrivilegiato = utentePrivilegiato;
 	}
 
+	/**
+	 * <p>Constructor for AbstractBeanDettaglioWAP.</p>
+	 */
 	protected AbstractBeanDettaglioWAP() {
 		try {
 
@@ -164,18 +218,30 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 		}
 	}
 
+	/**
+	 * <p>verificaUtentePrivilegiato.</p>
+	 */
 	protected abstract void verificaUtentePrivilegiato();
 
 	/**
 	 * Carica i dati dal database oppure crea un oggetto nuovo
+	 *
+	 * @throws java.lang.Exception if any.
 	 */
 	protected abstract void caricaDati() throws Exception;
 
 	/**
 	 * Inizializza alcuni dati dopo il caricamento (esempio valorizza campi)
+	 *
+	 * @throws java.lang.Exception if any.
 	 */
 	protected abstract void caricaDatiPost() throws Exception;
 
+	/**
+	 * <p>caricaDatiAccessori.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void caricaDatiAccessori() throws Exception;
 
 	/**
@@ -186,14 +252,14 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 
 	/**
 	 * Specifica se il tipo di chiave da usare e' numerico o stringa
-	 * 
+	 *
 	 * @return true se numerico
 	 */
 	protected abstract boolean isIDNumerico();
 
 	/**
 	 * Verifica se e' stato passato un id di un oggetto
-	 * 
+	 *
 	 * @return true se numerico maggiore di zero o non numerico e diverso da stringa vuota
 	 */
 	public boolean isEditMode() {
@@ -211,11 +277,21 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 
 	/**
 	 * Serve per determinare se l'elemento e' modificabile dall'utente
+	 *
+	 * @return a boolean.
 	 */
 	public abstract boolean isReadOnly();
 
+	/**
+	 * <p>eseguiAzioniDaParametri.</p>
+	 */
 	protected abstract void eseguiAzioniDaParametri();
 
+	/**
+	 * <p>Getter for the field <code>pageBaseOfProject</code>.</p>
+	 *
+	 * @return a P object.
+	 */
 	public P getPageBaseOfProject() {
 		// TODO: Forse e' il caso di farsi passare una istanza?
 		// if (pageBaseOfProject == null) {
@@ -224,6 +300,11 @@ public abstract class AbstractBeanDettaglioWAP<T extends Serializable, P extends
 		return pageBaseOfProject;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pageBaseOfProject</code>.</p>
+	 *
+	 * @param pageBaseOfProject a P object.
+	 */
 	public void setPageBaseOfProject(P pageBaseOfProject) {
 		this.pageBaseOfProject = pageBaseOfProject;
 	}

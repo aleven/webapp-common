@@ -27,9 +27,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Pagina Gestione Utenti Autenticati (Richiede filtro @AuthFilter)
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 // public abstract class PageBaseNoAuth extends @PageBaseJpa2Data {
 public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
@@ -45,8 +45,6 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 
 	/**
 	 * Use With @JPASessionListener
-	 * 
-	 * @return
 	 */
 	private EntityManagerFactory getEmfSession() {
 		EntityManagerFactory emf = null;
@@ -63,8 +61,6 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 
 	/**
 	 * Use With @JPAListener
-	 * 
-	 * @return
 	 */
 	private EntityManagerFactory getEmfContext() {
 		EntityManagerFactory emf = null;
@@ -80,6 +76,11 @@ public abstract class PageBaseNoAuth extends PageBaseNoAuthNoJpa2 {
 
 	// protected abstract void init() throws Exception;
 
+	/**
+	 * <p>getEmfShared.</p>
+	 *
+	 * @return a {@link javax.persistence.EntityManagerFactory} object.
+	 */
 	protected EntityManagerFactory getEmfShared() {
 		EntityManagerFactory emf = null;
 

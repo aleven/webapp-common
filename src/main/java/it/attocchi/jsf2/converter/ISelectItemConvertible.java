@@ -19,6 +19,12 @@
 
 package it.attocchi.jsf2.converter;
 
+/**
+ * <p>ISelectItemConvertible interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface ISelectItemConvertible {
 
 //	@Deprecated
@@ -27,6 +33,16 @@ public interface ISelectItemConvertible {
 //	@Deprecated
 //	String getDescrizione();
 
+	/**
+	 * <p>getItemValue.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	String getItemValue();
+	/**
+	 * <p>getItemLabel.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	String getItemLabel();
 }

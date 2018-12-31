@@ -23,19 +23,36 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Abstract AbstactEntityMarks class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class AbstactEntityMarks extends EntityBase {
 
 	/**
 	 * non puo essere serializzato in JSF 2.1
+	 *
+	 * @return a {@link it.attocchi.jpa2.entities.EntityMarks} object.
 	 */
 	// protected final transient Logger logger = Logger.getLogger(this.getClass().getName());
-	
-	// private static final long serialVersionUID = 1L;
 
+	// private static final long serialVersionUID = 1L;
 	public abstract EntityMarks getEntityMarks();
 
+	/**
+	 * <p>setEntityMarks.</p>
+	 *
+	 * @param entityMarks a {@link it.attocchi.jpa2.entities.EntityMarks} object.
+	 */
 	public abstract void setEntityMarks(EntityMarks entityMarks);
 
+	/**
+	 * <p>markAsCreated.</p>
+	 *
+	 * @param idUtente a long.
+	 */
 	public void markAsCreated(long idUtente) {
 		init();
 		getEntityMarks().utenteCreazioneId = idUtente;
@@ -44,18 +61,33 @@ public abstract class AbstactEntityMarks extends EntityBase {
 		markAsUpdated(idUtente);
 	}
 
+	/**
+	 * <p>markAsUpdated.</p>
+	 *
+	 * @param idUtente a long.
+	 */
 	public void markAsUpdated(long idUtente) {
 		init();
 		getEntityMarks().utenteModificaId = idUtente;
 		getEntityMarks().dataModifica = new Date();
 	}
 
+	/**
+	 * <p>markAsDeleted.</p>
+	 *
+	 * @param idUtente a long.
+	 */
 	public void markAsDeleted(long idUtente) {
 		init();
 		getEntityMarks().utenteCancellazioneId = idUtente;
 		getEntityMarks().dataCancellazione = new Date();
 	}
 	
+	/**
+	 * <p>markAsUnDeleted.</p>
+	 *
+	 * @param idUtente a long.
+	 */
 	public void markAsUnDeleted(long idUtente) {
 		init();
 		getEntityMarks().utenteCancellazioneId = 0;

@@ -33,12 +33,19 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.log4j.Logger;
 
 /**
+ * <pre>
+ * {@code
  * <!-- <filter-class>ch.bedag.gba.capweb.util.IE9Filter</filter-class> -->
+ * }
+ * </pre>
+ * @author mirco
+ * @version $Id: $Id
  */
 public class IE9TextFilter implements Filter {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
+	/** {@inheritDoc} */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -46,6 +53,7 @@ public class IE9TextFilter implements Filter {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -103,6 +111,7 @@ public class IE9TextFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void destroy() {
 		// noop

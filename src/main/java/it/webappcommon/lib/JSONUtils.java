@@ -28,11 +28,19 @@ import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 
 /**
- * 
+ * <p>JSONUtils class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class JSONUtils {
 
+	/**
+	 * <p>fromList.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String fromList(List aList) {
 		String res = null;
 
@@ -44,6 +52,12 @@ public class JSONUtils {
 
 	}
 
+	/**
+	 * <p>fromListExcludeJsonTransient.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String fromListExcludeJsonTransient(List aList) {
 		String res = null;
 
@@ -59,6 +73,11 @@ public class JSONUtils {
 
 	}
 
+	/**
+	 * <p>emptyArray.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String emptyArray() {
 		return "[]"; // Inizializzazione di Base ArrayJson
 	}

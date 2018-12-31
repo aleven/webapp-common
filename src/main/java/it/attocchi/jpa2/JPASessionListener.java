@@ -32,8 +32,9 @@ import org.apache.log4j.Logger;
 
 /**
  * Session Lifecycle Listener implementation class JPASessionListener
- * 
+ *
  * @author Mirco Attocchi
+ * @version $Id: $Id
  */
 public class JPASessionListener implements HttpSessionListener {
 
@@ -51,9 +52,7 @@ public class JPASessionListener implements HttpSessionListener {
 
 	}
 
-	/**
-	 * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
-	 */
+	/** {@inheritDoc} */
 	public void sessionCreated(HttpSessionEvent e) {
 
 		try {
@@ -87,9 +86,7 @@ public class JPASessionListener implements HttpSessionListener {
 		}
 	}
 
-	/**
-	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
-	 */
+	/** {@inheritDoc} */
 	public void sessionDestroyed(HttpSessionEvent e) {
 
 		EntityManagerFactory emf = (EntityManagerFactory) e.getSession().getAttribute(IJpaListernes.SESSION_EMF);

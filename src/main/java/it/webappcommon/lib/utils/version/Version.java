@@ -23,8 +23,9 @@ package it.webappcommon.lib.utils.version;
 /**
  * Questa classe serve sia a gestire la versione di AtreeFLOW sia per gestire
  * quella del database e per confrontarle
- * 
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class Version implements Comparable {
 
@@ -33,9 +34,19 @@ public class Version implements Comparable {
 	private int minor;
 	private int build;
 
+	/**
+	 * <p>Constructor for Version.</p>
+	 */
 	public Version() {
 	}
 
+	/**
+	 * <p>Constructor for Version.</p>
+	 *
+	 * @param major a int.
+	 * @param minor a int.
+	 * @param build a int.
+	 */
 	public Version(int major, int minor, int build) {
 		this.major = major;
 		this.minor = minor;
@@ -45,7 +56,7 @@ public class Version implements Comparable {
 	/**
 	 * Crea un oggetto AtreeFLOWVersion partendo dalla stringa nel fomato
 	 * supportato major.minor.build
-	 * 
+	 *
 	 * @param version stringa versione
 	 */
 	public Version(String version) {
@@ -56,6 +67,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Getter for the field <code>major</code>.</p>
+	 *
 	 * @return the major
 	 */
 	public int getMajor() {
@@ -63,6 +76,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Setter for the field <code>major</code>.</p>
+	 *
 	 * @param major
 	 *            the major to set
 	 */
@@ -71,6 +86,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Getter for the field <code>minor</code>.</p>
+	 *
 	 * @return the minor
 	 */
 	public int getMinor() {
@@ -78,6 +95,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Setter for the field <code>minor</code>.</p>
+	 *
 	 * @param minor
 	 *            the minor to set
 	 */
@@ -86,6 +105,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Getter for the field <code>build</code>.</p>
+	 *
 	 * @return the build
 	 */
 	public int getBuild() {
@@ -93,6 +114,8 @@ public class Version implements Comparable {
 	}
 
 	/**
+	 * <p>Setter for the field <code>build</code>.</p>
+	 *
 	 * @param build
 	 *            the build to set
 	 */
@@ -100,11 +123,13 @@ public class Version implements Comparable {
 		this.build = build;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return String.format("%s.%s.%s", this.getMajor(), this.getMinor(), this.getBuild());
 	}
 
+	/** {@inheritDoc} */
 	public int compareTo(Object anotherVersion) {
 
 		if (!(anotherVersion instanceof Version)) {
@@ -128,6 +153,7 @@ public class Version implements Comparable {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
 

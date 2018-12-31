@@ -21,11 +21,21 @@ package it.webappcommon.lib.jpa.scooped.multiple;
 
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * <p>ScopedMultiplePersistenceManagerTest class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class ScopedMultiplePersistenceManagerTest extends MultiplePersistenceManagerTest {
 
+	/**
+	 * <p>Constructor for ScopedMultiplePersistenceManagerTest.</p>
+	 */
 	protected ScopedMultiplePersistenceManagerTest() {
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
 		return new ScopedEntityManagerFactoryTest(super.createEntityManagerFactory(persistenceUnit));

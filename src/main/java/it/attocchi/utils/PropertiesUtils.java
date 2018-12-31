@@ -26,15 +26,23 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>PropertiesUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class PropertiesUtils {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(PropertiesUtils.class.getName());
 
 	/**
-	 * 
+	 * <p>getProperties.</p>
+	 *
 	 * @param in
 	 *            InputStrem like a getResourceAsStrem from ServletContext
-	 * @return "new Properties();" also in case of error
+	 * @return a {@link java.util.Properties} object.
 	 */
 	public static Properties getProperties(InputStream in) {
 
@@ -63,6 +71,12 @@ public class PropertiesUtils {
 		return properties;
 	}
 
+	/**
+	 * <p>saveProperties.</p>
+	 *
+	 * @param properties a {@link java.util.Properties} object.
+	 * @param filePath a {@link java.lang.String} object.
+	 */
 	public static void saveProperties(Properties properties, String filePath) {
 
 		// Properties properties = new Properties();

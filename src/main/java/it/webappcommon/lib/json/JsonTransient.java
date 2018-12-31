@@ -25,8 +25,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
+ * <p>JsonTransient class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })

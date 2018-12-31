@@ -21,8 +21,19 @@ package it.attocchi.utils;
 
 import java.util.UUID;
 
+/**
+ * <p>UUIDUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class UUIDUtils {
 
+	/**
+	 * <p>generate.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String generate() {
 		return UUID.randomUUID().toString();
 	}

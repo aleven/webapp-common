@@ -19,11 +19,28 @@
 
 package it.webappcommon.lib.jpa2.exceptions;
 
+/**
+ * <p>PreexistingEntityException class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class PreexistingEntityException extends Exception {
+	/**
+	 * <p>Constructor for PreexistingEntityException.</p>
+	 *
+	 * @param message a {@link java.lang.String} object.
+	 * @param cause a {@link java.lang.Throwable} object.
+	 */
 	public PreexistingEntityException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
+	/**
+	 * <p>Constructor for PreexistingEntityException.</p>
+	 *
+	 * @param message a {@link java.lang.String} object.
+	 */
 	public PreexistingEntityException(String message) {
 		super(message);
 	}

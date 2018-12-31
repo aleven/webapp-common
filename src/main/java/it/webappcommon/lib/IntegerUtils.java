@@ -1,7 +1,19 @@
 package it.webappcommon.lib;
 
+/**
+ * <p>IntegerUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class IntegerUtils {
 
+	/**
+	 * <p>max.</p>
+	 *
+	 * @param ints a {@link java.lang.Integer} object.
+	 * @return a {@link java.lang.Integer} object.
+	 */
 	public static Integer max(Integer... ints) {
 		Integer res = null;
 
@@ -16,6 +28,12 @@ public class IntegerUtils {
 		return res;
 	}
 
+	/**
+	 * <p>sum.</p>
+	 *
+	 * @param ints a {@link java.lang.Integer} object.
+	 * @return a {@link java.lang.Integer} object.
+	 */
 	public static Integer sum(Integer... ints) {
 		Integer res = null;
 
@@ -32,6 +50,13 @@ public class IntegerUtils {
 		return res;
 	}
 
+	/**
+	 * <p>tryParse.</p>
+	 *
+	 * @param value a {@link java.lang.String} object.
+	 * @param defaultValue a int.
+	 * @return a int.
+	 */
 	public static int tryParse(String value, int defaultValue) {
 		int res = defaultValue;
 		try {

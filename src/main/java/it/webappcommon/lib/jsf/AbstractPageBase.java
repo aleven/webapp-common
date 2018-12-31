@@ -46,8 +46,10 @@ import org.apache.log4j.Logger;
 
 //import org.apache.shale.view.AbstractViewController;
 /**
- * 
+ * <p>Abstract AbstractPageBase class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public abstract class AbstractPageBase implements Serializable {
 
@@ -364,6 +366,12 @@ public abstract class AbstractPageBase implements Serializable {
 	// return returnValue;
 	// }
 
+	/**
+	 * <p>getApplicationObject.</p>
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public Object getApplicationObject(String object_name) {
 
 		FacesContext facesContext = null;
@@ -441,6 +449,13 @@ public abstract class AbstractPageBase implements Serializable {
 	// return returnValue;
 	// }
 
+	/**
+	 * <p>setApplicationObject.</p>
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @param object a {@link java.lang.Object} object.
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public Object setApplicationObject(String object_name, Object object) {
 
 		FacesContext facesContext = null;
@@ -463,12 +478,9 @@ public abstract class AbstractPageBase implements Serializable {
 
 	/**
 	 * Rimuove dalla sessione l'oggetto specificato.
-	 * 
-	 * @param object_name
-	 *            Oggetto da rimuovere dalla sessione.
+	 *
 	 * @return Ritorna il valore dell'oggetto prima della rimozione, oppure null
 	 *         se non viene trovato l'oggetto in sessione.
-	 * 
 	 */
 	// public Object removeSessionObject(String object_name) {
 	//
@@ -489,7 +501,6 @@ public abstract class AbstractPageBase implements Serializable {
 	//
 	// return returnValue;
 	// }
-
 	public String getJs_alert_message() {
 		/*
 		 * Essendo che questa stringa e' stata pensata come parametro di un
@@ -507,6 +518,11 @@ public abstract class AbstractPageBase implements Serializable {
 		return _js_alert_message;
 	}
 
+	/**
+	 * <p>setJs_alert_message.</p>
+	 *
+	 * @param js_alert_message a {@link java.lang.String} object.
+	 */
 	public void setJs_alert_message(String js_alert_message) {
 		if (js_alert_message == null) {
 			js_alert_message = "Errore sconosciuto!";
@@ -514,10 +530,21 @@ public abstract class AbstractPageBase implements Serializable {
 		this._js_alert_message = js_alert_message;
 	}
 
+	/**
+	 * <p>addInfoMessage.</p>
+	 *
+	 * @param testo a {@link java.lang.String} object.
+	 */
 	protected void addInfoMessage(String testo) {
 		addInfoMessage(testo, null);
 	}
 
+	/**
+	 * <p>addInfoMessage.</p>
+	 *
+	 * @param testo a {@link java.lang.String} object.
+	 * @param dettaglio a {@link java.lang.String} object.
+	 */
 	protected void addInfoMessage(String testo, String dettaglio) {
 		FacesMessage message = new FacesMessage();
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
@@ -528,10 +555,21 @@ public abstract class AbstractPageBase implements Serializable {
 		getFacesContext().addMessage(testo, message);
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param testo a {@link java.lang.String} object.
+	 */
 	protected void addErrorMessage(String testo) {
 		addErrorMessage(testo, null);
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param testo a {@link java.lang.String} object.
+	 * @param dettaglio a {@link java.lang.String} object.
+	 */
 	protected void addErrorMessage(String testo, String dettaglio) {
 		FacesMessage message = new FacesMessage();
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -542,6 +580,11 @@ public abstract class AbstractPageBase implements Serializable {
 		getFacesContext().addMessage(testo, message);
 	}
 
+	/**
+	 * <p>isPostBack.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isPostBack() {
 		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("JSFPostBack") != null;
 	}
@@ -555,7 +598,7 @@ public abstract class AbstractPageBase implements Serializable {
 	 * fa niente in quanto il compareTo del comparator definito all'interno del
 	 * metodo ritorna sempre 0. La column, va indicata, come sempre del resto,
 	 * senza il get o l'is davanti.
-	 * 
+	 *
 	 * @param list
 	 *            ArrayList da ordinare
 	 * @param column
@@ -1123,20 +1166,30 @@ public abstract class AbstractPageBase implements Serializable {
 
 	}
 
+	/**
+	 * <p>getTimeZone.</p>
+	 *
+	 * @return a {@link java.util.TimeZone} object.
+	 */
 	public TimeZone getTimeZone() {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Rome"));
 		return TimeZone.getDefault();
 	}
 
+	/**
+	 * <p>getLocale.</p>
+	 *
+	 * @return a {@link java.util.Locale} object.
+	 */
 	public Locale getLocale() {
 		return Locale.getDefault();
 	}
 
-	/**
-	 * Questa funzione ritorna il valore della chiave specificata prelevandola
-	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
-	 * viene inserita con valore = valore_default.
-	 */
+//	/**
+//	 * Questa funzione ritorna il valore della chiave specificata prelevandola
+//	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
+//	 * viene inserita con valore = valore_default.
+//	 */
 	// public String getOpzionePagina(String chiave, String valore_default)
 	// throws Exception {
 	// String returnValue = null;
@@ -1198,11 +1251,11 @@ public abstract class AbstractPageBase implements Serializable {
 	// return returnValue;
 	// }
 
-	/**
-	 * Questa funzione ritorna il valore della chiave specificata prelevandola
-	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
-	 * viene inserita con valore = valore_default.
-	 */
+//	/**
+//	 * Questa funzione ritorna il valore della chiave specificata prelevandola
+//	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
+//	 * viene inserita con valore = valore_default.
+//	 */
 	// public String getOpzionePaginaNome_classe(String chiave, String
 	// nome_classe, String valore_default) throws Exception {
 	// String returnValue = null;
@@ -1260,11 +1313,11 @@ public abstract class AbstractPageBase implements Serializable {
 	// return returnValue;
 	// }
 
-	/**
-	 * Questa funzione ritorna il valore della chiave specificata prelevandola
-	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
-	 * viene inserita con valore = valore_default.
-	 */
+//	/**
+//	 * Questa funzione ritorna il valore della chiave specificata prelevandola
+//	 * dalla tabella cfg02_opzioni_pagine. Se l'opzione non viene trovata nel DB
+//	 * viene inserita con valore = valore_default.
+//	 */
 	// public String getOpzionePaginaBy(String chiave, String nome_classe,
 	// String valore_default, int idUtente) throws Exception {
 	// String returnValue = null;
@@ -1321,10 +1374,10 @@ public abstract class AbstractPageBase implements Serializable {
 	// return returnValue;
 	// }
 
-	/**
-	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
-	 * specificata.
-	 */
+//	/**
+//	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
+//	 * specificata.
+//	 */
 	// public void setOpzionePagina(String chiave, String valore) throws
 	// Exception {
 	// Opzione_pagina opzione_pagina = null;
@@ -1367,10 +1420,10 @@ public abstract class AbstractPageBase implements Serializable {
 	// }
 	// }
 
-	/**
-	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
-	 * specificata.
-	 */
+//	/**
+//	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
+//	 * specificata.
+//	 */
 	// public void setOpzionePaginaNome_classe(String chiave, String
 	// nome_classe, String valore) throws Exception {
 	// Opzione_pagina opzione_pagina = null;
@@ -1410,10 +1463,10 @@ public abstract class AbstractPageBase implements Serializable {
 	// }
 	// }
 
-	/**
-	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
-	 * specificata.
-	 */
+//	/**
+//	 * Metodo che effettua l'inserimento o l'aggiornamento della chiave opzione
+//	 * specificata.
+//	 */
 	// public void setOpzionePaginaBy(String chiave, String nome_classe, int
 	// idUtente, String valore) throws Exception {
 	// Opzione_pagina opzione_pagina = null;
@@ -1484,7 +1537,9 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo pubblico che restituisce i numeri concessi e l'opzione Tutti
 	 * (maschile)
-	 **/
+	 *
+	 * @return a {@link java.util.ArrayList} object.
+	 */
 	public ArrayList<SelectItem> getNumeroRighePerPaginaMaschile() {
 		ArrayList<SelectItem> returnValue = null;
 		try {
@@ -1500,7 +1555,9 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo pubblico che restituisce i numeri concessi e l'opzione Tutte
 	 * (femminile)
-	 **/
+	 *
+	 * @return a {@link java.util.ArrayList} object.
+	 */
 	public ArrayList<SelectItem> getNumeroRighePerPaginaFemminile() {
 		ArrayList<SelectItem> returnValue = null;
 		try {
@@ -1513,32 +1570,56 @@ public abstract class AbstractPageBase implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>getTitolo_pagina.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getTitolo_pagina() {
 		return m_titolo_pagina;
 	}
 
 	/**
 	 * Rappresenta il titolo HTML della pagina
+	 *
+	 * @param titolo_pagina a {@link java.lang.String} object.
 	 */
 	public void setTitolo_pagina(String titolo_pagina) {
 		this.m_titolo_pagina = titolo_pagina;
 	}
 
+	/**
+	 * <p>getTitolo.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getTitolo() {
 		return m_titolo;
 	}
 
 	/**
 	 * Rappresenta il titolo H1 della pagina
+	 *
+	 * @param titolo a {@link java.lang.String} object.
 	 */
 	public void setTitolo(String titolo) {
 		this.m_titolo = titolo;
 	}
 
+	/**
+	 * <p>getRighe_per_pagina.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getRighe_per_pagina() {
 		return m_righe_per_pagina;
 	}
 
+	/**
+	 * <p>setRighe_per_pagina.</p>
+	 *
+	 * @param m_righe_per_pagina a int.
+	 */
 	public void setRighe_per_pagina(int m_righe_per_pagina) {
 		this.m_righe_per_pagina = m_righe_per_pagina;
 	}
@@ -1552,10 +1633,20 @@ public abstract class AbstractPageBase implements Serializable {
 	 * longer work as expected. Resolve this issue with creation of a String
 	 * property that set and get value to a int property
 	 */
+	/**
+	 * <p>getRighe_per_pagina_string.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getRighe_per_pagina_string() {
 		return String.valueOf(m_righe_per_pagina);
 	}
 
+	/**
+	 * <p>setRighe_per_pagina_string.</p>
+	 *
+	 * @param righe_per_pagina_string a {@link java.lang.String} object.
+	 */
 	public void setRighe_per_pagina_string(String righe_per_pagina_string) {
 		if (righe_per_pagina_string != null) {
 			this.m_righe_per_pagina = Integer.parseInt(righe_per_pagina_string);
@@ -1610,6 +1701,11 @@ public abstract class AbstractPageBase implements Serializable {
 	// return resultValue;
 	// }
 
+	/**
+	 * <p>beforePhase.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public final void beforePhase(PhaseEvent event) {
 		if (event.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
 			beforeApplyRequestValues(event);
@@ -1626,6 +1722,11 @@ public abstract class AbstractPageBase implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>afterPhase.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public final void afterPhase(PhaseEvent event) {
 
 		if (event.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
@@ -1643,33 +1744,83 @@ public abstract class AbstractPageBase implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>beforeApplyRequestValues.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeApplyRequestValues(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>beforeInvokeApplication.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeInvokeApplication(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>beforeProcessValidations.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeProcessValidations(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>beforeRenderResponse.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeRenderResponse(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>beforeRestoreView.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeRestoreView(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>beforeUpdateModelValues.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void beforeUpdateModelValues(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>afterApplyRequestValues.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterApplyRequestValues(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>afterInvokeApplication.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterInvokeApplication(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>afterProcessValidations.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterProcessValidations(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>afterRenderResponse.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterRenderResponse(PhaseEvent event) {
 
 		// logger.debug("afterRenderResponse");
@@ -1684,9 +1835,19 @@ public abstract class AbstractPageBase implements Serializable {
 
 	}
 
+	/**
+	 * <p>afterRestoreView.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterRestoreView(PhaseEvent event) {
 	}
 
+	/**
+	 * <p>afterUpdateModelValues.</p>
+	 *
+	 * @param event a {@link javax.faces.event.PhaseEvent} object.
+	 */
 	public void afterUpdateModelValues(PhaseEvent event) {
 	}
 
@@ -1694,21 +1855,42 @@ public abstract class AbstractPageBase implements Serializable {
 	// return FacesContext.getCurrentInstance();
 	// }
 
+	/**
+	 * <p>getActionAttribute.</p>
+	 *
+	 * @param event a {@link javax.faces.event.ActionEvent} object.
+	 * @param name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String getActionAttribute(ActionEvent event, String name) {
 		return (String) event.getComponent().getAttributes().get(name);
 	}
 
+	/**
+	 * <p>getActionAttributeAsInt.</p>
+	 *
+	 * @param event a {@link javax.faces.event.ActionEvent} object.
+	 * @param name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Integer} object.
+	 */
 	protected Integer getActionAttributeAsInt(ActionEvent event, String name) {
 		return (Integer) event.getComponent().getAttributes().get(name);
 	}
 
 	/**
 	 * Mirco: ascolto tutto
+	 *
+	 * @return a {@link javax.faces.event.PhaseId} object.
 	 */
 	public PhaseId getPhaseId() {
 		return PhaseId.ANY_PHASE;
 	}
 
+	/**
+	 * <p>redirect.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 */
 	protected void redirect(String url) {
 		try {
 			getFacesContext().getExternalContext().redirect(url);
@@ -1717,10 +1899,20 @@ public abstract class AbstractPageBase implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>Getter for the field <code>pageInfo</code>.</p>
+	 *
+	 * @return a {@link it.webappcommon.lib.jsf.AbstractPageBase.PageBaseInfo} object.
+	 */
 	public PageBaseInfo getPageInfo() {
 		return pageInfo;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pageInfo</code>.</p>
+	 *
+	 * @param pageInfo a {@link it.webappcommon.lib.jsf.AbstractPageBase.PageBaseInfo} object.
+	 */
 	public void setPageInfo(PageBaseInfo pageInfo) {
 		this.pageInfo = pageInfo;
 	}
@@ -1731,6 +1923,9 @@ public abstract class AbstractPageBase implements Serializable {
      */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * <p>Constructor for AbstractPageBase.</p>
+	 */
 	public AbstractPageBase() {
 		// logger.debug("Verifico dati Login");
 		// DatiSessione datiSessione = (DatiSessione)
@@ -1748,6 +1943,9 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo che restituisce un oggetto messo in sessione, dato il nome
 	 * dell'oggetto stesso
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
 	 */
 	public Object getSessionObject(String object_name) {
 		Object returnValue = null;
@@ -1769,9 +1967,13 @@ public abstract class AbstractPageBase implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * Metodo che mette un oggetto in sessione con il nome specificato dal
 	 * parametro Ritorna l'oggetto stesso
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @param object a {@link java.lang.Object} object.
+	 * @return a {@link java.lang.Object} object.
 	 */
 	public Object setSessionObject(String object_name, Object object) {
 		Object returnValue = null;
@@ -1795,6 +1997,9 @@ public abstract class AbstractPageBase implements Serializable {
 
 	/**
 	 * Metodo che rimuove un oggetto dalla sessione Ritorna l'oggetto rimosso
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
 	 */
 	public Object removeSessionObject(String object_name) {
 		Object returnValue = null;
@@ -1816,9 +2021,12 @@ public abstract class AbstractPageBase implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * Metodo che restituisce il valore di un parametro dato il nome del
 	 * parammetro
+	 *
+	 * @param parameter_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
 	 */
 	public Object getParamObject(String parameter_name) {
 		Object returnValue = null;
@@ -1839,6 +2047,12 @@ public abstract class AbstractPageBase implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>getParamObjectAsString.</p>
+	 *
+	 * @param parameter_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getParamObjectAsString(String parameter_name) {
 		// Object tmp = null;
 		// String returnValue = null;
@@ -1866,10 +2080,20 @@ public abstract class AbstractPageBase implements Serializable {
 	}
 
 	// Faces objects
+	/**
+	 * <p>getFacesContext.</p>
+	 *
+	 * @return a {@link javax.faces.context.FacesContext} object.
+	 */
 	protected FacesContext getFacesContext() {
 		return FacesContext.getCurrentInstance();
 	}
 
+	/**
+	 * <p>getApplication.</p>
+	 *
+	 * @return a {@link javax.faces.application.Application} object.
+	 */
 	protected javax.faces.application.Application getApplication() {
 		return getFacesContext().getApplication();
 	}
@@ -1887,6 +2111,8 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Metodo che restituisce un arraylist di select item contenente la
 	 * quantità di elementi visualizzabili per pagina selezionabile
+	 *
+	 * @return a {@link java.util.ArrayList} object.
 	 */
 	public ArrayList<SelectItem> getNumeroRighePerPagina() {
 		ArrayList<SelectItem> returnValue = null;
@@ -1911,6 +2137,11 @@ public abstract class AbstractPageBase implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>setMessaggioErrore.</p>
+	 *
+	 * @param msg a {@link java.lang.String} object.
+	 */
 	public void setMessaggioErrore(String msg) {
 		if (msg == null) {
 			msg = "Errore sconosciuto!!";
@@ -1927,6 +2158,12 @@ public abstract class AbstractPageBase implements Serializable {
 	// addErrorMessage(testo, null);
 	// }
 	//
+	/**
+	 * <p>setMessaggioErrore.</p>
+	 *
+	 * @param msg a {@link java.lang.String} object.
+	 * @param dettaglio a {@link java.lang.String} object.
+	 */
 	protected void setMessaggioErrore(String msg, String dettaglio) {
 		FacesMessage facesMsg = new FacesMessage();
 		facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -1937,6 +2174,11 @@ public abstract class AbstractPageBase implements Serializable {
 		getFacesContext().addMessage(msg, facesMsg);
 	}
 
+	/**
+	 * <p>setMessaggioSuccesso.</p>
+	 *
+	 * @param msg a {@link java.lang.String} object.
+	 */
 	public void setMessaggioSuccesso(String msg) {
 		if (msg == null) {
 			msg = "Azione avvenuta correttamente.";
@@ -1950,7 +2192,11 @@ public abstract class AbstractPageBase implements Serializable {
 	/**
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>.
-	 **/
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	protected ArrayList<SelectItem> listToSelectItems(List list) throws Exception {
 		ArrayList<SelectItem> retVal = null;
 		try {
@@ -2214,20 +2460,42 @@ public abstract class AbstractPageBase implements Serializable {
 
 	// Getters
 	// -----------------------------------------------------------------------------------
+	/**
+	 * <p>getApplicationMapValue.</p>
+	 *
+	 * @param key a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public static Object getApplicationMapValue(String key) {
 		return FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get(key);
 	}
 
 	// Setters
 	// -----------------------------------------------------------------------------------
+	/**
+	 * <p>setApplicationMapValue.</p>
+	 *
+	 * @param key a {@link java.lang.String} object.
+	 * @param value a {@link java.lang.Object} object.
+	 */
 	public static void setApplicationMapValue(String key, Object value) {
 		FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put(key, value);
 	}
 
+	/**
+	 * <p>getServletContext.</p>
+	 *
+	 * @return a {@link javax.servlet.ServletContext} object.
+	 */
 	public ServletContext getServletContext() {
 		return (ServletContext) getFacesContext().getExternalContext().getContext();
 	}
 
+	/**
+	 * <p>getResponse.</p>
+	 *
+	 * @return a {@link javax.servlet.http.HttpServletResponse} object.
+	 */
 	public HttpServletResponse getResponse() {
 		return (HttpServletResponse) getFacesContext().getExternalContext().getResponse();
 	}

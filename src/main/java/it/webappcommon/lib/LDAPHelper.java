@@ -41,8 +41,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>LDAPHelper class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class LDAPHelper {
 
@@ -141,16 +143,26 @@ public class LDAPHelper {
 		}
 	}
 
+	/** Constant <code>logger</code> */
 	protected static Logger logger = Logger.getLogger(LDAPHelper.class.getName());
+	/** Constant <code>FIELD_ACCOUNT_NAME="sAMAccountName"</code> */
 	public static final String FIELD_ACCOUNT_NAME = "sAMAccountName";
+	/** Constant <code>FIELD_EMAIL="mail"</code> */
 	public static final String FIELD_EMAIL = "mail";
+	/** Constant <code>FIELD_TEL="telephoneNumber"</code> */
 	public static final String FIELD_TEL = "telephoneNumber";
 	// public static final String FIELD_UFFICIO = "physicalDeliveryOfficeName";
+	/** Constant <code>FIELD_UFFICIO="department"</code> */
 	public static final String FIELD_UFFICIO = "department";
+	/** Constant <code>FIELD_NOME_COMPLETO="cn"</code> */
 	public static final String FIELD_NOME_COMPLETO = "cn";
+	/** Constant <code>FIELD_NOME="givenName"</code> */
 	public static final String FIELD_NOME = "givenName";
+	/** Constant <code>FIELD_COGNOME="sn"</code> */
 	public static final String FIELD_COGNOME = "sn";
+	/** Constant <code>FIELD_NOME_VISUALIZZATO="displayName"</code> */
 	public static final String FIELD_NOME_VISUALIZZATO = "displayName";
+	/** Constant <code>FIELD_GROUPS="memberOf"</code> */
 	public static final String FIELD_GROUPS = "memberOf";
 	//
 	private static final String INITIAL_CONTEXT = "com.sun.jndi.ldap.LdapCtxFactory";
@@ -167,6 +179,15 @@ public class LDAPHelper {
 	private String areaWhereSearch;
 
 	//
+	/**
+	 * <p>Constructor for LDAPHelper.</p>
+	 *
+	 * @param server a {@link java.lang.String} object.
+	 * @param domain a {@link java.lang.String} object.
+	 * @param userName a {@link java.lang.String} object.
+	 * @param password a {@link java.lang.String} object.
+	 * @param areaWhereSearch a {@link java.lang.String} object.
+	 */
 	public LDAPHelper(String server, String domain, String userName, String password, String areaWhereSearch) {
 		this.server = server;
 		this.loginDomain = domain;
@@ -357,9 +378,10 @@ public class LDAPHelper {
 
 	/**
 	 * Ricerca l'account specificato
-	 * 
-	 * @param accountName
-	 * @return
+	 *
+	 * @param accountName a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.naming.NamingException if any.
 	 */
 	public List<UserInfo> findActiveUserByAccountName(String accountName) throws NamingException {
 		List<UserInfo> res = null;
@@ -380,6 +402,12 @@ public class LDAPHelper {
 		return res;
 	}
 
+	/**
+	 * <p>findActiveUsers.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.naming.NamingException if any.
+	 */
 	public List<UserInfo> findActiveUsers() throws NamingException {
 		return findActiveUsers(null);
 	}
@@ -387,7 +415,10 @@ public class LDAPHelper {
 	/**
 	 * Ricerca il testo nei campi FIELD_NOME_COMPLETO, FIELD_EMAIL, FIELD_TEL,
 	 * FIELD_UFFICIO
-	 * 
+	 *
+	 * @param filtroRicerca a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.naming.NamingException if any.
 	 */
 	public List<UserInfo> findActiveUsers(String filtroRicerca) throws NamingException {
 		List<UserInfo> res = null;
@@ -415,6 +446,12 @@ public class LDAPHelper {
 		return res;
 	}
 
+	/**
+	 * <p>domainParser.</p>
+	 *
+	 * @param username a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String domainParser(String username) {
 		String res = username;
 

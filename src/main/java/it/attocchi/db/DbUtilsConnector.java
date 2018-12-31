@@ -33,28 +33,63 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.wrappers.StringTrimmedResultSet;
 
 /**
- * 
+ * <p>DbUtilsConnector class.</p>
+ *
  * @author Mirco Attocchi
- * 
+ * @version $Id: $Id
  */
 public class DbUtilsConnector extends JdbcConnector {
 
+	/**
+	 * <p>Constructor for DbUtilsConnector.</p>
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 */
 	public DbUtilsConnector(Connection conn) {
 		super(conn);
 	}
 
+	/**
+	 * <p>Constructor for DbUtilsConnector.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 */
 	public DbUtilsConnector(String url) {
 		super(url);
 	}
 
+	/**
+	 * <p>Constructor for DbUtilsConnector.</p>
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 * @param connectionComeFromPool a boolean.
+	 */
 	public DbUtilsConnector(Connection conn, boolean connectionComeFromPool) {
 		super(conn, connectionComeFromPool);
 	}
 	
+	/**
+	 * <p>Constructor for DbUtilsConnector.</p>
+	 *
+	 * @param connString a {@link java.lang.String} object.
+	 * @param driverClass a {@link java.lang.String} object.
+	 * @param userName a {@link java.lang.String} object.
+	 * @param password a {@link java.lang.String} object.
+	 */
 	public DbUtilsConnector(String connString, String driverClass, String userName, String password) {
 		super(connString, driverClass, userName, password);
 	}
 
+	/**
+	 * <p>executeTop1.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aTop1Query a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T> T executeTop1(boolean keepConnOpen, String aTop1Query, Class<T> clazz) throws Exception {
 		T result = null;
 
@@ -84,6 +119,17 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>execute.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T> List<T> execute(boolean keepConnOpen, String aQuery, Class<T> clazz, Object... params) throws Exception {
 		List<T> result = new ArrayList<T>();
 
@@ -107,6 +153,17 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>executeSingle.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T> T executeSingle(boolean keepConnOpen, String aQuery, Class<T> clazz, Object... params) throws Exception {
 		T result = null;
 
@@ -127,6 +184,16 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>execute.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T> List<T> execute(boolean keepConnOpen, String aQuery, Class<T> clazz) throws Exception {
 		List<T> result = new ArrayList<T>();
 
@@ -150,6 +217,16 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>executeTrimedString.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T> List<T> executeTrimedString(boolean keepConnOpen, String aQuery, Class<T> clazz) throws Exception {
 		List<T> result = new ArrayList<T>();
 
@@ -177,6 +254,14 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>executeMap.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public List<Map<String, Object>> executeMap(boolean keepConnOpen, String aQuery) throws Exception {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
@@ -200,6 +285,14 @@ public class DbUtilsConnector extends JdbcConnector {
 		return result;
 	}
 
+	/**
+	 * <p>executeMapTrimmed.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public List<Map<String, Object>> executeMapTrimmed(boolean keepConnOpen, String aQuery) throws Exception {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
@@ -241,6 +334,11 @@ public class DbUtilsConnector extends JdbcConnector {
 		return h;
 	}
 
+	/**
+	 * <p>close.</p>
+	 *
+	 * @param connector a {@link it.attocchi.db.DbUtilsConnector} object.
+	 */
 	public static void close(DbUtilsConnector connector) {
 		if (connector != null) {
 			connector.close();

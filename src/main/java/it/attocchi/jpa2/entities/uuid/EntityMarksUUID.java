@@ -27,6 +27,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * <p>EntityMarksUUID class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 @Embeddable
 public class EntityMarksUUID implements Serializable {
 
@@ -56,50 +62,110 @@ public class EntityMarksUUID implements Serializable {
 	@Column(name = "mark_uuid_utente_cancellazione")
 	protected String uuidUtenteCancellazione;
 
+	/**
+	 * <p>Getter for the field <code>dataCreazione</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataCreazione() {
 		return dataCreazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataCreazione</code>.</p>
+	 *
+	 * @param dataCreazione a {@link java.util.Date} object.
+	 */
 	public void setDataCreazione(Date dataCreazione) {
 		this.dataCreazione = dataCreazione;
 	}
 
+	/**
+	 * <p>Getter for the field <code>dataModifica</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataModifica() {
 		return dataModifica;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataModifica</code>.</p>
+	 *
+	 * @param dataModifica a {@link java.util.Date} object.
+	 */
 	public void setDataModifica(Date dataModifica) {
 		this.dataModifica = dataModifica;
 	}
 
+	/**
+	 * <p>Getter for the field <code>dataCancellazione</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataCancellazione() {
 		return dataCancellazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataCancellazione</code>.</p>
+	 *
+	 * @param dataCancellazione a {@link java.util.Date} object.
+	 */
 	public void setDataCancellazione(Date dataCancellazione) {
 		this.dataCancellazione = dataCancellazione;
 	}
 
+	/**
+	 * <p>Getter for the field <code>uuidUtenteCreazione</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getUuidUtenteCreazione() {
 		return uuidUtenteCreazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>uuidUtenteCreazione</code>.</p>
+	 *
+	 * @param uuidUtenteCreazione a {@link java.lang.String} object.
+	 */
 	public void setUuidUtenteCreazione(String uuidUtenteCreazione) {
 		this.uuidUtenteCreazione = uuidUtenteCreazione;
 	}
 
+	/**
+	 * <p>Getter for the field <code>uuidUtenteModifica</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getUuidUtenteModifica() {
 		return uuidUtenteModifica;
 	}
 
+	/**
+	 * <p>Setter for the field <code>uuidUtenteModifica</code>.</p>
+	 *
+	 * @param uuidUtenteModifica a {@link java.lang.String} object.
+	 */
 	public void setUuidUtenteModifica(String uuidUtenteModifica) {
 		this.uuidUtenteModifica = uuidUtenteModifica;
 	}
 
+	/**
+	 * <p>Getter for the field <code>uuidUtenteCancellazione</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getUuidUtenteCancellazione() {
 		return uuidUtenteCancellazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>uuidUtenteCancellazione</code>.</p>
+	 *
+	 * @param uuidUtenteCancellazione a {@link java.lang.String} object.
+	 */
 	public void setUuidUtenteCancellazione(String uuidUtenteCancellazione) {
 		this.uuidUtenteCancellazione = uuidUtenteCancellazione;
 	}

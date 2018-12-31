@@ -21,20 +21,27 @@ package it.attocchi.jpa2.entities.uuid;
 
 /**
  * An entity with markable attributes and id long
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class AbstractEntityMarksWithIdUUID extends AbstactEntityMarksUUID implements IEntityUUID {
 
+	/**
+	 * <p>getUuid.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public abstract String getUuid();
 
+	/** {@inheritDoc} */
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		
 		return super.clone();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
 		// return this.getUuid().hashCode();
@@ -43,11 +50,13 @@ public abstract class AbstractEntityMarksWithIdUUID extends AbstactEntityMarksUU
 		return hash;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return String.format("%s[%s]", this.getClass().getName(), this.getUuid());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object object) {
 		// return super.equals(obj);

@@ -27,8 +27,10 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>DAOUtils class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class DAOUtils {
 
@@ -36,7 +38,7 @@ public class DAOUtils {
 
 	/**
 	 * Quietly close the Connection. Any errors will be printed to the logger.
-	 * 
+	 *
 	 * @param connection
 	 *            The Connection to be closed quietly.
 	 */
@@ -67,7 +69,7 @@ public class DAOUtils {
 	 * metodo unico per le connessioni (e non due come una volta) In quel caso
 	 * passo una variabile che dice se la connessione e' stata aperta dentro il
 	 * metodo
-	 * 
+	 *
 	 * @param connection connessione
 	 * @param close true se si vuole chiudere
 	 */
@@ -81,7 +83,7 @@ public class DAOUtils {
 
 	/**
 	 * Quietly close the Statement. Any errors will be printed to the logger.
-	 * 
+	 *
 	 * @param statement
 	 *            The Statement to be closed quietly.
 	 */
@@ -99,7 +101,7 @@ public class DAOUtils {
 
 	/**
 	 * Quietly close the ResultSet. Any errors will be printed to the logger.
-	 * 
+	 *
 	 * @param resultSet
 	 *            The ResultSet to be closed quietly.
 	 */
@@ -115,15 +117,15 @@ public class DAOUtils {
 		}
 	}
 
-	/**
-	 * Quietly close the Connection and Statement. Any errors will be printed to
-	 * logger.
-	 * 
-	 * @param connection
-	 *            The Connection to be closed quietly.
-	 * @param statement
-	 *            The Statement to be closed quietly.
-	 */
+//	/**
+//	 * Quietly close the Connection and Statement. Any errors will be printed to
+//	 * logger.
+//	 *
+//	 * @param connection
+//	 *            The Connection to be closed quietly.
+//	 * @param statement
+//	 *            The Statement to be closed quietly.
+//	 */
 	// public static void close(Connection connection, Statement statement) {
 	// close(statement);
 	// close(connection);
@@ -132,33 +134,39 @@ public class DAOUtils {
 	/**
 	 * Quietly close the ResultSet and Statement. Any errors will be printed to
 	 * the logger.
-	 * 
-	 * @param connection
-	 *            The Connection to be closed quietly.
+	 *
 	 * @param statement
 	 *            The Statement to be closed quietly.
+	 * @param resultSet a {@link java.sql.ResultSet} object.
 	 */
 	public static void close(Statement statement, ResultSet resultSet) {
 		close(resultSet);
 		close(statement);
 	}
 
+	/**
+	 * <p>close.</p>
+	 *
+	 * @param connection a {@link java.sql.Connection} object.
+	 * @param statement a {@link java.sql.Statement} object.
+	 * @param close a boolean.
+	 */
 	public static void close(Connection connection, Statement statement, boolean close) {
 		close(statement);
 		close(connection, close);
 	}
 
-	/**
-	 * Quietly close the Connection, Statement and ResultSet. Any errors will be
-	 * printed to the logger.
-	 * 
-	 * @param connection
-	 *            The Connection to be closed quietly.
-	 * @param statement
-	 *            The Statement to be closed quietly.
-	 * @param resultSet
-	 *            The ResultSet to be closed quietly.
-	 */
+//	/**
+//	 * Quietly close the Connection, Statement and ResultSet. Any errors will be
+//	 * printed to the logger.
+//	 *
+//	 * @param connection
+//	 *            The Connection to be closed quietly.
+//	 * @param statement
+//	 *            The Statement to be closed quietly.
+//	 * @param resultSet
+//	 *            The ResultSet to be closed quietly.
+//	 */
 	// public static void close(Connection connection, Statement statement,
 	// ResultSet resultSet) {
 	// close(resultSet);
@@ -171,6 +179,10 @@ public class DAOUtils {
 	 * metodo unico per le connessioni (e non due come una volta) In quel caso
 	 * passo una variabile che dice se la connessione e' stata aperta dentro il
 	 * metodo
+	 * @param connection The Connection to be closed quietly
+	 * @param statement The Statement to be closed quietly
+	 * @param resultSet The ResultSet to be closed quietly
+	 * @param close true se chiudere la connessione
 	 */
 	public static void close(Connection connection, Statement statement, ResultSet resultSet, boolean close) {
 		close(resultSet);

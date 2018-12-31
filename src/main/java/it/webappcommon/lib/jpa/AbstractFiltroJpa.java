@@ -28,9 +28,9 @@ import java.util.Map;
  * Versione Evoluta di AbstractFiltro per supportare le Ricerche JPA che hanno
  * bisogno dei Parametri. Ci sono una serie di funzioni in più per gestire i
  * Parametri e le condizioni in OR fra questi nel caso di ricerche avanzate
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
@@ -57,6 +57,12 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 	// this.batchSize = batchSize;
 	// }
 
+	/**
+	 * <p>addParameter.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @param value a {@link java.lang.Object} object.
+	 */
 	protected void addParameter(String paramName, Object value) {
 		if (listaParametri == null) {
 			listaParametri = new HashMap<String, Object>();
@@ -67,10 +73,18 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 		logger.debug(String.format("%s) %s=%s", listaParametri.size(), paramName, value));
 	}
 
+	/**
+	 * <p>Getter for the field <code>listaParametri</code>.</p>
+	 *
+	 * @return a {@link java.util.Map} object.
+	 */
 	public Map<String, Object> getListaParametri() {
 		return listaParametri;
 	}
 
+	/**
+	 * <p>initParameters.</p>
+	 */
 	protected void initParameters() {
 		if (listaParametri != null) {
 			listaParametri.clear();
@@ -80,6 +94,9 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
 	/**
 	 * Verifica se ci sono da aggiungere
+	 *
+	 * @param value a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	protected String parseJpaParameterValueForLike(String value) {
 		String res = value;
@@ -104,6 +121,13 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 	/*
 	 * 
 	 */
+	/**
+	 * <p>componiLikeSempliceJpa.</p>
+	 *
+	 * @param nomeProprieta a {@link java.lang.String} object.
+	 * @param nomeParametroInQuery a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String componiLikeSempliceJpa(String nomeProprieta, String nomeParametroInQuery) {
 
 		String tmp = nomeParametroInQuery.startsWith(":") ? nomeParametroInQuery : ":" + nomeParametroInQuery;
@@ -111,10 +135,24 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 		return nomeProprieta + " LIKE " + tmp;
 	}
 
+	/**
+	 * <p>calcolaNomeParametro.</p>
+	 *
+	 * @param nomeParametroInQuery a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String calcolaNomeParametro(String nomeParametroInQuery) {
 		return nomeParametroInQuery.startsWith(":") ? nomeParametroInQuery.substring(1) : nomeParametroInQuery;
 	}
 
+	/**
+	 * <p>componiLikeAvanzatoJpa.</p>
+	 *
+	 * @param nomeProprieta a {@link java.lang.String} object.
+	 * @param nomeParametro a {@link java.lang.String} object.
+	 * @param valore a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String componiLikeAvanzatoJpa(String nomeProprieta, String nomeParametro, String valore) {
 
 		StringBuilder condizioneAvanzata = new StringBuilder();
@@ -159,10 +197,22 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 		return condizioneAvanzata.toString();
 	}
 
+	/**
+	 * <p>isTestoConSpazi.</p>
+	 *
+	 * @param valore a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	protected boolean isTestoConSpazi(String valore) {
 		return (valore.trim().indexOf(" ") > -1);
 	}
 
+	/**
+	 * <p>componiLikeSempliceOAvanzatoDaSemeRicerca.</p>
+	 *
+	 * @param nomeProprieta a {@link java.lang.String} object.
+	 * @param nomeParametro a {@link java.lang.String} object.
+	 */
 	protected void componiLikeSempliceOAvanzatoDaSemeRicerca(String nomeProprieta, String nomeParametro) {
 
 		if (isTestoConSpazi(semeRicerca)) {
@@ -201,17 +251,24 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
 	}
 
+	/**
+	 * <p>iniziaBloccoOR.</p>
+	 */
 	protected void iniziaBloccoOR() {
 		condizioneWhere.append(" AND (");
 		primoElementoBloccoOrAggiunto = false;
 		dentroUnBloccoOR = true;
 	}
 
+	/**
+	 * <p>finisciBloccoOR.</p>
+	 */
 	protected void finisciBloccoOR() {
 		condizioneWhere.append(")");
 		dentroUnBloccoOR = false;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String getSQLWhere() throws Exception {
 		// // TODO Auto-generated method stub
@@ -228,6 +285,9 @@ public abstract class AbstractFiltroJpa extends AbstractFiltro {
 
 	/**
 	 * Da Fare
+	 *
+	 * @param nomeProprieta a {@link java.lang.String} object.
+	 * @param valore a {@link java.lang.String} object.
 	 */
 	protected void aggiungiCondizione(String nomeProprieta, String valore) {
 

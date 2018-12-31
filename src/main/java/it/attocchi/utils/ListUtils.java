@@ -19,26 +19,25 @@
 
 package it.attocchi.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import it.attocchi.jpa2.entities.IEntityWithIdLong;
 import org.apache.commons.lang3.StringUtils;
 
-import it.attocchi.jpa2.entities.IEntityWithIdLong;
+import java.util.*;
 
+/**
+ * <p>ListUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class ListUtils {
 
 	/**
 	 * Verifica se una lista e' nulla o vuota
-	 * 
-	 * @param aList
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param <T>  generic
+	 * @return a boolean.
 	 */
 	public static <T> boolean isEmpty(List<T> aList) {
 		// boolean res = true;
@@ -53,14 +52,22 @@ public class ListUtils {
 
 	/**
 	 * Verifica se una lista non e' nulla e vuota
-	 * 
-	 * @param aList
+	 *
+	 * @param aList a {@link java.util.Collection} object.
+	 * @param <T> generic
+	 * @return a boolean.
 	 */
 	public static <T> boolean isNotEmpty(Collection<T> aList) {
 		return aList != null && aList.size() > 0;
 		// return !isEmpty(aList);
 	}
 
+	/**
+	 * <p>toList.</p>
+	 *
+	 * @param anArray an array of {@link java.lang.String} objects.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<String> toList(String[] anArray) {
 		List<String> res = null;
 
@@ -76,6 +83,12 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>toArray.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @return an array of {@link java.lang.String} objects.
+	 */
 	public static String[] toArray(List<String> aList) {
 		String[] res = null;
 
@@ -92,8 +105,9 @@ public class ListUtils {
 
 	/**
 	 * Gestisce anche gli elementi con spazi dopo la virgola
-	 * 
-	 * @param aStringWithValues
+	 *
+	 * @param aStringWithValues a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
 	 */
 	public static List<String> fromCommaSepared(String aStringWithValues) {
 		List<String> res = new ArrayList<String>();
@@ -112,7 +126,13 @@ public class ListUtils {
 
 		return res;
 	}
-	
+
+	/**
+	 * <p>fromCommaSeparedSet.</p>
+	 *
+	 * @param aStringWithValues a {@link java.lang.String} object.
+	 * @return a {@link java.util.Set} object.
+	 */
 	public static Set<String> fromCommaSeparedSet(String aStringWithValues) {
 		Set<String> res = new HashSet<String>();
 
@@ -129,8 +149,14 @@ public class ListUtils {
 		}
 
 		return res;
-	}	
+	}
 
+	/**
+	 * <p>fromCommaSeparedLong.</p>
+	 *
+	 * @param aStringWithValues a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<Long> fromCommaSeparedLong(String aStringWithValues) {
 		List<Long> res = new ArrayList<Long>();
 
@@ -147,8 +173,10 @@ public class ListUtils {
 	}
 
 	/**
-	 * 
-	 * @param aListOfString
+	 * <p>toCommaSepared.</p>
+	 *
+	 * @param aListOfString a {@link java.util.Collection} object.
+	 * @param <T>           a T object.
 	 * @return [string, string, ... ]
 	 */
 	public static <T> String toCommaSepared(Collection<T> aListOfString) {
@@ -159,6 +187,13 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>toCommaSeparedNoBracket.</p>
+	 *
+	 * @param aListOfString a {@link java.util.Collection} object.
+	 * @param <T>           a T object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static <T> String toCommaSeparedNoBracket(Collection<T> aListOfString) {
 		String res = "";
 
@@ -174,11 +209,10 @@ public class ListUtils {
 
 	/**
 	 * If @List is Empty inizialize it to a new @ArrayList
-	 * 
-	 * @param aList
-	 *            a List where add the object (can be empty)
-	 * @param anObject
-	 *            an object to add to to the list
+	 *
+	 * @param aList    a List where add the object (can be empty)
+	 * @param anObject an object to add to to the list
+	 * @param <T>      a T object.
 	 */
 	public static <T> void add(List<T> aList, T anObject) {
 		if (aList == null) {
@@ -187,6 +221,15 @@ public class ListUtils {
 		aList.add(anObject);
 	}
 
+	/**
+	 * <p>find.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param key   a T object.
+	 * @param c     a {@link java.util.Comparator} object.
+	 * @param <T>   a T object.
+	 * @return a T object.
+	 */
 	public static <T> T find(List<T> aList, T key, Comparator<T> c) {
 		T res = null;
 
@@ -200,6 +243,14 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>find.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param key   a T object.
+	 * @param <T>   a T object.
+	 * @return a T object.
+	 */
 	public static <T extends Comparable<T>> T find(List<T> aList, T key) {
 		T res = null;
 
@@ -215,9 +266,11 @@ public class ListUtils {
 
 	/**
 	 * Verificare che sia il modo migliore per cercare per id
-	 * 
-	 * @param aList
-	 * @param id
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param id    a long.
+	 * @param <T>   IEntityWithIdLong
+	 * @return a T object.
 	 */
 	public static <T extends IEntityWithIdLong> T findByIdLong(List<T> aList, long id) {
 		T res = null;
@@ -245,6 +298,14 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>findByIdsLong.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param ids   a {@link java.lang.String} object.
+	 * @param <T>   a T object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static <T extends IEntityWithIdLong> List<T> findByIdsLong(List<T> aList, String ids) {
 		List<T> res = new ArrayList<T>();
 		if (StringUtils.isNotBlank(ids)) {
@@ -261,6 +322,14 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>findByIdsLong.</p>
+	 *
+	 * @param aMap a {@link java.util.Map} object.
+	 * @param ids  a {@link java.lang.String} object.
+	 * @param <T>  a T object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static <T extends IEntityWithIdLong> List<T> findByIdsLong(Map<Long, T> aMap, String ids) {
 		List<T> res = new ArrayList<T>();
 		if (StringUtils.isNotBlank(ids)) {
@@ -274,6 +343,12 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>fromValues.</p>
+	 *
+	 * @param values a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<String> fromValues(String... values) {
 		List<String> res = new ArrayList<String>();
 
@@ -284,6 +359,13 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>newIfNull.</p>
+	 *
+	 * @param listaTags a {@link java.util.List} object.
+	 * @param <T>       a T object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static <T> List<T> newIfNull(List<T> listaTags) {
 		List<T> res = listaTags;
 		if (res == null)
@@ -292,6 +374,13 @@ public class ListUtils {
 		return res;
 	}
 
+	/**
+	 * <p>newIfNullSet.</p>
+	 *
+	 * @param listaTags a {@link java.util.Set} object.
+	 * @param <T>       a T object.
+	 * @return a {@link java.util.Set} object.
+	 */
 	public static <T> Set<T> newIfNullSet(Set<T> listaTags) {
 		Set<T> res = listaTags;
 		if (res == null)
@@ -299,7 +388,13 @@ public class ListUtils {
 
 		return res;
 	}
-	
+
+	/**
+	 * <p>clear.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 * @param <T>   a T object.
+	 */
 	public static <T> void clear(List<T> aList) {
 		if (aList != null) {
 			aList.clear();
@@ -307,9 +402,11 @@ public class ListUtils {
 	}
 
 	/**
-	 * 
-	 * @param aCommaSeparatedList
-	 * @param newValue
+	 * <p>addToListOfString.</p>
+	 *
+	 * @param aCommaSeparatedList a {@link java.lang.String} object.
+	 * @param newValue            a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String addToListOfString(String aCommaSeparatedList, String newValue) {
 		List<String> list = null;
@@ -324,6 +421,13 @@ public class ListUtils {
 		return toCommaSepared(list);
 	}
 
+	/**
+	 * <p>addToSetOfString.</p>
+	 *
+	 * @param aCommaSeparatedList a {@link java.lang.String} object.
+	 * @param newValue            a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String addToSetOfString(String aCommaSeparatedList, String newValue) {
 		Set<String> list = null;
 		list = ListUtils.newIfNullSet(list);
@@ -336,7 +440,14 @@ public class ListUtils {
 
 		return toCommaSepared(list);
 	}
-	
+
+	/**
+	 * <p>addToListOfLong.</p>
+	 *
+	 * @param aCommaSeparatedList a {@link java.lang.String} object.
+	 * @param newValue            a long.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String addToListOfLong(String aCommaSeparatedList, long newValue) {
 		List<Long> list = null;
 		list = ListUtils.newIfNull(list);
@@ -352,7 +463,9 @@ public class ListUtils {
 
 	/**
 	 * se la lista non è vuota ritorna il primo elemento
-	 * @param aList una lista 
+	 *
+	 * @param aList una lista
+	 * @param <T>   a T object.
 	 * @return il primo elemento della lista
 	 */
 	public static <T> T fistItem(List<T> aList) {

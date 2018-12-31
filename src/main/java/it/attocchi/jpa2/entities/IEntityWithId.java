@@ -22,12 +22,18 @@ package it.attocchi.jpa2.entities;
 import java.io.Serializable;
 
 /**
- * 
+ * <p>IEntityWithId interface.</p>
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public interface IEntityWithId<T> extends Serializable {
 
+	/**
+	 * <p>getId.</p>
+	 *
+	 * @return a T object.
+	 */
 	T getId();
 
 }

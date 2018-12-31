@@ -42,8 +42,10 @@ import org.hibernate.criterion.Example;
 import it.attocchi.jpa2.entities.IEntityWithIdLong;
 
 /**
- * 
+ * <p>JpaController class.</p>
+ *
  * @author Mirco Attocchi
+ * @version $Id: $Id
  */
 public class JpaController implements Serializable {
 
@@ -52,8 +54,10 @@ public class JpaController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** Constant <code>DEFAULT_PU="DEFAULT_PU"</code> */
 	public static final String DEFAULT_PU = "DEFAULT_PU";
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(JpaController.class.getName());
 
 	private EntityManagerFactory emf = null;
@@ -80,6 +84,11 @@ public class JpaController implements Serializable {
 		// System.gc();
 	}
 
+	/**
+	 * <p>Constructor for JpaController.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 */
 	public JpaController(EntityManagerFactory emf) {
 		this();
 
@@ -92,6 +101,11 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>Constructor for JpaController.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 */
 	public JpaController(String persistenceUnit) {
 		this();
 		if (StringUtils.isNotBlank(persistenceUnit)) {
@@ -101,6 +115,12 @@ public class JpaController implements Serializable {
 
 	}
 
+	/**
+	 * <p>Constructor for JpaController.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param dbConf a {@link java.util.Map} object.
+	 */
 	public JpaController(String persistenceUnit, Map<String, String> dbConf) {
 		this(persistenceUnit);
 		this.dbConf = dbConf;
@@ -112,6 +132,13 @@ public class JpaController implements Serializable {
 	// logger.debug(String.format("Creazione Controller %s", numero));
 	// }
 
+	/**
+	 * <p>insert.</p>
+	 *
+	 * @param o a T object.
+	 * @param <T> a T object.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public <T extends Serializable> void insert(T o) throws JpaControllerException {
 		EntityManager em = getEntityManager();
 		try {
@@ -132,6 +159,13 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>update.</p>
+	 *
+	 * @param o a T object.
+	 * @param <T> a T object.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public <T extends Serializable> void update(T o) throws JpaControllerException {
 		EntityManager em = getEntityManager();
 		try {
@@ -152,6 +186,15 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>delete.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param o a T object.
+	 * @param id a {@link java.lang.Object} object.
+	 * @param <T> a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> void delete(Class<T> clazz, T o, Object id) throws Exception {
 		testClazz(clazz);
 		EntityManager em = getEntityManager();
@@ -178,6 +221,14 @@ public class JpaController implements Serializable {
 
 	}
 
+	/**
+	 * <p>findAll.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 */
 	public <T extends Serializable> List<T> findAll(Class<T> clazz) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
@@ -186,6 +237,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findAll.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param orderBy a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 */
 	public <T extends Serializable> List<T> findAll(Class<T> clazz, String orderBy) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
@@ -201,6 +261,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>find.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a long.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T find(Class<T> clazz, long id) throws Exception {
 		T res = null;
 
@@ -226,6 +295,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>find.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a int.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T find(Class<T> clazz, int id) throws Exception {
 		T res = null;
 
@@ -251,6 +329,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>find.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T find(Class<T> clazz, String id) throws Exception {
 		T res = null;
 
@@ -276,6 +363,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findFirst.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param query a {@link java.lang.String} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T findFirst(Class<T> clazz, String query, Object... params) throws Exception {
 		T res = null;
 		List<T> list = null;
@@ -317,6 +414,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findFirst.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T findFirst(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> list = new ArrayList<T>();
@@ -340,6 +446,14 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findFirst.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T findFirst(Class<T> clazz) throws Exception {
 		T res = null;
 		List<T> list = null;
@@ -354,8 +468,8 @@ public class JpaController implements Serializable {
 
 	/**
 	 * User for speed test
-	 * 
-	 * @return
+	 *
+	 * @return a {@link javax.persistence.EntityManagerFactory} object.
 	 */
 	@Deprecated
 	public EntityManagerFactory getEntityManagetFactory() {
@@ -422,6 +536,15 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>findByExample.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param anExample a T object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> List<T> findByExample(Class<T> clazz, T anExample) throws Exception {
 		List<T> res = new ArrayList<T>();
 
@@ -447,6 +570,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findBy.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param query a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 */
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query) throws ClassNotFoundException {
 		List<T> res = new ArrayList<T>();
 
@@ -473,13 +605,13 @@ public class JpaController implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param clazz
-	 * @param query
-	 *            a query with Ordinal Parameters (?index)
-	 * @param params
-	 * @return
-	 * @throws Exception
+	 * a query with Ordinal Parameters (?index)
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param query a {@link java.lang.String} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, String query, Object... params) throws Exception {
 		List<T> res = new ArrayList<T>();
@@ -516,6 +648,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findBy.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> List<T> findBy(Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 		List<T> res = new ArrayList<T>();
 
@@ -551,10 +693,27 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>count.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.lang.Long} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> Long count(Class<T> clazz) throws Exception {
 		return countBy(clazz, null);
 	}
 
+	/**
+	 * <p>countBy.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.lang.Long} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> Long countBy(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Long res = 0L;
 
@@ -626,6 +785,14 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findBy.</p>
+	 *
+	 * @param criteria a {@link javax.persistence.criteria.CriteriaQuery} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> List<T> findBy(CriteriaQuery<T> criteria) throws Exception {
 		List<T> res = new ArrayList<T>();
 
@@ -648,6 +815,14 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>executeUpdate.</p>
+	 *
+	 * @param query a {@link java.lang.String} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public int executeUpdate(String query, Object... params) throws Exception {
 		int res = 0;
 
@@ -687,6 +862,7 @@ public class JpaController implements Serializable {
 	}
 
 	private boolean closedFromFinalize = false;
+	/** {@inheritDoc} */
 	@Override
 	protected void finalize() throws Throwable {
 
@@ -714,6 +890,14 @@ public class JpaController implements Serializable {
 	// return getEmf();
 	// }
 
+	/**
+	 * <p>getItemCount.</p>
+	 *
+	 * @param classObj a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> int getItemCount(Class<T> classObj) throws Exception {
 		int returnValue = 0;
 
@@ -765,6 +949,9 @@ public class JpaController implements Serializable {
 		// return getEmf().createEntityManager();
 	}
 
+	/**
+	 * <p>beginTransaction.</p>
+	 */
 	public void beginTransaction() {
 		if (!controllerTransactionOpen) {
 			EntityManager em = getEntityManager();
@@ -776,6 +963,9 @@ public class JpaController implements Serializable {
 		nestedTransactionCount++;
 	}
 
+	/**
+	 * <p>commitTransaction.</p>
+	 */
 	public void commitTransaction() {
 		if (controllerTransactionOpen && nestedTransactionCount == 1) {
 			EntityManager em = getEntityManager();
@@ -787,6 +977,9 @@ public class JpaController implements Serializable {
 		nestedTransactionCount--;
 	}
 
+	/**
+	 * <p>rollbackTransaction.</p>
+	 */
 	public void rollbackTransaction() {
 		if (controllerTransactionOpen && nestedTransactionCount == 1) {
 			EntityManager em = getEntityManager();
@@ -800,8 +993,8 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Use for close the Controller in a try-catch-finally block.
-	 * 
-	 * @param aController
+	 *
+	 * @param aController a {@link it.attocchi.jpa2.JpaController} object.
 	 */
 	public static void callCloseEmf(JpaController aController) {
 		if (aController != null) {
@@ -809,6 +1002,11 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>callRollback.</p>
+	 *
+	 * @param aController a {@link it.attocchi.jpa2.JpaController} object.
+	 */
 	public static void callRollback(JpaController aController) {
 		if (aController != null) {
 			aController.rollbackTransaction();
@@ -817,11 +1015,12 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Ready to use method to search entities using JPAEntityFilter
-	 * 
-	 * @param clazz
-	 * @param filter
-	 * @return
-	 * @throws Exception
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static <T extends Serializable> List<T> callFind(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
@@ -841,6 +1040,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> List<T> callFindPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		List<T> res = new ArrayList<T>();
@@ -859,6 +1068,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindById.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a long.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, long id) throws Exception {
 
 		T res = null;
@@ -877,6 +1096,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindById.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a int.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, int id) throws Exception {
 
 		T res = null;
@@ -895,6 +1124,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindById.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindById(EntityManagerFactory emf, Class<T> clazz, String id) throws Exception {
 
 		T res = null;
@@ -913,6 +1152,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindByIdPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a long.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindByIdPU(String persistenceUnit, Class<T> clazz, long id) throws Exception {
 
 		T res = null;
@@ -931,6 +1180,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindByUUIDPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param uuid a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindByUUIDPU(String persistenceUnit, Class<T> clazz, String uuid) throws Exception {
 
 		T res = null;
@@ -949,6 +1208,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callCount.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.lang.Long} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> Long callCount(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		Long res = 0L;
@@ -967,6 +1236,16 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callCountPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.lang.Long} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> Long callCountPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 
 		Long res = 0L;
@@ -985,6 +1264,17 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindFirst.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindFirst(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 
 		List<T> list = new ArrayList<T>();
@@ -1013,6 +1303,17 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindFirstPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.ClassNotFoundException if any.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindFirstPU(String persistenceUnit, Class<T> clazz, JPAEntityFilter<T> filter) throws ClassNotFoundException, Exception {
 
 		List<T> list = new ArrayList<T>();
@@ -1041,6 +1342,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callUpdate.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param object a T object.
+	 * @param <T> a T object.
+	 * @return a boolean.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public static <T extends Serializable> boolean callUpdate(EntityManagerFactory emf, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
@@ -1061,6 +1371,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callInsert.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param object a T object.
+	 * @param <T> a T object.
+	 * @return a boolean.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public static <T extends Serializable> boolean callInsert(EntityManagerFactory emf, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
@@ -1081,6 +1400,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callInsertPU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param object a T object.
+	 * @param <T> a T object.
+	 * @return a boolean.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public static <T extends Serializable> boolean callInsertPU(String persistenceUnit, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
@@ -1101,6 +1429,15 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callUpdatePU.</p>
+	 *
+	 * @param persistenceUnit a {@link java.lang.String} object.
+	 * @param object a T object.
+	 * @param <T> a T object.
+	 * @return a boolean.
+	 * @throws it.attocchi.jpa2.JpaControllerException if any.
+	 */
 	public static <T extends Serializable> boolean callUpdatePU(String persistenceUnit, T object) throws JpaControllerException {
 		boolean res = false;
 		JpaController controller = null;
@@ -1127,6 +1464,17 @@ public class JpaController implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>callDelete.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param o a T object.
+	 * @param id a {@link java.lang.Object} object.
+	 * @param <T> a T object.
+	 * @return a boolean.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> boolean callDelete(EntityManagerFactory emf, Class<T> clazz, T o, Object id) throws Exception {
 		boolean res = false;
 		JpaController controller = null;
@@ -1146,11 +1494,11 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Use findAsMap
-	 * 
-	 * @param clazz
-	 * @param filter
-	 * @return
-	 * @throws Exception
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @return a {@link java.util.Map} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	@Deprecated
 	public <T extends IEntityWithIdLong> Map<Long, T> findAllAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
@@ -1159,10 +1507,11 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Return a Map based on element ID
-	 * 
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @return a {@link java.util.Map} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public <T extends IEntityWithIdLong> Map<Long, T> findAsMap(Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Map<Long, T> res = new LinkedHashMap<Long, T>();
@@ -1177,18 +1526,28 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Use callFindAsMap
-	 * 
-	 * @param emf
-	 * @param clazz
-	 * @param filter
-	 * @return
-	 * @throws Exception
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @return a {@link java.util.Map} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	@Deprecated
 	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAllAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		return callFindAsMap(emf, clazz, filter);
 	}
 
+	/**
+	 * <p>callFindAsMap.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.Map} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends IEntityWithIdLong> Map<Long, T> callFindAsMap(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		Map<Long, T> res = new LinkedHashMap<Long, T>();
 		JpaController controller = null;
@@ -1205,6 +1564,19 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>callFindProjection.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazzT a {@link java.lang.Class} object.
+	 * @param clazzF a {@link java.lang.Class} object.
+	 * @param fieldDefinition a {@link javax.persistence.metamodel.SingularAttribute} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @param <F> a F object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends IEntityWithIdLong, F> List<F> callFindProjection(EntityManagerFactory emf, Class<T> clazzT, Class<F> clazzF, SingularAttribute<T, F> fieldDefinition, JPAEntityFilter<T> filter) throws Exception {
 		List<F> res = new ArrayList<F>();
 		JpaController controller = null;
@@ -1220,6 +1592,19 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findProjection.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazzT a {@link java.lang.Class} object.
+	 * @param clazzF a {@link java.lang.Class} object.
+	 * @param fieldDefinition a {@link javax.persistence.metamodel.SingularAttribute} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @param <F> a F object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends IEntityWithIdLong, F> List<F> findProjection(EntityManagerFactory emf, Class<T> clazzT, Class<F> clazzF, SingularAttribute<T, F> fieldDefinition, JPAEntityFilter<T> filter) throws Exception {
 		List<F> res = new ArrayList<F>();
 
@@ -1247,14 +1632,43 @@ public class JpaController implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>findById.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a long.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <T extends Serializable> T findById(Class<T> clazz, long id) throws Exception {
 		return find(clazz, id);
 	}
 
+	/**
+	 * <p>callFindBy.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> List<T> callFindBy(EntityManagerFactory emf, Class<T> clazz, JPAEntityFilter<T> filter) throws Exception {
 		return callFind(emf, clazz, filter);
 	}
 
+	/**
+	 * <p>callFindBy.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param id a long.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends Serializable> T callFindBy(EntityManagerFactory emf, Class<T> clazz, long id) throws Exception {
 		return callFindById(emf, clazz, id);
 	}

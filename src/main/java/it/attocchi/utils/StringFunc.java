@@ -24,10 +24,24 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * <p>StringFunc class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class StringFunc {
 
+	/** Constant <code>NEW_LINE="\r\n"</code> */
 	public static final String NEW_LINE = "\r\n";
 
+	/**
+	 * <p>concat.</p>
+	 *
+	 * @param separator a {@link java.lang.String} object.
+	 * @param strings a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String concat(String separator, String... strings) {
 		StringBuilder sb = new StringBuilder();
 
@@ -42,14 +56,34 @@ public class StringFunc {
 		return sb.toString();
 	}
 
+	/**
+	 * <p>equalsIgnoreCase.</p>
+	 *
+	 * @param string1 a {@link java.lang.String} object.
+	 * @param string2 a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean equalsIgnoreCase(String string1, String string2) {
 		return (string1 != null && string2 != null && string1.equalsIgnoreCase(string2));
 	}
 
+	/**
+	 * <p>contains.</p>
+	 *
+	 * @param string a {@link java.lang.String} object.
+	 * @param subString a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean contains(String string, String subString) {
 		return string != null && !string.isEmpty() && string.indexOf(subString) >= 0;
 	}
 
+	/**
+	 * <p>readLines.</p>
+	 *
+	 * @param aText a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<String> readLines(String aText) {
 		List<String> res = null;
 
@@ -59,6 +93,13 @@ public class StringFunc {
 		return res;
 	}
 
+	/**
+	 * <p>writeLines.</p>
+	 *
+	 * @param lines a {@link java.util.List} object.
+	 * @param defaultValueIfEmpty a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String writeLines(List<String> lines, String defaultValueIfEmpty) {
 		String res = defaultValueIfEmpty;
 

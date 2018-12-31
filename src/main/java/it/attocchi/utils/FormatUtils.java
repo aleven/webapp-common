@@ -20,14 +20,20 @@
 package it.attocchi.utils;
 
 /**
- * 
+ * <p>FormatUtils class.</p>
+ *
  * @author Mirco Attocchi
- * 
+ * @version $Id: $Id
  */
 public class FormatUtils {
 
 	/**
 	 * Format a Strings like a C# Formatter with placeholder like {0}
+	 *
+	 * @param parseForSQL a boolean.
+	 * @param aString a {@link java.lang.String} object.
+	 * @param param a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String formatLikeCSharp(boolean parseForSQL, String aString, String... param) {
 		String res = aString;

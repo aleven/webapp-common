@@ -30,8 +30,24 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * <p>JAXBUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class JAXBUtils {
 
+	/**
+	 * <p>serializeToFile.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param object a T object.
+	 * @param outputFile a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @throws javax.xml.bind.JAXBException if any.
+	 * @throws java.io.FileNotFoundException if any.
+	 */
 	public static <T> void serializeToFile(Class<T> clazz, T object, String outputFile) throws JAXBException, FileNotFoundException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 
@@ -41,6 +57,15 @@ public class JAXBUtils {
 		m.marshal(object, new FileOutputStream(outputFile));
 	}
 
+	/**
+	 * <p>deserializeFromFile.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param inputFile a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws javax.xml.bind.JAXBException if any.
+	 */
 	public static <T> T deserializeFromFile(Class<T> clazz, String inputFile) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 
@@ -51,6 +76,16 @@ public class JAXBUtils {
 		return (T) u.unmarshal(f);
 	}
 
+	/**
+	 * <p>serializeToString.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param object a T object.
+	 * @param <T> a T object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws javax.xml.bind.JAXBException if any.
+	 * @throws java.io.FileNotFoundException if any.
+	 */
 	public static <T> String serializeToString(Class<T> clazz, T object) throws JAXBException, FileNotFoundException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 
@@ -64,6 +99,16 @@ public class JAXBUtils {
 		return sw.toString();
 	}
 
+	/**
+	 * <p>deserializeFromString.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param aString a {@link java.lang.String} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 * @throws javax.xml.bind.JAXBException if any.
+	 * @throws java.io.FileNotFoundException if any.
+	 */
 	public static <T> T deserializeFromString(Class<T> clazz, String aString) throws JAXBException, FileNotFoundException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 

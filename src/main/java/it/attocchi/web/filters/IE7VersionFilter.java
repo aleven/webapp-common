@@ -33,22 +33,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-/*
+/**
  * Usage on web.xml:
  * 
- * 	
- <!-- IE7VersionFilter -->
- <filter>
- <display-name>IE7VersionFilter</display-name>
- <filter-name>IE7VersionFilter</filter-name>
- <filter-class>it.attocchi.web.filters.IE7VersionFilter</filter-class>
- </filter>
- <filter-mapping>
- <filter-name>IE7VersionFilter</filter-name>
- <servlet-name>Faces Servlet</servlet-name>
- </filter-mapping>
- <!-- IE7VersionFilter -->
-
+ * <pre>
+ * {@code
+ * <!-- IE7VersionFilter -->
+ * <filter>
+ * <display-name>IE7VersionFilter</display-name>
+ * <filter-name>IE7VersionFilter</filter-name>
+ * <filter-class>it.attocchi.web.filters.IE7VersionFilter</filter-class>
+ * </filter>
+ * <filter-mapping>
+ * <filter-name>IE7VersionFilter</filter-name>
+ * <servlet-name>Faces Servlet</servlet-name>
+ * </filter-mapping>
+ * <!-- IE7VersionFilter -->
+ * }
+ * </pre>
+ * <p>IE7VersionFilter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
  */
 public class IE7VersionFilter implements Filter {
 
@@ -59,11 +65,13 @@ public class IE7VersionFilter implements Filter {
 	String xuaCompatible;
 	String xuaDefault;
 
+	/** {@inheritDoc} */
 	@Override
 	public void destroy() {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -119,6 +127,7 @@ public class IE7VersionFilter implements Filter {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		pathToBeIgnored = config.getInitParameter("pathToBeIgnored");
@@ -129,17 +138,14 @@ public class IE7VersionFilter implements Filter {
 
 	/**
 	 * Performs a wildcard matching for the text and pattern provided.
-	 * 
+	 *
 	 * @param text
 	 *            the text to be tested for matches.
-	 * 
 	 * @param pattern
 	 *            the pattern to be matched for. This can contain the wildcard
 	 *            character '*' (asterisk).
-	 * 
 	 * @return <tt>true</tt> if a match is found, <tt>false</tt> otherwise.
 	 */
-
 	public static boolean wildCardMatch(String text, String pattern) {
 		// Create the cards by splitting using a RegEx. If more speed
 		// is desired, a simpler character based splitting can be done.

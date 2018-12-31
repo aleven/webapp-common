@@ -56,9 +56,13 @@ import org.apache.log4j.Logger;
 
 /**
  * Servlet Filter implementation class JSONPFilter
+ *
+ * @author mirco
+ * @version $Id: $Id
  */
 public class JSONPRequestFilter implements Filter {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(JSONPRequestFilter.class.getName());
 
 	/**
@@ -69,15 +73,15 @@ public class JSONPRequestFilter implements Filter {
 	}
 
 	/**
+	 * <p>destroy.</p>
+	 *
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
 		
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+	/** {@inheritDoc} */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		if (!(request instanceof HttpServletRequest)) {
@@ -104,9 +108,7 @@ public class JSONPRequestFilter implements Filter {
 		}
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
+	/** {@inheritDoc} */
 	public void init(FilterConfig fConfig) throws ServletException {
 		
 	}

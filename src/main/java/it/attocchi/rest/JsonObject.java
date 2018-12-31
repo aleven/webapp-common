@@ -19,8 +19,19 @@
 
 package it.attocchi.rest;
 
+/**
+ * <p>JsonObject interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface JsonObject {
 
+	/**
+	 * <p>toJson.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public abstract String toJson();
 
 }

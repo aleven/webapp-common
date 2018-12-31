@@ -44,5 +44,10 @@ abstract class PageBaseForceInitSession extends PageBase {
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	}
 
+	/**
+	 * <p>init.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void init() throws Exception;
 }

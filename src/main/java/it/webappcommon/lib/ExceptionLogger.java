@@ -24,7 +24,19 @@ import java.io.StringWriter;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>ExceptionLogger class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class ExceptionLogger {
+	/**
+	 * <p>logException.</p>
+	 *
+	 * @param logger a {@link org.apache.log4j.Logger} object.
+	 * @param ex a {@link java.lang.Throwable} object.
+	 */
 	public static void logException(Logger logger, Throwable ex) {
 		StringWriter sw = new StringWriter();
 		ex.printStackTrace(new PrintWriter(sw));
@@ -32,6 +44,12 @@ public class ExceptionLogger {
 		logger.error(stacktrace);
 	}
 	
+	/**
+	 * <p>logExceptionWithCause.</p>
+	 *
+	 * @param logger a {@link org.apache.log4j.Logger} object.
+	 * @param ex a {@link java.lang.Throwable} object.
+	 */
 	public static void logExceptionWithCause(Logger logger, Throwable ex) {		
 		logger.error(ex);
 		Throwable cause = ex.getCause();

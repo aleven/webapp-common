@@ -44,14 +44,15 @@ import org.apache.log4j.Logger;
 //import org.joda.time.format.DateTimeFormatter;
 
 /**
- * 
- * DateUtils that not require Joda
- * 
- * @author Mirco
  *
+ * DateUtils that not require Joda
+ *
+ * @author Mirco
+ * @version $Id: $Id
  */
 public class DateUtils {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(DateUtils.class.getName());
 
 	/**
@@ -116,30 +117,68 @@ public class DateUtils {
 	 */
 	public static final String FORMAT_yyyyMMdd_dot_HHmmss = "yyyyMMdd.HHmmss";
 
+	/**
+	 * <p>Now.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date Now() {
 		return new Date();
 	}
 
+	/**
+	 * <p>Now.</p>
+	 *
+	 * @param pattern a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String Now(String pattern) {
 		return new SimpleDateFormat(pattern).format(Now());
 	}
 
+	/**
+	 * <p>NowFormatISO.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String NowFormatISO() {
 		return new SimpleDateFormat(FORMAT_ISO).format(Now());
 	}
 
+	/**
+	 * <p>NowYear2.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String NowYear2() {
 		return new SimpleDateFormat("yy").format(Now());
 	}
 
+	/**
+	 * <p>NowYear4.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String NowYear4() {
 		return new SimpleDateFormat("yyyy").format(Now());
 	}
 
+	/**
+	 * <p>getYear.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getYear(Date aDate) {
 		return new SimpleDateFormat("yyyy").format(aDate);
 	}
 
+	/**
+	 * <p>getYearAsInt.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getYearAsInt(Date aDate) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(aDate);
@@ -148,6 +187,9 @@ public class DateUtils {
 
 	/**
 	 * Ritorna il giorno del mese della data specificata
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int getGiorno(Date aDate) {
 
@@ -157,10 +199,21 @@ public class DateUtils {
 		return tempCal.get(Calendar.DAY_OF_MONTH);
 	}
 
+	/**
+	 * <p>getNowFormatTZGMT.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getNowFormatTZGMT() {
 		return getFormatTZGMT(new GregorianCalendar().getTime());
 	}
 
+	/**
+	 * <p>getFormatTZGMT.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getFormatTZGMT(Date aDate) {
 
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat(FORMAT_ISO_8601);
@@ -171,6 +224,9 @@ public class DateUtils {
 	
 	/**
 	 * Data nel formato MM
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String getMonth(Date aDate) {
 		return new SimpleDateFormat("MM").format(aDate);
@@ -178,11 +234,21 @@ public class DateUtils {
 
 	/**
 	 * Data nel formato dd
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String getDay(Date aDate) {
 		return new SimpleDateFormat("dd").format(aDate);
 	}
 
+	/**
+	 * <p>addHours.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @param hours a int.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date addHours(Date aDate, int hours) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(aDate);
@@ -190,6 +256,13 @@ public class DateUtils {
 		return cal.getTime();
 	}
 
+	/**
+	 * <p>addDays.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @param days a int.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date addDays(Date aDate, int days) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(aDate);
@@ -197,6 +270,13 @@ public class DateUtils {
 		return cal.getTime();
 	}
 
+	/**
+	 * <p>addMonths.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @param months a int.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date addMonths(Date aDate, int months) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(aDate);
@@ -204,6 +284,13 @@ public class DateUtils {
 		return cal.getTime();
 	}
 
+	/**
+	 * <p>dateBetweens.</p>
+	 *
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<Date> dateBetweens(Date start, Date end) {
 		List<Date> res = new ArrayList<Date>();
 
@@ -223,6 +310,10 @@ public class DateUtils {
 	 * potrebbe diventare 2012 03 08 perche viene valorizzata con ora 00:00 e
 	 * quando la si formatta nel locale Italiano Java la fa diventare il giorno
 	 * precedente passando da CET a CEST
+	 *
+	 * @param aIsoString a {@link java.lang.String} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.text.ParseException if any.
 	 */
 	public static Date parseISO(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_ISO_HHmm).parse(aIsoString + " 12:00");
@@ -230,6 +321,10 @@ public class DateUtils {
 
 	/**
 	 * 2013-12-13
+	 *
+	 * @param aIsoString a {@link java.lang.String} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.text.ParseException if any.
 	 */
 	public static Date parseISOSeparator(String aIsoString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_ISO_HHmm_SEPARATOR).parse(aIsoString + " 12:00");
@@ -238,6 +333,9 @@ public class DateUtils {
 	/**
 	 * Calcolate duration starting from a string like 01:30 (1 hour and 30
 	 * minutes)
+	 *
+	 * @param HHmm a {@link java.lang.String} object.
+	 * @return a float.
 	 */
 	public static float calculateDuration(String HHmm) {
 
@@ -252,12 +350,24 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getCalendar.</p>
+	 *
+	 * @param dt a {@link java.util.Date} object.
+	 * @return a {@link java.util.Calendar} object.
+	 */
 	public static Calendar getCalendar(Date dt) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(dt);
 		return cal;
 	}
 
+	/**
+	 * <p>isWorkDay.</p>
+	 *
+	 * @param data a {@link java.util.Date} object.
+	 * @return a boolean.
+	 */
 	public static boolean isWorkDay(Date data) {
 
 		int theDay = getCalendar(data).get(Calendar.DAY_OF_WEEK);
@@ -269,6 +379,9 @@ public class DateUtils {
 	/**
 	 * Week number of the date. From the help this may be different by Calendar
 	 * Locale
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int getWeekOfTheYear(Date aDate) {
 		Calendar cal = Calendar.getInstance();
@@ -278,7 +391,7 @@ public class DateUtils {
 
 	/**
 	 * Create a Date from specified data
-	 * 
+	 *
 	 * @param year
 	 *            YEAR
 	 * @param month
@@ -305,7 +418,7 @@ public class DateUtils {
 
 	/**
 	 * crea una data dai dati specificati (imposta orario alle 00:00)
-	 * 
+	 *
 	 * @param year
 	 *            YEAR
 	 * @param month
@@ -320,6 +433,7 @@ public class DateUtils {
 	
 	/**
 	 * crea una data dai dati specificati (imposta orario alle 23:59)
+	 *
 	 * @param year anno
 	 * @param month mese
 	 * @param day giorno
@@ -331,6 +445,11 @@ public class DateUtils {
 	
 	/**
 	 * Set time of a Date
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @param hours a int.
+	 * @param minutes a int.
+	 * @return a {@link java.util.Date} object.
 	 */
 	public static Date setTime(Date aDate, int hours, int minutes) {
 		Calendar c = Calendar.getInstance();
@@ -346,6 +465,11 @@ public class DateUtils {
 	/**
 	 * Verify if a Date is Between other dates, looking only for the date, not
 	 * for the time
+	 *
+	 * @param aMoment a {@link java.util.Date} object.
+	 * @param from a {@link java.util.Date} object.
+	 * @param to a {@link java.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean isBetween(Date aMoment, Date from, Date to) {
 
@@ -374,23 +498,44 @@ public class DateUtils {
 		return aMoment.getTime() >= a.getTime().getTime() && aMoment.getTime() <= b.getTime().getTime();
 	}
 
+	/**
+	 * <p>getAnno.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getAnno(Date aDate) {
 		Calendar tempCal = new GregorianCalendar();
 		tempCal.setTime(aDate);
 		return tempCal.get(Calendar.YEAR);
 	}
 
+	/**
+	 * <p>getMonthZeroBased.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getMonthZeroBased(Date aDate) {
 		return getMeseZeroBased(aDate);
 	}
 	
 	/**
 	 * Ritorna il mese della data specificata non 0 based
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int getMese(Date aDate) {
 		return getMeseZeroBased(aDate) + 1;
 	}
 	
+	/**
+	 * <p>getMeseZeroBased.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getMeseZeroBased(Date aDate) {
 		Calendar tempCal = new GregorianCalendar();
 		tempCal.setTime(aDate);
@@ -398,18 +543,26 @@ public class DateUtils {
 	}
 
 	/**
-	 * 
+	 * <p>getLastDayOfMontZeroBased.</p>
+	 *
 	 * @param monthZeroBased
 	 *            numero del mese zero-based
+	 * @param year a int.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static int getLastDayOfMontZeroBased(int monthZeroBased, int year) throws Exception {
 		return getLastDayOfMont(monthZeroBased + 1, year);
 	}
 
 	/**
-	 * 
+	 * <p>getLastDayOfMont.</p>
+	 *
 	 * @param monthNonZeroBased
 	 *            Numero del mese non zero-based
+	 * @param year a int.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static int getLastDayOfMont(int monthNonZeroBased, int year) throws Exception {
 		int res = 0;
@@ -442,6 +595,13 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getLastDateOfMonth.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static Date getLastDateOfMonth(Date aDate) throws Exception {
 
 		Calendar cal = new GregorianCalendar(getAnno(aDate), getMeseZeroBased(aDate), getLastDayOfMontZeroBased(getMeseZeroBased(aDate), getAnno(aDate)));
@@ -452,6 +612,10 @@ public class DateUtils {
 	 * Original code from source:
 	 * http://stackoverflow.com/questions/4600034/calculate
 	 * -number-of-weekdays-between-two-dates-in-java
+	 *
+	 * @param startDate a {@link java.util.Date} object.
+	 * @param endDate a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
 
@@ -489,12 +653,27 @@ public class DateUtils {
 		return workDays;
 	}
 
+	/**
+	 * <p>getDate.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param inputTime a {@link java.lang.String} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.text.ParseException if any.
+	 */
 	public static Date getDate(Date date, String inputTime) throws ParseException {
 		DateFormat format = new SimpleDateFormat("HH:mm");
 		Date time = format.parse(inputTime);
 		return getDate(date, time);
 	}
 
+	/**
+	 * <p>getDate.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param time a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getDate(Date date, Date time) {
 		Calendar calendarA = Calendar.getInstance();
 		calendarA.setTime(date);
@@ -512,20 +691,46 @@ public class DateUtils {
 		return result;
 	}
 
+	/**
+	 * <p>format.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @param format a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String format(Date aDate, String format) {
 		return new SimpleDateFormat(format).format(aDate);
 	}
 	
+	/**
+	 * <p>format.</p>
+	 *
+	 * @param aDate a {@link java.util.Calendar} object.
+	 * @param format a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String format(Calendar aDate, String format) {
 		return format(aDate.getTime(), format);
 	}
 
+	/**
+	 * <p>parseTime.</p>
+	 *
+	 * @param timeString a {@link java.lang.String} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.text.ParseException if any.
+	 */
 	public static Date parseTime(String timeString) throws ParseException {
 		return new SimpleDateFormat(FORMAT_TIME_IT).parse(timeString);
 	}
 
 	/**
 	 * verifica se una data esiste
+	 *
+	 * @param anno a int.
+	 * @param mese a int.
+	 * @param giorno a int.
+	 * @return a boolean.
 	 */
 	public static boolean exists(int anno, int mese, int giorno) {
 		boolean res = false;
@@ -552,6 +757,7 @@ public class DateUtils {
 	
 	/**
 	 * cerca una data valida se quella specificata non è valida. cercando all'indietro nel tempo
+	 *
 	 * @param anno YEAR
 	 * @param mese MONTH
 	 * @param giorno DAY_OF_MONTH
@@ -650,6 +856,9 @@ public class DateUtils {
 
 	/**
 	 * Ritorna l'ora della Data nel formato HH:mm
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String getOra(Date aDate) {
 		return new SimpleDateFormat("HH:mm").format(aDate);
@@ -716,10 +925,30 @@ public class DateUtils {
 //		return res;
 //	}
 
+	/**
+	 * <p>verificaSovrapposizione.</p>
+	 *
+	 * @param dateStartApp1 a {@link java.util.Date} object.
+	 * @param dateEndApp1 a {@link java.util.Date} object.
+	 * @param dateStartApp2 a {@link java.util.Date} object.
+	 * @param dateEndApp2 a {@link java.util.Date} object.
+	 * @param unEstremoPuoEssereUguale a boolean.
+	 * @return a boolean.
+	 */
 	public static boolean verificaSovrapposizione(Date dateStartApp1, Date dateEndApp1, Date dateStartApp2, Date dateEndApp2, boolean unEstremoPuoEssereUguale) {
 		return verificaSovrapposizione(dateStartApp1.getTime(), dateEndApp1.getTime(), dateStartApp2.getTime(), dateEndApp2.getTime(), unEstremoPuoEssereUguale);
 	}
 
+	/**
+	 * <p>verificaSovrapposizione.</p>
+	 *
+	 * @param dateStartApp1 a long.
+	 * @param dateEndApp1 a long.
+	 * @param dateStartApp2 a long.
+	 * @param dateEndApp2 a long.
+	 * @param unEstremoPuoEssereUguale a boolean.
+	 * @return a boolean.
+	 */
 	public static boolean verificaSovrapposizione(long dateStartApp1, long dateEndApp1, long dateStartApp2, long dateEndApp2, boolean unEstremoPuoEssereUguale) {
 		boolean result = true;
 
@@ -745,6 +974,9 @@ public class DateUtils {
 	 */
 	/**
 	 * Ritorna se il giorno cade in un fine settimana cioe' sabato o domenica
+	 *
+	 * @param dt a {@link java.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean isWeekend(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -757,11 +989,11 @@ public class DateUtils {
 	 * <p>
 	 * Checks if a date is today.
 	 * </p>
-	 * 
+	 *
 	 * @param date
 	 *            the date, not altered, not null.
 	 * @return true if the date is today.
-	 * @throws IllegalArgumentException
+	 * @throws java.lang.IllegalArgumentException
 	 *             if the date is <code>null</code>
 	 */
 	public static boolean isToday(Date date) {
@@ -772,11 +1004,11 @@ public class DateUtils {
 	 * <p>
 	 * Checks if a calendar date is today.
 	 * </p>
-	 * 
+	 *
 	 * @param cal
 	 *            the calendar, not altered, not null
 	 * @return true if cal date is today
-	 * @throws IllegalArgumentException
+	 * @throws java.lang.IllegalArgumentException
 	 *             if the calendar is <code>null</code>
 	 */
 	public static boolean isToday(Calendar cal) {
@@ -787,13 +1019,13 @@ public class DateUtils {
 	 * <p>
 	 * Checks if two calendars represent the same day ignoring time.
 	 * </p>
-	 * 
+	 *
 	 * @param cal1
 	 *            the first calendar, not altered, not null
 	 * @param cal2
 	 *            the second calendar, not altered, not null
 	 * @return true if they represent the same day
-	 * @throws IllegalArgumentException
+	 * @throws java.lang.IllegalArgumentException
 	 *             if either calendar is <code>null</code>
 	 */
 	public static boolean isSameDay(Calendar cal1, Calendar cal2) {
@@ -808,13 +1040,13 @@ public class DateUtils {
 	 * <p>
 	 * Checks if two dates are on the same day ignoring time.
 	 * </p>
-	 * 
+	 *
 	 * @param date1
 	 *            the first date, not altered, not null
 	 * @param date2
 	 *            the second date, not altered, not null
 	 * @return true if they represent the same day
-	 * @throws IllegalArgumentException
+	 * @throws java.lang.IllegalArgumentException
 	 *             if either date is <code>null</code>
 	 */
 	public static boolean isSameDay(Date date1, Date date2) {
@@ -832,6 +1064,13 @@ public class DateUtils {
 		return isSameDay(cal1, cal2);
 	}
 
+	/**
+	 * <p>isSameMonth.</p>
+	 *
+	 * @param date1 a {@link java.util.Date} object.
+	 * @param date2 a {@link java.util.Date} object.
+	 * @return a boolean.
+	 */
 	public static boolean isSameMonth(Date date1, Date date2) {
 		if (date1 == null || date2 == null) {
 			throw new IllegalArgumentException("The dates must not be null");
@@ -843,10 +1082,24 @@ public class DateUtils {
 		return isSameDay(cal1, cal2);
 	}
 
+	/**
+	 * <p>isNotSameDay.</p>
+	 *
+	 * @param date1 a {@link java.util.Date} object.
+	 * @param date2 a {@link java.util.Date} object.
+	 * @return a boolean.
+	 */
 	public static boolean isNotSameDay(Date date1, Date date2) {
 		return !isSameDay(date1, date2);
 	}
 
+	/**
+	 * <p>isSameMonth.</p>
+	 *
+	 * @param cal1 a {@link java.util.Calendar} object.
+	 * @param cal2 a {@link java.util.Calendar} object.
+	 * @return a boolean.
+	 */
 	public static boolean isSameMonth(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException("The dates must not be null");
@@ -856,6 +1109,9 @@ public class DateUtils {
 
 	/**
 	 * Settimana dell'anno
+	 *
+	 * @param dt a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int WeekOfTheYear(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -866,6 +1122,9 @@ public class DateUtils {
 	/**
 	 * Mette a zero la componente tempo della data es. 23/04/2010 24:25:01
 	 * diventa 23/04/2010 00:00:00
+	 *
+	 * @param dt a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
 	 */
 	public static Date getDateNoTime(Date dt) {
 		Calendar cal = new GregorianCalendar();
@@ -878,7 +1137,7 @@ public class DateUtils {
 
 	/**
 	 * ritorna il giorno della settimana
-	 * 
+	 *
 	 * @param dt data
 	 * @return 1 e' domenica, .. 7 sabato
 	 */
@@ -903,7 +1162,7 @@ public class DateUtils {
 
 	/**
 	 * Ritona il prefisso del giorno della settimana indicato
-	 * 
+	 *
 	 * @param dt data
 	 * @return prefisso del giorno
 	 */
@@ -934,7 +1193,7 @@ public class DateUtils {
 
 	/**
 	 * Ritorna la data formattata come richiesto
-	 * 
+	 *
 	 * @param dt
 	 *            Data da formattare
 	 * @param formatString
@@ -950,6 +1209,10 @@ public class DateUtils {
 
 	/**
 	 * Ritorna la differenza in giorni tra 2 date
+	 *
+	 * @param startDate a {@link java.util.Date} object.
+	 * @param endDate a {@link java.util.Date} object.
+	 * @return a int.
 	 */
 	public static int DiffDays(Date startDate, Date endDate) {
 		return (int) ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -958,15 +1221,14 @@ public class DateUtils {
 	/**
 	 * Calculates the number of days between two calendar days in a manner which
 	 * is independent of the Calendar type used.
-	 * 
+	 *
 	 * @param d1
 	 *            The first date.
 	 * @param d2
 	 *            The second date.
-	 * 
 	 * @return The number of days between the two dates. Zero is returned if the
 	 *         dates are the same, one if the dates are adjacent, etc. The order
-	 *         of the dates does not matter, the value returned is always >= 0.
+	 *         of the dates does not matter, the value returned is always &gt;= 0.
 	 *         If Calendar types of d1 and d2 are different, the result may not
 	 *         be accurate.
 	 */
@@ -1001,6 +1263,12 @@ public class DateUtils {
 	// return res;
 	// }
 
+	/**
+	 * <p>getQuarter.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getQuarter(Date date) {
 		// Calendar calendar = Calendar.getInstance();
 		// calendar.setTime(date);
@@ -1024,6 +1292,12 @@ public class DateUtils {
 		return quarter;
 	}
 
+	/**
+	 * <p>getQuarterStartDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getQuarterStartDate(Date aDate) {
 		Date res = null;
 
@@ -1039,6 +1313,12 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getPrevQuarterStartDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getPrevQuarterStartDate(Date aDate) {
 		Date res = null;
 
@@ -1063,6 +1343,12 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getSixMonthBefore.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getSixMonthBefore(Date aDate) {
 		Date res = null;
 
@@ -1091,12 +1377,26 @@ public class DateUtils {
 		return getFirstDateOfMonth(move.getTime());
 	}
 
+	/**
+	 * <p>getMonthsDifference.</p>
+	 *
+	 * @param date1 a {@link java.util.Calendar} object.
+	 * @param date2 a {@link java.util.Calendar} object.
+	 * @return a int.
+	 */
 	public static int getMonthsDifference(Calendar date1, Calendar date2) {
 		int m1 = date1.get(Calendar.YEAR) * 12 + date1.get(Calendar.MONTH);
 		int m2 = date2.get(Calendar.YEAR) * 12 + date2.get(Calendar.MONTH);
 		return m2 - m1;
 	}
 
+	/**
+	 * <p>getPrevQuarterEndDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static Date getPrevQuarterEndDate(Date aDate) throws Exception {
 		Date res = null;
 
@@ -1121,6 +1421,12 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getFirstDateOfMonth.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getFirstDateOfMonth(Date aDate) {
 		Calendar cal = new GregorianCalendar(getAnno(aDate), getMeseZeroBased(aDate), 1);
 		return cal.getTime();
@@ -1183,6 +1489,13 @@ public class DateUtils {
 	// return res;
 	// }
 
+	/**
+	 * <p>getQuarterEndDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static Date getQuarterEndDate(Date aDate) throws Exception {
 		Date res = null;
 
@@ -1200,6 +1513,11 @@ public class DateUtils {
 
 	/**
 	 * Crea una data usando anno mese giorno e i mesi non zero-based
+	 *
+	 * @param anno a int.
+	 * @param mese a int.
+	 * @param giorno a int.
+	 * @return a {@link java.util.Date} object.
 	 */
 	public static Date newDate(int anno, int mese, int giorno) {
 
@@ -1211,6 +1529,9 @@ public class DateUtils {
 
 	/**
 	 * Procedura copiata dal celendario per AppuntamentiDAO
+	 *
+	 * @param inizio a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
 	 */
 	public static Date getInizioSettimana(Date inizio) {
 
@@ -1233,6 +1554,12 @@ public class DateUtils {
 		return calWeekInizio.getTime();
 	}
 
+	/**
+	 * <p>getFineSettimana.</p>
+	 *
+	 * @param inizio a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getFineSettimana(Date inizio) {
 		Calendar calWeekFine = new GregorianCalendar();
 
@@ -1359,6 +1686,13 @@ public class DateUtils {
 //		return duration;
 //	}
 
+	/**
+	 * <p>mergeDateTime.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param time a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date mergeDateTime(Date date, Date time) {
 		return new Date(date.getYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
 	}
@@ -1453,6 +1787,11 @@ public class DateUtils {
 	// return cal.getTime();
 	// }
 
+	/**
+	 * <p>minDate.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date minDate() {
 		// Calendar calendar = Calendar.getInstance();
 		// calendar.setTime(new Date(0l));
@@ -1824,6 +2163,13 @@ public class DateUtils {
 	// * 24));
 	// }
 	//
+	/**
+	 * <p>getDaysBetween.</p>
+	 *
+	 * @param d1 a {@link java.util.Date} object.
+	 * @param d2 a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getDaysBetween(Date d1, Date d2) {
 		Calendar c1 = Calendar.getInstance();
 		c1.setTime(d1);
@@ -2352,6 +2698,12 @@ public class DateUtils {
 //		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();
 //	}
 
+	/**
+	 * <p>getSemester.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getSemester(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -2360,6 +2712,12 @@ public class DateUtils {
 		return quarter;
 	}
 
+	/**
+	 * <p>getSemesterStartDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getSemesterStartDate(Date aDate) {
 		Date res = null;
 		int semester = getSemester(aDate);
@@ -2371,6 +2729,12 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getPrevSemesterStartDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 */
 	public static Date getPrevSemesterStartDate(Date aDate) {
 		Date res = null;
 		int semester = getSemester(aDate);
@@ -2388,6 +2752,13 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getSemesterEndDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static Date getSemesterEndDate(Date aDate) throws Exception {
 		Date res = null;
 		int semester = getSemester(aDate);
@@ -2399,6 +2770,13 @@ public class DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getPrevSemesterEndDate.</p>
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.util.Date} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static Date getPrevSemesterEndDate(Date aDate) throws Exception {
 		Date res = null;
 		int semester = getSemester(aDate);
@@ -2417,7 +2795,8 @@ public class DateUtils {
 	}
 	
 	/**
-	 * 
+	 * <p>getTimestampMS.</p>
+	 *
 	 * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this date.
 	 */
 	public static synchronized long getTimestampMS() {

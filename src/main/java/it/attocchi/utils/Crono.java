@@ -26,11 +26,22 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Crono class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class Crono {
 
 	private static Map<String, Date> starts = new HashMap<String, Date>();
 	private static Map<String, Date> stops = new HashMap<String, Date>();
 
+	/**
+	 * <p>start.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 */
 	public static void start(String name) {
 		// if (starts == null)
 		// starts = new HashMap<String, Date>();
@@ -46,6 +57,12 @@ public class Crono {
 
 	}
 
+	/**
+	 * <p>stopAndLog.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String stopAndLog(String name) {
 		String res = "Crono \"" + name + "\" not available.";
 
@@ -70,14 +87,31 @@ public class Crono {
 		return res;
 	}
 
+	/**
+	 * <p>stopAndLogDebug.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 * @param logger a {@link org.apache.log4j.Logger} object.
+	 */
 	public static void stopAndLogDebug(String name, Logger logger) {
 		logger.debug(stopAndLog(name));
 	}
 	
+	/**
+	 * <p>stopAndLogInfo.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 * @param logger a {@link org.apache.log4j.Logger} object.
+	 */
 	public static void stopAndLogInfo(String name, Logger logger) {
 		logger.info(stopAndLog(name));
 	}	
 
+	/**
+	 * <p>stopAndSysOut.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 */
 	public static void stopAndSysOut(String name) {
 		System.out.println(stopAndLog(name));
 	}

@@ -24,14 +24,19 @@ import it.webappcommon.lib.datamapping.StandardDao;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>DataMappingTest class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class DataMappingTest {
 
+	/** Constant <code>logger</code> */
 	protected static Logger logger = Logger.getLogger(DataMappingTest.class.getName());
 
 	/**
+	 * <p>main.</p>
+	 *
 	 * @param args
 	 *            the command line arguments
 	 */

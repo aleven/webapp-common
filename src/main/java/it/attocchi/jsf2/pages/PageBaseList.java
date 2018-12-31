@@ -32,11 +32,12 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
- * @author Mirco
+ * <p>Abstract PageBaseList class.</p>
  *
- * @param <T>
- * @param <F>
+ * @author Mirco
+ * @param <T> Serializable
+ * @param <F> JPAEntityFilter
+ * @version $Id: $Id
  */
 public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFilter<T>> extends PageBaseAuth {
 
@@ -46,38 +47,79 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 	protected long count;
 	protected String persistentUnit;
 
+	/**
+	 * <p>Getter for the field <code>elenco</code>.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 */
 	public List<T> getElenco() {
 		return elenco;
 	}
 
+	/**
+	 * <p>Setter for the field <code>elenco</code>.</p>
+	 *
+	 * @param elenco a {@link java.util.List} object.
+	 */
 	public void setElenco(List<T> elenco) {
 		this.elenco = elenco;
 	}
 
+	/**
+	 * <p>Getter for the field <code>filtro</code>.</p>
+	 *
+	 * @return a F object.
+	 */
 	public F getFiltro() {
 		return filtro;
 	}
 
+	/**
+	 * <p>Setter for the field <code>filtro</code>.</p>
+	 *
+	 * @param filtro a F object.
+	 */
 	public void setFiltro(F filtro) {
 		this.filtro = filtro;
 	}
 
+	/**
+	 * <p>Getter for the field <code>clazz</code>.</p>
+	 *
+	 * @return a {@link java.lang.Class} object.
+	 */
 	public Class<T> getClazz() {
 		return clazz;
 	}
 
+	/**
+	 * <p>Setter for the field <code>clazz</code>.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 */
 	public void setClazz(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 
+	/**
+	 * <p>Getter for the field <code>count</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getCount() {
 		return count;
 	}
 
+	/**
+	 * <p>Setter for the field <code>count</code>.</p>
+	 *
+	 * @param count a long.
+	 */
 	public void setCount(long count) {
 		this.count = count;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected void initLogged() throws Exception {
 
@@ -100,6 +142,11 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		// postInit();
 	}
 
+	/**
+	 * <p>loadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected void loadData() throws Exception {
 
 		if (StringUtils.isNotBlank(persistentUnit))
@@ -119,6 +166,9 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		}
 	}
 
+	/**
+	 * <p>loadDataException.</p>
+	 */
 	protected void loadDataException() {
 		try {
 			loadData();
@@ -128,24 +178,44 @@ public abstract class PageBaseList<T extends Serializable, F extends JPAEntityFi
 		}
 	}
 
-	/**
-	 * 
-	 * @param filtro
-	 * @param clazz
-	 */
 	// protected abstract void inizializeMembers(F filtro, Class<T> clazz);
+	/**
+	 * <p>inizializeMembers.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void inizializeMembers() throws Exception;
 
 	// abstract postInit();
+	/**
+	 * <p>onPreLoadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void onPreLoadData() throws Exception;
 
+	/**
+	 * <p>onPostLoadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void onPostLoadData() throws Exception;
 
+	/**
+	 * <p>actionReload.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionReload() {
 		loadDataException();
 		return "";
 	}
 
+	/**
+	 * <p>actionListenerReload.</p>
+	 *
+	 * @param event a {@link javax.faces.event.ActionEvent} object.
+	 */
 	public void actionListenerReload(ActionEvent event) {
 		loadDataException();
 	}

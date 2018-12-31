@@ -25,10 +25,21 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>StandardDao class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class StandardDao<T extends StorableObject> {
 
 	T type;
 
+	/**
+	 * <p>getGenericType.</p>
+	 *
+	 * @return a {@link java.lang.Class} object.
+	 */
 	public Class getGenericType() {
 		return type.getClass();
 	}
@@ -38,6 +49,12 @@ public class StandardDao<T extends StorableObject> {
 
 	private List<String> fieldList;
 
+	/**
+	 * <p>insert.</p>
+	 *
+	 * @param objectToSave a T object.
+	 * @return a int.
+	 */
 	public int insert(T objectToSave) {
 		int generatedId = 0;
 

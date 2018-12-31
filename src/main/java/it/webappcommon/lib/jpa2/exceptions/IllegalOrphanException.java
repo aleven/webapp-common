@@ -22,9 +22,20 @@ package it.webappcommon.lib.jpa2.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>IllegalOrphanException class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class IllegalOrphanException extends Exception {
 	private List<String> messages;
 
+	/**
+	 * <p>Constructor for IllegalOrphanException.</p>
+	 *
+	 * @param messages a {@link java.util.List} object.
+	 */
 	public IllegalOrphanException(List<String> messages) {
 		super((messages != null && messages.size() > 0 ? messages.get(0) : null));
 		if (messages == null) {
@@ -34,6 +45,11 @@ public class IllegalOrphanException extends Exception {
 		}
 	}
 
+	/**
+	 * <p>Getter for the field <code>messages</code>.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 */
 	public List<String> getMessages() {
 		return messages;
 	}

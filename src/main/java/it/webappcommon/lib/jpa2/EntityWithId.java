@@ -21,6 +21,12 @@ package it.webappcommon.lib.jpa2;
 
 import java.io.Serializable;
 
+/**
+ * <p>Abstract EntityWithId class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class EntityWithId implements Serializable {
 
 	// public EntityWithId() {
@@ -32,8 +38,14 @@ public abstract class EntityWithId implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * <p>getId.</p>
+	 *
+	 * @return a {@link java.lang.Integer} object.
+	 */
 	public abstract Integer getId();
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -41,6 +53,7 @@ public abstract class EntityWithId implements Serializable {
 		return hash;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object object) {
 		// TODO: Warning - this method won't work in the case the id fields are
@@ -55,6 +68,7 @@ public abstract class EntityWithId implements Serializable {
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return this.getClass().getCanonicalName() + "[id=" + getId() + "]";

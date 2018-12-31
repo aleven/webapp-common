@@ -31,21 +31,30 @@ import javax.servlet.ServletResponse;
 import org.apache.log4j.Logger;
 
 // @WebFilter("/*")
+/**
+ * <p>CharacterEncodingFilter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class CharacterEncodingFilter implements Filter {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
+	/** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void destroy() {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 

@@ -19,6 +19,12 @@
 
 package it.webappcommon.lib.datamapping;
 
+/**
+ * <p>StorableObject interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface StorableObject {
 
 }

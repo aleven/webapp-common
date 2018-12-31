@@ -19,6 +19,12 @@
 
 package it.webappcommon.lib.csv;
 
+/**
+ * <p>CSVHelper class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class CSVHelper {
 
 }

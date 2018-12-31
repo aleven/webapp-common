@@ -4,17 +4,20 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 
 /**
+ * <p>PersistenceAppRequestListener class.</p>
  *
  * @author puche
  *
  *         Web application lifecycle listener.
+ * @version $Id: $Id
  */
-
 public class PersistenceAppRequestListener extends PersistenceAppListener implements ServletRequestListener {
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * ### Method from ServletRequestListener ###
-	 * 
+	 *
 	 * The request is about to come into scope of the web application.
 	 */
 	public void requestInitialized(ServletRequestEvent evt) {
@@ -22,8 +25,10 @@ public class PersistenceAppRequestListener extends PersistenceAppListener implem
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * ### Method from ServletRequestListener ###
-	 * 
+	 *
 	 * The request is about to go out of scope of the web application.
 	 */
 	public void requestDestroyed(ServletRequestEvent evt) {

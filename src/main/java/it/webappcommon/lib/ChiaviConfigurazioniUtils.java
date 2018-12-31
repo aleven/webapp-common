@@ -20,13 +20,18 @@
 package it.webappcommon.lib;
 
 /**
+ * <p>ChiaviConfigurazioniUtils class.</p>
  *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class ChiaviConfigurazioniUtils {
 
     /**
      * Verifica se il valore di una chiave di Configurazione e' true.
+     *
+     * @param aValue a {@link java.lang.String} object.
+     * @return a boolean.
      */
     public static boolean isTrue(String aValue) {
         boolean res = false;

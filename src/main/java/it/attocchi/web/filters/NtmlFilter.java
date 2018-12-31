@@ -36,8 +36,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>NtmlFilter class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class NtmlFilter implements Filter {
 
@@ -47,14 +49,19 @@ public class NtmlFilter implements Filter {
 	FilterConfig config = null;
 	ServletContext servletContext = null;
 
+	/**
+	 * <p>Constructor for NtmlFilter.</p>
+	 */
 	public NtmlFilter() {
 	}
 
+	/** {@inheritDoc} */
 	public void init(FilterConfig filterConfig) throws ServletException {
 		config = filterConfig;
 		servletContext = config.getServletContext();
 	}
 
+	/** {@inheritDoc} */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		logger.debug("Filtro Ntlm");
@@ -191,6 +198,9 @@ public class NtmlFilter implements Filter {
 		logger.debug("Fine Filtro Ntlm");
 	}
 
+	/**
+	 * <p>destroy.</p>
+	 */
 	public void destroy() {
 
 	}

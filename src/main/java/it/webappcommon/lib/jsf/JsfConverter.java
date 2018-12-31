@@ -27,19 +27,29 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 /**
+ * <p>JsfConverter class.</p>
  *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class JsfConverter {
 
-	/** Creates a new instance of JsfConverter */
+	/**
+	 * Creates a new instance of JsfConverter
+	 */
 	public JsfConverter() {
 	}
 
 	/**
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>.
-	 **/
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemValue a {@link java.lang.String} object.
+	 * @param itemLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static ArrayList<SelectItem> listToSelectItems(List list, String itemValue, String itemLabel) throws Exception {
 		ArrayList<SelectItem> retVal = null;
 		try {
@@ -78,6 +88,13 @@ public class JsfConverter {
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>. This method allow to
 	 * concatenate more than one Object Property.
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemValue a {@link java.lang.String} object.
+	 * @param itemLabel an array of {@link java.lang.String} objects.
+	 * @param separatorForLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static ArrayList<SelectItem> listToSelectItems(List list, String itemValue, String[] itemLabel, String separatorForLabel) throws Exception {
 		ArrayList<SelectItem> retVal = null;
@@ -134,7 +151,12 @@ public class JsfConverter {
 	/**
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>.
-	 **/
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static ArrayList<SelectItem> listToSelectItems(List list, String itemLabel) throws Exception {
 		ArrayList<SelectItem> retVal = null;
 		try {
@@ -174,6 +196,12 @@ public class JsfConverter {
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>. This method allow to
 	 * concatenate more than one Object Property.
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemLabel an array of {@link java.lang.String} objects.
+	 * @param separatorForLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static ArrayList<SelectItem> listToSelectItems(List list, String[] itemLabel, String separatorForLabel) throws Exception {
 		ArrayList<SelectItem> retVal = null;
@@ -217,6 +245,14 @@ public class JsfConverter {
 		return retVal;
 	}
 
+	/**
+	 * <p>getSelectOptionFromText.</p>
+	 *
+	 * @param text a {@link java.lang.String} object.
+	 * @param splitter a {@link java.lang.String} object.
+	 * @return a {@link java.util.ArrayList} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static ArrayList<SelectItem> getSelectOptionFromText(String text, String splitter) throws Exception {
 		ArrayList<SelectItem> returnValue = null;
 		String[] valori = null;

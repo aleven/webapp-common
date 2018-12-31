@@ -24,8 +24,20 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * <p>TimeUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class TimeUtils {
 	
+	/**
+	 * <p>timeToFloat.</p>
+	 *
+	 * @param aTimeDuration a {@link java.lang.String} object.
+	 * @return a float.
+	 */
 	public static float timeToFloat(String aTimeDuration) {
 		float oreLavorate = 0f;
 		if (aTimeDuration != null && aTimeDuration.length() > 0) {
@@ -40,6 +52,12 @@ public class TimeUtils {
 		return oreLavorate;
 	}
 
+	/**
+	 * <p>floatToTime.</p>
+	 *
+	 * @param aTimeDuration a float.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String floatToTime(float aTimeDuration) {
 
 		long iPart = (long) aTimeDuration;
@@ -69,6 +87,7 @@ public class TimeUtils {
 	 * <li>Nms milli millisecondi</li>
 	 * </ul>
 	 * dove N è un numero intero (valido anche se N e unità sono separati da spazio)
+	 *
 	 * @param value testo da decodificare
 	 * @return secondi
 	 */
@@ -145,7 +164,8 @@ public class TimeUtils {
 	}
 	
 	/**
-	 * Aggiunge alla data specificata un valore espresso in unità 
+	 * Aggiunge alla data specificata un valore espresso in unità
+	 *
 	 * @param aDate la data/ora su cui aggiungere il valore
 	 * @param value un valore valido per {@link decode}
 	 * @return data
@@ -163,9 +183,10 @@ public class TimeUtils {
 	
 	/**
 	 * indica se allarme risulta scaduto rispetto alla scadenza
+	 *
 	 * @param allarme data/ora da verificare
 	 * @param scadenza data/ora massimi oltre la quale allarme scade
-	 * @return true  se scaduto (scadenza < allarme)
+	 * @return true se scaduto (scadenza &lt; allarme)
 	 */
 	public static boolean scaduto(Date allarme, Date scadenza) {		
 		return (scadenza.before(allarme));

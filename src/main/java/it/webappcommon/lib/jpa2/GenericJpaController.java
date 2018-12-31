@@ -22,8 +22,10 @@ package it.webappcommon.lib.jpa2;
 import java.io.Serializable;
 
 /**
- * 
+ * <p>GenericJpaController class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class GenericJpaController<T extends EntityWithId> implements Serializable {
 

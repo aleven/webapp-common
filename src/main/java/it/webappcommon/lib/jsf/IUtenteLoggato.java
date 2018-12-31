@@ -19,6 +19,17 @@
 
 package it.webappcommon.lib.jsf;
 
+/**
+ * <p>IUtenteLoggato interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface IUtenteLoggato {
+	/**
+	 * <p>getId_utenteLoggato.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getId_utenteLoggato();
 }

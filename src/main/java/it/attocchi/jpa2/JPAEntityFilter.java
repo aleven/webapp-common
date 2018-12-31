@@ -36,8 +36,15 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Abstract JPAEntityFilter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class JPAEntityFilter<T extends Serializable> implements Serializable {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(JPAEntityFilter.class.getName());
 
 	/**
@@ -70,24 +77,52 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	// CriteriaQuery<T> criteriaQuery;
 	// Root<T> root;
 
+	/**
+	 * <p>isEmptyFilterEmptyData.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isEmptyFilterEmptyData() {
 		return emptyFilterEmptyData;
 	}
 
+	/**
+	 * <p>Setter for the field <code>emptyFilterEmptyData</code>.</p>
+	 *
+	 * @param emptyFilterEmptyData a boolean.
+	 */
 	public void setEmptyFilterEmptyData(boolean emptyFilterEmptyData) {
 		this.emptyFilterEmptyData = emptyFilterEmptyData;
 	}
 
 	protected SortOrder sortOrder = SortOrder.ASC;
 
+	/**
+	 * <p>Getter for the field <code>sortOrder</code>.</p>
+	 *
+	 * @return a {@link it.attocchi.jpa2.JPAEntityFilter.SortOrder} object.
+	 */
 	public SortOrder getSortOrder() {
 		return sortOrder;
 	}
 
+	/**
+	 * <p>Setter for the field <code>sortOrder</code>.</p>
+	 *
+	 * @param sortOrder a {@link it.attocchi.jpa2.JPAEntityFilter.SortOrder} object.
+	 */
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
+	/**
+	 * <p>getCriteria.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @return a {@link javax.persistence.criteria.CriteriaQuery} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public CriteriaQuery<T> getCriteria(Class<T> clazz, EntityManagerFactory emf) throws Exception {
 
 		// CriteriaBuilder
@@ -122,6 +157,14 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	}
 
 	// Predicate wherePredicate;
+	/**
+	 * <p>getWherePredicate.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @return a {@link javax.persistence.criteria.Predicate} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public Predicate getWherePredicate(Class<T> clazz, EntityManagerFactory emf) throws Exception {
 
 		// CriteriaBuilder
@@ -143,6 +186,17 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return wherePredicate;
 	}
 
+	/**
+	 * <p>getWherePredicates.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param predicateList a {@link java.util.List} object.
+	 * @param criteriaQuery a {@link javax.persistence.criteria.CriteriaQuery} object.
+	 * @param criteriaBuilder a {@link javax.persistence.criteria.CriteriaBuilder} object.
+	 * @param root a {@link javax.persistence.criteria.Root} object.
+	 * @return an array of {@link javax.persistence.criteria.Predicate} objects.
+	 * @throws java.lang.Exception if any.
+	 */
 	public Predicate[] getWherePredicates(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception {
 
 		buildWhere(emf, predicateList, criteriaQuery, criteriaBuilder, root);
@@ -158,34 +212,76 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	// return wherePredicate;
 	// }
 
+	/**
+	 * <p>buildWhere.</p>
+	 *
+	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param predicateList a {@link java.util.List} object.
+	 * @param criteriaQuery a {@link javax.persistence.criteria.CriteriaQuery} object.
+	 * @param criteriaBuilder a {@link javax.persistence.criteria.CriteriaBuilder} object.
+	 * @param root a {@link javax.persistence.criteria.Root} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract void buildWhere(EntityManagerFactory emf, List<Predicate> predicateList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
+	/**
+	 * <p>buildSort.</p>
+	 *
+	 * @param orderList a {@link java.util.List} object.
+	 * @param criteriaQuery a {@link javax.persistence.criteria.CriteriaQuery} object.
+	 * @param criteriaBuilder a {@link javax.persistence.criteria.CriteriaBuilder} object.
+	 * @param root a {@link javax.persistence.criteria.Root} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract void buildSort(List<Order> orderList, CriteriaQuery<T> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<T> root) throws Exception;
 
 	protected String semeRicerca;
 
+	/**
+	 * <p>Getter for the field <code>semeRicerca</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getSemeRicerca() {
 		return semeRicerca;
 	}
 
+	/**
+	 * <p>Setter for the field <code>semeRicerca</code>.</p>
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 */
 	public void setSemeRicerca(String semeRicerca) {
 		logger.debug(String.format("setSemeRicerca(%s)", semeRicerca));
 		this.semeRicerca = semeRicerca;
 	}
 
+	/**
+	 * <p>setSemeRicercaL.</p>
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 */
 	public JPAEntityFilter<T> setSemeRicercaL(String semeRicerca) {
 		setSemeRicerca(semeRicerca);
 		return this;
 	}
 
+	/**
+	 * <p>semeRicerca.</p>
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 */
 	public JPAEntityFilter<T> semeRicerca(String semeRicerca) {
 		setSemeRicerca(semeRicerca);
 		return this;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * <p>getSemeRicercaForLike.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getSemeRicercaForLike() {
 		// String res = semeRicerca;
@@ -203,9 +299,10 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	}
 
 	/**
-	 * 
-	 * @param aString
-	 * @return
+	 * <p>getForLike.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getForLike(String aString) {
 		String res = aString;
@@ -223,14 +320,29 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	protected boolean includiEliminati = false;
 
+	/**
+	 * <p>isIncludiEliminati.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isIncludiEliminati() {
 		return includiEliminati;
 	}
 
+	/**
+	 * <p>Setter for the field <code>includiEliminati</code>.</p>
+	 *
+	 * @param includiEliminati a boolean.
+	 */
 	public void setIncludiEliminati(boolean includiEliminati) {
 		this.includiEliminati = includiEliminati;
 	}
 
+	/**
+	 * <p>includiEliminati.</p>
+	 *
+	 * @return a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 */
 	public JPAEntityFilter<T> includiEliminati() {
 		setIncludiEliminati(true);
 		return this;
@@ -242,6 +354,12 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	// return this;
 	// }
 
+	/**
+	 * <p>buildMultiIds.</p>
+	 *
+	 * @param longs a {@link java.util.List} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String buildMultiIds(List<Long> longs) {
 		StringBuilder res = new StringBuilder();
 
@@ -256,6 +374,12 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 		return res.toString();
 	}
 
+	/**
+	 * <p>splitMultiIds.</p>
+	 *
+	 * @param stringIds a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	protected List<Long> splitMultiIds(String stringIds) {
 		List<Long> res = new ArrayList<Long>();
 
@@ -291,22 +415,48 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	private int pageNumber;
 	private int limit;
 
+	/**
+	 * <p>Getter for the field <code>pageNumber</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getPageNumber() {
 		return pageNumber;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pageNumber</code>.</p>
+	 *
+	 * @param pageNumber a int.
+	 */
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
 	}
 
+	/**
+	 * <p>Getter for the field <code>limit</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getLimit() {
 		return limit;
 	}
 
+	/**
+	 * <p>Setter for the field <code>limit</code>.</p>
+	 *
+	 * @param limit a int.
+	 */
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
 
+	/**
+	 * <p>limit.</p>
+	 *
+	 * @param limit a int.
+	 * @return a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 */
 	public JPAEntityFilter<T> limit(int limit) {
 		setLimit(limit);
 		return this;
@@ -331,19 +481,31 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 	/*
 	 * FUNZIONI UTILI PER PAGINATORI
 	 */
+	/**
+	 * <p>getCurrentPage.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getCurrentPage() {
 		return (limit > 0) ? pageNumber + 1 : 1;
 	}
 
+	/**
+	 * <p>totalPages.</p>
+	 *
+	 * @param count a long.
+	 * @return a int.
+	 */
 	public int totalPages(long count) {
 		return (limit > 0 && count > limit) ? (int) ((count / limit) + 1) : 1;
 	}
 
 	/**
-	 * 
-	 * @param criteriaBuilder
-	 * @param paths
-	 * @return
+	 * <p>buildMultiWordLikePredicate.</p>
+	 *
+	 * @param criteriaBuilder a {@link javax.persistence.criteria.CriteriaBuilder} object.
+	 * @param paths a {@link javax.persistence.criteria.Path} object.
+	 * @return a {@link javax.persistence.criteria.Predicate} object.
 	 */
 	protected Predicate buildMultiWordLikePredicate(CriteriaBuilder criteriaBuilder, Path<String>... paths) {
 
@@ -382,10 +544,20 @@ public abstract class JPAEntityFilter<T extends Serializable> implements Seriali
 
 	private boolean filtriAvanzati;
 
+	/**
+	 * <p>isFiltriAvanzati.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isFiltriAvanzati() {
 		return filtriAvanzati;
 	}
 
+	/**
+	 * <p>Setter for the field <code>filtriAvanzati</code>.</p>
+	 *
+	 * @param filtriAvanzati a boolean.
+	 */
 	public void setFiltriAvanzati(boolean filtriAvanzati) {
 		this.filtriAvanzati = filtriAvanzati;
 	}

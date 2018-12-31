@@ -19,7 +19,18 @@
 
 package it.webappcommon.lib.jsf;
 
+/**
+ * <p>IOpzione_pagina interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface IOpzione_pagina {
 
+	/**
+	 * <p>getValore.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getValore();
 }

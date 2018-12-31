@@ -34,37 +34,82 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Abstract EntityBaseStandard class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class EntityBaseStandard implements Serializable {
 
 	// public abstract Object getPKValue();
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(EntityBaseStandard.class.getName());
 
 	private boolean _selected;
 
-	/** Creates a new instance of EntityBase */
+	/**
+	 * Creates a new instance of EntityBase
+	 */
 	public EntityBaseStandard() {
 		super();
 	}
 
+	/**
+	 * <p>beforeCreate.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void beforeCreate() throws Exception {
 	}
 
+	/**
+	 * <p>afterCreate.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void afterCreate() throws Exception {
 	}
 
+	/**
+	 * <p>beforeUpdate.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void beforeUpdate() throws Exception {
 	}
 
+	/**
+	 * <p>afterUpdate.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void afterUpdate() throws Exception {
 	}
 
+	/**
+	 * <p>beforeDelete.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void beforeDelete() throws Exception {
 	}
 
+	/**
+	 * <p>afterDelete.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public void afterDelete() throws Exception {
 	}
 
+	/**
+	 * <p>isDeletable.</p>
+	 *
+	 * @return a boolean.
+	 * @throws java.lang.Exception if any.
+	 */
 	public final boolean isDeletable() throws Exception {
 		boolean res = true;
 		Method[] methods = null;
@@ -95,6 +140,11 @@ public abstract class EntityBaseStandard implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>updateEntityLastModification.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract void updateEntityLastModification() throws Exception;
 
 	// protected final void updateEntityLastModification() throws Exception {
@@ -110,6 +160,12 @@ public abstract class EntityBaseStandard implements Serializable {
 	// }
 	// }
 
+	/**
+	 * <p>getValueOf.</p>
+	 *
+	 * @param field a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getValueOf(String field) {
 		String returnValue = null;
 		Class c = null;
@@ -175,6 +231,12 @@ public abstract class EntityBaseStandard implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>getDescriptionOf.</p>
+	 *
+	 * @param field a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getDescriptionOf(String field) {
 		String returnValue = null;
 		Class c = null;
@@ -198,11 +260,21 @@ public abstract class EntityBaseStandard implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>isSelected.</p>
+	 *
+	 * @return a boolean.
+	 */
 	@XmlTransient
 	public boolean isSelected() {
 		return _selected;
 	}
 
+	/**
+	 * <p>setSelected.</p>
+	 *
+	 * @param selected a boolean.
+	 */
 	public void setSelected(boolean selected) {
 		this._selected = selected;
 	}
@@ -211,15 +283,15 @@ public abstract class EntityBaseStandard implements Serializable {
 	// entita' passata e non sappiamo come recuperare l'ID
 	// public abstract Long getId();
 
-	/*
-	 * MERGE DA ATREEHELPDESK
-	 */
-	/**
-	 * Questoi metodo permette di inserire nella base di dati l'EntityBase in
-	 * oggetto
-	 * 
-	 * @throws java.lang.Exception
-	 */
+//	/*
+//	 * MERGE DA ATREEHELPDESK
+//	 */
+//	/**
+//	 * Questoi metodo permette di inserire nella base di dati l'EntityBase in
+//	 * oggetto
+//	 *
+//	 * @throws java.lang.Exception
+//	 */
 	// @Deprecated
 	// public void inserisci() throws Exception {
 	// EntityManager em = null;
@@ -256,12 +328,12 @@ public abstract class EntityBaseStandard implements Serializable {
 	// }
 	// }
 
-	/**
-	 * 
-	 * Metodo che permette la modifica dell'oggetto EntityBase
-	 * 
-	 * @throws java.lang.Exception
-	 */
+//	/**
+//	 *
+//	 * Metodo che permette la modifica dell'oggetto EntityBase
+//	 *
+//	 * @throws java.lang.Exception
+//	 */
 	// @Deprecated
 	// public void modifica() throws Exception {
 	// EntityManager em = null;
@@ -297,12 +369,12 @@ public abstract class EntityBaseStandard implements Serializable {
 	// }
 	// }
 
-	/**
-	 * 
-	 * Metodo che permette la cancellazione dell'oggetto EntityBase
-	 * 
-	 * @throws java.lang.Exception
-	 */
+//	/**
+//	 *
+//	 * Metodo che permette la cancellazione dell'oggetto EntityBase
+//	 *
+//	 * @throws java.lang.Exception
+//	 */
 	// @Deprecated
 	// public void cancella() throws Exception {
 	// EntityManager em = null;

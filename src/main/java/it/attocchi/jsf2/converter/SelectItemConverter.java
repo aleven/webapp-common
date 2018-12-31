@@ -26,10 +26,24 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+/**
+ * <p>SelectItemConverter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class SelectItemConverter {
 
 	// public static List<SelectItem> convert(List<ISelectItemConvertible>
 	// aList) throws Exception {
+	/**
+	 * <p>convert.</p>
+	 *
+	 * @param aList a {@link java.util.Collection} object.
+	 * @param <T> a T object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static <T extends ISelectItemConvertible> List<SelectItem> convert(Collection<T> aList) throws Exception {
 		List<SelectItem> res = new ArrayList<SelectItem>();
 
@@ -48,6 +62,14 @@ public class SelectItemConverter {
 		return res;
 	}
 
+	/**
+	 * <p>convertFromStrings.</p>
+	 *
+	 * @param aList a {@link java.util.Collection} object.
+	 * @param sort a boolean.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static List<SelectItem> convertFromStrings(Collection<String> aList, boolean sort) throws Exception {
 		List<SelectItem> res = new ArrayList<SelectItem>();
 

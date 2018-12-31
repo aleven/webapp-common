@@ -21,9 +21,23 @@ package it.attocchi.utils;
 
 import java.util.Map;
 
+/**
+ * <p>MapUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class MapUtils {
 
 	// public static <T, K extends Number> void addToMap(Map<T, K> aMap, T aKey, K aValue) {
+	/**
+	 * <p>addToMap.</p>
+	 *
+	 * @param aMap a {@link java.util.Map} object.
+	 * @param aKey a T object.
+	 * @param aValue a {@link java.lang.Float} object.
+	 * @param <T> a T object.
+	 */
 	public static <T> void addToMap(Map<T, Float> aMap, T aKey, Float aValue) {
 		if (aMap != null) {
 
@@ -39,6 +53,14 @@ public class MapUtils {
 		}
 	}
 	
+	/**
+	 * <p>addToMapExistKey.</p>
+	 *
+	 * @param aMap a {@link java.util.Map} object.
+	 * @param aKey a T object.
+	 * @param aValue a {@link java.lang.Float} object.
+	 * @param <T> a T object.
+	 */
 	public static <T> void addToMapExistKey(Map<T, Float> aMap, T aKey, Float aValue) {
 		if (aMap != null) {
 

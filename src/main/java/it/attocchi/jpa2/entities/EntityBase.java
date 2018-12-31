@@ -21,6 +21,12 @@ package it.attocchi.jpa2.entities;
 
 import java.io.Serializable;
 
+/**
+ * <p>Abstract EntityBase class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class EntityBase implements Serializable {
 
 }

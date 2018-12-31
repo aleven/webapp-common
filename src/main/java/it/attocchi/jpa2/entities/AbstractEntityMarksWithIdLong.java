@@ -21,12 +21,17 @@ package it.attocchi.jpa2.entities;
 
 /**
  * An entity with markable attributes and id long
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMarksWithIdLong<T>> extends AbstactEntityMarks implements IEntityWithIdLong, Comparable<T> {
 
+	/**
+	 * <p>getId.</p>
+	 *
+	 * @return a long.
+	 */
 	public abstract long getId();
 
 	// @Override
@@ -34,17 +39,20 @@ public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMark
 	// return super.clone();
 	// }
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
 		// return super.hashCode();
 		return new Long(getId()).hashCode();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return String.format("%s[%s]", this.getClass().getName(), this.getId());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
 
@@ -68,6 +76,7 @@ public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMark
 		// http://javarevisited.blogspot.com/2011/02/how-to-write-equals-method-in-java.html#ixzz2bI4axUuS
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int compareTo(T o) {
 		return new Long(this.getId()).compareTo(o.getId());
@@ -75,6 +84,7 @@ public abstract class AbstractEntityMarksWithIdLong<T extends AbstractEntityMark
 	
 	/**
 	 * verifica se la data cancellazione per questo oggetto e' impostata
+	 *
 	 * @return true se ha data cancellazione diversa da null
 	 */
 	public boolean isDeleted() {

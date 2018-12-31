@@ -21,22 +21,26 @@ package it.attocchi.jpa2;
 
 /**
  * Usage in web.xml:
- * 
+ * <pre>
+ * {@code
  *   <listener>
  *   	<listener-class>it.attocchi.jpa2.JPASessionListener</listener-class>
  *   </listener>
- * 
- * 
- * 
+ * }
+ * </pre>
  * @author Mirco Attocchi
- *
+ * @version $Id: $Id
  */
 public interface IJpaListernes {
 	
+	/** Constant <code>DEFAULT_PU="DEFAULT_PU"</code> */
 	public static final String DEFAULT_PU = "DEFAULT_PU";
+	/** Constant <code>WEB_XML_INITPARAMETER_NAME="PersistenceUnitName"</code> */
 	public static final String WEB_XML_INITPARAMETER_NAME = "PersistenceUnitName";
 	
+	/** Constant <code>APPLICATION_EMF="APPLICATION_EMF"</code> */
 	public static final String APPLICATION_EMF = "APPLICATION_EMF";
+	/** Constant <code>SESSION_EMF="SESSION_EMF"</code> */
 	public static final String SESSION_EMF = "SESSION_EMF";
 	
 }

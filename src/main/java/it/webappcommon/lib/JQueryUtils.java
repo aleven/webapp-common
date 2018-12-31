@@ -23,8 +23,21 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * <p>JQueryUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class JQueryUtils {
 
+	/**
+	 * <p>listToJSArrayItems.</p>
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static String listToJSArrayItems(List<String> list) throws Exception {
 
 		StringBuilder retVal = null;
@@ -54,11 +67,12 @@ public class JQueryUtils {
 	}
 
 	/**
-	 * 
-	 * @param list
-	 * @param item
-	 * @return
-	 * @throws Exception
+	 * <p>listToJSArrayItems.</p>
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param item a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static String listToJSArrayItems(List list, String item) throws Exception {
 		StringBuilder retVal = null;

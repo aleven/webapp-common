@@ -26,6 +26,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * <p>QueryBuilder class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class QueryBuilder {
 
 	private static final String RICERCA_JOLLY_CHAR = "*";
@@ -44,10 +50,23 @@ public class QueryBuilder {
 	private static final String PREFIX_FROM = "FROM:";
 	private static final String PREFIX_TO = "TO:";
 
+	/**
+	 * <p>encodeStringSQL.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String encodeStringSQL(String aString) {
 		return aString.replace("'", "''");
 	}
 
+	/**
+	 * <p>equal.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String equal(String nomeCampo, String valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -56,6 +75,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>equal.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a int.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String equal(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -64,6 +90,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>equal.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a long.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String equal(String nomeCampo, long valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -71,12 +104,13 @@ public class QueryBuilder {
 
 		return equalBulder.toString();
 	}
-	
+
 	/**
-	 * 
-	 * @param nomeCampo
-	 * @param valore
-	 * @return
+	 * <p>equal.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a boolean.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String equal(String nomeCampo, boolean valore) {
 		StringBuilder equalBulder = new StringBuilder();
@@ -92,10 +126,10 @@ public class QueryBuilder {
 
 	/**
 	 * Verifica che ANNO MESE e GIORNO della DATA del CAMPO corrispondano
-	 * 
-	 * @param nomeCampo
-	 * @param valore
-	 * @return
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String equal(String nomeCampo, Date valore) {
 		StringBuilder equalBulder = new StringBuilder();
@@ -113,6 +147,14 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>betweenDate.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String betweenDate(String nomeCampo, Date start, Date end) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -131,6 +173,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>bigger.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String bigger(String nomeCampo, Date valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -148,11 +197,11 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * >
-	 * 
-	 * @param nomeCampo
-	 * @param valore
-	 * @return
+	 * <p>greater.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String greater(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
@@ -164,6 +213,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>greaterOrEqual.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a int.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String greaterOrEqual(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -174,6 +230,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>greaterOrEqual.</p>
+	 *
+	 * @param valore a int.
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String greaterOrEqual(int valore, String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -185,10 +248,11 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * <
-	 * 
-	 * @param nomeCampo
-	 * @param valore
+	 * <p>less.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String less(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
@@ -200,6 +264,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>lessOrEqual.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a int.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String lessOrEqual(String nomeCampo, int valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -210,6 +281,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>lessOrEqual.</p>
+	 *
+	 * @param valore a int.
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String lessOrEqual(int valore, String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -220,6 +298,13 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>lower.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param valore a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String lower(String nomeCampo, Date valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -237,11 +322,12 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * 
-	 * @param nomeCampo
-	 * @param dataStart
-	 * @param dataEnd
-	 * @return
+	 * <p>between.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @param dataStart a {@link java.util.Date} object.
+	 * @param dataEnd a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String between(String nomeCampo, Date dataStart, Date dataEnd) {
 		StringBuilder equalBulder = new StringBuilder();
@@ -265,6 +351,12 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>isNotNull.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String isNotNull(String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -273,6 +365,12 @@ public class QueryBuilder {
 		return equalBulder.toString();
 	}
 
+	/**
+	 * <p>isNull.</p>
+	 *
+	 * @param nomeCampo a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String isNull(String nomeCampo) {
 		StringBuilder equalBulder = new StringBuilder();
 
@@ -283,6 +381,10 @@ public class QueryBuilder {
 
 	/**
 	 * ricerca in like per parola, ovvero ogni parola specificata deve essere contentuta in almeno uno dei campi indicati
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @param fields a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String likeAnyWords(String semeRicerca, String... fields) {
 		StringBuilder likeBulder = new StringBuilder();
@@ -322,10 +424,10 @@ public class QueryBuilder {
 	 * Costruisce una stringa da usare nelle query come fosse un like ma nel
 	 * caso di seme di ricerca con piu' parole riesce ad evitare che l'ordine
 	 * debba essere corretto
-	 * 
-	 * @param semeRicerca
-	 * @param fields
-	 * @return
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @param fields a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String like(String semeRicerca, String... fields) {
 		StringBuilder likeBulder = new StringBuilder();
@@ -361,10 +463,10 @@ public class QueryBuilder {
 
 	/**
 	 * Supporta la ricerca str* *str str che corrisponde a like %%
-	 * 
-	 * @param campo
-	 * @param semeRicerca
-	 * @return
+	 *
+	 * @param campo a {@link java.lang.String} object.
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String likeSimple(String campo, String semeRicerca) {
 		StringBuilder res = new StringBuilder();
@@ -393,6 +495,12 @@ public class QueryBuilder {
 		return res.toString();
 	}
 
+	/**
+	 * <p>isAdvancedSearchCommand.</p>
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean isAdvancedSearchCommand(String semeRicerca) {
 		boolean res = false;
 
@@ -401,6 +509,14 @@ public class QueryBuilder {
 		return res;
 	}
 
+	/**
+	 * <p>buildUserCommandSearch.</p>
+	 *
+	 * @param semeRicerca a {@link java.lang.String} object.
+	 * @param fromField a {@link java.lang.String} object.
+	 * @param toField a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String buildUserCommandSearch(String semeRicerca, String fromField, String toField) {
 		StringBuilder res = new StringBuilder();
 
@@ -413,6 +529,14 @@ public class QueryBuilder {
 		return res.toString();
 	}
 
+	/**
+	 * <p>inListBuilder.</p>
+	 *
+	 * @param field a {@link java.lang.String} object.
+	 * @param listaID a {@link java.util.List} object.
+	 * @param asStrings a boolean.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String inListBuilder(String field, List<String> listaID, boolean asStrings) {
 		StringBuilder res = new StringBuilder();
 
@@ -445,10 +569,10 @@ public class QueryBuilder {
 
 	/**
 	 * Ritorna una composizione del tipo "(a = 1 OR a = 2)"
-	 * 
-	 * @param field
-	 * @param listaID
-	 * @return
+	 *
+	 * @param field a {@link java.lang.String} object.
+	 * @param listaID a {@link java.util.List} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String inListBuilder(String field, List<Integer> listaID) {
 		StringBuilder res = new StringBuilder();

@@ -21,12 +21,27 @@ package it.webappcommon.lib.jpa.scooped.multiple;
 
 import it.webappcommon.lib.jsf.AbstractFiltro;
 
+/**
+ * <p>QueriesTest class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class QueriesTest {
 
-	/** Creates a new instance of Queries */
+	/**
+	 * Creates a new instance of Queries
+	 */
 	public QueriesTest() {
 	}
 
+	/**
+	 * <p>ServiceOrdersSearchNamedQuery.</p>
+	 *
+	 * @param filter a {@link it.webappcommon.lib.jsf.AbstractFiltro} object.
+	 * @param count a boolean.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String ServiceOrdersSearchNamedQuery(AbstractFiltro filter, boolean count) {
 		StringBuilder query = new StringBuilder();
 
