@@ -35,7 +35,8 @@ import org.apache.log4j.Logger;
 
 /**
  * Servlet Filter implementation class LoginFilter
- * 
+ * <pre>
+ * {@code
  * <filter> <display-name>AuthFilter</display-name>
  * <filter-name>AuthFilter</filter-name>
  * <filter-class>it.attocchi.web.filters.LoginFilter</filter-class> <init-param>
@@ -48,11 +49,16 @@ import org.apache.log4j.Logger;
  * </init-param> </filter> <filter-mapping>
  * <filter-name>AuthFilter</filter-name> <url-pattern>/api/*</url-pattern>
  * <url-pattern>*.html</url-pattern> </filter-mapping>
+ * }
+ * </pre>
+ * @author mirco
+ * @version $Id: $Id
  */
 public class LoginFilter implements Filter {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
+	/** Constant <code>CURRENT_USER="CURRENT_USER"</code> */
 	public static final String CURRENT_USER = "CURRENT_USER";
 
 	String enabled;
@@ -68,15 +74,15 @@ public class LoginFilter implements Filter {
 	}
 
 	/**
+	 * <p>destroy.</p>
+	 *
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
 
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+	/** {@inheritDoc} */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest httprequest = (HttpServletRequest) request;
@@ -135,9 +141,7 @@ public class LoginFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
+	/** {@inheritDoc} */
 	public void init(FilterConfig fConfig) throws ServletException {
 		enabled = fConfig.getInitParameter("enabled");
 		allowedUrls = fConfig.getInitParameter("allowedUrls");

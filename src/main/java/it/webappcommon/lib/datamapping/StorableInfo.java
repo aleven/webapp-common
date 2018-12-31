@@ -19,8 +19,20 @@
 
 package it.webappcommon.lib.datamapping;
 
+/**
+ * <p>StorableInfo class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class StorableInfo<T extends StorableObject> {
 
+	/**
+	 * <p>getTableName.</p>
+	 *
+	 * @param o a {@link it.webappcommon.lib.datamapping.StorableObject} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getTableName(StorableObject o) {
 		String res = null;
 

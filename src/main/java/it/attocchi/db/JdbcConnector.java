@@ -36,9 +36,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ * <p>JdbcConnector class.</p>
+ *
  * @author Mirco Attocchi
- * 
+ * @version $Id: $Id
  */
 public class JdbcConnector implements Closeable {
 
@@ -55,6 +56,14 @@ public class JdbcConnector implements Closeable {
 
 	protected String url;
 
+	/**
+	 * <p>Constructor for JdbcConnector.</p>
+	 *
+	 * @param connString a {@link java.lang.String} object.
+	 * @param driverClass a {@link java.lang.String} object.
+	 * @param userName a {@link java.lang.String} object.
+	 * @param password a {@link java.lang.String} object.
+	 */
 	public JdbcConnector(String connString, String driverClass, String userName, String password) {
 		super();
 
@@ -64,11 +73,21 @@ public class JdbcConnector implements Closeable {
 		this.password = password;
 	}
 
+	/**
+	 * <p>Constructor for JdbcConnector.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 */
 	public JdbcConnector(String url) {
 		super();
 		this.url = url;
 	}
 
+	/**
+	 * <p>Constructor for JdbcConnector.</p>
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 */
 	public JdbcConnector(Connection conn) {
 		this("", "", "", "");
 
@@ -84,7 +103,7 @@ public class JdbcConnector implements Closeable {
 	/**
 	 * Costruttore specificatamente pensato per utilizzo delle connessioni da
 	 * pool
-	 * 
+	 *
 	 * @param conn
 	 *            la connessione istanziata esternamente
 	 * @param connectionComeFromPool
@@ -103,6 +122,7 @@ public class JdbcConnector implements Closeable {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected void finalize() throws Throwable {
 		close();
@@ -111,8 +131,9 @@ public class JdbcConnector implements Closeable {
 
 	/**
 	 * Uses DriverManager.
+	 *
 	 * @return the connections
-	 * @throws Exception
+	 * @throws java.lang.Exception if any.
 	 */
 	public Connection getConnection() throws Exception {
 
@@ -144,11 +165,16 @@ public class JdbcConnector implements Closeable {
 		return conn;
 	}
 
+	/**
+	 * <p>reopenConnection.</p>
+	 */
 	public void reopenConnection() {
 		conn = null;
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * Close a Connection if not is passed in constructor. If you pass in
 	 * constructor you close manually, not with this method
 	 */
@@ -167,6 +193,11 @@ public class JdbcConnector implements Closeable {
 		}
 	}
 	
+	/**
+	 * <p>isClosed.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isClosed() {
 		boolean res = true;
 		try {
@@ -177,6 +208,14 @@ public class JdbcConnector implements Closeable {
 		return res;
 	}
 
+	/**
+	 * <p>executeSelect.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param aQuery a {@link java.lang.String} object.
+	 * @return a {@link java.sql.ResultSet} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public ResultSet executeSelect(boolean keepConnOpen, String aQuery) throws Exception {
 		ResultSet res = null;
 
@@ -194,6 +233,14 @@ public class JdbcConnector implements Closeable {
 		return res;
 	}
 
+	/**
+	 * <p>execute.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param sqlCommand a {@link java.lang.String} object.
+	 * @return a boolean.
+	 * @throws java.lang.Exception if any.
+	 */
 	public boolean execute(boolean keepConnOpen, String sqlCommand) throws Exception {
 		boolean res = false;
 
@@ -213,6 +260,15 @@ public class JdbcConnector implements Closeable {
 		return res;
 	}
 
+	/**
+	 * <p>executeStored.</p>
+	 *
+	 * @param keepConnOpen a boolean.
+	 * @param storedName a {@link java.lang.String} object.
+	 * @param params a {@link java.lang.Object} object.
+	 * @return a boolean.
+	 * @throws java.lang.Exception if any.
+	 */
 	@Deprecated
 	public boolean executeStored(boolean keepConnOpen, String storedName, Object... params) throws Exception {
 		boolean res = false;
@@ -251,11 +307,13 @@ public class JdbcConnector implements Closeable {
 	}
 
 	/**
-	 * 
+	 * <p>executeUpdate.</p>
+	 *
 	 * @param keepConnOpen keep connection open
 	 * @param aQuery the SQL query
 	 * @return row count
 	 * @throws SQLException sql exception
+	 * @throws java.lang.Exception if any.
 	 */
 	public int executeUpdate(boolean keepConnOpen, String aQuery) throws Exception {
 		int res = 0;
@@ -274,11 +332,13 @@ public class JdbcConnector implements Closeable {
 	}
 
 	/**
-	 * 
+	 * <p>executeBatchUpdate.</p>
+	 *
 	 * @param keepConnOpen keep connection open
 	 * @param batchQuery list of SQL queries
 	 * @return row count
 	 * @throws SQLException sql exception
+	 * @throws java.lang.Exception if any.
 	 */
 	public int executeBatchUpdate(boolean keepConnOpen, List<String> batchQuery) throws Exception {
 		int res = 0;
@@ -320,6 +380,9 @@ public class JdbcConnector implements Closeable {
 	 */
 	protected boolean keepConnOpen = false;
 
+	/**
+	 * <p>keepConnOpen.</p>
+	 */
 	public void keepConnOpen() {
 		keepConnOpen = true;
 	}

@@ -71,10 +71,20 @@ abstract class PageBase implements Serializable {
 	// protected static final Logger loggerStatic =
 	// Logger.getLogger(PageBase.class.getName());
 
+	/**
+	 * <p>getServletContext.</p>
+	 *
+	 * @return a {@link javax.servlet.ServletContext} object.
+	 */
 	protected ServletContext getServletContext() {
 		return (ServletContext) getExternalContext().getContext();
 	}
 
+	/**
+	 * <p>getSession.</p>
+	 *
+	 * @return a {@link javax.servlet.http.HttpSession} object.
+	 */
 	protected HttpSession getSession() {
 		HttpSession res = (HttpSession) getExternalContext().getSession(false);
 		if (res == null) {
@@ -83,30 +93,68 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>addFatalMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 */
 	protected void addFatalMessage(String summary) {
 		addInfoMessage(summary, "");
 	}
 
+	/**
+	 * <p>addFatalMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 * @param detail a {@link java.lang.String} object.
+	 */
 	protected void addFatalMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, summary, detail));
 	}
 
+	/**
+	 * <p>addInfoMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 */
 	protected void addInfoMessage(String summary) {
 		addInfoMessage(summary, "");
 	}
 
+	/**
+	 * <p>addInfoMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 * @param detail a {@link java.lang.String} object.
+	 */
 	protected void addInfoMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
 
+	/**
+	 * <p>addWarnMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 */
 	protected void addWarnMessage(String summary) {
 		addWarnMessage(summary, "");
 	}
 
+	/**
+	 * <p>addWarnMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 * @param detail a {@link java.lang.String} object.
+	 */
 	protected void addWarnMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param ex a {@link java.lang.Throwable} object.
+	 */
 	protected void addErrorMessage(Throwable ex) {
 
 		// if (ex != null && ex.getMessage() != null) {
@@ -132,10 +180,21 @@ abstract class PageBase implements Serializable {
 
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 */
 	protected void addErrorMessage(String summary) {
 		addErrorMessage(summary, "");
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 * @param ex a {@link java.lang.Throwable} object.
+	 */
 	protected void addErrorMessage(String summary, Throwable ex) {
 
 		if (ex != null && ex.getMessage() != null) {
@@ -173,10 +232,22 @@ abstract class PageBase implements Serializable {
 
 	}
 
+	/**
+	 * <p>addErrorMessage.</p>
+	 *
+	 * @param summary a {@link java.lang.String} object.
+	 * @param detail a {@link java.lang.String} object.
+	 */
 	protected void addErrorMessage(String summary, String detail) {
 		getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 	}
 
+	/**
+	 * <p>addValidationMessage.</p>
+	 *
+	 * @param componentId a {@link java.lang.String} object.
+	 * @param summary a {@link java.lang.String} object.
+	 */
 	protected void addValidationMessage(String componentId, String summary) {
 
 		getFacesContext().addMessage(componentId, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null));
@@ -190,10 +261,21 @@ abstract class PageBase implements Serializable {
 
 	}
 
+	/**
+	 * <p>getInitParam.</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String getInitParam(String name) {
 		return getExternalContext().getInitParameter(name);
 	}
 
+	/**
+	 * <p>getFacesContext.</p>
+	 *
+	 * @return a {@link javax.faces.context.FacesContext} object.
+	 */
 	protected FacesContext getFacesContext() {
 		FacesContext res = FacesContext.getCurrentInstance();
 		if (res == null) {
@@ -202,6 +284,11 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getExternalContext.</p>
+	 *
+	 * @return a {@link javax.faces.context.ExternalContext} object.
+	 */
 	protected ExternalContext getExternalContext() {
 		ExternalContext res = getFacesContext().getExternalContext();
 		if (res == null) {
@@ -217,6 +304,11 @@ abstract class PageBase implements Serializable {
 	private Integer viewportWidth;
 	private Integer viewportHeight;
 
+	/**
+	 * <p>Getter for the field <code>viewportWidth</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getViewportWidth() {
 		if (viewportWidth == null) {
 			viewportWidth = getParamObjectAsInt("viewportWidth");
@@ -224,6 +316,11 @@ abstract class PageBase implements Serializable {
 		return viewportWidth;
 	}
 
+	/**
+	 * <p>Getter for the field <code>viewportHeight</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getViewportHeight() {
 		if (viewportHeight == null) {
 			viewportHeight = getParamObjectAsInt("viewportHeight");
@@ -237,14 +334,20 @@ abstract class PageBase implements Serializable {
 
 	/**
 	 * Verify if current page has certain name passed parameter
-	 * 
-	 * @param paramName
-	 * @return
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a boolean.
 	 */
 	protected boolean hasParam(String paramName) {
 		return getParamObject(paramName) != null;
 	}
 
+	/**
+	 * <p>getParamObject.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String getParamObject(String paramName) {
 		String res = null;
 
@@ -262,6 +365,12 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getParamObjectAsInt.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a int.
+	 */
 	protected int getParamObjectAsInt(String paramName) {
 		int res = 0;
 		try {
@@ -277,6 +386,12 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getParamObjectAsLong.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Long} object.
+	 */
 	protected Long getParamObjectAsLong(String paramName) {
 		Long res = 0l;
 		try {
@@ -292,6 +407,12 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getParamObjectAsLongList.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	protected List<Long> getParamObjectAsLongList(String paramName) {
 		List<Long> res = new ArrayList<Long>();
 		try {
@@ -305,6 +426,14 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getParamObject.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <T> a T object.
+	 * @return a T object.
+	 */
 	protected <T> T getParamObject(String paramName, Class<T> clazz) {
 		T res = null;
 
@@ -322,6 +451,13 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getResourceBundle.</p>
+	 *
+	 * @param resourceName a {@link java.lang.String} object.
+	 * @param key a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String getResourceBundle(String resourceName, String key) {
 		ResourceBundle bundle = getFacesContext().getApplication().getResourceBundle(getFacesContext(), resourceName);
 		return bundle.getString(key);
@@ -331,6 +467,12 @@ abstract class PageBase implements Serializable {
 	 * SESSION
 	 */
 
+	/**
+	 * <p>getSessionObject.</p>
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public Object getSessionObject(String object_name) {
 		Object returnValue = null;
 
@@ -357,6 +499,12 @@ abstract class PageBase implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 * <p>getSessionObjectAsInt.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a int.
+	 */
 	protected int getSessionObjectAsInt(String paramName) {
 		int res = 0;
 
@@ -371,6 +519,12 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>getSessionObjectAsString.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String getSessionObjectAsString(String paramName) {
 		String res = null;
 
@@ -385,6 +539,13 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>setSessionObject.</p>
+	 *
+	 * @param object_name a {@link java.lang.String} object.
+	 * @param object a {@link java.lang.Object} object.
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public Object setSessionObject(String object_name, Object object) {
 		Object returnValue = null;
 
@@ -409,6 +570,11 @@ abstract class PageBase implements Serializable {
 	 * END SESSION
 	 */
 
+	/**
+	 * <p>redirect.</p>
+	 *
+	 * @param relativeUrl a {@link java.lang.String} object.
+	 */
 	protected void redirect(String relativeUrl) {
 		try {
 			getFacesContext().getExternalContext().redirect(relativeUrl);
@@ -417,6 +583,11 @@ abstract class PageBase implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>redirectContext.</p>
+	 *
+	 * @param relativeUrl a {@link java.lang.String} object.
+	 */
 	protected void redirectContext(String relativeUrl) {
 		if (!relativeUrl.startsWith("/"))
 			relativeUrl = "/" + relativeUrl;
@@ -424,6 +595,11 @@ abstract class PageBase implements Serializable {
 		redirect(getRequest().getContextPath() + relativeUrl);
 	}
 
+	/**
+	 * <p>redirectContextCall.</p>
+	 *
+	 * @param relativeUrl a {@link java.lang.String} object.
+	 */
 	protected void redirectContextCall(String relativeUrl) {
 		String uri = getRequest().getRequestURI();
 		String params = getRequest().getQueryString();
@@ -451,6 +627,13 @@ abstract class PageBase implements Serializable {
 	// Actions
 	// ------------------------------------------------------------------------------------
 
+	/**
+	 * <p>downloadPDF.</p>
+	 *
+	 * @param fileName a {@link java.lang.String} object.
+	 * @param rename a {@link java.lang.String} object.
+	 * @throws java.io.IOException if any.
+	 */
 	protected void downloadPDF(String fileName, String rename) throws IOException {
 
 		// Prepare.
@@ -535,19 +718,40 @@ abstract class PageBase implements Serializable {
 	 * 
 	 */
 
+	/**
+	 * <p>getCurrentLocale.</p>
+	 *
+	 * @return a {@link java.util.Locale} object.
+	 */
 	public Locale getCurrentLocale() {
 		return getFacesContext().getViewRoot().getLocale();
 	}
 
+	/**
+	 * <p>getCurrentLocaleDatePattern.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCurrentLocaleDatePattern() {
 		SimpleDateFormat format = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, getCurrentLocale());
 		return format.toLocalizedPattern();
 	}
 
+	/**
+	 * <p>getRealPath.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getRealPath() {
 		return getServletContext().getRealPath("/");
 	}
 
+	/**
+	 * <p>getRealPath.</p>
+	 *
+	 * @param relativePath a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getRealPath(String relativePath) {
 		return getServletContext().getRealPath(relativePath);
 	}
@@ -555,27 +759,61 @@ abstract class PageBase implements Serializable {
 	/*
 	 * 
 	 */
+	/**
+	 * <p>getJsfRedirect.</p>
+	 *
+	 * @param outcome a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getJsfRedirect(String outcome) {
 		String concat = (outcome.indexOf("?") >= 0) ? "&" : "?";
 		return outcome + concat + "faces-redirect=true";
 	}
 
+	/**
+	 * <p>getResponse.</p>
+	 *
+	 * @return a {@link javax.servlet.http.HttpServletResponse} object.
+	 */
 	protected HttpServletResponse getResponse() {
 		return (HttpServletResponse) getExternalContext().getResponse();
 	}
 
+	/**
+	 * <p>getRequest.</p>
+	 *
+	 * @return a {@link javax.servlet.http.HttpServletRequest} object.
+	 */
 	protected HttpServletRequest getRequest() {
 		return (HttpServletRequest) getExternalContext().getRequest();
 	}
 
+	/**
+	 * <p>encodeParam.</p>
+	 *
+	 * @param value a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String encodeParam(String value) {
 		return Base64.encodeBase64URLSafeString(value.getBytes());
 	}
 
+	/**
+	 * <p>decodeParam.</p>
+	 *
+	 * @param value a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	protected String decodeParam(String value) {
 		return new String(Base64.decodeBase64(value));
 	}
 
+	/**
+	 * <p>truncate50.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String truncate50(String aString) {
 		String res = aString;
 		if (res != null && !res.isEmpty()) {
@@ -586,6 +824,9 @@ abstract class PageBase implements Serializable {
 		return res;
 	}
 
+	/**
+	 * <p>sessionInvalidate.</p>
+	 */
 	protected void sessionInvalidate() {
 		// HttpSession session = request.getSession(false);
 		if (getSession() != null)

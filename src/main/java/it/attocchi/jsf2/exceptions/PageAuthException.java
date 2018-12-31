@@ -20,12 +20,16 @@
 package it.attocchi.jsf2.exceptions;
 
 /**
- * 
- * @author Mirco
+ * <p>PageAuthException class.</p>
  *
+ * @author Mirco
+ * @version $Id: $Id
  */
 public class PageAuthException extends WebAppException {
 
+	/**
+	 * <p>Constructor for PageAuthException.</p>
+	 */
 	public PageAuthException() {
 		super("Necessaria Autenticazione");
 	}

@@ -17,22 +17,46 @@ import java.io.*;
 import java.util.*;
 
 
+/**
+ * <p>MailUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class MailUtils {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = LoggerFactory.getLogger(MailUtils.class);
 
+	/** Constant <code>CONTENT_TYPE_MULTIPART="multipart/*"</code> */
 	public static final String CONTENT_TYPE_MULTIPART = "multipart/*";
+	/** Constant <code>CONTENT_TYPE_MULTIPART_ALTERNATIVE="multipart/alternative"</code> */
 	public static final String CONTENT_TYPE_MULTIPART_ALTERNATIVE = "multipart/alternative";
+	/** Constant <code>CONTENT_TYPE_TEXT_HTML="text/html"</code> */
 	public static final String CONTENT_TYPE_TEXT_HTML = "text/html";
+	/** Constant <code>CONTENT_TYPE_TEXT_PLAIN="text/plain"</code> */
 	public static final String CONTENT_TYPE_TEXT_PLAIN = "text/plain";
 
+	/** Constant <code>CONTENT_TYPE_MULTIPART_MIXED="multipart/mixed"</code> */
 	public static final String CONTENT_TYPE_MULTIPART_MIXED = "multipart/mixed";
 
+	/** Constant <code>CONTENT_TYPE_MESSAGE_RFC822="message/rfc822"</code> */
 	public static final String CONTENT_TYPE_MESSAGE_RFC822 = "message/rfc822";
 
+	/** Constant <code>CHARSET_ISO_8859_1="ISO-8859-1"</code> */
 	public static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
+	/** Constant <code>CHARSET_UTF8="UTF-8"</code> */
 	public static final String CHARSET_UTF8 = "UTF-8";
 
+	/**
+	 * <p>removeDisclaimer.</p>
+	 *
+	 * @param mailText a {@link java.lang.String} object.
+	 * @param textStart a {@link java.lang.String} object.
+	 * @param textEnd a {@link java.lang.String} object.
+	 * @param isHtml a boolean.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String removeDisclaimer(String mailText, String textStart, String textEnd, boolean isHtml) {
 
 		String res = mailText;
@@ -90,6 +114,11 @@ public class MailUtils {
 
 	/**
 	 * Estrae il Body di una email anche nel caso sia Html o MultiPart
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link it.attocchi.mail.parts.EmailBody} object.
+	 * @throws javax.mail.MessagingException if any.
+	 * @throws java.io.IOException if any.
 	 */
 	public static EmailBody getBody(Message message) throws MessagingException, java.io.IOException {
 		String testo = null;
@@ -187,18 +216,39 @@ public class MailUtils {
 		return res;
 	}
 
+	/**
+	 * <p>getSenderAddress.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static String getSenderAddress(Message message) throws MessagingException {
 		Address[] froms = message.getFrom();
 		String email = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 		return email;
 	}
 	
+	/**
+	 * <p>getReplyToAddress.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static String getReplyToAddress(Message message) throws MessagingException {
 		Address[] froms = message.getReplyTo();
 		String email = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 		return email;
 	}	
 
+	/**
+	 * <p>getAllSenders.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static List<String> getAllSenders(Message message) throws MessagingException {
 		List<String> fromAddresses = new ArrayList<String>();
 
@@ -210,10 +260,24 @@ public class MailUtils {
 		return fromAddresses;
 	}
 
+	/**
+	 * <p>getAllSendersAsString.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static String getAllSendersAsString(Message message) throws MessagingException {
 		return ListUtils.toCommaSeparedNoBracket(getAllSenders(message));
 	}
 
+	/**
+	 * <p>getAllRecipents.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static List<String> getAllRecipents(Message message) throws MessagingException {
 		List<String> toAddresses = new ArrayList<String>();
 
@@ -227,6 +291,14 @@ public class MailUtils {
 		return toAddresses;
 	}
 
+	/**
+	 * <p>getAttachments.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 * @throws java.io.IOException if any.
+	 */
 	public static List<MailAttachmentUtil> getAttachments(Message message) throws MessagingException, IOException {
 
 		List<MailAttachmentUtil> res = new ArrayList<MailAttachmentUtil>();
@@ -273,6 +345,11 @@ public class MailUtils {
 		return res;
 	}
 
+	/**
+	 * <p>saveFile.</p>
+	 *
+	 * @param m a {@link it.attocchi.mail.parts.MailAttachmentUtil} object.
+	 */
 	public static void saveFile(MailAttachmentUtil m) {
 		saveFile(m.getFileName(), m.getStream());
 	}
@@ -313,6 +390,10 @@ public class MailUtils {
 	/**
 	 * Rimuove un indirizzo email da una serie che sono stati specificati
 	 * separati da virgola o punto e virgola
+	 *
+	 * @param indirizziMultipli a {@link java.lang.String} object.
+	 * @param mail a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	@Deprecated
 	public static String removeAddress(String indirizziMultipli, String mail) {
@@ -353,6 +434,13 @@ public class MailUtils {
 		return res;
 	}
 
+	/**
+	 * <p>cleanDuplicatesAndRemoveAddress2.</p>
+	 *
+	 * @param elencoIndirizzi a {@link java.lang.String} object.
+	 * @param emailDaRimuovere a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String cleanDuplicatesAndRemoveAddress2(String elencoIndirizzi, String emailDaRimuovere) {
 		String res = elencoIndirizzi;
 		if (elencoIndirizzi != null && !elencoIndirizzi.isEmpty()) {
@@ -386,9 +474,12 @@ public class MailUtils {
 
 	/**
 	 * Salvataggio EML su file. Prima locale temporaneo e successivamente copiato in file indicato da parametro, se tmp = true
+	 *
 	 * @param mail mail message da salvare
 	 * @param emlFile file destinazione salvataggio
 	 * @param tmpEnabled indica se salvare prima sul temporaneo
+	 * @throws java.io.IOException if any.
+	 * @throws javax.mail.MessagingException if any.
 	 */
 	public static void saveToEml(Message mail, File emlFile, boolean tmpEnabled) throws IOException, MessagingException {
 		OutputStream os = null;
@@ -414,6 +505,12 @@ public class MailUtils {
 		}
 	}
 
+	/**
+	 * <p>removeDuplicateAddresses.</p>
+	 *
+	 * @param indirizziNotifica a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	@Deprecated
 	public static String removeDuplicateAddresses(String indirizziNotifica) {
 		String res = indirizziNotifica;
@@ -441,9 +538,13 @@ public class MailUtils {
 		return res;
 	}
 
-	/***
+	/**
+	 *
 	 * Nelle notifiche in cui concateno come destinatario + campi potrei trovare
 	 * dei casi in cui i segnaposti sono vuoti
+	 *
+	 * @param addresses a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	@Deprecated
 	public static String cleanEmptyAddresses(String addresses) {
@@ -459,6 +560,13 @@ public class MailUtils {
 		return indirizziNotifica;
 	}
 	
+	/**
+	 * <p>getAllHeaders.</p>
+	 *
+	 * @param mail a {@link javax.mail.Message} object.
+	 * @return a {@link java.util.Map} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public static Map<String, String> getAllHeaders(Message mail) throws MessagingException {
 		Map<String, String> res = new HashMap<String, String>();
 		

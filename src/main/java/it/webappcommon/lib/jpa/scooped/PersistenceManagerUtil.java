@@ -23,6 +23,12 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>PersistenceManagerUtil class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class PersistenceManagerUtil {
 
 	private static final Logger logger = Logger.getLogger(PersistenceManagerUtil.class.getName());
@@ -30,8 +36,8 @@ public class PersistenceManagerUtil {
 	/**
 	 * Chiude l'entity manager passato come parametro se non e' null ed e'
 	 * aperto
-	 * 
-	 * @param em
+	 *
+	 * @param em a {@link javax.persistence.EntityManager} object.
 	 */
 	public static void close(EntityManager em) {
 		if (em != null && em.isOpen()) {

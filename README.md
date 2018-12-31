@@ -8,6 +8,12 @@ Charset source UTF-8
 - [https://aleven.github.io/webapp-common/apidocs/](https://aleven.github.io/webapp-common/apidocs/)
 
 
+    mvn clean
+    
+    mvn release:prepare
+    
+    mvn release:perform
+
 ## _it.attocchi.jpa2_
 
 A set of class for work with JPA Entitites. You can find Session or Context Listener to use for lazy close of JPA Controller (EntityManagerFactory lifecicle)
@@ -15,8 +21,8 @@ A set of class for work with JPA Entitites. You can find Session or Context List
 ### Example for JPAController usage:
 
 ```java
-/* you can use this code on standalone java program, for JSF web-app is better to work with a shared emf */
-List<MyEntity> list = JPAController.callFindPU("PU_NAME", MyEntity.class, myEntityFilter);
+    /* you can use this code on standalone java program, for JSF web-app is better to work with a shared emf */
+    List<MyEntity> list = JPAController.callFindPU("PU_NAME", MyEntity.class, myEntityFilter);
 ```   
 
 ### Example for JPAEntityFilter

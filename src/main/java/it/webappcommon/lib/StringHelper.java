@@ -27,16 +27,25 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * <p>StringHelper class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class StringHelper {
 
+	/** Constant <code>logger</code> */
 	protected static Logger logger = Logger.getLogger(StringUtils.class.getName());
 
 	/**
 	 * Ritorna una String troncata al numero di caratteri specificati. Se la
 	 * string e' piu' lunga della dimensione a cui la funzione deve troncare
 	 * vengono accodati dei "..." ad indicare che la stringa continua
-	 * 
+	 *
 	 * @return stringa troncata
+	 * @param aString a {@link java.lang.String} object.
+	 * @param part a int.
 	 */
 	public static String stringPart(String aString, int part) {
 		String res = null;
@@ -91,6 +100,15 @@ public class StringHelper {
 //		return concat(" ", strings);
 //	}
 
+	/**
+	 * <p>calculateWithSeparators.</p>
+	 *
+	 * @param string1 a {@link java.lang.String} object.
+	 * @param separator1 a {@link java.lang.String} object.
+	 * @param string2 a {@link java.lang.String} object.
+	 * @param separator2 a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String calculateWithSeparators(String string1, String separator1, String string2, String separator2) {
 
 		String res = null;
@@ -131,6 +149,14 @@ public class StringHelper {
 		return sb.toString();
 	}
 
+	/**
+	 * <p>removePrefix.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @param prefix a {@link java.lang.String} object.
+	 * @param separator a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String removePrefix(String aString, String prefix, String separator) {
 
 		String res = aString;
@@ -145,6 +171,14 @@ public class StringHelper {
 		return res;
 	}
 
+	/**
+	 * <p>addPrefix.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @param prefix a {@link java.lang.String} object.
+	 * @param separator a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String addPrefix(String aString, String prefix, String separator) {
 
 		String res = aString;
@@ -162,7 +196,7 @@ public class StringHelper {
 
 	/**
 	 * Speparated by , and with no start and end []
-	 * 
+	 *
 	 * @param indirizziAttivi lista indirizzi email
 	 * @return indirizzi concatenati
 	 */
@@ -178,7 +212,7 @@ public class StringHelper {
 
 	/**
 	 * Separated by white spaces
-	 * 
+	 *
 	 * @param indirizziAttivi lista indirizzi email
 	 * @return indirizzi concatenati
 	 */
@@ -194,9 +228,9 @@ public class StringHelper {
 
 	/**
 	 * Empty string in case of null
-	 * 
-	 * @param aString
-	 * @return
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String notNull(String aString) {
 		return notNull(aString, "");
@@ -204,10 +238,10 @@ public class StringHelper {
 
 	/**
 	 * Never null, instead defautlValue
-	 * 
-	 * @param aString
-	 * @param defaultValue
-	 * @return
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @param defaultValue a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String notNull(String aString, String defaultValue) {
 		String res = defaultValue;
@@ -219,6 +253,13 @@ public class StringHelper {
 		return res;
 	}
 
+	/**
+	 * <p>difference.</p>
+	 *
+	 * @param string1 a {@link java.lang.String} object.
+	 * @param string2 a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean difference(String string1, String string2) {
 		boolean res = false;
 
@@ -235,6 +276,12 @@ public class StringHelper {
 		return res;
 	}
 
+	/**
+	 * <p>removeDoubleSpace.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String removeDoubleSpace(String aString) {
 		String tempo = aString;
 
@@ -247,6 +294,13 @@ public class StringHelper {
 		return tempo;
 	}
 
+	/**
+	 * <p>equalsToAny.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @param strings a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean equalsToAny(String aString, String... strings) {
 		boolean found = false;
 		for (String a : strings) {
@@ -260,8 +314,16 @@ public class StringHelper {
 	 * from StringFunc
 	 */
 	
+	/** Constant <code>NEW_LINE="\r\n"</code> */
 	public static final String NEW_LINE = "\r\n";
 
+	/**
+	 * <p>concat.</p>
+	 *
+	 * @param separator a {@link java.lang.String} object.
+	 * @param strings a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String concat(String separator, String... strings) {
 		StringBuilder sb = new StringBuilder();
 
@@ -276,14 +338,34 @@ public class StringHelper {
 		return sb.toString();
 	}
 
+	/**
+	 * <p>equalsIgnoreCase.</p>
+	 *
+	 * @param string1 a {@link java.lang.String} object.
+	 * @param string2 a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean equalsIgnoreCase(String string1, String string2) {
 		return (string1 != null && string2 != null && string1.equalsIgnoreCase(string2));
 	}
 
+	/**
+	 * <p>contains.</p>
+	 *
+	 * @param string a {@link java.lang.String} object.
+	 * @param subString a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public static boolean contains(String string, String subString) {
 		return string != null && !string.isEmpty() && string.indexOf(subString) >= 0;
 	}
 
+	/**
+	 * <p>readLines.</p>
+	 *
+	 * @param aText a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<String> readLines(String aText) {
 		List<String> res = null;
 
@@ -293,6 +375,13 @@ public class StringHelper {
 		return res;
 	}
 
+	/**
+	 * <p>writeLines.</p>
+	 *
+	 * @param lines a {@link java.util.List} object.
+	 * @param defaultValueIfEmpty a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String writeLines(List<String> lines, String defaultValueIfEmpty) {
 		String res = defaultValueIfEmpty;
 
@@ -301,12 +390,13 @@ public class StringHelper {
 
 		return res;
 	}
-	
+
 	/**
-	 * 
-	 * @param str
-	 * @param expr
-	 * @return
+	 * <p>like.</p>
+	 *
+	 * @param str a {@link java.lang.String} object.
+	 * @param expr a {@link java.lang.String} object.
+	 * @return a boolean.
 	 */
 	public static boolean like(String str, String expr) {
 		if (str == null || expr == null) 

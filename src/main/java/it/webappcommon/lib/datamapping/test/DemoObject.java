@@ -25,6 +25,12 @@ import it.webappcommon.lib.datamapping.StoreInTable;
 
 import java.util.Date;
 
+/**
+ * <p>DemoObject class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 @StoreInTable(tableName = "dem01_table", tablePrefix = "dem01", primaryKeyField = "dem01_id")
 public class DemoObject implements StorableObject {
 

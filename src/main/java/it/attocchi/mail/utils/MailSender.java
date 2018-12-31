@@ -23,10 +23,17 @@ import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
 
+/**
+ * <p>MailSender class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class MailSender {
 
 	private static final String MAIL_SMTP_SSL_SOCKET_FACTORY_FALLBACK = "mail.smtp.ssl.socketFactory.fallback";
 	private static final String MAIL_SMTP_SSL_SOCKET_FACTORY_CLASS = "mail.smtp.ssl.socketFactory.class";
+	/** Constant <code>MAIL_SMTP_SSL_ENABLE="mail.smtp.ssl.enable"</code> */
 	public static final String MAIL_SMTP_SSL_ENABLE = "mail.smtp.ssl.enable";
 	private String hostName;
 	private int port;
@@ -44,6 +51,13 @@ public class MailSender {
 		super();
 	}
 
+	/**
+	 * <p>createMailSender.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @return a {@link it.attocchi.mail.utils.MailSender} object.
+	 */
 	public synchronized static MailSender createMailSender(String hostName, int port) {
 		MailSender m = new MailSender();
 		m.setHostName(hostName);
@@ -52,6 +66,15 @@ public class MailSender {
 		return m;
 	}
 
+	/**
+	 * <p>createMailSenderAuth.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param authUser a {@link java.lang.String} object.
+	 * @param authPassword a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.mail.utils.MailSender} object.
+	 */
 	public synchronized static MailSender createMailSenderAuth(String hostName, int port, String authUser, String authPassword) {
 		MailSender m = new MailSender();
 		m.setHostName(hostName);
@@ -63,6 +86,15 @@ public class MailSender {
 		return m;
 	}
 
+	/**
+	 * <p>createMailSender.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param fromAddress a {@link java.lang.String} object.
+	 * @param fromName a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.mail.utils.MailSender} object.
+	 */
 	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName) {
 		MailSender m = createMailSender(hostName, port);
 
@@ -78,6 +110,17 @@ public class MailSender {
 		return m;
 	}
 
+	/**
+	 * <p>createMailSender.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param fromAddress a {@link java.lang.String} object.
+	 * @param fromName a {@link java.lang.String} object.
+	 * @param authUser a {@link java.lang.String} object.
+	 * @param authPassword a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.mail.utils.MailSender} object.
+	 */
 	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, String authUser, String authPassword) {
 		MailSender m = createMailSender(hostName, port, fromAddress, fromName);
 
@@ -87,6 +130,19 @@ public class MailSender {
 		return m;
 	}
 
+	/**
+	 * <p>createMailSender.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param fromAddress a {@link java.lang.String} object.
+	 * @param fromName a {@link java.lang.String} object.
+	 * @param enableSSL a boolean.
+	 * @param disableSSLCertCheck a boolean.
+	 * @param authUser a {@link java.lang.String} object.
+	 * @param authPassword a {@link java.lang.String} object.
+	 * @return a {@link it.attocchi.mail.utils.MailSender} object.
+	 */
 	public synchronized static MailSender createMailSender(String hostName, int port, String fromAddress, String fromName, boolean enableSSL, boolean disableSSLCertCheck, String authUser, String authPassword) {
 		// MailSender m = createMailSender(hostName, port, fromAddress,
 		// fromName);
@@ -101,66 +157,146 @@ public class MailSender {
 		return m;
 	}
 
+	/**
+	 * <p>Getter for the field <code>hostName</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getHostName() {
 		return hostName;
 	}
 
+	/**
+	 * <p>Setter for the field <code>hostName</code>.</p>
+	 *
+	 * @param hostName a {@link java.lang.String} object.
+	 */
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
 
+	/**
+	 * <p>Getter for the field <code>port</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * <p>Setter for the field <code>port</code>.</p>
+	 *
+	 * @param port a int.
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
+	/**
+	 * <p>Getter for the field <code>fromAddress</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getFromAddress() {
 		return fromAddress;
 	}
 
+	/**
+	 * <p>Setter for the field <code>fromAddress</code>.</p>
+	 *
+	 * @param fromAddress a {@link java.lang.String} object.
+	 */
 	public void setFromAddress(String fromAddress) {
 		this.fromAddress = fromAddress;
 	}
 
+	/**
+	 * <p>Getter for the field <code>fromName</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getFromName() {
 		return fromName;
 	}
 
+	/**
+	 * <p>Setter for the field <code>fromName</code>.</p>
+	 *
+	 * @param fromName a {@link java.lang.String} object.
+	 */
 	public void setFromName(String fromName) {
 		this.fromName = fromName;
 	}
 
+	/**
+	 * <p>Getter for the field <code>authUser</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getAuthUser() {
 		return authUser;
 	}
 
+	/**
+	 * <p>Setter for the field <code>authUser</code>.</p>
+	 *
+	 * @param authUser a {@link java.lang.String} object.
+	 */
 	public void setAuthUser(String authUser) {
 		this.authUser = authUser;
 	}
 
+	/**
+	 * <p>Getter for the field <code>authPassword</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getAuthPassword() {
 		return authPassword;
 	}
 
+	/**
+	 * <p>Setter for the field <code>authPassword</code>.</p>
+	 *
+	 * @param authPassword a {@link java.lang.String} object.
+	 */
 	public void setAuthPassword(String authPassword) {
 		this.authPassword = authPassword;
 	}
 
+	/**
+	 * <p>isEnableSSL.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isEnableSSL() {
 		return enableSSL;
 	}
 
+	/**
+	 * <p>Setter for the field <code>enableSSL</code>.</p>
+	 *
+	 * @param enableSSL a boolean.
+	 */
 	public void setEnableSSL(boolean enableSSL) {
 		this.enableSSL = enableSSL;
 	}
 
+	/**
+	 * <p>isDisableSSLCertCheck.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isDisableSSLCertCheck() {
 		return disableSSLCertCheck;
 	}
 
+	/**
+	 * <p>Setter for the field <code>disableSSLCertCheck</code>.</p>
+	 *
+	 * @param disableSSLCertCheck a boolean.
+	 */
 	public void setDisableSSLCertCheck(boolean disableSSLCertCheck) {
 		this.disableSSLCertCheck = disableSSLCertCheck;
 	}
@@ -239,6 +375,16 @@ public class MailSender {
 		}
 	}
 
+	/**
+	 * <p>sendMail.</p>
+	 *
+	 * @param to a {@link java.lang.String} object.
+	 * @param toCC a {@link java.lang.String} object.
+	 * @param toCCN a {@link java.lang.String} object.
+	 * @param subject a {@link java.lang.String} object.
+	 * @param message a {@link java.lang.String} object.
+	 * @throws org.apache.commons.mail.EmailException if any.
+	 */
 	public synchronized void sendMail(String to, String toCC, String toCCN, String subject, String message) throws EmailException {
 		SimpleEmail email = new SimpleEmail();
 
@@ -247,6 +393,17 @@ public class MailSender {
 		email.send();
 	}
 
+	/**
+	 * <p>sendMailHtml.</p>
+	 *
+	 * @param to a {@link java.lang.String} object.
+	 * @param toCC a {@link java.lang.String} object.
+	 * @param toCCN a {@link java.lang.String} object.
+	 * @param subject a {@link java.lang.String} object.
+	 * @param message a {@link java.lang.String} object.
+	 * @param attachments a {@link java.util.List} object.
+	 * @throws org.apache.commons.mail.EmailException if any.
+	 */
 	public synchronized void sendMailHtml(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException {
 		HtmlEmail email = new HtmlEmail();
 
@@ -262,10 +419,38 @@ public class MailSender {
 		email.send();
 	}
 
+	/**
+	 * <p>sendMail.</p>
+	 *
+	 * @param to a {@link java.lang.String} object.
+	 * @param toCC a {@link java.lang.String} object.
+	 * @param toCCN a {@link java.lang.String} object.
+	 * @param subject a {@link java.lang.String} object.
+	 * @param message a {@link java.lang.String} object.
+	 * @param attachments a {@link java.util.List} object.
+	 * @throws org.apache.commons.mail.EmailException if any.
+	 * @throws java.io.IOException if any.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void sendMail(String to, String toCC, String toCCN, String subject, String message, List<EmailAttachment> attachments) throws EmailException, IOException, MessagingException {
 		sendMail(to, toCC, toCCN, subject, message, null, attachments, null);
 	}
 
+	/**
+	 * <p>sendMail.</p>
+	 *
+	 * @param to a {@link java.lang.String} object.
+	 * @param toCC a {@link java.lang.String} object.
+	 * @param toCCN a {@link java.lang.String} object.
+	 * @param subject a {@link java.lang.String} object.
+	 * @param message a {@link java.lang.String} object.
+	 * @param customHeaders a {@link java.util.List} object.
+	 * @param emlToStore a {@link java.io.File} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws org.apache.commons.mail.EmailException if any.
+	 * @throws java.io.IOException if any.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, File emlToStore) throws EmailException, IOException, MessagingException {
 
 		SimpleEmail email = new SimpleEmail();
@@ -279,6 +464,22 @@ public class MailSender {
 		return email.getMimeMessage().getMessageID();
 	}
 
+	/**
+	 * <p>sendMail.</p>
+	 *
+	 * @param to a {@link java.lang.String} object.
+	 * @param toCC a {@link java.lang.String} object.
+	 * @param toCCN a {@link java.lang.String} object.
+	 * @param subject a {@link java.lang.String} object.
+	 * @param message a {@link java.lang.String} object.
+	 * @param customHeaders a {@link java.util.List} object.
+	 * @param attachments a {@link java.util.List} object.
+	 * @param emlToStore a {@link java.io.File} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws org.apache.commons.mail.EmailException if any.
+	 * @throws java.io.IOException if any.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized String sendMail(String to, String toCC, String toCCN, String subject, String message, List<MailHeader> customHeaders, List<EmailAttachment> attachments, File emlToStore) throws EmailException, IOException, MessagingException {
 		// Create the attachment
 		// EmailAttachment attachment = new EmailAttachment();
@@ -358,6 +559,9 @@ public class MailSender {
 
 	/**
 	 * Extract multi recipient from a string separed with ; or ,
+	 *
+	 * @param toEmail a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
 	 */
 	public List<MailRecipient> parseEmails(String toEmail) {
 		List<MailRecipient> res = new ArrayList<MailRecipient>();
@@ -389,6 +593,12 @@ public class MailSender {
 		return res;
 	}
 
+	/**
+	 * <p>prepareAttachment.</p>
+	 *
+	 * @param files a {@link java.util.List} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<EmailAttachment> prepareAttachment(List<String> files) {
 		List<EmailAttachment> res = null;
 
@@ -400,6 +610,9 @@ public class MailSender {
 
 	/**
 	 * Prepara la lista di attachments partendo dalla lista di nomi files
+	 *
+	 * @param files a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
 	 */
 	public static List<EmailAttachment> prepareAttachment(String... files) {
 		List<EmailAttachment> res = null;

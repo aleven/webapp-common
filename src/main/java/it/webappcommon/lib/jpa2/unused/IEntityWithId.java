@@ -19,6 +19,12 @@
 
 package it.webappcommon.lib.jpa2.unused;
 
+/**
+ * <p>IEntityWithId interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface IEntityWithId {
 
 }

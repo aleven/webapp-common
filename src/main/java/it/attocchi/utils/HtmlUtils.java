@@ -31,8 +31,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 
+/**
+ * <p>HtmlUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class HtmlUtils {
 
+	/** Constant <code>logger</code> */
 	protected static Logger logger = Logger.getLogger(HtmlUtils.class.getName());
 
 	// public static String readUrl(String uri) throws Exception {
@@ -50,6 +57,13 @@ public class HtmlUtils {
 	// return sb.toString();
 	// }
 
+	/**
+	 * <p>callUrl.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static String callUrl(String url) throws Exception {
 		StringBuffer sb = new StringBuffer();
 
@@ -76,6 +90,7 @@ public class HtmlUtils {
 
 	/**
 	 * converti html in string java
+	 *
 	 * @param htmlText testo html
 	 * @param convertHtmlNewLine
 	 *            if enabled convert <br>
@@ -141,9 +156,9 @@ public class HtmlUtils {
 
 	/**
 	 * Funzione che converte
-	 * 
-	 * @param aString
-	 * @return
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String encodeForEscape(String aString) {
 		String res = aString;
@@ -167,6 +182,12 @@ public class HtmlUtils {
 		return res;
 	}
 
+	/**
+	 * <p>encodeWebUrl.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String encodeWebUrl(String aString) {
 		String res = null;
 

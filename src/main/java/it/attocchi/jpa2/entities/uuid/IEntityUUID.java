@@ -22,12 +22,18 @@ package it.attocchi.jpa2.entities.uuid;
 import java.io.Serializable;
 
 /**
- * 
+ * <p>IEntityUUID interface.</p>
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public interface IEntityUUID extends Serializable {
 	
+	/**
+	 * <p>getUuid.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	String getUuid();
 	
 }

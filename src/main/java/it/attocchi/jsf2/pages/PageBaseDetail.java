@@ -27,11 +27,11 @@ import it.attocchi.utils.Crono;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
+ * <p>Abstract PageBaseDetail class.</p>
+ *
  * @author Mirco
- * 
- * @param <T>
- * @param <F>
+ * @param <T> IEntityWithIdLong
+ * @version $Id: $Id
  */
 public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBaseAuth {
 
@@ -40,30 +40,61 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 	protected Class<T> clazz;
 	protected String persistentUnit;
 
+	/**
+	 * <p>Getter for the field <code>elemento</code>.</p>
+	 *
+	 * @return a T object.
+	 */
 	public T getElemento() {
 		return elemento;
 	}
 
+	/**
+	 * <p>Setter for the field <code>elemento</code>.</p>
+	 *
+	 * @param elemento a T object.
+	 */
 	public void setElemento(T elemento) {
 		this.elemento = elemento;
 	}
 
+	/**
+	 * <p>Getter for the field <code>clazz</code>.</p>
+	 *
+	 * @return a {@link java.lang.Class} object.
+	 */
 	public Class<T> getClazz() {
 		return clazz;
 	}
 
+	/**
+	 * <p>Setter for the field <code>clazz</code>.</p>
+	 *
+	 * @param clazz a {@link java.lang.Class} object.
+	 */
 	public void setClazz(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 
+	/**
+	 * <p>Getter for the field <code>id</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * <p>Setter for the field <code>id</code>.</p>
+	 *
+	 * @param id a long.
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected void initLogged() throws Exception {
 
@@ -86,6 +117,11 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 		// postInit();
 	}
 
+	/**
+	 * <p>loadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected void loadData() throws Exception {
 
 		if (id > 0) {
@@ -101,6 +137,9 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 
 	}
 
+	/**
+	 * <p>loadDataException.</p>
+	 */
 	protected void loadDataException() {
 		try {
 			loadData();
@@ -109,24 +148,35 @@ public abstract class PageBaseDetail<T extends IEntityWithIdLong> extends PageBa
 		}
 	}
 
-	/**
-	 * 
-	 * @param filtro
-	 * @param clazz
-	 */
 	// protected abstract void inizializeMembers(F filtro, Class<T> clazz);
 	// protected abstract void inizializeMembers(Class<T> clazz) throws
 	// Exception;
+	/**
+	 * <p>inizializeMembers.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void inizializeMembers() throws Exception;
 
 	// abstract postInit();
+	/**
+	 * <p>onPreLoadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void onPreLoadData() throws Exception;
 
+	/**
+	 * <p>onPostLoadData.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void onPostLoadData() throws Exception;
 
 	/**
-	 * 
-	 * @return
+	 * <p>doActionSave.</p>
+	 *
+	 * @throws java.lang.Exception if any.
 	 */
 	protected void doActionSave() throws Exception {
 

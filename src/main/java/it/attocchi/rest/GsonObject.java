@@ -23,8 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.gson.Gson;
 
+/**
+ * <p>Abstract GsonObject class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class GsonObject implements JsonObject {
 
+	/** {@inheritDoc} */
 	@XmlTransient
 	@Override
 	public String toJson() {

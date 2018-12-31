@@ -34,11 +34,13 @@ import org.apache.log4j.Logger;
 
 /**
  * Application Lifecycle Listener implementation class JPAListener
- * 
+ *
  * @author Mirco Attocchi
+ * @version $Id: $Id
  */
 public class JPAContextListener implements ServletContextListener {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(JPAContextListener.class.getName());
 
 	// private JpaController chachedController;
@@ -51,9 +53,7 @@ public class JPAContextListener implements ServletContextListener {
 
 	}
 
-	/**
-	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
-	 */
+	/** {@inheritDoc} */
 	public void contextInitialized(ServletContextEvent sce) {
 		logger.info("initializing JPAContextListener@" + sce.getServletContext().getContextPath());
 		try {
@@ -99,9 +99,7 @@ public class JPAContextListener implements ServletContextListener {
 		}
 	}
 
-	/**
-	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-	 */
+	/** {@inheritDoc} */
 	public void contextDestroyed(ServletContextEvent sce) {
 		// EntityManagerFactory emf = (EntityManagerFactory)
 		// e.getServletContext().getAttribute("emf");

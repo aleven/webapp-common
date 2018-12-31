@@ -23,6 +23,12 @@ import it.attocchi.utils.ListUtils;
 
 import java.util.List;
 
+/**
+ * <p>Abstract ListEach class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class ListEach<E> {
 
 	List<E> aList;
@@ -32,10 +38,18 @@ public abstract class ListEach<E> {
 	// this.aList = aList;
 	// }
 
+	/**
+	 * <p>Constructor for ListEach.</p>
+	 *
+	 * @param aList a {@link java.util.List} object.
+	 */
 	public ListEach(List<E> aList) {
 		this.aList = aList;
 	}
 	
+	/**
+	 * <p>forEach.</p>
+	 */
 	public void forEach() {
 		if (ListUtils.isNotEmpty(aList)) {
 			for (E item : aList) {
@@ -44,6 +58,11 @@ public abstract class ListEach<E> {
 		}
 	}
 	
+	/**
+	 * <p>eachDo.</p>
+	 *
+	 * @param item a E object.
+	 */
 	protected abstract void eachDo(E item);
 	
 //	public static <T> ListEach forEach2(List<T> aList) {

@@ -20,5 +20,10 @@
 package it.webappcommon.lib.jpa2.unused;
 
 interface IEntityWithIdFactory<F extends IEntityWithId> {
+	/**
+	 * <p>newEntity.</p>
+	 *
+	 * @return a F object.
+	 */
 	F newEntity();
 }

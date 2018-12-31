@@ -32,32 +32,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-/*
+/**
  * Usage on web.xml:
- * 
- * 	
- <!-- IEVersionFilter -->
- <filter>
- <display-name>IEVersionFilter</display-name>
- <filter-name>IEVersionFilter</filter-name>
- <filter-class>it.attocchi.web.filters.IEVersionFilter</filter-class>
- </filter>
- <filter-mapping>
- <filter-name>IEVersionFilter</filter-name>
- <servlet-name>Faces Servlet</servlet-name>
- </filter-mapping>
- <!-- IEVersionFilter -->
-
+ *
+ * <pre>
+ * {@code
+ * <!-- IEVersionFilter -->
+ * <filter>
+ * <display-name>IEVersionFilter</display-name>
+ * <filter-name>IEVersionFilter</filter-name>
+ * <filter-class>it.attocchi.web.filters.IEVersionFilter</filter-class>
+ * </filter>
+ * <filter-mapping>
+ * <filter-name>IEVersionFilter</filter-name>
+ * <servlet-name>Faces Servlet</servlet-name>
+ * </filter-mapping>
+ * <!-- IEVersionFilter -->
+ * }
+ * </pre>
+ * <p>IEVersionFilter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
  */
 public class IEVersionFilter implements Filter {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
+	/** {@inheritDoc} */
 	@Override
 	public void destroy() {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -72,6 +80,7 @@ public class IEVersionFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 

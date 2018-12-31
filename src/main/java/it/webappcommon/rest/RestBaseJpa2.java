@@ -15,9 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * @author mirco
+ * <p>RestBaseJpa2 class.</p>
  *
+ * @author mirco
+ * @version $Id: $Id
  */
 public class RestBaseJpa2 {
 
@@ -61,8 +62,8 @@ public class RestBaseJpa2 {
 	 * Verifica innanzitutto se esiste un EMF di contesto (inizializzato con il
 	 * listener. Nel caso non esiste ne crea uno nuovo (sconsigliato per
 	 * lentezza)
-	 * 
-	 * @return
+	 *
+	 * @return a {@link javax.persistence.EntityManagerFactory} object.
 	 */
 	protected EntityManagerFactory getContextEmf() {
 		if (this.emf == null) {

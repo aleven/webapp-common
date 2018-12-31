@@ -27,20 +27,23 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>PersistenceAppListenerTest class.</p>
+ *
  * @author Mirco Attocchi
- * 
+ *
  *         Web application lifecycle listener.
+ * @version $Id: $Id
  */
-
 public class PersistenceAppListenerTest implements ServletContextListener {
 
 	private static final Logger logger = Logger.getLogger(PersistenceAppListenerTest.class.getName());
 
+	/** {@inheritDoc} */
 	public void contextInitialized(ServletContextEvent evt) {
 
 	}
 
+	/** {@inheritDoc} */
 	public void contextDestroyed(ServletContextEvent evt) {
 
 		MultiplePersistenceManagerTest.getInstance().closeEntityManagerFactory();

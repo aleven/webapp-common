@@ -29,18 +29,20 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 /**
- * 
+ * <p>JSFHelper class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class JSFHelper {
 
 	/**
 	 * Convert a list of ISelectItemConvertible to a list of SelectItem
-	 * 
+	 *
 	 * @param list
 	 *            a list of ISelectItemConvertible object
-	 * @return
-	 * @throws Exception
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	public static List<SelectItem> listToSelectItems(List list) throws Exception {
 		List<SelectItem> retVal = null;
@@ -96,7 +98,13 @@ public class JSFHelper {
 	/**
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>.
-	 **/
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemValue a {@link java.lang.String} object.
+	 * @param itemLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static List<SelectItem> listToSelectItems(List list, String itemValue, String itemLabel) throws Exception {
 		List<SelectItem> retVal = null;
 		try {
@@ -137,6 +145,13 @@ public class JSFHelper {
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>. This method allow to
 	 * concatenate more than one Object Property.
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemValue a {@link java.lang.String} object.
+	 * @param itemLabel an array of {@link java.lang.String} objects.
+	 * @param separatorForLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	protected List<SelectItem> listToSelectItems(List list, String itemValue, String[] itemLabel, String separatorForLabel) throws Exception {
 		List<SelectItem> retVal = null;
@@ -195,7 +210,12 @@ public class JSFHelper {
 	/**
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>.
-	 **/
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	protected List<SelectItem> listToSelectItems(List list, String itemLabel) throws Exception {
 		List<SelectItem> retVal = null;
 		try {
@@ -237,6 +257,12 @@ public class JSFHelper {
 	 * Method that convert a <tt>List</tt> of <tt>Object</tt> to an
 	 * <tt>ArrayList</tt> of <tt>SelectedItem</tt>. This method allow to
 	 * concatenate more than one Object Property.
+	 *
+	 * @param list a {@link java.util.List} object.
+	 * @param itemLabel an array of {@link java.lang.String} objects.
+	 * @param separatorForLabel a {@link java.lang.String} object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	protected List<SelectItem> listToSelectItems(List list, String[] itemLabel, String separatorForLabel) throws Exception {
 		List<SelectItem> retVal = null;

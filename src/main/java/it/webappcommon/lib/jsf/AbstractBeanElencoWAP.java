@@ -28,8 +28,15 @@ import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Abstract AbstractBeanElencoWAP class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends AbstractFiltro, P extends AbstractPageBase> extends AbstractPageBase {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(AbstractBeanElencoWAP.class.getName());
 
 	/**
@@ -75,10 +82,14 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 	protected String nomeOggettiVisualizzati = "";
 
 	//
+	/** Constant <code>NUMERO_RIGHE_PAGINA="NUMERO_RIGHE_PAGINA"</code> */
 	protected final static String NUMERO_RIGHE_PAGINA = "NUMERO_RIGHE_PAGINA";
 
 	protected P pageBaseOfProject;
 
+	/**
+	 * <p>Constructor for AbstractBeanElencoWAP.</p>
+	 */
 	protected AbstractBeanElencoWAP() {
 		try {
 
@@ -129,8 +140,16 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		}
 	}
 
+	/**
+	 * <p>verificaUtentePrivilegiato.</p>
+	 */
 	protected abstract void verificaUtentePrivilegiato();
 
+	/**
+	 * <p>actionCerca.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionCerca() {
 		try {
 			caricaDati();
@@ -142,6 +161,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionResetFiltri.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionResetFiltri() {
 		impostaFiltroBase(true);
 		pagina = 1;
@@ -149,16 +173,31 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionVisualizzaFiltri.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionVisualizzaFiltri() {
 		filtriVisualizzati = true;
 		return null;
 	}
 
+	/**
+	 * <p>actionNascondiFiltri.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionNascondiFiltri() {
 		filtriVisualizzati = false;
 		return null;
 	}
 
+	/**
+	 * <p>actionRefresh.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionRefresh() {
 		try {
 			caricaDati();
@@ -169,53 +208,124 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>caricaDati.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void caricaDati() throws Exception;
 
+	/**
+	 * <p>caricaDatiAccessori.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void caricaDatiAccessori() throws Exception;
 
+	/**
+	 * <p>impostaFiltroBase.</p>
+	 *
+	 * @param reset a boolean.
+	 * @return a E object.
+	 */
 	protected abstract E impostaFiltroBase(boolean reset);
 
+	/**
+	 * <p>Setter for the field <code>filtriVisualizzati</code>.</p>
+	 *
+	 * @param filtriVisualizzati a boolean.
+	 */
 	public void setFiltriVisualizzati(boolean filtriVisualizzati) {
 		this.filtriVisualizzati = filtriVisualizzati;
 	}
 
+	/**
+	 * <p>isFiltriVisualizzati.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isFiltriVisualizzati() {
 		return filtriVisualizzati;
 	}
 
+	/**
+	 * <p>Setter for the field <code>elencoDati</code>.</p>
+	 *
+	 * @param elencoDati a {@link java.util.List} object.
+	 */
 	public void setElencoDati(List<T> elencoDati) {
 		this.elencoDati = elencoDati;
 	}
 
+	/**
+	 * <p>Getter for the field <code>elencoDati</code>.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 */
 	public List<T> getElencoDati() {
 		return elencoDati;
 	}
 
+	/**
+	 * <p>Getter for the field <code>recordTotali</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getRecordTotali() {
 		return recordTotali;
 	}
 
+	/**
+	 * <p>Setter for the field <code>recordTotali</code>.</p>
+	 *
+	 * @param recordTotali a int.
+	 */
 	public void setRecordTotali(int recordTotali) {
 		this.recordTotali = recordTotali;
 	}
 
+	/**
+	 * <p>isNuovo.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isNuovo() {
 		nuovo = (getIdSelezionato() == 0);
 		return nuovo;
 	}
 
+	/**
+	 * <p>Setter for the field <code>nuovo</code>.</p>
+	 *
+	 * @param nuovo a boolean.
+	 */
 	public void setNuovo(boolean nuovo) {
 		this.nuovo = nuovo;
 	}
 
+	/**
+	 * <p>isUtentePrivilegiato.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isUtentePrivilegiato() {
 		return utentePrivilegiato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>utentePrivilegiato</code>.</p>
+	 *
+	 * @param utentePrivilegiato a boolean.
+	 */
 	public void setUtentePrivilegiato(boolean utentePrivilegiato) {
 		this.utentePrivilegiato = utentePrivilegiato;
 	}
 
+	/**
+	 * <p>actionChangeRighePagina.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionChangeRighePagina() {
 		try {
 			pagina = 1;
@@ -229,6 +339,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionChangePagina.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionChangePagina() {
 		try {
 			muoviPagina();
@@ -238,6 +353,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionPaginaPrima.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionPaginaPrima() {
 		try {
 			int numeroPagine = this.getPagineTotali();
@@ -253,6 +373,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionPaginaUltima.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionPaginaUltima() {
 		try {
 			int numeroPagine = this.getPagineTotali();
@@ -268,6 +393,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionPaginaAvanti.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionPaginaAvanti() {
 		try {
 			int numeroPagine = this.getPagineTotali();
@@ -283,6 +413,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return null;
 	}
 
+	/**
+	 * <p>actionPaginaIndietro.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String actionPaginaIndietro() {
 		try {
 			int numeroPagine = this.getPagineTotali();
@@ -299,6 +434,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 
 	}
 
+	/**
+	 * <p>Getter for the field <code>pagineTotali</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getPagineTotali() {
 		pagineTotali = 0;
 
@@ -313,10 +453,20 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return pagineTotali;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pagineTotali</code>.</p>
+	 *
+	 * @param pagineTotali a int.
+	 */
 	public void setPagineTotali(int pagineTotali) {
 		this.pagineTotali = pagineTotali;
 	}
 
+	/**
+	 * <p>getPagineSelect.</p>
+	 *
+	 * @return a {@link java.util.ArrayList} object.
+	 */
 	public ArrayList<SelectItem> getPagineSelect() {
 		ArrayList<SelectItem> returnValue = new ArrayList<SelectItem>();
 		int pagineTotali = this.getPagineTotali();
@@ -328,10 +478,20 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return returnValue;
 	}
 
+	/**
+	 * <p>getPagina_string.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getPagina_string() {
 		return String.valueOf(this.pagina);
 	}
 
+	/**
+	 * <p>setPagina_string.</p>
+	 *
+	 * @param pagina a {@link java.lang.String} object.
+	 */
 	public void setPagina_string(String pagina) {
 		if (pagina != null && !pagina.equals("")) {
 			this.pagina = Integer.parseInt(pagina);
@@ -340,7 +500,7 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 
 	/**
 	 * Verifica se la pagina corrente corrisponde all'ultima pagina
-	 * 
+	 *
 	 * @return true se pagina e' l'ultima pagina
 	 */
 	public boolean isUltimaPagina() {
@@ -364,80 +524,171 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 	// this.vistaSelezionata = vistaSelezionata;
 	// }
 
+	/**
+	 * <p>Getter for the field <code>idSelezionato</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getIdSelezionato() {
 		return idSelezionato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>idSelezionato</code>.</p>
+	 *
+	 * @param idSelezionato a int.
+	 */
 	public void setIdSelezionato(int idSelezionato) {
 		this.idSelezionato = idSelezionato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>filtroImpostato</code>.</p>
+	 *
+	 * @return a E object.
+	 */
 	public E getFiltroImpostato() {
 		return filtroImpostato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>filtroImpostato</code>.</p>
+	 *
+	 * @param filtroImpostato a E object.
+	 */
 	public void setFiltroImpostato(E filtroImpostato) {
 		this.filtroImpostato = filtroImpostato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>elementoSelezionato</code>.</p>
+	 *
+	 * @return a T object.
+	 */
 	public T getElementoSelezionato() {
 		return elementoSelezionato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>elementoSelezionato</code>.</p>
+	 *
+	 * @param elementoSelezionato a T object.
+	 */
 	public void setElementoSelezionato(T elementoSelezionato) {
 		this.elementoSelezionato = elementoSelezionato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>pagina</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getPagina() {
 		return pagina;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pagina</code>.</p>
+	 *
+	 * @param pagina a int.
+	 */
 	public void setPagina(int pagina) {
 		this.pagina = pagina;
 	}
 
+	/**
+	 * <p>Getter for the field <code>id_contatto</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getId_contatto() {
 		return id_contatto;
 	}
 
+	/**
+	 * <p>Setter for the field <code>id_contatto</code>.</p>
+	 *
+	 * @param idContatto a int.
+	 */
 	public void setId_contatto(int idContatto) {
 		this.id_contatto = idContatto;
 	}
 
+	/**
+	 * <p>Getter for the field <code>tipo_contatto</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getTipo_contatto() {
 		return tipo_contatto;
 	}
 
+	/**
+	 * <p>Setter for the field <code>tipo_contatto</code>.</p>
+	 *
+	 * @param tipoContatto a {@link java.lang.String} object.
+	 */
 	public void setTipo_contatto(String tipoContatto) {
 		this.tipo_contatto = tipoContatto;
 	}
 
 	// public abstract void initVistePredefinite();
 
+	/**
+	 * <p>Getter for the field <code>nomeOggettoVisualizzato</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getNomeOggettoVisualizzato() {
 		return nomeOggettoVisualizzato;
 	}
 
+	/**
+	 * <p>Setter for the field <code>nomeOggettoVisualizzato</code>.</p>
+	 *
+	 * @param nomeOggettoVisualizzato a {@link java.lang.String} object.
+	 */
 	public void setNomeOggettoVisualizzato(String nomeOggettoVisualizzato) {
 		this.nomeOggettoVisualizzato = nomeOggettoVisualizzato;
 	}
 
+	/**
+	 * <p>Getter for the field <code>nomeOggettiVisualizzati</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getNomeOggettiVisualizzati() {
 		return nomeOggettiVisualizzati;
 	}
 
+	/**
+	 * <p>Setter for the field <code>nomeOggettiVisualizzati</code>.</p>
+	 *
+	 * @param nomeOggettiVisualizzati a {@link java.lang.String} object.
+	 */
 	public void setNomeOggettiVisualizzati(String nomeOggettiVisualizzati) {
 		this.nomeOggettiVisualizzati = nomeOggettiVisualizzati;
 	}
 
+	/**
+	 * <p>initPageInfo.</p>
+	 */
 	public abstract void initPageInfo();
 
+	/**
+	 * <p>listenerRighe.</p>
+	 *
+	 * @param event a {@link javax.faces.event.ValueChangeEvent} object.
+	 */
 	public void listenerRighe(ValueChangeEvent event) {
 		// this.setRighe_per_pagina(Integer.parseInt(
 		// event.getNewValue().toString()) );
 		// caricaDati();
 	}
 
+	/**
+	 * <p>muoviPagina.</p>
+	 */
 	protected void muoviPagina() {
 
 		try {
@@ -480,8 +731,18 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 	 */
 	protected abstract void verificaImpostazioniSoftware();
 
+	/**
+	 * <p>initRighePerPagina.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void initRighePerPagina() throws Exception;
 
+	/**
+	 * <p>Getter for the field <code>pageBaseOfProject</code>.</p>
+	 *
+	 * @return a P object.
+	 */
 	public P getPageBaseOfProject() {
 		// TODO: Forse e' il caso di farsi passare una istanza?
 		// if (pageBaseOfProject == null) {
@@ -490,6 +751,11 @@ public abstract class AbstractBeanElencoWAP<T extends Serializable, E extends Ab
 		return pageBaseOfProject;
 	}
 
+	/**
+	 * <p>Setter for the field <code>pageBaseOfProject</code>.</p>
+	 *
+	 * @param pageBaseOfProject a P object.
+	 */
 	public void setPageBaseOfProject(P pageBaseOfProject) {
 		this.pageBaseOfProject = pageBaseOfProject;
 	}

@@ -30,10 +30,25 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>BookmarkParser class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class BookmarkParser {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(BookmarkParser.class.getName());
 
+	/**
+	 * <p>parse.</p>
+	 *
+	 * @param testo a {@link java.lang.String} object.
+	 * @param parameters a {@link java.util.Map} object.
+	 * @return a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static String parse(String testo, Map<String, Object> parameters) throws Exception {
 		String returnValue = null;
 		String strOggetto = null;

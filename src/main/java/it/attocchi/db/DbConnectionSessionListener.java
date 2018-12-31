@@ -32,12 +32,14 @@ import org.apache.log4j.Logger;
 
 /**
  * Session Lifecycle Listener implementation class JPASessionListener
- * 
+ *
  * @author Mirco Attocchi
+ * @version $Id: $Id
  */
 public class DbConnectionSessionListener implements HttpSessionListener {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	/** Constant <code>SESSION_CONN="SESSION_CONN"</code> */
 	public final static String SESSION_CONN = "SESSION_CONN";
 
 	/**
@@ -47,9 +49,7 @@ public class DbConnectionSessionListener implements HttpSessionListener {
 
 	}
 
-	/**
-	 * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
-	 */
+	/** {@inheritDoc} */
 	public void sessionCreated(HttpSessionEvent e) {
 
 		/*
@@ -72,9 +72,7 @@ public class DbConnectionSessionListener implements HttpSessionListener {
 		logger.info(SESSION_CONN + " start");
 	}
 
-	/**
-	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
-	 */
+	/** {@inheritDoc} */
 	public void sessionDestroyed(HttpSessionEvent e) {
 
 		Connection conn = (Connection) e.getSession().getAttribute(SESSION_CONN);

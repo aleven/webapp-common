@@ -23,9 +23,9 @@ import javax.annotation.PostConstruct;
 
 /**
  * Pagina Gestione Utenti Autenticati (Richiede filtro @AuthFilter)
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
 	/**
@@ -47,6 +47,11 @@ public abstract class PageBaseNoAuthNoJpa2 extends PageBaseForceInitSession {
 		}
 	}
 
+	/**
+	 * <p>init.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void init() throws Exception;
 
 }

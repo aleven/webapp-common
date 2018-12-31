@@ -35,8 +35,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>AuthenticationFilter class.</p>
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public class AuthenticationFilter implements Filter {
 
@@ -45,9 +47,13 @@ public class AuthenticationFilter implements Filter {
 	FilterConfig config = null;
 	ServletContext servletContext = null;
 
+	/**
+	 * <p>Constructor for AuthenticationFilter.</p>
+	 */
 	public AuthenticationFilter() {
 	}
 
+	/** {@inheritDoc} */
 	public void init(FilterConfig filterConfig) throws ServletException {
 		config = filterConfig;
 		servletContext = config.getServletContext();
@@ -58,6 +64,7 @@ public class AuthenticationFilter implements Filter {
 	// System.out.println("Inside the filter");
 	// chain.doFilter(request, response);
 	// }
+	/** {@inheritDoc} */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		logger.debug("Filtro Autenticazione");
@@ -168,6 +175,9 @@ public class AuthenticationFilter implements Filter {
 		logger.debug("Fine Filtro Autenticazione");
 	}
 
+	/**
+	 * <p>destroy.</p>
+	 */
 	public void destroy() {
 		logger.debug("");
 	}

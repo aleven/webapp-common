@@ -35,8 +35,9 @@ import org.apache.log4j.Logger;
 /**
  * Classe astratta per la definizione dei metodi base che un dao deve supportare
  * In questo modo chiunque fa i metodi base allo stesso modo
- * 
+ *
  * @author Mirco
+ * @version $Id: $Id
  */
 public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F extends AbstractFiltro> {
 
@@ -64,16 +65,22 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
+	/** Constant <code>SUFFISSO_UTENTE_CREAZIONE_USR01="_utente_creazione_usr01"</code> */
 	protected static final String SUFFISSO_UTENTE_CREAZIONE_USR01 = "_utente_creazione_usr01";
 
+	/** Constant <code>SUFFISSO_DT_CREAZIONE="_dt_creazione"</code> */
 	protected static final String SUFFISSO_DT_CREAZIONE = "_dt_creazione";
 
+	/** Constant <code>SUFFISSO_UTENTE_MODIFICA_USR01="_utente_modifica_usr01"</code> */
 	protected static final String SUFFISSO_UTENTE_MODIFICA_USR01 = "_utente_modifica_usr01";
 
+	/** Constant <code>SUFFISSO_TS_MODIFICA="_ts_modifica"</code> */
 	protected static final String SUFFISSO_TS_MODIFICA = "_ts_modifica";
 
+	/** Constant <code>SUFFISSO_UTENTE_CANCELLAZIONE_USR01="_utente_cancellazione_usr01"</code> */
 	protected static final String SUFFISSO_UTENTE_CANCELLAZIONE_USR01 = "_utente_cancellazione_usr01";
 
+	/** Constant <code>SUFFISSO_DT_CANCELLAZIONE="_dt_cancellazione"</code> */
 	protected static final String SUFFISSO_DT_CANCELLAZIONE = "_dt_cancellazione";
 
 	protected String nomeTabella;
@@ -89,7 +96,9 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 */
 	protected Boolean connApertaQui = false;
 
+	/** Constant <code>MSG_ID_VALORIZZATO="Impossibile inserire un nuovo oggetto c"{trunked}</code> */
 	protected static final String MSG_ID_VALORIZZATO = "Impossibile inserire un nuovo oggetto che ha id %s";
+	/** Constant <code>MSG_ID_NON_VALORIZZATO="Impossibile aggiornare un oggetto che n"{trunked}</code> */
 	protected static final String MSG_ID_NON_VALORIZZATO = "Impossibile aggiornare un oggetto che non ha id ";
 
 	private String campoDataCreazioneNonStd;
@@ -111,6 +120,11 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * ereditano in modo che possano comunicare il nome della tabella a cui fare
 	 * riferimento e il nome del campo della data cancellazione per fare delle
 	 * query di base
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 * @param nomeTabella a {@link java.lang.String} object.
+	 * @param campoID a {@link java.lang.String} object.
+	 * @param prefissoCampi a {@link java.lang.String} object.
 	 */
 	public AbstractBaseDAO(Connection conn, String nomeTabella, String campoID, String prefissoCampi) {
 
@@ -126,6 +140,16 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * starndard. Nel caso un campo non sia presente nella tabella, ad esempio
 	 * "utente modifica" basta specificarlo come stringa vuota e non viene
 	 * usato.
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 * @param nomeTabella a {@link java.lang.String} object.
+	 * @param campoID a {@link java.lang.String} object.
+	 * @param campoDataCreazioneNonStandard a {@link java.lang.String} object.
+	 * @param campoIDUtenteCreazioneNonStd a {@link java.lang.String} object.
+	 * @param campoDataModificaNonStandard a {@link java.lang.String} object.
+	 * @param campoIDUtenteModificaNonStd a {@link java.lang.String} object.
+	 * @param campoDataCancellazioneNonStandard a {@link java.lang.String} object.
+	 * @param campoIDUtenteCancellazioneNonStd a {@link java.lang.String} object.
 	 */
 	public AbstractBaseDAO(Connection conn, String nomeTabella, String campoID, String campoDataCreazioneNonStandard, String campoIDUtenteCreazioneNonStd, String campoDataModificaNonStandard, String campoIDUtenteModificaNonStd, String campoDataCancellazioneNonStandard, String campoIDUtenteCancellazioneNonStd) {
 
@@ -141,6 +165,13 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		this.campoIDUtenteCancellazioneNonStd = campoIDUtenteCancellazioneNonStd;
 	}
 
+	/**
+	 * <p>getNum.</p>
+	 *
+	 * @param filtro a F object.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public int getNum(F filtro) throws Exception {
 		int res = 0;
 
@@ -189,10 +220,11 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	}
 
 	/**
-	 * 
+	 * <p>getAll.</p>
+	 *
 	 * @param filtro filtro da applicare
 	 * @return un nuovo ArrayList anche se non ci sono risultati dall query
-	 * @throws Exception eccezione
+	 * @throws java.lang.Exception eccezione
 	 */
 	public List<T> getAll(F filtro) throws Exception {
 		List<T> returnValue = new ArrayList<T>();
@@ -255,6 +287,13 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return returnValue;
 	}
 
+	/**
+	 * <p>getTop1.</p>
+	 *
+	 * @param filtro a F object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public T getTop1(F filtro) throws Exception {
 		T returnValue = null;
 
@@ -324,11 +363,11 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	 * possibile scegliere il campo sul quale fare il distinct cosi' si puo' *
 	 * usare anche per i LINKS efare il distinct su id tabella 1 o 2 Se non
 	 * viene specificato un campoID viene fatto sul campo ID del Dao
-	 * 
+	 *
 	 * @param filtro filtro da applicare
 	 * @param campoIdDistinct campo ID su cui applicare DISTINCT
 	 * @return lista da ID
-	 * @throws Exception errore
+	 * @throws java.lang.Exception errore
 	 */
 	public List<Integer> getAllIdDistinct(F filtro, String campoIdDistinct) throws Exception {
 		List<Integer> res = new ArrayList<Integer>();
@@ -399,6 +438,16 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
+	/**
+	 * <p>getAllFieldDistinct.</p>
+	 *
+	 * @param filtro a F object.
+	 * @param field a {@link java.lang.String} object.
+	 * @param clazz a {@link java.lang.Class} object.
+	 * @param <X> a X object.
+	 * @return a {@link java.util.List} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public <X> List<X> getAllFieldDistinct(F filtro, String field, Class<X> clazz) throws Exception {
 		List<X> res = new ArrayList<X>();
 
@@ -463,10 +512,21 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
+	/**
+	 * <p>filler.</p>
+	 *
+	 * @param rs a {@link java.sql.ResultSet} object.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract T filler(ResultSet rs) throws Exception;
 
 	/**
 	 * Si preoccupa di caricare i dati base di tutti gli AbstractDataMappingBase
+	 *
+	 * @param oggettoDaCaricare a T object.
+	 * @param rs a {@link java.sql.ResultSet} object.
+	 * @throws java.lang.Exception if any.
 	 */
 	protected void fillerBase(T oggettoDaCaricare, ResultSet rs) throws Exception {
 
@@ -494,8 +554,24 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 
 	}
 
+	/**
+	 * <p>insert.</p>
+	 *
+	 * @param oggettoDaInserire a T object.
+	 * @param idUtente a int.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract int insert(T oggettoDaInserire, int idUtente) throws Exception;
 
+	/**
+	 * <p>insertAndFill.</p>
+	 *
+	 * @param oggettoDaInserire a T object.
+	 * @param idUtente a int.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public T insertAndFill(T oggettoDaInserire, int idUtente) throws Exception {
 		T returnValue = null;
 
@@ -506,8 +582,25 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return returnValue;
 	}
 
+	/**
+	 * <p>update.</p>
+	 *
+	 * @param oggettoDaAggiornare a T object.
+	 * @param idUtente a int.
+	 * @return a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public abstract int update(T oggettoDaAggiornare, int idUtente) throws Exception;
 
+	/**
+	 * <p>updateAndFill.</p>
+	 *
+	 * @param oggettoDaAggiornare a T object.
+	 * @param id a int.
+	 * @param idUtente a int.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public T updateAndFill(T oggettoDaAggiornare, int id, int idUtente) throws Exception {
 		T returnValue = null;
 
@@ -519,6 +612,13 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return returnValue;
 	}
 
+	/**
+	 * <p>delete.</p>
+	 *
+	 * @param idElemento a int.
+	 * @param idUtente a int.
+	 * @throws java.lang.Exception if any.
+	 */
 	public void delete(int idElemento, int idUtente) throws Exception {
 		// T returnValue = null;
 
@@ -563,6 +663,13 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		// return returnValue;
 	}
 
+	/**
+	 * <p>getById.</p>
+	 *
+	 * @param id a int.
+	 * @return a T object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public T getById(int id) throws Exception {
 		T returnValue = null;
 
@@ -608,14 +715,29 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return returnValue;
 	}
 
+	/**
+	 * <p>Setter for the field <code>nomeTabella</code>.</p>
+	 *
+	 * @param nomeTabella a {@link java.lang.String} object.
+	 */
 	protected void setNomeTabella(String nomeTabella) {
 		this.nomeTabella = nomeTabella;
 	}
 
+	/**
+	 * <p>Getter for the field <code>nomeTabella</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getNomeTabella() {
 		return nomeTabella;
 	}
 
+	/**
+	 * <p>getCampoDataCancellazione.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoDataCancellazione() {
 		// return (StringUtils.isEmpty(campoDataCancellazioneNonStd)) ?
 		// prefissoCampi + SUFFISSO_DT_CANCELLAZIONE :
@@ -623,6 +745,11 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return (campoDataCancellazioneNonStd == null) ? prefissoCampi + SUFFISSO_DT_CANCELLAZIONE : (campoDataCancellazioneNonStd.isEmpty()) ? null : campoDataCancellazioneNonStd;
 	}
 
+	/**
+	 * <p>getCampoIDUtenteCancellazione.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoIDUtenteCancellazione() {
 		// return (StringUtils.isEmpty(campoIDUtenteCancellazioneNonStd)) ?
 		// prefissoCampi + SUFFISSO_UTENTE_CANCELLAZIONE_USR01 :
@@ -630,12 +757,22 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return (campoIDUtenteCancellazioneNonStd == null) ? prefissoCampi + SUFFISSO_UTENTE_CANCELLAZIONE_USR01 : (campoIDUtenteCancellazioneNonStd.isEmpty()) ? null : campoIDUtenteCancellazioneNonStd;
 	}
 
+	/**
+	 * <p>getCampoDataModifica.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoDataModifica() {
 		// return (StringUtils.isEmpty(campoDataModificaNonStd)) ? prefissoCampi
 		// + SUFFISSO_TS_MODIFICA : campoDataModificaNonStd;
 		return (campoDataModificaNonStd == null) ? prefissoCampi + SUFFISSO_TS_MODIFICA : (campoDataModificaNonStd.isEmpty()) ? null : campoDataModificaNonStd;
 	}
 
+	/**
+	 * <p>getCampoIDUtenteModifica.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoIDUtenteModifica() {
 		// return (StringUtils.isEmpty(campoIDUtenteModificaNonStd)) ?
 		// prefissoCampi + SUFFISSO_UTENTE_MODIFICA_USR01 :
@@ -643,10 +780,20 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return (campoIDUtenteModificaNonStd == null) ? prefissoCampi + SUFFISSO_UTENTE_MODIFICA_USR01 : (campoIDUtenteModificaNonStd.isEmpty()) ? null : campoIDUtenteModificaNonStd;
 	}
 
+	/**
+	 * <p>getCampoDataCreazione.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoDataCreazione() {
 		return (campoDataCreazioneNonStd == null) ? prefissoCampi + SUFFISSO_DT_CREAZIONE : (campoDataCreazioneNonStd.isEmpty()) ? null : campoDataCreazioneNonStd;
 	}
 
+	/**
+	 * <p>getCampoIDUtenteCreazione.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoIDUtenteCreazione() {
 		// return (StringUtils.isEmpty(campoIDUtenteCreazioneNonStd)) ?
 		// prefissoCampi + SUFFISSO_UTENTE_CREAZIONE_USR01 :
@@ -654,18 +801,38 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		return (campoIDUtenteCreazioneNonStd == null) ? prefissoCampi + SUFFISSO_UTENTE_CREAZIONE_USR01 : (campoIDUtenteCreazioneNonStd.isEmpty()) ? null : campoIDUtenteCreazioneNonStd;
 	}
 
+	/**
+	 * <p>Setter for the field <code>prefissoCampi</code>.</p>
+	 *
+	 * @param prefissoCampi a {@link java.lang.String} object.
+	 */
 	public void setPrefissoCampi(String prefissoCampi) {
 		this.prefissoCampi = prefissoCampi;
 	}
 
+	/**
+	 * <p>Getter for the field <code>prefissoCampi</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getPrefissoCampi() {
 		return prefissoCampi;
 	}
 
+	/**
+	 * <p>Getter for the field <code>campoID</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getCampoID() {
 		return campoID;
 	}
 
+	/**
+	 * <p>Setter for the field <code>campoID</code>.</p>
+	 *
+	 * @param campoID a {@link java.lang.String} object.
+	 */
 	public void setCampoID(String campoID) {
 		this.campoID = campoID;
 	}
@@ -683,8 +850,18 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	// return conn;
 	// }
 
+	/**
+	 * <p>getConnection.</p>
+	 *
+	 * @return a {@link java.sql.Connection} object.
+	 */
 	protected abstract Connection getConnection();
 
+	/**
+	 * <p>setConnection.</p>
+	 *
+	 * @param conn a {@link java.sql.Connection} object.
+	 */
 	protected void setConnection(Connection conn) {
 		this.conn = conn;
 	}
@@ -701,7 +878,7 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	// }
 
 	/**
-	 * 
+	 * <p>beginTransaction.</p>
 	 */
 	protected void beginTransaction() {
 		try {
@@ -714,6 +891,9 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		}
 	}
 
+	/**
+	 * <p>commit.</p>
+	 */
 	protected void commit() {
 		try {
 			if (connApertaQui && !getConnection().getAutoCommit()) {
@@ -724,6 +904,9 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		}
 	}
 
+	/**
+	 * <p>rollback.</p>
+	 */
 	protected void rollback() {
 		try {
 			if (connApertaQui && !getConnection().getAutoCommit()) {
@@ -734,6 +917,13 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 		}
 	}
 
+	/**
+	 * <p>executeUpdate.</p>
+	 *
+	 * @param aSqlQuery a {@link java.lang.String} object.
+	 * @return a int.
+	 * @throws java.sql.SQLException if any.
+	 */
 	public int executeUpdate(String aSqlQuery) throws SQLException {
 		PreparedStatement prpStmt = null;
 		int res = 0;
@@ -764,7 +954,7 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	/**
 	 * Impostato nel dao viene usato nel filler per impostare su ogni singolo
 	 * oggetto se e' stato caricato da un utente privilegiato
-	 * 
+	 *
 	 * @param uiUtentePrivilegiato uiUtentePrivilegiato
 	 */
 	public void setUiUtentePrivilegiato(boolean uiUtentePrivilegiato) {
@@ -777,6 +967,7 @@ public abstract class AbstractBaseDAO<T extends AbstractDataMappingBase, F exten
 	// super.finalize(); //not necessary if extending Object.
 	// }
 
+	/** {@inheritDoc} */
 	@Override
 	protected void finalize() throws Throwable {
 		if (connApertaQui) {

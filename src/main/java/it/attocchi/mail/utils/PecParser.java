@@ -21,8 +21,15 @@ import javax.mail.internet.ParseException;
 
 
 
+/**
+ * <p>PecParser class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class PecParser {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = LoggerFactory.getLogger(PecParser.class);
 
 	int level = 0;
@@ -35,10 +42,22 @@ public class PecParser {
 	File f;
 	EmailBody testo;
 
+	/**
+	 * <p>Getter for the field <code>testo</code>.</p>
+	 *
+	 * @return a {@link it.attocchi.mail.parts.EmailBody} object.
+	 */
 	public EmailBody getTesto() {
 		return testo;
 	}
 
+	/**
+	 * <p>Constructor for PecParser.</p>
+	 *
+	 * @param emlFileName a {@link java.lang.String} object.
+	 * @param saveFile a boolean.
+	 * @param f a {@link java.io.File} object.
+	 */
 	public PecParser(String emlFileName, boolean saveFile, File f) {
 		super();
 		this.emlFileName = emlFileName;
@@ -49,18 +68,24 @@ public class PecParser {
 	/*
 	 * 
 	 */
+	/**
+	 * <p>dumpPart.</p>
+	 *
+	 * @param part a {@link javax.mail.Part} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public void dumpPart(Part part) throws Exception {
 		if (part instanceof Message)
 			dumpEnvelope((Message) part);
 
-		/**
-		 * Dump input stream ..
-		 * 
-		 * InputStream is = p.getInputStream(); // If "is" is not already
-		 * buffered, wrap a BufferedInputStream // around it. if (!(is
-		 * instanceof BufferedInputStream)) is = new BufferedInputStream(is);
-		 * int c; while ((c = is.read()) != -1) System.out.write(c);
-		 **/
+//		/**
+//		 * Dump input stream ..
+//		 *
+//		 * InputStream is = p.getInputStream(); // If "is" is not already
+//		 * buffered, wrap a BufferedInputStream // around it. if (!(is
+//		 * instanceof BufferedInputStream)) is = new BufferedInputStream(is);
+//		 * int c; while ((c = is.read()) != -1) System.out.write(c);
+//		 **/
 
 		String ct = part.getContentType();
 		try {
@@ -190,6 +215,12 @@ public class PecParser {
 		// }
 	}
 
+	/**
+	 * <p>dumpEnvelope.</p>
+	 *
+	 * @param m a {@link javax.mail.Message} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public void dumpEnvelope(Message m) throws Exception {
 		log("This is the message envelope");
 		log("---------------------------");
@@ -257,6 +288,11 @@ public class PecParser {
 		}
 	}
 
+	/**
+	 * <p>log.</p>
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 */
 	public void log(String s) {
 		if (showStructure)
 			logger.debug(indentStr.substring(0, level * 2));

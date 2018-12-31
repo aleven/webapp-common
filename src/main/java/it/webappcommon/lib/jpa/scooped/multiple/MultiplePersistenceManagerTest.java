@@ -29,11 +29,18 @@ import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>MultiplePersistenceManagerTest class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class MultiplePersistenceManagerTest {
 
 	private static final Logger logger = Logger.getLogger(MultiplePersistenceManagerTest.class.getName());
 
 	// public static final boolean DEBUG = true;
+	/** Constant <code>PERSISTENCE_UNIT="DefaultPU"</code> */
 	public static final String PERSISTENCE_UNIT = "DefaultPU";
 
 	private static final MultiplePersistenceManagerTest singletonScooped = new ScopedMultiplePersistenceManagerTest();
@@ -50,6 +57,11 @@ public class MultiplePersistenceManagerTest {
 	// private EntityManagerFactory emfToClose;
 	private Map<String, EntityManagerFactory> emfMap;
 
+	/**
+	 * <p>getInstance.</p>
+	 *
+	 * @return a {@link it.webappcommon.lib.jpa.scooped.multiple.MultiplePersistenceManagerTest} object.
+	 */
 	public static MultiplePersistenceManagerTest getInstance() {
 
 		// if (singletonScooped == null) {
@@ -80,9 +92,18 @@ public class MultiplePersistenceManagerTest {
 	// return singleton;
 	// }
 
+	/**
+	 * <p>Constructor for MultiplePersistenceManagerTest.</p>
+	 */
 	protected MultiplePersistenceManagerTest() {
 	}
 
+	/**
+	 * <p>getEntityManagerFactory.</p>
+	 *
+	 * @param persisteceUnit a {@link java.lang.String} object.
+	 * @return a {@link javax.persistence.EntityManagerFactory} object.
+	 */
 	public synchronized EntityManagerFactory getEntityManagerFactory(String persisteceUnit) {
 
 		if (emfMap == null) {
@@ -106,10 +127,20 @@ public class MultiplePersistenceManagerTest {
 		return emfMap.get(persisteceUnit);
 	}
 
+	/**
+	 * <p>getEntityManagerFactoryList.</p>
+	 *
+	 * @return a {@link java.util.Set} object.
+	 */
 	public synchronized Set<Entry<String, EntityManagerFactory>> getEntityManagerFactoryList() {
 		return emfMap.entrySet();
 	}
 
+	/**
+	 * <p>closeEntityManagerFactory.</p>
+	 *
+	 * @param persisteceUnit a {@link java.lang.String} object.
+	 */
 	public synchronized void closeEntityManagerFactory(String persisteceUnit) {
 		if (emfMap != null) {
 			if (!emfMap.isEmpty()) {
@@ -133,6 +164,9 @@ public class MultiplePersistenceManagerTest {
 		}
 	}
 
+	/**
+	 * <p>closeEntityManagerFactory.</p>
+	 */
 	public synchronized void closeEntityManagerFactory() {
 
 		if (emfMap != null) {
@@ -163,6 +197,12 @@ public class MultiplePersistenceManagerTest {
 		// }
 	}
 
+	/**
+	 * <p>createEntityManagerFactory.</p>
+	 *
+	 * @param pu a {@link java.lang.String} object.
+	 * @return a {@link javax.persistence.EntityManagerFactory} object.
+	 */
 	protected EntityManagerFactory createEntityManagerFactory(String pu) {
 		return Persistence.createEntityManagerFactory(pu);
 	}

@@ -19,11 +19,28 @@
 
 package it.webappcommon.lib.jpa2.exceptions;
 
+/**
+ * <p>NonexistentEntityException class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class NonexistentEntityException extends Exception {
+	/**
+	 * <p>Constructor for NonexistentEntityException.</p>
+	 *
+	 * @param message a {@link java.lang.String} object.
+	 * @param cause a {@link java.lang.Throwable} object.
+	 */
 	public NonexistentEntityException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
+	/**
+	 * <p>Constructor for NonexistentEntityException.</p>
+	 *
+	 * @param message a {@link java.lang.String} object.
+	 */
 	public NonexistentEntityException(String message) {
 		super(message);
 	}

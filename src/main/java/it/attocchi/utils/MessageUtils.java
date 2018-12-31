@@ -21,13 +21,20 @@ package it.attocchi.utils;
 
 import java.text.MessageFormat;
 
+/**
+ * <p>MessageUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class MessageUtils {
 
 	/**
-	 * Uso di {@link MessageFormat} per formattare un messaggio
+	 * Uso di {@link java.text.MessageFormat} per formattare un messaggio
+	 *
 	 * @param message il pattern del messaggio da formattare
 	 * @param params parametri
-	 * @return
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String parse(String message, Object... params) {
 		String res = message;

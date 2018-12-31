@@ -35,12 +35,20 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 
+/**
+ * <p>HttpClientUtils class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class HttpClientUtils {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(HttpClientUtils.class.getName());
 
 	/**
-	 * 
+	 * <p>getFile.</p>
+	 *
 	 * @param url
 	 *            un url dove scaricare il file
 	 * @param urlFileNameParam
@@ -49,9 +57,9 @@ public class HttpClientUtils {
 	 * @param dest
 	 *            dove salvare il file, se non specificato crea un file
 	 *            temporaneo
-	 * @return
-	 * @throws ClientProtocolException
-	 * @throws IOException
+	 * @return a {@link java.io.File} object.
+	 * @throws org.apache.http.client.ClientProtocolException if any.
+	 * @throws java.io.IOException if any.
 	 */
 	public static File getFile(String url, String urlFileNameParam, File dest) throws ClientProtocolException, IOException {
 
@@ -112,6 +120,13 @@ public class HttpClientUtils {
 		return dest;
 	}
 
+	/**
+	 * <p>getFileNameFromUrl.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getFileNameFromUrl(String url, String paramName) {
 		String res = null;
 

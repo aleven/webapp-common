@@ -22,19 +22,32 @@ package it.webappcommon.lib;
 import java.io.Serializable;
 
 /**
- * 
- * @author Mirco
+ * <p>XMLUtils class.</p>
  *
- * @param <T>
+ * @author Mirco
+ * @param <T> classe che estende Serializable
+ * @version $Id: $Id
  */
 public class XMLUtils<T extends Serializable> {
 
+	/**
+	 * <p>encodeXML.</p>
+	 *
+	 * @param aSerializableObject a T object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String encodeXML(T aSerializableObject) {
 		String res = null;
 
 		return res;
 	}
 	
+	/**
+	 * <p>decodeXML.</p>
+	 *
+	 * @param xmlSource a {@link java.lang.String} object.
+	 * @return a T object.
+	 */
 	public T decodeXML(String xmlSource) {
 		T res = null;
 

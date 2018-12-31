@@ -23,14 +23,35 @@ import it.attocchi.jpa2.entities.EntityBase;
 
 import java.util.Date;
 
+/**
+ * <p>Abstract AbstactEntityMarksUUID class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public abstract class AbstactEntityMarksUUID extends EntityBase {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * <p>getEntityMarks.</p>
+	 *
+	 * @return a {@link it.attocchi.jpa2.entities.uuid.EntityMarksUUID} object.
+	 */
 	public abstract EntityMarksUUID getEntityMarks();
 
+	/**
+	 * <p>setEntityMarks.</p>
+	 *
+	 * @param entityMarks a {@link it.attocchi.jpa2.entities.uuid.EntityMarksUUID} object.
+	 */
 	public abstract void setEntityMarks(EntityMarksUUID entityMarks);
 
+	/**
+	 * <p>markAsCreated.</p>
+	 *
+	 * @param uuidUtente a {@link java.lang.String} object.
+	 */
 	public void markAsCreated(String uuidUtente) {
 		init();
 		getEntityMarks().uuidUtenteCreazione = uuidUtente;
@@ -39,12 +60,22 @@ public abstract class AbstactEntityMarksUUID extends EntityBase {
 		markAsUpdated(uuidUtente);
 	}
 
+	/**
+	 * <p>markAsUpdated.</p>
+	 *
+	 * @param uuidUtente a {@link java.lang.String} object.
+	 */
 	public void markAsUpdated(String uuidUtente) {
 		init();
 		getEntityMarks().uuidUtenteModifica = uuidUtente;
 		getEntityMarks().dataModifica = new Date();
 	}
 
+	/**
+	 * <p>markAsDeleted.</p>
+	 *
+	 * @param uuidUtente a {@link java.lang.String} object.
+	 */
 	public void markAsDeleted(String uuidUtente) {
 		init();
 		getEntityMarks().uuidUtenteCancellazione = uuidUtente;

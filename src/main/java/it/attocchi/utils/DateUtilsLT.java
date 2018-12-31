@@ -22,10 +22,10 @@ package it.attocchi.utils;
 import it.webappcommon.lib.DateUtils;
 
 /**
- * use {@link DateUtils}
- *  
- * @author Mirco
+ * use {@link it.webappcommon.lib.DateUtils}
  *
+ * @author Mirco
+ * @version $Id: $Id
  */
 @Deprecated
 public class DateUtilsLT extends DateUtils {

@@ -29,19 +29,22 @@ import javax.servlet.ServletRequestListener;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * <p>PersistenceAppRequestListenerTest class.</p>
+ *
  * @author Mirco Attocchi
- * 
+ *
  *         Web application lifecycle listener.
+ * @version $Id: $Id
  */
-
 public class PersistenceAppRequestListenerTest implements ServletRequestListener {
 
 	private static final Logger logger = Logger.getLogger(PersistenceAppRequestListenerTest.class.getName());
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * ### Method from ServletRequestListener ###
-	 * 
+	 *
 	 * The request is about to come into scope of the web application.
 	 */
 	public void requestInitialized(ServletRequestEvent evt) {
@@ -49,8 +52,10 @@ public class PersistenceAppRequestListenerTest implements ServletRequestListener
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * ### Method from ServletRequestListener ###
-	 * 
+	 *
 	 * The request is about to go out of scope of the web application.
 	 */
 	public void requestDestroyed(ServletRequestEvent evt) {

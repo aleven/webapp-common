@@ -22,33 +22,54 @@ package it.webappcommon.lib.jpa.scooped.multiple;
 import javax.persistence.EntityManager;
 
 /**
- * 
+ * <p>LazyCloseEntityManagerTest class.</p>
+ *
  * @author puche
+ * @version $Id: $Id
  */
 public class LazyCloseEntityManagerTest extends EntityManagerProxyTest {
 
 	private ILazyCloseListenerTest listener;
 
+	/**
+	 * <p>Constructor for LazyCloseEntityManagerTest.</p>
+	 *
+	 * @param delegate a {@link javax.persistence.EntityManager} object.
+	 */
 	public LazyCloseEntityManagerTest(EntityManager delegate) {
 
 		super(delegate);
 	}
 
+	/**
+	 * <p>setLazyCloseListener.</p>
+	 *
+	 * @param listener a {@link it.webappcommon.lib.jpa.scooped.multiple.ILazyCloseListenerTest} object.
+	 */
 	public void setLazyCloseListener(ILazyCloseListenerTest listener) {
 
 		this.listener = listener;
 	}
 
+	/**
+	 * <p>getLazyCloseListener.</p>
+	 *
+	 * @return a {@link it.webappcommon.lib.jpa.scooped.multiple.ILazyCloseListenerTest} object.
+	 */
 	public ILazyCloseListenerTest getLazyCloseListener() {
 
 		return listener;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void close() {
 
 	}
 
+	/**
+	 * <p>lazyClose.</p>
+	 */
 	protected void lazyClose() {
 
 		super.close();

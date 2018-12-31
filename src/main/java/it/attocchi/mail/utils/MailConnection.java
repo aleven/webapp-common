@@ -23,19 +23,26 @@ import org.apache.log4j.Logger;
 import com.sun.mail.imap.IMAPFolder;
 
 /**
- * 
+ * <p>MailConnection class.</p>
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public class MailConnection {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(MailConnection.class.getName());
 
+	/** Constant <code>PROTOCOL_IMAP="imap"</code> */
 	public static final String PROTOCOL_IMAP = "imap";
+	/** Constant <code>PROTOCOL_IMAPS="imaps"</code> */
 	public static final String PROTOCOL_IMAPS = "imaps";
+	/** Constant <code>PROTOCOL_POP3="pop3"</code> */
 	public static final String PROTOCOL_POP3 = "pop3";
+	/** Constant <code>PROTOCOL_POP3S="pop3s"</code> */
 	public static final String PROTOCOL_POP3S = "pop3s";
 
+	/** Constant <code>FOLDER_INBOX="INBOX"</code> */
 	public static final String FOLDER_INBOX = "INBOX";
 
 	// private String protocol = "imap";
@@ -61,10 +68,25 @@ public class MailConnection {
 	// private Map<String, String> originalMailValues = new HashMap<String,
 	// String>();
 
+	/**
+	 * <p>Constructor for MailConnection.</p>
+	 *
+	 * @param host a {@link java.lang.String} object.
+	 * @param user a {@link java.lang.String} object.
+	 * @param password a {@link java.lang.String} object.
+	 */
 	public MailConnection(String host, String user, String password) {
 		this(host, 0, user, password);
 	}
 
+	/**
+	 * <p>Constructor for MailConnection.</p>
+	 *
+	 * @param host a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param user a {@link java.lang.String} object.
+	 * @param password a {@link java.lang.String} object.
+	 */
 	public MailConnection(String host, int port, String user, String password) {
 		super();
 		// this.protocol = protocol;
@@ -77,18 +99,38 @@ public class MailConnection {
 		// this.debug = debug;
 	}
 
+	/**
+	 * <p>isDebug.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isDebug() {
 		return debug;
 	}
 
+	/**
+	 * <p>Setter for the field <code>debug</code>.</p>
+	 *
+	 * @param debug a boolean.
+	 */
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
+	/**
+	 * <p>isEnableSSLNoCertCheck.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isEnableSSLNoCertCheck() {
 		return enableSSLNoCertCheck;
 	}
 
+	/**
+	 * <p>Setter for the field <code>enableSSLNoCertCheck</code>.</p>
+	 *
+	 * @param enableSSLNoCertCheck a boolean.
+	 */
 	public void setEnableSSLNoCertCheck(boolean enableSSLNoCertCheck) {
 		this.enableSSLNoCertCheck = enableSSLNoCertCheck;
 	}
@@ -191,6 +233,12 @@ public class MailConnection {
 		return store;
 	}
 
+	/**
+	 * <p>getDefaultFolder.</p>
+	 *
+	 * @return a {@link javax.mail.Folder} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized Folder getDefaultFolder() throws MessagingException {
 
 		Folder folder = getStore().getDefaultFolder();
@@ -204,6 +252,13 @@ public class MailConnection {
 		return folder;
 	}
 
+	/**
+	 * <p>getFolder.</p>
+	 *
+	 * @param mailBox a {@link java.lang.String} object.
+	 * @return a {@link javax.mail.Folder} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized Folder getFolder(String mailBox) throws MessagingException {
 		Folder folder = store.getDefaultFolder().getFolder(mailBox);
 
@@ -216,6 +271,12 @@ public class MailConnection {
 		return folder;
 	}
 
+	/**
+	 * <p>getFolders.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Folder> getFolders() throws MessagingException {
 
 		if (folderList == null) {
@@ -281,16 +342,37 @@ public class MailConnection {
 		}
 	}
 
+	/**
+	 * <p>getMessages.</p>
+	 *
+	 * @param msgNum a int.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Message> getMessages(int msgNum) throws MessagingException {
 		return getMessages(1, msgNum);
 	}
 
+	/**
+	 * <p>getMessages.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Message> getMessages() throws MessagingException {
 		return getMessages(0, 0);
 	}
 
 	private int folderMode = Folder.READ_ONLY;
 
+	/**
+	 * <p>getMessages.</p>
+	 *
+	 * @param start a int.
+	 * @param end a int.
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Message> getMessages(int start, int end) throws MessagingException {
 		List<Message> res = new ArrayList<Message>();
 		if (getCurrentFolder() != null) {
@@ -314,6 +396,12 @@ public class MailConnection {
 		return res;
 	}
 
+	/**
+	 * <p>getMessagesUnread.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Message> getMessagesUnread() throws MessagingException {
 		List<Message> res = new ArrayList<Message>();
 		if (getCurrentFolder() != null) {
@@ -337,14 +425,30 @@ public class MailConnection {
 		return res;
 	}
 
+	/**
+	 * <p>enableFolderWrite.</p>
+	 */
 	public synchronized void enableFolderWrite() {
 		folderMode = Folder.READ_WRITE;
 	}
 
+	/**
+	 * <p>deleteMessagesFromServer.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized List<Message> deleteMessagesFromServer() throws MessagingException {
 		return getMessages(0, 0);
 	}
 
+	/**
+	 * <p>deleteMessagesFromServer.</p>
+	 *
+	 * @param start a int.
+	 * @param end a int.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void deleteMessagesFromServer(int start, int end) throws MessagingException {
 
 		if (getCurrentFolder() != null) {
@@ -367,18 +471,38 @@ public class MailConnection {
 
 	}
 
+	/**
+	 * <p>connectIMAP.</p>
+	 *
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void connectIMAP() throws MessagingException {
 		connect(PROTOCOL_IMAP);
 	}
 
+	/**
+	 * <p>connectIMAPS.</p>
+	 *
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void connectIMAPS() throws MessagingException {
 		connect(PROTOCOL_IMAPS);
 	}
 
+	/**
+	 * <p>connectPOP3.</p>
+	 *
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void connectPOP3() throws MessagingException {
 		connect(PROTOCOL_POP3);
 	}
 
+	/**
+	 * <p>connectPOP3S.</p>
+	 *
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void connectPOP3S() throws MessagingException {
 		// enableSSL = true;
 		connect(PROTOCOL_POP3S);
@@ -400,6 +524,11 @@ public class MailConnection {
 		}
 	}
 
+	/**
+	 * <p>close.</p>
+	 *
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void close() throws MessagingException {
 		if (store != null) {
 			try {
@@ -425,12 +554,19 @@ public class MailConnection {
 		}
 	}
 
+	/**
+	 * <p>close.</p>
+	 *
+	 * @param conn a {@link it.attocchi.mail.utils.MailConnection} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized static void close(MailConnection conn) throws MessagingException {
 		if (conn != null) {
 			conn.close();
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected void finalize() throws Throwable {
 		try {
@@ -440,22 +576,52 @@ public class MailConnection {
 		}
 	}
 
+	/**
+	 * <p>getMessageCount.</p>
+	 *
+	 * @return a int.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized int getMessageCount() throws MessagingException {
 		return getCurrentFolder().getMessageCount();
 	}
 
+	/**
+	 * <p>getUnreadMessageCount.</p>
+	 *
+	 * @return a int.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized int getUnreadMessageCount() throws MessagingException {
 		return getCurrentFolder().getUnreadMessageCount();
 	}
 
+	/**
+	 * <p>getNewMessageCount.</p>
+	 *
+	 * @return a int.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized int getNewMessageCount() throws MessagingException {
 		return getCurrentFolder().getNewMessageCount();
 	}
 
+	/**
+	 * <p>Setter for the field <code>currentFolder</code>.</p>
+	 *
+	 * @param folderName a {@link java.lang.String} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void setCurrentFolder(String folderName) throws MessagingException {
 		currentFolder = this.getFolder(folderName);
 	}
 
+	/**
+	 * <p>Getter for the field <code>currentFolder</code>.</p>
+	 *
+	 * @return a {@link javax.mail.Folder} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized Folder getCurrentFolder() throws MessagingException {
 		if (currentFolder == null) {
 			setCurrentFolder(MailConnection.FOLDER_INBOX);
@@ -464,6 +630,14 @@ public class MailConnection {
 		return currentFolder;
 	}
 
+	/**
+	 * <p>getMimeMessage.</p>
+	 *
+	 * @param message a {@link javax.mail.Message} object.
+	 * @return a {@link javax.mail.internet.MimeMessage} object.
+	 * @throws javax.mail.MessagingException if any.
+	 * @throws java.io.IOException if any.
+	 */
 	public synchronized MimeMessage getMimeMessage(Message message) throws MessagingException, IOException {
 		MimeMessage m2 = new MimeMessage(session, message.getInputStream());
 		return m2;
@@ -471,22 +645,50 @@ public class MailConnection {
 
 	private boolean enableDeleteMessageFromServer;
 
+	/**
+	 * <p>isEnableDeleteMessageFromServer.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isEnableDeleteMessageFromServer() {
 		return enableDeleteMessageFromServer;
 	}
 
+	/**
+	 * <p>Setter for the field <code>enableDeleteMessageFromServer</code>.</p>
+	 *
+	 * @param enableDeleteMessageFromServer a boolean.
+	 */
 	public synchronized void setEnableDeleteMessageFromServer(boolean enableDeleteMessageFromServer) {
 		this.enableDeleteMessageFromServer = enableDeleteMessageFromServer;
 	}
 
+	/**
+	 * <p>markMessageDeleted.</p>
+	 *
+	 * @param mail a {@link javax.mail.Message} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void markMessageDeleted(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.DELETED, true);
 	}
 
+	/**
+	 * <p>markMessageAsRead.</p>
+	 *
+	 * @param mail a {@link javax.mail.Message} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void markMessageAsRead(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.SEEN, true);
 	}
 
+	/**
+	 * <p>markMessageAsUnRead.</p>
+	 *
+	 * @param mail a {@link javax.mail.Message} object.
+	 * @throws javax.mail.MessagingException if any.
+	 */
 	public synchronized void markMessageAsUnRead(Message mail) throws MessagingException {
 		mail.setFlag(Flags.Flag.SEEN, false);
 	}

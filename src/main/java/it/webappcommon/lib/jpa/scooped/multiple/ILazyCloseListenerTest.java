@@ -19,7 +19,16 @@
 
 package it.webappcommon.lib.jpa.scooped.multiple;
 
+/**
+ * <p>ILazyCloseListenerTest interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface ILazyCloseListenerTest {
 
+	/**
+	 * <p>lazilyClosed.</p>
+	 */
 	public void lazilyClosed();
 }

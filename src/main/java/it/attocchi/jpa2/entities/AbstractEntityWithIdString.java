@@ -21,29 +21,38 @@ package it.attocchi.jpa2.entities;
 
 /**
  * An entity with id String
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class AbstractEntityWithIdString extends EntityBase implements IEntityWithIdString {
 
+	/**
+	 * <p>getId.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public abstract String getId();
 
+	/** {@inheritDoc} */
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
 		return toString().hashCode();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return String.format("%s[%s]", this.getClass().getName(), this.getId());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object object) {
 	    if (this == object) return true;

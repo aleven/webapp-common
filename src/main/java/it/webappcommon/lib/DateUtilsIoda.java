@@ -18,13 +18,20 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * DateUtils that extends {@link DateUtilsLT} with use of {@link org.joda.time}
- * 
- * @author mirco
+ * DateUtils that extends {@link DateUtils} with use of {@link org.joda.time}
  *
+ * @author mirco
+ * @version $Id: $Id
  */
 public class DateUtilsIoda extends DateUtils {
 
+	/**
+	 * <p>differenzaInGiorni.</p>
+	 *
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int differenzaInGiorni(Date start, Date end) {
 		int res = 0;
 
@@ -37,6 +44,13 @@ public class DateUtilsIoda extends DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>differenzaInSettimane.</p>
+	 *
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int differenzaInSettimane(Date start, Date end) {
 		int res = 0;
 
@@ -49,6 +63,13 @@ public class DateUtilsIoda extends DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>differenzaInMesi.</p>
+	 *
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a int.
+	 */
 	public static int differenzaInMesi(Date start, Date end) {
 		int res = 0;
 
@@ -61,6 +82,13 @@ public class DateUtilsIoda extends DateUtils {
 		return res;
 	}
 
+	/**
+	 * <p>calcolaDateIntermedie.</p>
+	 *
+	 * @param start a {@link java.util.Date} object.
+	 * @param end a {@link java.util.Date} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<Date> calcolaDateIntermedie(Date start, Date end) {
 		List<Date> res = new ArrayList<Date>();
 
@@ -87,12 +115,13 @@ public class DateUtilsIoda extends DateUtils {
 	}
 
 	/**
-	 * 
-	 * @param _fromDate
-	 * @param _fromTime
-	 * @param _toDate
-	 * @param _toTime
-	 * @return
+	 * <p>calculateDuration.</p>
+	 *
+	 * @param _fromDate a {@link java.util.Date} object.
+	 * @param _fromTime a {@link java.util.Date} object.
+	 * @param _toDate a {@link java.util.Date} object.
+	 * @param _toTime a {@link java.util.Date} object.
+	 * @return a {@link java.lang.Double} object.
 	 */
 	public static Double calculateDuration(Date _fromDate, Date _fromTime, Date _toDate, Date _toTime) {
 		Double duration;
@@ -201,6 +230,13 @@ public class DateUtilsIoda extends DateUtils {
 		return duration;
 	}
 	
+	/**
+	 * <p>mergeDateTime2.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param time a {@link java.util.Date} object.
+	 * @return a {@link org.joda.time.DateTime} object.
+	 */
 	public static DateTime mergeDateTime2(Date date, Date time) {
 		// setup objects
 		// LocalDate localDate = new LocalDate(date.getYear(), date.getMonth(),
@@ -240,16 +276,24 @@ public class DateUtilsIoda extends DateUtils {
 		return dt;
 	}
 	
+	/**
+	 * <p>mergeLocalDateTime.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param time a {@link java.util.Date} object.
+	 * @return a {@link org.joda.time.LocalDateTime} object.
+	 */
 	public static LocalDateTime mergeLocalDateTime(Date date, Date time) {
 		// return new LocalDateTime(mergeDateTime(date, time));
 		return new LocalDateTime(mergeDateTime2(date, time));
 	}
 
 	/**
-	 * 
-	 * @param date
-	 * @param time
-	 * @return
+	 * <p>mergeDateTimeUTC.</p>
+	 *
+	 * @param date a {@link java.util.Date} object.
+	 * @param time a {@link java.util.Date} object.
+	 * @return a {@link org.joda.time.DateTime} object.
 	 */
 	public static DateTime mergeDateTimeUTC(Date date, Date time) {
 		// return new Date(date.getYear(), date.getMonth(), date.getDate(),
@@ -284,9 +328,9 @@ public class DateUtilsIoda extends DateUtils {
 	/**
 	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/
 	 * DateTimeFormat.html
-	 * 
-	 * @param aDate
-	 * @return
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String getWeekOfTheYearKey(Date aDate) {
 		DateTime dateTime = new DateTime(aDate);
@@ -298,12 +342,12 @@ public class DateUtilsIoda extends DateUtils {
 	/**
 	 * http://stackoverflow.com/questions/15358409/dividing-a-joda-time-period-
 	 * into-intervals-of-desired-size
-	 * 
-	 * @param start
-	 * @param end
-	 * @param chunkAmount
-	 * @param chunkSize
-	 * @return
+	 *
+	 * @param start a {@link org.joda.time.DateTime} object.
+	 * @param end a {@link org.joda.time.DateTime} object.
+	 * @param chunkAmount a long.
+	 * @param chunkSize a long.
+	 * @return a {@link java.util.List} object.
 	 */
 	public static List<Interval> splitDuration(DateTime start, DateTime end, long chunkAmount, long chunkSize) {
 		long millis = start.getMillis();
@@ -325,9 +369,9 @@ public class DateUtilsIoda extends DateUtils {
 
 	/**
 	 * verifica se una data e' diversa da vuota e superiore ad adesso
-	 * 
-	 * @param aDate
-	 * @return
+	 *
+	 * @param aDate a {@link java.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean greaterThanToday(Date aDate) {
 		return aDate != null && new DateTime(aDate).toDateMidnight().isAfterNow();

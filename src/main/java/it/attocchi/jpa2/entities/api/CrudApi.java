@@ -25,6 +25,12 @@ import org.slf4j.LoggerFactory;
 import it.attocchi.jpa2.entities.IEntityWithIdLong;
 
 // public class CrudApi<T extends IEntityWithIdLong, C extends Class<T>> {
+/**
+ * <p>CrudApi class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class CrudApi<T extends IEntityWithIdLong> {
 
 	// protected static final Logger logger =

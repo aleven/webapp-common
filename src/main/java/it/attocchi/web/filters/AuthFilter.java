@@ -32,17 +32,26 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+/**
+ * <p>AuthFilter class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class AuthFilter implements Filter {
 
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
+	/** Constant <code>PARAM_AUTH="auth"</code> */
 	public static final String PARAM_AUTH = "auth";
 
+	/** {@inheritDoc} */
 	@Override
 	public void destroy() {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -72,6 +81,7 @@ public class AuthFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 

@@ -19,7 +19,21 @@
 
 package it.webappcommon.lib.jsf;
 
+/**
+ * <p>IOpzioni_pagineDAO interface.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public interface IOpzioni_pagineDAO {
 
+	/**
+	 * <p>getOpzione_paginaBy.</p>
+	 *
+	 * @param idUtenteLoggato a int.
+	 * @param nome_classe a {@link java.lang.String} object.
+	 * @param chiave a {@link java.lang.String} object.
+	 * @return a {@link it.webappcommon.lib.jsf.IOpzione_pagina} object.
+	 */
 	public IOpzione_pagina getOpzione_paginaBy(int idUtenteLoggato, String nome_classe, String chiave);
 }

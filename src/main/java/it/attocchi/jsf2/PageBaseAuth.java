@@ -25,9 +25,9 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * Pagina Gestione Utenti Autenticati (Richiede filtro @AuthFilter)
- * 
+ *
  * @author Mirco
- * 
+ * @version $Id: $Id
  */
 public abstract class PageBaseAuth extends PageBaseNoAuth {
 	/**
@@ -37,6 +37,7 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 
 	private boolean debug = false;
 
+	/** {@inheritDoc} */
 	@Override
 	protected final void init() throws Exception {
 
@@ -49,8 +50,18 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		}
 	}
 
+	/**
+	 * <p>initLogged.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void initLogged() throws Exception;
 
+	/**
+	 * <p>initNonLogged.</p>
+	 *
+	 * @throws java.lang.Exception if any.
+	 */
 	protected abstract void initNonLogged() throws Exception;
 
 	/*
@@ -58,6 +69,11 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 	 */
 	protected String idUtenteLoggato;
 
+	/**
+	 * <p>getAuthKey.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getAuthKey() {
 
 		idUtenteLoggato = getSessionObjectAsString(AuthFilter.PARAM_AUTH);
@@ -84,6 +100,11 @@ public abstract class PageBaseAuth extends PageBaseNoAuth {
 		return idUtenteLoggato;
 	}
 
+	/**
+	 * <p>isUtenteLoggato.</p>
+	 *
+	 * @return a boolean.
+	 */
 	protected boolean isUtenteLoggato() {
 		return StringUtils.isNotBlank(getAuthKey());
 	}

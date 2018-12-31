@@ -27,6 +27,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * <p>EntityMarks class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 @Embeddable
 public class EntityMarks implements Serializable, Cloneable {
 
@@ -56,54 +62,119 @@ public class EntityMarks implements Serializable, Cloneable {
 	@Column(name = "utente_cancellazione_id")
 	protected long utenteCancellazioneId;
 
+	/**
+	 * <p>Getter for the field <code>dataCreazione</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataCreazione() {
 		return dataCreazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataCreazione</code>.</p>
+	 *
+	 * @param dataCreazione a {@link java.util.Date} object.
+	 */
 	public void setDataCreazione(Date dataCreazione) {
 		this.dataCreazione = dataCreazione;
 	}
 
+	/**
+	 * <p>Getter for the field <code>dataModifica</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataModifica() {
 		return dataModifica;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataModifica</code>.</p>
+	 *
+	 * @param dataModifica a {@link java.util.Date} object.
+	 */
 	public void setDataModifica(Date dataModifica) {
 		this.dataModifica = dataModifica;
 	}
 
+	/**
+	 * <p>Getter for the field <code>dataCancellazione</code>.</p>
+	 *
+	 * @return a {@link java.util.Date} object.
+	 */
 	public Date getDataCancellazione() {
 		return dataCancellazione;
 	}
 
+	/**
+	 * <p>Setter for the field <code>dataCancellazione</code>.</p>
+	 *
+	 * @param dataCancellazione a {@link java.util.Date} object.
+	 */
 	public void setDataCancellazione(Date dataCancellazione) {
 		this.dataCancellazione = dataCancellazione;
 	}
 
+	/**
+	 * <p>Getter for the field <code>utenteCreazioneId</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getUtenteCreazioneId() {
 		return utenteCreazioneId;
 	}
 
+	/**
+	 * <p>Setter for the field <code>utenteCreazioneId</code>.</p>
+	 *
+	 * @param utenteCreazioneId a long.
+	 */
 	public void setUtenteCreazioneId(long utenteCreazioneId) {
 		this.utenteCreazioneId = utenteCreazioneId;
 	}
 
+	/**
+	 * <p>Getter for the field <code>utenteModificaId</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getUtenteModificaId() {
 		return utenteModificaId;
 	}
 
+	/**
+	 * <p>Setter for the field <code>utenteModificaId</code>.</p>
+	 *
+	 * @param utenteModificaId a long.
+	 */
 	public void setUtenteModificaId(long utenteModificaId) {
 		this.utenteModificaId = utenteModificaId;
 	}
 
+	/**
+	 * <p>Getter for the field <code>utenteCancellazioneId</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getUtenteCancellazioneId() {
 		return utenteCancellazioneId;
 	}
 
+	/**
+	 * <p>Setter for the field <code>utenteCancellazioneId</code>.</p>
+	 *
+	 * @param utenteCancellazioneId a long.
+	 */
 	public void setUtenteCancellazioneId(long utenteCancellazioneId) {
 		this.utenteCancellazioneId = utenteCancellazioneId;
 	}
 
+	/**
+	 * <p>deepClone.</p>
+	 *
+	 * @return a {@link it.attocchi.jpa2.entities.EntityMarks} object.
+	 */
 	@Deprecated
 	public EntityMarks deepClone() {
 

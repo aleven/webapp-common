@@ -29,8 +29,15 @@ import com.sun.mail.util.QPDecoderStream;
 
 import it.attocchi.mail.parts.EmailBody;
 
+/**
+ * <p>PecParser2 class.</p>
+ *
+ * @author mirco
+ * @version $Id: $Id
+ */
 public class PecParser2 {
 
+	/** Constant <code>logger</code> */
 	protected static final Logger logger = Logger.getLogger(PecParser2.class.getName());
 
 	private int level = 0;
@@ -58,6 +65,11 @@ public class PecParser2 {
 
 	private StringBuffer dumpLog = new StringBuffer();
 
+	/**
+	 * <p>Getter for the field <code>dumpLog</code>.</p>
+	 *
+	 * @return a {@link java.lang.StringBuffer} object.
+	 */
 	public StringBuffer getDumpLog() {
 		return dumpLog;
 	}
@@ -72,8 +84,8 @@ public class PecParser2 {
 	 * considerati Nel caso di nomi doppi, oppure dello stesso allegato
 	 * contenuto in un eml allegato il nome viene generato con incluso livello o
 	 * progessivo
-	 * 
-	 * @return
+	 *
+	 * @return a {@link java.util.Map} object.
 	 */
 	public Map<String, DataHandler> getAttachments() {
 		return attachments;
@@ -81,38 +93,61 @@ public class PecParser2 {
 
 	/**
 	 * ritorna il contenuto xml di daticert.xml
-	 * 
-	 * @return
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getDaticertXml() {
 		return daticertXml;
 	}
 
+	/**
+	 * <p>Getter for the field <code>segnaturaXml</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getSegnaturaXml() {
 		return segnaturaXml;
 	}
 
 	/**
 	 * ritorna il messaggio postacert.eml
-	 * 
-	 * @return
+	 *
+	 * @return a {@link javax.activation.DataHandler} object.
 	 */
 	public DataHandler getPostacertEml() {
 		return postacertEml;
 	}
 
+	/**
+	 * <p>Getter for the field <code>postacertEmlSubject</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getPostacertEmlSubject() {
 		return postacertEmlSubject;
 	}
 	
+	/**
+	 * <p>Getter for the field <code>postacertEmlSenderAddress</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getPostacertEmlSenderAddress() {
 		return postacertEmlSenderAddress;
 	}
 
+	/**
+	 * <p>Getter for the field <code>postacertEmlBody</code>.</p>
+	 *
+	 * @return a {@link it.attocchi.mail.parts.EmailBody} object.
+	 */
 	public EmailBody getPostacertEmlBody() {
 		return postacertEmlBody;
 	}
 
+	/**
+	 * <p>Constructor for PecParser2.</p>
+	 */
 	public PecParser2() {
 		super();
 		// String emlFileName, boolean saveFile, File f
@@ -124,18 +159,24 @@ public class PecParser2 {
 	/*
 	 * 
 	 */
+	/**
+	 * <p>dumpPart.</p>
+	 *
+	 * @param part a {@link javax.mail.Part} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public void dumpPart(Part part) throws Exception {
 		if (part instanceof Message)
 			dumpEnvelope((Message) part);
 
-		/**
-		 * Dump input stream ..
-		 * 
-		 * InputStream is = p.getInputStream(); // If "is" is not already
-		 * buffered, wrap a BufferedInputStream // around it. if (!(is
-		 * instanceof BufferedInputStream)) is = new BufferedInputStream(is);
-		 * int c; while ((c = is.read()) != -1) System.out.write(c);
-		 **/
+//		/**
+//		 * Dump input stream ..
+//		 *
+//		 * InputStream is = p.getInputStream(); // If "is" is not already
+//		 * buffered, wrap a BufferedInputStream // around it. if (!(is
+//		 * instanceof BufferedInputStream)) is = new BufferedInputStream(is);
+//		 * int c; while ((c = is.read()) != -1) System.out.write(c);
+//		 **/
 
 		String partContentType = part.getContentType();
 		try {
@@ -382,6 +423,12 @@ public class PecParser2 {
 		return xmlDecoded;
 	}
 
+	/**
+	 * <p>dumpEnvelope.</p>
+	 *
+	 * @param m a {@link javax.mail.Message} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public void dumpEnvelope(Message m) throws Exception {
 		log("This is the message envelope");
 		log("---------------------------");
@@ -449,6 +496,11 @@ public class PecParser2 {
 		}
 	}
 
+	/**
+	 * <p>log.</p>
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 */
 	public void log(String s) {
 		if (showStructure)
 			s = indentStr.substring(0, level * 2) + s;
