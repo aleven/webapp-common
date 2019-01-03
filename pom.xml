@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.aleven</groupId>
     <artifactId>webapp-common</artifactId>
-    <version>3.2.5-SNAPSHOT</version>
+    <version>3.2.6-SNAPSHOT</version>
 
     <name>webapp-common</name>
     <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
@@ -371,8 +371,7 @@
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
-            </url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 </project>
