@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.aleven</groupId>
     <artifactId>webapp-common</artifactId>
-    <version>3.2.6-SNAPSHOT</version>
+    <version>3.2.7-SNAPSHOT</version>
 
     <name>webapp-common</name>
     <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
@@ -200,6 +200,25 @@
                     <additionalOptions>-Xdoclint:none</additionalOptions>
                 </configuration>
             </plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.5</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
