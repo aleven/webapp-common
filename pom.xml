@@ -175,6 +175,8 @@
                 </executions>
             </plugin>
 
+            <!--
+            REMOVED https://issues.sonatype.org/browse/OSSRH-22221
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -185,7 +187,7 @@
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
