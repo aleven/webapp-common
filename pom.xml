@@ -8,6 +8,26 @@
     <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
     <url>https://github.com/aleven/webapp-common</url>
 
+    <developers>
+        <developer>
+            <id>mattocchi</id>
+            <name>Mirco Attocchi</name>
+            <email>amirco@gmail.com</email>
+            <!--<url>http://www.example.com/jdoe</url>-->
+            <organization>Aleven Software Studio</organization>
+            <organizationUrl>http://www.aleven.it</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>Europe/Rome</timezone>
+            <!--<properties>-->
+                <!--<picUrl>http://www.example.com/jdoe/pic</picUrl>-->
+            <!--</properties>-->
+        </developer>
+    </developers>
+
+
     <licenses>
         <license>
             <name>GNU Lesser General Public License 3.0</name>
