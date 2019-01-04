@@ -20,7 +20,6 @@
 package it.webappcommon.lib.jpa;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,10 +101,10 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * <p>create.</p>
 	 *
-	 * @param entity a {@link it.webappcommon.lib.jpa.EntityBaseStandard} object.
+	 * @param entity a {@link it.webappcommon.lib.jpa.JpaEntity} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public void create(EntityBaseStandard entity) throws Exception {
+	public void create(JpaEntityWithListeners entity) throws Exception {
 		EntityManagerFactory emf = null;
 		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
@@ -156,10 +155,10 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * <p>edit.</p>
 	 *
-	 * @param entity a {@link it.webappcommon.lib.jpa.EntityBaseStandard} object.
+	 * @param entity a {@link it.webappcommon.lib.jpa.JpaEntity} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public void edit(EntityBaseStandard entity) throws Exception {
+	public void edit(JpaEntityWithListeners entity) throws Exception {
 		EntityManagerFactory emf = null;
 		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
@@ -211,10 +210,10 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * <p>editSimple.</p>
 	 *
-	 * @param entity a {@link it.webappcommon.lib.jpa.EntityBaseStandard} object.
+	 * @param entity a {@link it.webappcommon.lib.jpa.JpaEntity} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public void editSimple(EntityBaseStandard entity) throws Exception {
+	public void editSimple(JpaEntity entity) throws Exception {
 		EntityManagerFactory emf = null;
 		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
@@ -266,10 +265,10 @@ public abstract class ControllerStandard implements Closeable {
 	/**
 	 * <p>destroy.</p>
 	 *
-	 * @param entity a {@link it.webappcommon.lib.jpa.EntityBaseStandard} object.
+	 * @param entity a {@link it.webappcommon.lib.jpa.JpaEntity} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public void destroy(EntityBaseStandard entity) throws Exception {
+	public void destroy(JpaEntityWithListeners entity) throws Exception {
 		EntityManagerFactory emf = null;
 		// // EntityManager em = null;
 		boolean tAlreadyActive = false;
@@ -324,7 +323,7 @@ public abstract class ControllerStandard implements Closeable {
 		}
 	}
 
-	// public void destroyBeta(EntityBaseStandard entity, Long id) throws
+	// public void destroyBeta(JpaEntity entity, Long id) throws
 	// Exception {
 	// EntityManagerFactory emf = null;
 	// // // EntityManager em = null;
@@ -393,7 +392,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a T object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> T find(Class<T> classObj, Object id) throws Exception {
+	public <T extends JpaEntity> T find(Class<T> classObj, Object id) throws Exception {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -427,11 +426,11 @@ public abstract class ControllerStandard implements Closeable {
 	 *
 	 * @param classObj a {@link java.lang.Class} object.
 	 * @param id a {@link java.lang.Object} object.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a T object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> T findAndRefresh(Class<T> classObj, Object id) throws Exception {
+	public <T extends JpaEntity> T findAndRefresh(Class<T> classObj, Object id) throws Exception {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -475,7 +474,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a T object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> T findSingle(Class<T> classObj, String query, Map<String, Object> map) throws Exception {
+	public <T extends JpaEntity> T findSingle(Class<T> classObj, String query, Map<String, Object> map) throws Exception {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -528,7 +527,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> findList(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
+	public <T extends JpaEntity> List<T> findList(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -569,7 +568,7 @@ public abstract class ControllerStandard implements Closeable {
 		return returnValue;
 	}
 
-	// public <T extends EntityBaseStandard> List<T> findAll(
+	// public <T extends JpaEntity> List<T> findAll(
 	// Class<T> classObj, int firstItem, int batchSize) throws Exception {
 	// List<T> returnValue = null;
 	//
@@ -797,11 +796,11 @@ public abstract class ControllerStandard implements Closeable {
 	 *
 	 * @param classObj a {@link java.lang.Class} object.
 	 * @param id a {@link java.lang.Object} object.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a T object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> T find2(Class<T> classObj, Object id) throws Exception {
+	public <T extends JpaEntity> T find2(Class<T> classObj, Object id) throws Exception {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -834,11 +833,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * @param classObj a {@link java.lang.Class} object.
 	 * @param query a {@link java.lang.String} object.
 	 * @param map a {@link java.util.Map} object.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a T object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> T findSingle2(Class<T> classObj, String query, Map<String, Object> map) throws Exception {
+	public <T extends JpaEntity> T findSingle2(Class<T> classObj, String query, Map<String, Object> map) throws Exception {
 		T returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -899,11 +898,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * @param map a {@link java.util.Map} object.
 	 * @param firstItem a int.
 	 * @param batchSize a int.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> findList2(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
+	public <T extends JpaEntity> List<T> findList2(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -968,11 +967,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * @param map a {@link java.util.Map} object.
 	 * @param firstItem a int.
 	 * @param batchSize a int.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> findListCustomQuery(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
+	public <T extends JpaEntity> List<T> findListCustomQuery(Class<T> classObj, String query, Map<String, Object> map, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -1034,11 +1033,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * @param classObj a {@link java.lang.Class} object.
 	 * @param firstItem a int.
 	 * @param batchSize a int.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj, int firstItem, int batchSize) throws Exception {
+	public <T extends JpaEntity> List<T> findAll(Class<T> classObj, int firstItem, int batchSize) throws Exception {
 		List<T> returnValue = new ArrayList<T>(); // Non piu' null cosi' posso
 													// semplificare il codice
 													// del chiamante
@@ -1090,7 +1089,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> findAll(Class<T> classObj) throws Exception {
+	public <T extends JpaEntity> List<T> findAll(Class<T> classObj) throws Exception {
 		return findAll(classObj, 0, 0);
 	}
 
@@ -1099,11 +1098,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * Metodo che restituisce il numero di elementi dato un certo tipo
 	 *
 	 * @param classObj a {@link java.lang.Class} object.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a int.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> int getItemCount3(Class<T> classObj) throws Exception {
+	public <T extends JpaEntity> int getItemCount3(Class<T> classObj) throws Exception {
 		int returnValue = 0;
 
 		StringBuffer hsqlQuery = null;
@@ -1150,7 +1149,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<String> getDisinctStringValues(Class<T> classObj, String property) throws Exception {
+	public <T extends JpaEntity> List<String> getDisinctStringValues(Class<T> classObj, String property) throws Exception {
 		List<String> returnValue = null;
 
 		StringBuffer hsqlQuery = null;
@@ -1197,7 +1196,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<StringValuesCount> getDisinctStringValuesCount(Class<T> classObj, String property) throws Exception {
+	public <T extends JpaEntity> List<StringValuesCount> getDisinctStringValuesCount(Class<T> classObj, String property) throws Exception {
 		List<StringValuesCount> returnValue = null;
 
 		StringBuffer hsqlQuery = null;
@@ -1268,7 +1267,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a int.
 	 * @throws java.lang.Exception if any.
 	 */
-	public int getItemCount2(Class<? extends EntityBaseStandard> classObj, String query, Map<String, Object> map) throws Exception {
+	public int getItemCount2(Class<? extends JpaEntity> classObj, String query, Map<String, Object> map) throws Exception {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
@@ -1324,7 +1323,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a int.
 	 * @throws java.lang.Exception if any.
 	 */
-	public int getItemCountCustomQuery(Class<? extends EntityBaseStandard> classObj, String query, Map<String, Object> map) throws Exception {
+	public int getItemCountCustomQuery(Class<? extends JpaEntity> classObj, String query, Map<String, Object> map) throws Exception {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
@@ -1373,11 +1372,11 @@ public abstract class ControllerStandard implements Closeable {
 	 * Funziona SOLO CON IMPLEMENTAZIONE HIBERNATE
 	 * @param classObj a {@link java.lang.Class} object.
 	 * @param aFilter a {@link java.lang.String} object.
-	 * @param <T> an EntityBaseStandard
+	 * @param <T> an JpaEntity
 	 * @return a {@link java.util.ArrayList} object.
 	 * @throws Exception java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> ArrayList<T> getFilteredList(Class<T> classObj, String aFilter) throws Exception {
+	public <T extends JpaEntity> ArrayList<T> getFilteredList(Class<T> classObj, String aFilter) throws Exception {
 		ArrayList<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -1426,7 +1425,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard, E extends AbstractFiltroJpa> List<T> findFilter(Class<T> classObj, E filtro) throws Exception {
+	public <T extends JpaEntity, E extends AbstractFiltroJpa> List<T> findFilter(Class<T> classObj, E filtro) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;
@@ -1502,7 +1501,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a int.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard, E extends AbstractFiltroJpa> int findFilterCount(Class<T> classObj, E filtro) throws Exception {
+	public <T extends JpaEntity, E extends AbstractFiltroJpa> int findFilterCount(Class<T> classObj, E filtro) throws Exception {
 		int returnValue = 0;
 
 		EntityManagerFactory emf = null;
@@ -1650,7 +1649,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a boolean.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> boolean isTableEmpty(Class<T> classObj) throws Exception {
+	public <T extends JpaEntity> boolean isTableEmpty(Class<T> classObj) throws Exception {
 		List<T> res = findAll(classObj, 0, 1);
 		return ListUtils.isEmpty(res);
 	}
@@ -1664,7 +1663,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
-	public <T extends EntityBaseStandard> List<T> listByExample(Class<T> classObj, T anExample) throws Exception {
+	public <T extends JpaEntity> List<T> listByExample(Class<T> classObj, T anExample) throws Exception {
 		List<T> returnValue = null;
 
 		EntityManagerFactory emf = null;

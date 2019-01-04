@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * @author mirco
  * @version $Id: $Id
  */
-public abstract class EntityBaseStandard implements Serializable {
+public abstract class EntityBaseStandard implements JpaEntityWithListeners {
 
 	// public abstract Object getPKValue();
 
