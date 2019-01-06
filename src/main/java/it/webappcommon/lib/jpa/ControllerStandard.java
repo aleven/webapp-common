@@ -102,6 +102,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * <p>create.</p>
 	 *
 	 * @param entity a {@link it.webappcommon.lib.jpa.Serializable} object.
+*      @param <T> a Serializable object.
 	 * @throws java.lang.Exception if any.
 	 */
 	public <T extends Serializable> void create(T entity) throws Exception {
@@ -156,6 +157,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * <p>edit.</p>
 	 *
 	 * @param entity a {@link it.webappcommon.lib.jpa.Serializable} object.
+	 * @param <T> a Serializable object.
 	 * @throws java.lang.Exception if any.
 	 */
 	public <T extends Serializable> void edit(T entity) throws Exception {
@@ -266,6 +268,7 @@ public abstract class ControllerStandard implements Closeable {
 	 * <p>destroy.</p>
 	 *
 	 * @param entity a {@link it.webappcommon.lib.jpa.Serializable} object.
+	 * @param <T> a Serializable object.
 	 * @throws java.lang.Exception if any.
 	 */
 	public <T extends Serializable> void destroy(T entity) throws Exception {
