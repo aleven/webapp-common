@@ -1015,10 +1015,10 @@ public class JpaController implements Serializable {
 
 	/**
 	 * Ready to use method to search entities using JPAEntityFilter
-	 *
-	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
-	 * @param clazz a {@link java.lang.Class} object.
-	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param emf emf a {@link javax.persistence.EntityManagerFactory} object.
+	 * @param clazz clazz a {@link java.lang.Class} object.
+	 * @param filter filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a Serializable object.
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
@@ -1497,6 +1497,7 @@ public class JpaController implements Serializable {
 	 *
 	 * @param clazz a {@link java.lang.Class} object.
 	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a Serializable object.
 	 * @return a {@link java.util.Map} object.
 	 * @throws java.lang.Exception if any.
 	 */
@@ -1510,6 +1511,7 @@ public class JpaController implements Serializable {
 	 *
 	 * @param clazz a {@link java.lang.Class} object.
 	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a Serializable object.
 	 * @return a {@link java.util.Map} object.
 	 * @throws java.lang.Exception if any.
 	 */
@@ -1530,6 +1532,7 @@ public class JpaController implements Serializable {
 	 * @param emf a {@link javax.persistence.EntityManagerFactory} object.
 	 * @param clazz a {@link java.lang.Class} object.
 	 * @param filter a {@link it.attocchi.jpa2.JPAEntityFilter} object.
+	 * @param <T> a Serializable object.
 	 * @return a {@link java.util.Map} object.
 	 * @throws java.lang.Exception if any.
 	 */
