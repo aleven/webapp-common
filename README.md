@@ -7,12 +7,17 @@ Charset source UTF-8
 - [https://aleven.github.io/webapp-common/](https://aleven.github.io/webapp-common/)
 - [https://aleven.github.io/webapp-common/apidocs/](https://aleven.github.io/webapp-common/apidocs/)
 
+https://dzone.com/articles/publish-your-artifacts-to-maven-central
 
     mvn clean
     
     mvn release:prepare
     
     mvn release:perform
+
+git tag -d webapp-common-3.2.7
+
+git push origin :refs/tags/webapp-common-3.2.7
 
 ## _it.attocchi.jpa2_
 
