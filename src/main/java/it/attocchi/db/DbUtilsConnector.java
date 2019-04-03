@@ -195,26 +195,27 @@ public class DbUtilsConnector extends JdbcConnector {
 	 * @throws java.lang.Exception if any.
 	 */
 	public <T> List<T> execute(boolean keepConnOpen, String aQuery, Class<T> clazz) throws Exception {
-		List<T> result = new ArrayList<T>();
-
-		// No DataSource so we must handle Connections manually
-		QueryRunner run = new QueryRunner();
-
-		try {
-
-			/*
-			 * Sembra che il like con i parametri ufficiali non funzioni, forse
-			 * dovuto al fatto che son tutti object
-			 */
-			logger.debug(aQuery);
-			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz));
-
-		} finally {
-			if (!keepConnOpen)
-				close();
-		}
-
-		return result;
+//		List<T> result = new ArrayList<T>();
+//
+//		// No DataSource so we must handle Connections manually
+//		QueryRunner run = new QueryRunner();
+//
+//		try {
+//
+//			/*
+//			 * Sembra che il like con i parametri ufficiali non funzioni, forse
+//			 * dovuto al fatto che son tutti object
+//			 */
+//			logger.debug(aQuery);
+//			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz));
+//
+//		} finally {
+//			if (!keepConnOpen)
+//				close();
+//		}
+//
+//		return result;
+		return executeTrimedString(keepConnOpen, aQuery, clazz, null);
 	}
 
 	/**
@@ -227,6 +228,33 @@ public class DbUtilsConnector extends JdbcConnector {
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
+	public <T> List<T> executeTrimedString(boolean keepConnOpen, String aQuery, Class<T> clazz, Object... params) throws Exception {
+		List<T> result = new ArrayList<T>();
+
+		// No DataSource so we must handle Connections manually
+		QueryRunner run = new QueryRunner() {
+			protected ResultSet wrap(ResultSet rs) {
+				return StringTrimmedResultSet.wrap(rs);
+			}
+		};
+
+		try {
+
+			/*
+			 * Sembra che il like con i parametri ufficiali non funzioni, forse
+			 * dovuto al fatto che son tutti object
+			 */
+			logger.debug(aQuery);
+			result = run.query(getConnection(), aQuery, getResultSetHandler(clazz), params);
+
+		} finally {
+			if (!keepConnOpen)
+				close();
+		}
+
+		return result;
+	}
+
 	public <T> List<T> executeTrimedString(boolean keepConnOpen, String aQuery, Class<T> clazz) throws Exception {
 		List<T> result = new ArrayList<T>();
 
