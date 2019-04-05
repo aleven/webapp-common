@@ -127,7 +127,7 @@ public class JdbcConnector implements Closeable {
 	 * Uses DriverManager.
 	 *
 	 * @return the connections
-	 * @throws java.lang.Exception if any.
+	 * @throws java.sql.SQLException if any.
 	 */
 	public Connection getConnection() throws SQLException {
 

@@ -50,7 +50,7 @@ public class JdbcUtils {
 	 * @param driverClass a {@link java.lang.String} object.
 	 * @param connString  a {@link java.lang.String} object.
 	 * @return Returns the JDBC connection to the database
-	 * @throws java.lang.Exception if any.
+	 * @throws java.sql.SQLException if any exception occur.
 	 */
 	public static Connection getConnection(String driverClass, String connString, String userName, String password) throws SQLException {
 		Connection conn = null;
