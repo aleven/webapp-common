@@ -129,7 +129,7 @@ public class JdbcConnector implements Closeable {
 	 * @return the connections
 	 * @throws java.lang.Exception if any.
 	 */
-	public Connection getConnection() throws Exception {
+	public Connection getConnection() throws SQLException {
 
 		if (conn == null) {
 
