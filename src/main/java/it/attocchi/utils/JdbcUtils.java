@@ -19,14 +19,14 @@
 
 package it.attocchi.utils;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import org.apache.log4j.Logger;
 
 /**
  * <p>JdbcUtils class.</p>
@@ -36,30 +36,36 @@ import org.apache.log4j.Logger;
  */
 public class JdbcUtils {
 
-	/** Constant <code>logger</code> */
+	/**
+	 * Constant <code>logger</code>
+	 */
 	protected static final Logger logger = Logger.getLogger(JdbcUtils.class.getName());
 
 	/**
 	 * Takes 3 parameters: databaseName, userName, password and connects to the
 	 * database.
 	 *
-	 * @param userName
-	 *            holds user name
-	 * @param password
-	 *            holds password to connect the database,
-	 * @return Returns the JDBC connection to the database
+	 * @param userName    holds user name
+	 * @param password    holds password to connect the database,
 	 * @param driverClass a {@link java.lang.String} object.
-	 * @param connString a {@link java.lang.String} object.
-	 * @throws java.lang.Exception if any.
+	 * @param connString  a {@link java.lang.String} object.
+	 * @return Returns the JDBC connection to the database
+	 * @throws java.sql.SQLException if any exception occur.
 	 */
-	public static Connection getConnection(String driverClass, String connString, String userName, String password) throws Exception {
+	public static Connection getConnection(String driverClass, String connString, String userName, String password) throws SQLException {
 		Connection conn = null;
-		
+
 		try {
 			Class.forName(driverClass).newInstance();
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException ex) {
 			logger.error("Check classpath. Cannot load db driver: " + driverClass, ex);
-			throw ex;
+			throw new SQLException(ex);
+		} catch (InstantiationException ex) {
+			logger.error("Instantiationn Error. Cannot load db driver: " + driverClass, ex);
+			throw new SQLException(ex);
+		} catch (IllegalAccessException ex) {
+			logger.error("Illegal Access Error. Cannot load db driver: " + driverClass, ex);
+			throw new SQLException(ex);
 		}
 
 		try {
@@ -71,7 +77,7 @@ public class JdbcUtils {
 
 		return conn;
 	}
-	
+
 	/**
 	 * <p>convertToTimestampNow.</p>
 	 *
@@ -80,7 +86,7 @@ public class JdbcUtils {
 	public static Timestamp convertToTimestampNow() {
 		return convertToTimestamp(new Date());
 	}
-	
+
 	/**
 	 * <p>convertToTimestamp.</p>
 	 *
@@ -96,7 +102,7 @@ public class JdbcUtils {
 
 		return retVal;
 	}
-	
+
 	/**
 	 * <p>convertToDate.</p>
 	 *
@@ -106,14 +112,14 @@ public class JdbcUtils {
 	@Deprecated
 	public static Date convertToDate(Timestamp aTimeStamp) {
 		Date res = null;
-		
+
 		if (aTimeStamp != null) {
 			GregorianCalendar calendar = new GregorianCalendar();
 			calendar.setTime(new Date(aTimeStamp.getTime()));
-			
+
 			res = calendar.getTime();
 		}
-		
-		return res; 
-	}	
+
+		return res;
+	}
 }
