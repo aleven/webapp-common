@@ -336,17 +336,27 @@ public class JdbcConnector implements Closeable {
 	 */
 	public int executeUpdate(boolean keepConnOpen, String aQuery) throws Exception {
 		int res = 0;
-
 		try {
-
 			logger.debug(aQuery);
 			res = getConnection().prepareStatement(aQuery).executeUpdate();
-
 		} finally {
 			if (!keepConnOpen)
 				close();
 		}
+		return res;
+	}
 
+	public int executeUpdate(boolean keepConnOpen, String aQuery, Object... params) throws Exception {
+		int res = 0;
+		try {
+			logger.debug(aQuery);
+			final PreparedStatement ps = getConnection().prepareStatement(aQuery);
+			setParams(ps, params);
+			res = ps.executeUpdate();
+		} finally {
+			if (!keepConnOpen)
+				close();
+		}
 		return res;
 	}
 
@@ -416,7 +426,7 @@ public class JdbcConnector implements Closeable {
 				else if (paramValue instanceof Integer)
 					ps.setInt(paramIndex, Integer.parseInt(paramValue.toString()));
 				else if (paramValue instanceof Long)
-					ps.setLong(paramIndex, Integer.parseInt(paramValue.toString()));
+					ps.setLong(paramIndex, Long.parseLong(paramValue.toString()));
 				else if (paramValue instanceof Double)
 					ps.setDouble(paramIndex, Double.parseDouble(paramValue.toString()));
 				else if (paramValue instanceof Float)
