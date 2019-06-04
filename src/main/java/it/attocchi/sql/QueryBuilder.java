@@ -344,7 +344,7 @@ public class QueryBuilder {
 			equalBulder.append(")");
 		} else if (dataEnd != null) {
 			equalBulder.append("(");
-			equalBulder.append(lower(nomeCampo, dataStart));
+			equalBulder.append(lower(nomeCampo, dataEnd));
 			equalBulder.append(")");
 		}
 
