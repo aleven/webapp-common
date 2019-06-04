@@ -9,15 +9,17 @@ Charset source UTF-8
 
 https://dzone.com/articles/publish-your-artifacts-to-maven-central
 
+    mvn clean compile javadoc:javadoc
+    
     mvn clean
     
     mvn release:prepare
     
     mvn release:perform
 
-git tag -d webapp-common-3.2.7
+git tag -d webapp-common-3.2.14
 
-git push origin :refs/tags/webapp-common-3.2.7
+git push origin :refs/tags/webapp-common-3.2.14
 
 ## _it.attocchi.jpa2_
 
