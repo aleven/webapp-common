@@ -225,6 +225,7 @@ public class DbUtilsConnector extends JdbcConnector {
 	 * @param aQuery a {@link java.lang.String} object.
 	 * @param clazz a {@link java.lang.Class} object.
 	 * @param params optionals parameters to pass to the query.
+	 * @param <T> a T object.
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */

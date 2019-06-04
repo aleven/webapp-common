@@ -234,7 +234,7 @@ public class JdbcConnector implements Closeable {
 	 * @param aQuery       the SQL to execute
 	 * @param params       list of params
 	 * @return the resultset
-	 * @throws Exception
+	 * @throws Exception error executing sql
 	 */
 	public ResultSet execute(boolean keepConnOpen, String aQuery, Object... params) throws Exception {
 		ResultSet res = null;

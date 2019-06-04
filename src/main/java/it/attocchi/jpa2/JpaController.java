@@ -610,6 +610,7 @@ public class JpaController implements Serializable {
 	 * @param clazz a {@link java.lang.Class} object.
 	 * @param query a {@link java.lang.String} object.
 	 * @param params a {@link java.lang.Object} object.
+	 * @param <T> a T object.
 	 * @return a {@link java.util.List} object.
 	 * @throws java.lang.Exception if any.
 	 */
