@@ -421,18 +421,22 @@ public class JdbcConnector implements Closeable {
 			for (int i = 0; i < params.length; i++) {
 				final int paramIndex = i + 1;
 				final Object paramValue = params[i];
-				if (paramValue instanceof String || paramValue instanceof Character)
-					ps.setString(paramIndex, paramValue.toString());
-				else if (paramValue instanceof Integer)
-					ps.setInt(paramIndex, Integer.parseInt(paramValue.toString()));
-				else if (paramValue instanceof Long)
-					ps.setLong(paramIndex, Long.parseLong(paramValue.toString()));
-				else if (paramValue instanceof Double)
-					ps.setDouble(paramIndex, Double.parseDouble(paramValue.toString()));
-				else if (paramValue instanceof Float)
-					ps.setFloat(paramIndex, Float.parseFloat(paramValue.toString()));
-				else if (paramValue instanceof Date)
-					ps.setDate(paramIndex, (Date) paramValue);
+				if (paramValue == null) {
+					ps.setObject(paramIndex, null);
+				} else {
+					if (paramValue instanceof String || paramValue instanceof Character)
+						ps.setString(paramIndex, paramValue.toString());
+					else if (paramValue instanceof Integer)
+						ps.setInt(paramIndex, Integer.parseInt(paramValue.toString()));
+					else if (paramValue instanceof Long)
+						ps.setLong(paramIndex, Long.parseLong(paramValue.toString()));
+					else if (paramValue instanceof Double)
+						ps.setDouble(paramIndex, Double.parseDouble(paramValue.toString()));
+					else if (paramValue instanceof Float)
+						ps.setFloat(paramIndex, Float.parseFloat(paramValue.toString()));
+					else if (paramValue instanceof Date)
+						ps.setDate(paramIndex, (Date) paramValue);
+				}
 			}
 		}
 	}
