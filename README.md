@@ -17,9 +17,11 @@ https://dzone.com/articles/publish-your-artifacts-to-maven-central
     
     mvn release:perform
 
-git tag -d webapp-common-3.2.15
+in caso di errore sulla release per rimuovere tag corrente
 
-git push origin :refs/tags/webapp-common-3.2.15
+	git tag -d webapp-common-3.2.15
+	
+	git push origin :refs/tags/webapp-common-3.2.15
 
 ## _it.attocchi.jpa2_
 
