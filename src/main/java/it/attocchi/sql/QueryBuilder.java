@@ -174,25 +174,31 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * <p>bigger.</p>
+	 * <p>bigger or equal.</p>
 	 *
 	 * @param nomeCampo a {@link java.lang.String} object.
 	 * @param valore a {@link java.util.Date} object.
 	 * @return a {@link java.lang.String} object.
 	 */
-	public static String bigger(String nomeCampo, Date valore) {
+	public static String biggerOrEq(String nomeCampo, Date valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		int anno = DateUtils.getAnno(valore);
-		int mese = DateUtils.getMese(valore);
-		int giorno = DateUtils.getGiorno(valore);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+//		int anno = DateUtils.getAnno(valore);
+//		int mese = DateUtils.getMese(valore);
+//		int giorno = DateUtils.getGiorno(valore);
+//
+//		equalBulder.append("(");
+//		equalBulder.append("YEAR(" + nomeCampo + ") >= " + anno + " AND ");
+//		equalBulder.append("MONTH(" + nomeCampo + ") >= " + mese + " AND ");
+//		equalBulder.append("DAY(" + nomeCampo + ") >= " + giorno + "");
+//		equalBulder.append(")");
 
 		equalBulder.append("(");
-		equalBulder.append("YEAR(" + nomeCampo + ") >= " + anno + " AND ");
-		equalBulder.append("MONTH(" + nomeCampo + ") >= " + mese + " AND ");
-		equalBulder.append("DAY(" + nomeCampo + ") >= " + giorno + "");
+		equalBulder.append(nomeCampo + " >= '" + sdf.format(valore) + "'");
 		equalBulder.append(")");
-
+		
 		return equalBulder.toString();
 	}
 
@@ -299,23 +305,29 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * <p>lower.</p>
+	 * <p>lower or equal.</p>
 	 *
 	 * @param nomeCampo a {@link java.lang.String} object.
 	 * @param valore a {@link java.util.Date} object.
 	 * @return a {@link java.lang.String} object.
 	 */
-	public static String lower(String nomeCampo, Date valore) {
+	public static String lowerOrEq(String nomeCampo, Date valore) {
 		StringBuilder equalBulder = new StringBuilder();
 
-		int anno = DateUtils.getAnno(valore);
-		int mese = DateUtils.getMese(valore);
-		int giorno = DateUtils.getGiorno(valore);
+//		int anno = DateUtils.getAnno(valore);
+//		int mese = DateUtils.getMese(valore);
+//		int giorno = DateUtils.getGiorno(valore);
+//
+//		equalBulder.append("(");
+//		equalBulder.append("YEAR(" + nomeCampo + ")<=" + anno + " AND ");
+//		equalBulder.append("MONTH(" + nomeCampo + ")<=" + mese + " AND ");
+//		equalBulder.append("DAY(" + nomeCampo + ")<=" + giorno + "");
+//		equalBulder.append(")");
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
 		equalBulder.append("(");
-		equalBulder.append("YEAR(" + nomeCampo + ")<=" + anno + " AND ");
-		equalBulder.append("MONTH(" + nomeCampo + ")<=" + mese + " AND ");
-		equalBulder.append("DAY(" + nomeCampo + ")<=" + giorno + "");
+		equalBulder.append(nomeCampo + " <= '" + sdf.format(valore) + "'");
 		equalBulder.append(")");
 
 		return equalBulder.toString();
@@ -340,11 +352,11 @@ public class QueryBuilder {
 			equalBulder.append(")");
 		} else if (dataStart != null) {
 			equalBulder.append("(");
-			equalBulder.append(bigger(nomeCampo, dataStart));
+			equalBulder.append(biggerOrEq(nomeCampo, dataStart));
 			equalBulder.append(")");
 		} else if (dataEnd != null) {
 			equalBulder.append("(");
-			equalBulder.append(lower(nomeCampo, dataEnd));
+			equalBulder.append(lowerOrEq(nomeCampo, dataEnd));
 			equalBulder.append(")");
 		}
 
