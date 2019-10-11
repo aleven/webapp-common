@@ -17,9 +17,9 @@ https://dzone.com/articles/publish-your-artifacts-to-maven-central
     
     mvn release:perform
 
-git tag -d webapp-common-3.2.14
+git tag -d webapp-common-3.2.15
 
-git push origin :refs/tags/webapp-common-3.2.14
+git push origin :refs/tags/webapp-common-3.2.15
 
 ## _it.attocchi.jpa2_
 
