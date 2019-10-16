@@ -9,6 +9,8 @@ Charset source UTF-8
 
 https://dzone.com/articles/publish-your-artifacts-to-maven-central
 
+	mvn -B clean release:prepare release:perform
+
     mvn clean compile javadoc:javadoc
     
     mvn clean
