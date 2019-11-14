@@ -87,7 +87,11 @@ public class RestBaseJpa2 {
 				// if (context != null)
 				// SoftwareProperties.init(context);
 				// else
-				SoftwareProperties.init(restServletContext);
+				if (restServletContext != null) {
+					SoftwareProperties.init(restServletContext);
+				} else {
+					logger.warn("servlet context missing");
+				}
 
 				Map<String, String> dbProps = SoftwareProperties.getJpaDbProps();
 
