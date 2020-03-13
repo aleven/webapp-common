@@ -658,7 +658,7 @@ abstract class PageBase implements Serializable {
 				String extNuova = FilenameUtils.getExtension(rename);
 				String extOrig = FilenameUtils.getExtension(fileName);
 				if (StringUtils.isBlank(extNuova))
-					if (StringUtils.isNotBlank(extNuova))
+					if (StringUtils.isNotBlank(extOrig))
 						rename = rename + "." + extOrig;
 				downloadFileName = rename;
 				// fileName.substring(fileName.lastIndexOf("."));
