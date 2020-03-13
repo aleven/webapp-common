@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.aleven</groupId>
     <artifactId>webapp-common</artifactId>
-    <version>3.2.18-SNAPSHOT</version>
+    <version>3.2.18</version>
 
     <name>webapp-common</name>
     <description>un set di classi utili per lo sviluppo di applicazioni web jss, jpa e rest based</description>
@@ -35,7 +35,7 @@
         <url>https://github.com/aleven/webapp-common</url>
         <connection>scm:git:git://github.com/aleven/webapp-common.git</connection>
         <developerConnection>scm:git:git@github.com:aleven/webapp-common.git</developerConnection>
-        <tag>webapp-common-3.2.14</tag>
+        <tag>webapp-common-3.2.18</tag>
     </scm>
 
     <properties>
