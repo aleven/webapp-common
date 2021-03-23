@@ -1,6 +1,6 @@
 /*
     Copyright (c) 2012,2013 Mirco Attocchi
-	
+
     This file is part of WebAppCommon.
 
     WebAppCommon is free software: you can redistribute it and/or modify
@@ -221,7 +221,7 @@ public class DateUtils {
 
 		return dateFormatGmt.format(aDate);
 	}
-	
+
 	/**
 	 * Data nel formato MM
 	 *
@@ -430,7 +430,7 @@ public class DateUtils {
 	public static Date getDate(int year, int month, int day) {
 		return getDate(year, month, day, 0, 0);
 	}
-	
+
 	/**
 	 * crea una data dai dati specificati (imposta orario alle 23:59)
 	 *
@@ -442,7 +442,7 @@ public class DateUtils {
 	public static Date getDateEnd(int year, int month, int day) {
 		return getDate(year, month, day, 23, 59);
 	}
-	
+
 	/**
 	 * Set time of a Date
 	 *
@@ -519,7 +519,7 @@ public class DateUtils {
 	public static int getMonthZeroBased(Date aDate) {
 		return getMeseZeroBased(aDate);
 	}
-	
+
 	/**
 	 * Ritorna il mese della data specificata non 0 based
 	 *
@@ -529,7 +529,7 @@ public class DateUtils {
 	public static int getMese(Date aDate) {
 		return getMeseZeroBased(aDate) + 1;
 	}
-	
+
 	/**
 	 * <p>getMeseZeroBased.</p>
 	 *
@@ -701,7 +701,7 @@ public class DateUtils {
 	public static String format(Date aDate, String format) {
 		return new SimpleDateFormat(format).format(aDate);
 	}
-	
+
 	/**
 	 * <p>format.</p>
 	 *
@@ -734,27 +734,27 @@ public class DateUtils {
 	 */
 	public static boolean exists(int anno, int mese, int giorno) {
 		boolean res = false;
-		
+
 //		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 ////		format.parse("2010-02-31"); //=> Ok, rolls to "Wed Mar 03 00:00:00 PST 2010".
 //		format.setLenient(false);
 ////		format.parse("2010-02-31"); //=> Throws ParseException "Unparseable date".
-		
-		
+
+
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, anno);
 		c.set(Calendar.MONTH, mese);
-		c.set(Calendar.DAY_OF_MONTH, giorno);		
-		
+		c.set(Calendar.DAY_OF_MONTH, giorno);
+
 		int annoTest = c.get(Calendar.YEAR);
 		int meseTest = c.get(Calendar.MONTH);
-		int giornoTest = c.get(Calendar.DAY_OF_MONTH);	
-		
+		int giornoTest = c.get(Calendar.DAY_OF_MONTH);
+
 		res = (anno == annoTest && mese == meseTest && giorno == giornoTest);
 
 		return res;
 	}
-	
+
 	/**
 	 * cerca una data valida se quella specificata non è valida. cercando all'indietro nel tempo
 	 *
@@ -766,7 +766,7 @@ public class DateUtils {
 	public static Date searchValidBefore(int anno, int mese, int giorno) {
 		Date res = null;
 		if (!exists(anno, mese, giorno)) {
-			// cerco scorrendo i giorni all'indietro 
+			// cerco scorrendo i giorni all'indietro
 			for (int i = giorno - 1; i > 0; i--) {
 				if (exists(anno, mese, i)) {
 					res = getDateEnd(anno, mese, i);
@@ -778,7 +778,7 @@ public class DateUtils {
 		}
 		return res;
 	}
-	
+
 	// protected static final Logger logger =
 	// Logger.getLogger(DateUtils.class.getName());
 
@@ -804,7 +804,7 @@ public class DateUtils {
 
 //	/**
 //	 * Ritorna il mese della data specificata non 0 based
-//	 * 
+//	 *
 //	 * @param aDate
 //	 * @return
 //	 */
@@ -822,7 +822,7 @@ public class DateUtils {
 
 //	/**
 //	 * Ritorna il giorno del mese della data specificata
-//	 * 
+//	 *
 //	 * @param aDate
 //	 * @return
 //	 */
@@ -1132,6 +1132,7 @@ public class DateUtils {
 
 		Calendar newcal = new GregorianCalendar();
 		newcal.set(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DAY_OF_MONTH), 0, 0, 0);
+		newcal.set(Calendar.MILLISECOND, 0);
 		return newcal.getTime();
 	}
 
@@ -1572,7 +1573,7 @@ public class DateUtils {
 	}
 
 //	/**
-//	 * 
+//	 *
 //	 * @param _fromDate
 //	 * @param _fromTime
 //	 * @param _toDate
@@ -1742,7 +1743,7 @@ public class DateUtils {
 //	}
 //
 //	/**
-//	 * 
+//	 *
 //	 * @param date
 //	 * @param time
 //	 * @return
@@ -1818,10 +1819,10 @@ public class DateUtils {
 	// }
 
 	/*
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 * FROM it.attocchi package DateUtils
 	 */
 
@@ -2649,7 +2650,7 @@ public class DateUtils {
 //	/**
 //	 * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/
 //	 * DateTimeFormat.html
-//	 * 
+//	 *
 //	 * @param aDate
 //	 * @return
 //	 */
@@ -2663,7 +2664,7 @@ public class DateUtils {
 //	/**
 //	 * http://stackoverflow.com/questions/15358409/dividing-a-joda-time-period-
 //	 * into-intervals-of-desired-size
-//	 * 
+//	 *
 //	 * @param start
 //	 * @param end
 //	 * @param chunkAmount
@@ -2690,7 +2691,7 @@ public class DateUtils {
 //
 //	/**
 //	 * verifica se una data e' diversa da vuota e superiore ad adesso
-//	 * 
+//	 *
 //	 * @param aDate
 //	 * @return
 //	 */
@@ -2793,7 +2794,7 @@ public class DateUtils {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * <p>getTimestampMS.</p>
 	 *
