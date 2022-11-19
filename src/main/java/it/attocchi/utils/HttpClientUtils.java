@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
@@ -79,7 +80,7 @@ public class HttpClientUtils {
 			String extension = FilenameUtils.getExtension(name);
 
 			if (dest == null)
-				dest = File.createTempFile(baseName + "_", "." + extension);
+				dest = Files.createTempFile(baseName + "_", "." + extension).toFile();
 
 			/* Procediamo con il Download */
 			httpget = new HttpGet(url);

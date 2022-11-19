@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 
@@ -485,7 +486,7 @@ public class MailUtils {
 		OutputStream os = null;
 		try {
 			if (tmpEnabled) {
-				File tmp = File.createTempFile("tmpEml", ".eml");
+				File tmp = Files.createTempFile("tmpEml", ".eml").toFile();
 				logger.debug("inizio scrittura mail su file temporaneo {}...", tmp);
 				os = new FileOutputStream(tmp);
 				mail.writeTo(os);
